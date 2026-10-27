@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FuelPilot • Carburant Autoroute & Bornes PK</title>
+
+  <!-- PWA & Mobile App Icons -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="brand-title">
+      <img src="icon.png" alt="FuelPilot Logo" class="brand-logo-img">
+      <div>
+        <h1>Fuel<span>Pilot</span></h1>
+        <div class="creator-signature">JLDApps 2026</div>
+      </div>
+    </div>
+
+    <div class="header-status">
+      <div class="badge-jld">JLDApps 2026</div>
+      <div class="badge-live">
+        <span class="pulse-dot"></span>
+        <span class="live-text">Prix en direct</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="app-container">
+    
+    <!-- Left Sidebar -->
+    <div class="sidebar">
+      
+      <!-- Itinerary Search Section -->
+      <div class="sidebar-section compact-section">
+        <div class="section-title">
+          <span>1. Choix de l'itinéraire</span>
+        </div>
+
+        <!-- Start & Destination Side-by-Side -->
+        <div class="row-2col">
+          <div class="input-group" style="margin-bottom:0;">
+            <span class="input-icon">🟢</span>
+            <input type="text" class="address-input" id="input-start" placeholder="Ville de départ..." autocomplete="off">
+            <div class="autocomplete-dropdown" id="dropdown-start"></div>
+          </div>
+
+          <div class="input-group" style="margin-bottom:0;">
+            <span class="input-icon">🏁</span>
+            <input type="text" class="address-input" id="input-end" placeholder="Ville d'arrivée..." autocomplete="off">
+            <div class="autocomplete-dropdown" id="dropdown-end"></div>
+          </div>
+        </div>
+
+        <!-- Dynamic Waypoints Container -->
+        <div id="waypoints-container"></div>
+
+        <!-- Actions Row: Add Step & Calculate -->
+        <div class="row-actions">
+          <button type="button" class="btn-add-step" id="btn-add-waypoint">
+            + Étape
+          </button>
+          <button type="button" class="btn-calculate" id="btn-calculate">
+            <span>🚀</span> Calculer l'itinéraire
+          </button>
+        </div>
+
+        <!-- Alternative Routes Selector (like Waze) -->
+        <div id="routes-container" class="routes-container" style="display: none;"></div>
+      </div>
+
+      <!-- Filters: Brand and Fuel Dropdowns Side-by-Side -->
+      <div class="sidebar-section compact-section">
+        <div class="row-2col" style="margin-bottom:6px;">
+          <div>
+            <label for="select-brand" class="filter-label">Enseigne / Société :</label>
+            <select id="select-brand" class="select-filter" style="width: 100%;">
+              <option value="all">Toutes les enseignes</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="select-fuel" class="filter-label">Carburant :</label>
+            <select id="select-fuel" class="select-filter" style="width: 100%;">
+              <option value="gazole">Gazole</option>
+              <option value="e10" selected>SP95-E10</option>
+              <option value="sp98">SP98</option>
+              <option value="sp95">SP95</option>
+              <option value="e85">E85</option>
+              <option value="gplc">GPLc</option>
+              <option value="all">Tous les carburants</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stations List Section (Zone 3 - Agrandie) -->
+      <div class="stations-section">
+        <div class="stations-header">
+          <div>
+            <div class="section-title" style="margin-bottom:2px;">
+              <span>3. Stations d'autoroute</span>
+            </div>
+            <span class="stations-count" id="stations-count-label">0 station</span>
+          </div>
+
+          <!-- Sort dropdown compact -->
+          <div>
+            <select id="select-sort" class="select-filter select-sort-compact" title="Ordre de tri">
+              <option value="route">Tri : Ordre du trajet</option>
+              <option value="price">Tri : Moins cher d'abord</option>
+              <option value="dist">Tri : Distance</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Scrollable stations cards -->
+        <div class="stations-scroll" id="stations-list">
+          <div style="text-align:center; padding: 40px 20px; color: var(--text-muted);">
+            <p style="font-size: 2rem; margin-bottom: 8px;">🛣️</p>
+            <p>Sélectionnez un départ et une arrivée pour afficher les stations d'autoroute et leurs bornes kilométriques.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Map Container -->
+    <div class="map-container">
+      <div id="map"></div>
+    </div>
+
+  </div>
+
+  <!-- Mobile Floating Tab Switcher (Mode Carte / Mode Liste) -->
+  <div class="mobile-nav-bar" id="mobile-nav-bar">
+    <button type="button" class="mobile-tab-btn active" id="btn-tab-map">
+      <span class="tab-icon">🗺️</span>
+      <span class="tab-label">Carte</span>
+    </button>
+    <button type="button" class="mobile-tab-btn" id="btn-tab-list">
+      <span class="tab-icon">📋</span>
+      <span class="tab-label">Liste & Filtres</span>
+      <span class="tab-badge" id="mobile-badge-count">0</span>
+    </button>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="app.js"></script>
+</body>
+</html>
