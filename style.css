@@ -404,6 +404,62 @@ header {
   color: var(--text-muted);
 }
 
+/* Itinerary Collapsible Summary Bar */
+.itinerary-summary-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+.summary-route-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.summary-point {
+  color: #f8fafc;
+}
+
+.summary-arrow {
+  color: var(--accent-cyan);
+  font-size: 0.8rem;
+}
+
+.summary-meta {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.btn-edit-route {
+  background: rgba(14, 165, 233, 0.15);
+  border: 1px solid rgba(14, 165, 233, 0.4);
+  color: var(--accent-cyan);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.btn-edit-route:hover {
+  background: rgba(14, 165, 233, 0.25);
+}
+
 /* Filters */
 .fuel-pills {
   display: flex;
@@ -877,18 +933,28 @@ header {
   margin-bottom: 4px;
 }
 
-/* Top Big Nav Switcher - Hidden on large desktop */
-.top-nav-switcher {
-  display: none;
-}
-
 /* Mobile Floating Navigation Bar - Hidden on large desktop */
 .mobile-nav-bar {
   display: none;
 }
 
+/* On desktop (>1080px), itinerary summary bar is hidden and full form always shown */
+#itinerary-summary-bar {
+  display: none !important;
+}
+#itinerary-full-form {
+  display: block !important;
+}
+
 /* Responsive & Mobile Mode Carte / Mode Liste (Tablets & Smartphones) */
 @media (max-width: 1080px) {
+  /* On mobile: when route is active and collapsed, show summary bar & hide full form */
+  body.mobile-route-collapsed #itinerary-summary-bar {
+    display: flex !important;
+  }
+  body.mobile-route-collapsed #itinerary-full-form {
+    display: none !important;
+  }
   header {
     padding: 6px 14px;
     height: 52px;
@@ -1005,51 +1071,55 @@ header {
   }
 
   /* Station Cards - Compact & High-density */
+  .stations-scroll {
+    gap: 8px !important;
+  }
+
   .station-card {
-    padding: 10px 12px !important;
-    border-radius: 10px !important;
-    margin-bottom: 8px !important;
+    padding: 8px 10px !important;
+    border-radius: 9px !important;
+    margin-bottom: 0 !important;
   }
 
   .station-rank {
-    width: 22px !important;
-    height: 22px !important;
-    font-size: 0.72rem !important;
+    width: 20px !important;
+    height: 20px !important;
+    font-size: 0.7rem !important;
     font-weight: 700 !important;
     border-radius: 4px !important;
     margin-right: 6px !important;
   }
 
   .flag-icon {
-    font-size: 1rem !important;
+    font-size: 0.95rem !important;
     margin-right: 4px !important;
   }
 
   .brand-badge {
-    font-size: 0.75rem !important;
-    padding: 2px 7px !important;
-    border-radius: 5px !important;
+    font-size: 0.72rem !important;
+    padding: 2px 6px !important;
+    border-radius: 4px !important;
   }
 
   .pk-marker-badge {
-    font-size: 0.78rem !important;
-    padding: 2px 7px !important;
-    border-radius: 5px !important;
+    font-size: 0.75rem !important;
+    padding: 2px 6px !important;
+    border-radius: 4px !important;
     font-weight: 700 !important;
   }
 
   .station-name {
-    font-size: 1.05rem !important;
+    font-size: 1.0rem !important;
     font-weight: 800 !important;
     color: #ffffff !important;
-    margin: 4px 0 2px 0 !important;
-    line-height: 1.25 !important;
+    margin: 3px 0 1px 0 !important;
+    line-height: 1.2 !important;
   }
 
   .station-details {
-    font-size: 0.78rem !important;
+    font-size: 0.75rem !important;
     color: #94a3b8 !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 4px !important;
     gap: 6px !important;
   }
 
@@ -1059,55 +1129,55 @@ header {
   }
 
   .sens-tag {
-    font-size: 0.72rem !important;
-    padding: 1px 6px !important;
+    font-size: 0.7rem !important;
+    padding: 1px 5px !important;
   }
 
   .prices-single-row {
-    padding: 6px 12px !important;
-    border-radius: 8px !important;
+    padding: 5px 10px !important;
+    border-radius: 6px !important;
   }
 
   .single-fuel-label .fuel-icon {
-    font-size: 1.05rem !important;
+    font-size: 0.95rem !important;
   }
 
   .single-fuel-label .fuel-name {
-    font-size: 0.88rem !important;
+    font-size: 0.85rem !important;
     font-weight: 700 !important;
   }
 
   .price-val-large {
-    font-size: 1.35rem !important;
+    font-size: 1.3rem !important;
     font-weight: 800 !important;
     letter-spacing: -0.3px !important;
   }
 
   .price-val-unavail {
-    font-size: 0.85rem !important;
+    font-size: 0.8rem !important;
     font-weight: 700 !important;
   }
 
   .best-price-ribbon {
-    font-size: 0.72rem !important;
-    padding: 2px 8px !important;
+    font-size: 0.7rem !important;
+    padding: 2px 7px !important;
     font-weight: 700 !important;
-    top: -8px !important;
-    right: 10px !important;
+    top: -7px !important;
+    right: 8px !important;
   }
 
   .rupture-badge {
-    font-size: 0.7rem !important;
-    padding: 2px 6px !important;
+    font-size: 0.68rem !important;
+    padding: 2px 5px !important;
     font-weight: 600 !important;
-    margin-top: 4px !important;
+    margin-top: 3px !important;
   }
 
   /* Sleek Floating Bottom Navigation Bar */
   .mobile-nav-bar {
     display: flex;
     position: fixed;
-    bottom: 16px;
+    bottom: 12px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2000;
@@ -1115,19 +1185,20 @@ header {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 28px;
-    padding: 4px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-    gap: 6px;
+    border-radius: 26px;
+    padding: 3px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
+    gap: 4px;
+    height: 46px;
   }
 
   .mobile-tab-btn {
     background: transparent;
     border: none;
     color: #94a3b8;
-    padding: 9px 18px;
-    border-radius: 24px;
-    font-size: 0.92rem;
+    padding: 6px 16px;
+    border-radius: 22px;
+    font-size: 0.88rem;
     font-weight: 700;
     display: flex;
     align-items: center;
@@ -1137,22 +1208,22 @@ header {
   }
 
   .mobile-tab-btn .tab-icon {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
   }
 
   .mobile-tab-btn.active {
     background: linear-gradient(135deg, #0284c7, #0369a1);
     color: #ffffff;
-    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.5);
+    box-shadow: 0 3px 10px rgba(2, 132, 199, 0.5);
   }
 
   .tab-badge {
     background: #e11d48;
     color: #fff;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 800;
-    padding: 2px 7px;
-    border-radius: 12px;
+    padding: 1px 6px;
+    border-radius: 10px;
   }
 
   .app-container {

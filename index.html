@@ -51,63 +51,77 @@
     <div class="sidebar">
       
       <!-- Itinerary Search Section -->
-      <div class="sidebar-section compact-section">
-        <div class="section-title">
-          <span>1. Choix de l'itinéraire</span>
-        </div>
-
-        <!-- Start & Destination Side-by-Side -->
-        <div class="row-2col">
-          <div class="input-group" style="margin-bottom:0;">
-            <span class="input-icon">🟢</span>
-            <input type="text" class="address-input" id="input-start" placeholder="Ville de départ..." autocomplete="off">
-            <div class="autocomplete-dropdown" id="dropdown-start"></div>
+      <div class="sidebar-section compact-section" id="section-itinerary">
+        <!-- Collapsed Summary Row (Mobile Auto-compact) -->
+        <div class="itinerary-summary-bar" id="itinerary-summary-bar" style="display: none;">
+          <div class="summary-route-info">
+            <span class="summary-point start" id="sum-start-label">Paris</span>
+            <span class="summary-arrow">➔</span>
+            <span class="summary-point end" id="sum-end-label">Lyon</span>
+            <span class="summary-meta" id="sum-route-meta"></span>
           </div>
-
-          <div class="input-group" style="margin-bottom:0;">
-            <span class="input-icon">🏁</span>
-            <input type="text" class="address-input" id="input-end" placeholder="Ville d'arrivée..." autocomplete="off">
-            <div class="autocomplete-dropdown" id="dropdown-end"></div>
-          </div>
-        </div>
-
-        <!-- Dynamic Waypoints Container -->
-        <div id="waypoints-container"></div>
-
-        <!-- Actions Row: Add Step & Calculate -->
-        <div class="row-actions">
-          <button type="button" class="btn-add-step" id="btn-add-waypoint">
-            + Étape
-          </button>
-          <button type="button" class="btn-calculate" id="btn-calculate">
-            <span>🚀</span> Calculer l'itinéraire
+          <button type="button" class="btn-edit-route" id="btn-toggle-route-edit" title="Modifier le trajet">
+            <span>✏️</span> Modifier
           </button>
         </div>
 
-        <!-- Alternative Routes Selector (like Waze) -->
-        <div id="routes-container" class="routes-container" style="display: none;"></div>
+        <!-- Full Input Form -->
+        <div class="itinerary-full-form" id="itinerary-full-form">
+          <div class="section-title">
+            <span>1. Choix de l'itinéraire</span>
+          </div>
+
+          <!-- Start & Destination Side-by-Side -->
+          <div class="row-2col">
+            <div class="input-group" style="margin-bottom:0;">
+              <span class="input-icon">🟢</span>
+              <input type="text" class="address-input" id="input-start" placeholder="Ville de départ..." autocomplete="off">
+              <div class="autocomplete-dropdown" id="dropdown-start"></div>
+            </div>
+
+            <div class="input-group" style="margin-bottom:0;">
+              <span class="input-icon">🏁</span>
+              <input type="text" class="address-input" id="input-end" placeholder="Ville d'arrivée..." autocomplete="off">
+              <div class="autocomplete-dropdown" id="dropdown-end"></div>
+            </div>
+          </div>
+
+          <!-- Dynamic Waypoints Container -->
+          <div id="waypoints-container"></div>
+
+          <!-- Actions Row: Add Step & Calculate -->
+          <div class="row-actions">
+            <button type="button" class="btn-add-step" id="btn-add-waypoint">
+              + Étape
+            </button>
+            <button type="button" class="btn-calculate" id="btn-calculate">
+              <span>🚀</span> Calculer l'itinéraire
+            </button>
+          </div>
+
+          <!-- Alternative Routes Selector (like Waze) -->
+          <div id="routes-container" class="routes-container" style="display: none;"></div>
+        </div>
       </div>
 
       <!-- Filters: Brand and Fuel Dropdowns Side-by-Side -->
-      <div class="sidebar-section compact-section">
-        <div class="row-2col" style="margin-bottom:6px;">
+      <div class="sidebar-section compact-section" style="padding: 6px 10px; margin-bottom: 4px;">
+        <div class="row-2col" style="margin-bottom:0;">
           <div>
-            <label for="select-brand" class="filter-label">Enseigne / Société :</label>
-            <select id="select-brand" class="select-filter" style="width: 100%;">
-              <option value="all">Toutes les enseignes</option>
+            <select id="select-brand" class="select-filter" style="width: 100%;" title="Filtrer par Enseigne">
+              <option value="all">🏢 Toutes les enseignes</option>
             </select>
           </div>
 
           <div>
-            <label for="select-fuel" class="filter-label">Carburant :</label>
-            <select id="select-fuel" class="select-filter" style="width: 100%;">
-              <option value="e10" selected>SP95</option>
-              <option value="gazole">Gazole</option>
-              <option value="sp98">SP98</option>
-              <option value="sp95">SP95 (Pur)</option>
-              <option value="e85">E85</option>
-              <option value="gplc">GPLc</option>
-              <option value="all">Tous les carburants</option>
+            <select id="select-fuel" class="select-filter" style="width: 100%;" title="Filtrer par Carburant">
+              <option value="e10" selected>⛽ SP95</option>
+              <option value="gazole">⛽ Gazole</option>
+              <option value="sp98">⛽ SP98</option>
+              <option value="sp95">⛽ SP95 (Pur)</option>
+              <option value="e85">⛽ E85</option>
+              <option value="gplc">⛽ GPLc</option>
+              <option value="all">⛽ Tous carburants</option>
             </select>
           </div>
         </div>

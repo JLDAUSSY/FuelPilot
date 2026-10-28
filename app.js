@@ -240,12 +240,29 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
 
 // Event Listeners for Filters and Controls
 function setupEventListeners() {
-  // Mobile tab buttons (floating bar & header toggle)
-  document.body.classList.add('mobile-view-map');
+  // Mobile tab buttons (floating bar)
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialView = urlParams.get('view') === 'list' ? 'list' : 'map';
+  setMobileView(initialView);
   const btnMap = document.getElementById('btn-tab-map');
   const btnList = document.getElementById('btn-tab-list');
   if (btnMap) btnMap.addEventListener('click', () => setMobileView('map'));
   if (btnList) btnList.addEventListener('click', () => setMobileView('list'));
+
+  // Itinerary Collapse / Edit Button
+  const btnToggleRoute = document.getElementById('btn-toggle-route-edit');
+  if (btnToggleRoute) {
+    btnToggleRoute.addEventListener('click', () => {
+      const isCollapsed = document.body.classList.contains('mobile-route-collapsed');
+      if (isCollapsed) {
+        document.body.classList.remove('mobile-route-collapsed');
+        btnToggleRoute.innerHTML = '<span>✖</span> Fermer';
+      } else {
+        document.body.classList.add('mobile-route-collapsed');
+        btnToggleRoute.innerHTML = '<span>✏️</span> Modifier';
+      }
+    });
+  }
 
   // Fuel selector dropdown
   const fuelSelect = document.getElementById('select-fuel');
@@ -381,6 +398,22 @@ async function calculateItinerary() {
     alternativeRoutes = data.routes;
     selectRoute(0);
     renderRouteAlternatives();
+
+    // Update and auto-collapse itinerary summary on mobile
+    const startLbl = document.getElementById('sum-start-label');
+    const endLbl = document.getElementById('sum-end-label');
+    const metaLbl = document.getElementById('sum-route-meta');
+    if (startLbl && startPoint) startLbl.textContent = startPoint.label.split(',')[0].trim();
+    if (endLbl && endPoint) endLbl.textContent = endPoint.label.split(',')[0].trim();
+    if (metaLbl && data.routes[0]) {
+      const dist = (data.routes[0].distance / 1000).toFixed(0);
+      metaLbl.textContent = `• ${dist} km`;
+    }
+    if (window.innerWidth <= 1080) {
+      document.body.classList.add('mobile-route-collapsed');
+      const btnToggle = document.getElementById('btn-toggle-route-edit');
+      if (btnToggle) btnToggle.innerHTML = '<span>✏️</span> Modifier';
+    }
   } catch (err) {
     console.error("Erreur calcul d'itinéraire:", err);
     alert("Impossible de joindre le serveur d'itinéraire. Veuillez réessayer.");
