@@ -745,11 +745,18 @@ function renderCurrentRouteStations() {
         </span>
       </div>
 
-      <div class="station-name">${st.nom}</div>
-      <div class="station-details">
-        <span class="distance-countdown">⏱️ À ${st.distOnRoute.toFixed(1)} km du départ</span>
-        ${st.sens ? `<span class="sens-tag">${st.sens}</span>` : ''}
-        <span>• ${st.ville}</span>
+      <div class="card-mid-row">
+        <div class="station-name-col">
+          <div class="station-name">${st.nom}</div>
+          <div class="station-details">
+            <span class="distance-countdown">⏱️ À ${st.distOnRoute.toFixed(1)} km du départ</span>
+            ${st.sens ? `<span class="sens-tag">${st.sens}</span>` : ''}
+            <span>• ${st.ville}</span>
+          </div>
+        </div>
+        <div class="station-logo-badge" title="${st.enseigne}">
+          ${getBrandLogoSvg(st.enseigne)}
+        </div>
       </div>
 
       <div class="prices-container">
@@ -886,4 +893,165 @@ function getBrandClass(brand) {
   if (b.includes('galp')) return 'badge-galp';
   if (b.includes('petronor')) return 'badge-petronor';
   return 'badge-default';
+}
+
+// Return official brand logo SVG badge
+function getBrandLogoSvg(brand) {
+  const b = (brand || '').toLowerCase().trim();
+
+  // TotalEnergies
+  if (b.includes('total')) {
+    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#ffffff"/>
+      <defs>
+        <linearGradient id="teGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ef4444"/>
+          <stop offset="30%" stop-color="#f97316"/>
+          <stop offset="60%" stop-color="#eab308"/>
+          <stop offset="85%" stop-color="#10b981"/>
+          <stop offset="100%" stop-color="#0284c7"/>
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="44" r="26" fill="none" stroke="url(#teGrad)" stroke-width="11" stroke-dasharray="140 25" stroke-linecap="round"/>
+      <path d="M50 20 L50 68 M36 32 L64 32" stroke="#ef4444" stroke-width="7" stroke-linecap="round"/>
+      <text x="50" y="88" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="11" fill="#0f172a" text-anchor="middle" letter-spacing="0.5">TOTAL</text>
+    </svg>`;
+  }
+
+  // Shell
+  if (b.includes('shell')) {
+    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#ffde00"/>
+      <path d="M22 75 L32 82 L68 82 L78 75 L86 52 L82 32 L68 20 L50 16 L32 20 L18 32 L14 52 Z" fill="#dd1d21"/>
+      <path d="M26 72 L34 78 L66 78 L74 72 L81 51 L77 34 L65 24 L50 20 L35 24 L23 34 L19 51 Z" fill="#ffde00"/>
+      <path d="M50 20 L50 78 M36 24 L43 78 M64 24 L57 78 M24 34 L35 78 M76 34 L65 78" stroke="#dd1d21" stroke-width="3.5" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  // BP
+  if (b.includes('bp')) {
+    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#ffffff"/>
+      <circle cx="50" cy="46" r="32" fill="#008837"/>
+      <circle cx="50" cy="46" r="24" fill="#8bc53f"/>
+      <circle cx="50" cy="46" r="16" fill="#fff200"/>
+      <circle cx="50" cy="46" r="8" fill="#ffffff"/>
+      <text x="50" y="89" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="17" fill="#008837" text-anchor="middle" letter-spacing="-0.5">bp</text>
+    </svg>`;
+  }
+
+  // Esso
+  if (b.includes('esso')) {
+    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#003399"/>
+      <ellipse cx="50" cy="50" rx="44" ry="26" fill="#ffffff" stroke="#003399" stroke-width="3"/>
+      <text x="50" y="58" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="26" fill="#ed1c24" text-anchor="middle" letter-spacing="-1">Esso</text>
+    </svg>`;
+  }
+
+  // Repsol
+  if (b.includes('repsol')) {
+    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#0a1d37"/>
+      <path d="M16 42 A34 34 0 0 1 84 42 Z" fill="#e31b23"/>
+      <rect x="12" y="44" width="76" height="18" rx="2" fill="#ffffff"/>
+      <text x="50" y="58" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="13" fill="#0a1d37" text-anchor="middle" letter-spacing="1">REPSOL</text>
+      <path d="M16 64 A34 34 0 0 0 84 64 Z" fill="#ff7900"/>
+    </svg>`;
+  }
+
+  // Avia
+  if (b.includes('avia')) {
+    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#ffffff"/>
+      <circle cx="50" cy="50" r="44" fill="#d9251d"/>
+      <text x="50" y="58" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="22" fill="#ffffff" text-anchor="middle" font-style="italic">AVIA</text>
+      <rect x="24" y="65" width="52" height="4" rx="2" fill="#ffffff"/>
+    </svg>`;
+  }
+
+  // Cepsa
+  if (b.includes('cepsa')) {
+    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#c4122d"/>
+      <text x="50" y="56" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="19" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">CEPSA</text>
+      <circle cx="28" cy="68" r="3.5" fill="#ffffff"/>
+      <circle cx="50" cy="68" r="3.5" fill="#ffffff"/>
+      <circle cx="72" cy="68" r="3.5" fill="#ffffff"/>
+    </svg>`;
+  }
+
+  // Moeve (New Cepsa identity)
+  if (b.includes('moeve')) {
+    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#e11d48"/>
+      <text x="50" y="58" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="20" fill="#ffffff" text-anchor="middle" letter-spacing="-0.5">moeve</text>
+    </svg>`;
+  }
+
+  // Eni / Agip
+  if (b.includes('eni') || b.includes('agip')) {
+    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#ffde00"/>
+      <path d="M40 30 C40 24 46 22 50 22 C54 22 60 26 56 32 L70 38 L66 46 L55 42 L55 60 L49 60 L49 46 L45 52 L37 44 L44 38 Z" fill="#000000"/>
+      <path d="M57 26 Q65 22 63 30 Q59 28 57 26" fill="#e31b23"/>
+      <circle cx="43" cy="66" r="3" fill="#000"/>
+      <circle cx="51" cy="66" r="3" fill="#000"/>
+      <circle cx="59" cy="66" r="3" fill="#000"/>
+      <text x="50" y="85" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="16" fill="#000000" text-anchor="middle">eni</text>
+    </svg>`;
+  }
+
+  // E.Leclerc
+  if (b.includes('leclerc')) {
+    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#005696"/>
+      <circle cx="64" cy="34" r="10" fill="#f38b00"/>
+      <path d="M38 24 L48 24 L48 66 L68 66 L68 76 L38 76 Z" fill="#ffffff"/>
+    </svg>`;
+  }
+
+  // Galp
+  if (b.includes('galp')) {
+    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#ff5900"/>
+      <path d="M30 40 Q45 20 65 35 Q75 45 60 65 Q45 75 35 60 Z" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+      <text x="50" y="84" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="17" fill="#ffffff" text-anchor="middle">galp</text>
+    </svg>`;
+  }
+
+  // Fulli
+  if (b.includes('fulli')) {
+    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#008080"/>
+      <circle cx="50" cy="50" r="38" fill="#00a3a6"/>
+      <text x="50" y="58" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="22" fill="#ffff00" text-anchor="middle">fulli</text>
+    </svg>`;
+  }
+
+  // Dyneff
+  if (b.includes('dyneff')) {
+    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#002b66"/>
+      <path d="M30 30 L50 48 L70 30" fill="none" stroke="#e31b23" stroke-width="8" stroke-linecap="round"/>
+      <text x="50" y="75" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="16" fill="#ffffff" text-anchor="middle">dyneff</text>
+    </svg>`;
+  }
+
+  // Petronor
+  if (b.includes('petronor')) {
+    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#004b93"/>
+      <path d="M32 30 L50 45 L68 30" fill="none" stroke="#e31b23" stroke-width="7" stroke-linecap="round"/>
+      <text x="50" y="73" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="14" fill="#ffffff" text-anchor="middle">petronor</text>
+    </svg>`;
+  }
+
+  // Default fallback
+  const initial = (brand || 'S').substring(0, 3).toUpperCase();
+  return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="100" rx="18" fill="#1e293b" stroke="#334155" stroke-width="3"/>
+    <text x="50" y="46" font-size="24" text-anchor="middle">⛽</text>
+    <text x="50" y="76" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="14" fill="#38bdf8" text-anchor="middle">${initial}</text>
+  </svg>`;
 }
