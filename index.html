@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=3.1">
+  <link rel="stylesheet" href="style.css?v=3.2">
 </head>
 <body class="mobile-view-list">
 
@@ -161,6 +161,11 @@
     <!-- Right Map Container -->
     <div class="map-container">
       <div id="map"></div>
+      <!-- Floating Map Coverage Indicator Badge -->
+      <div class="map-coverage-badge" id="map-coverage-badge">
+        <span class="coverage-dot"></span>
+        <span class="coverage-text">Réseau couvert : 🇫🇷 France • 🇪🇸 Espagne</span>
+      </div>
     </div>
 
   </div>
@@ -180,6 +185,6 @@
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="app.js?v=3.1"></script>
+  <script src="app.js?v=3.2"></script>
 </body>
 </html>

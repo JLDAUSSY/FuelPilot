@@ -179,14 +179,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   setupEventListeners();
   await loadStationsData();
+  await loadCoveredCountries();
 });
 
 // Initialize Leaflet Map
 function initMap() {
-  // Center of France
+  // Center to encompass both France & Spain coverage
+  const initialZoom = window.innerWidth <= 768 ? 5 : 5.5;
   map = L.map('map', {
     zoomControl: false
-  }).setView([46.603354, 1.888334], 6);
+  }).setView([44.2, 0.5], initialZoom);
 
   L.control.zoom({ position: 'topright' }).addTo(map);
 
@@ -231,6 +233,67 @@ async function loadStationsData() {
     if (badge) badge.textContent = `${allStations.length} aires répertoriées`;
   } catch (err) {
     console.error('Erreur chargement stations:', err);
+  }
+}
+
+let coveredCountriesLayer = null;
+
+// Load covered countries boundary overlay (France & Spain)
+async function loadCoveredCountries() {
+  try {
+    const res = await fetch('pays_couverts.json');
+    if (!res.ok) return;
+    const geojsonData = await res.json();
+
+    coveredCountriesLayer = L.geoJSON(geojsonData, {
+      style: () => ({
+        color: '#0284c7',        // Cyan-blue border
+        weight: 2,               // Border width
+        opacity: 0.85,
+        fillColor: '#0ea5e9',    // Sky blue fill
+        fillOpacity: 0.08,       // Subtle translucency
+        dashArray: '6, 6'        // Dashed border for country limit
+      }),
+      onEachFeature: (feature, layer) => {
+        const p = feature.properties;
+        layer.bindTooltip(
+          `<div style="font-weight:800; font-size:0.88rem; color:#fff;">${p.flag} ${p.name}</div><div style="font-size:0.75rem; color:#38bdf8;">${p.stationsCount} aires répertoriées • Prix en direct</div>`,
+          { sticky: true, className: 'country-coverage-tooltip' }
+        );
+        layer.on({
+          mouseover: () => {
+            layer.setStyle({
+              fillOpacity: 0.18,
+              weight: 3,
+              color: '#38bdf8'
+            });
+          },
+          mouseout: () => {
+            if (coveredCountriesLayer) coveredCountriesLayer.resetStyle(layer);
+          }
+        });
+      }
+    }).addTo(map);
+
+    coveredCountriesLayer.bringToBack();
+
+    // Central Country Badges (France & Spain)
+    const countryLabels = [
+      { coords: [46.6, 2.5], flag: '🇫🇷', name: 'France', count: '438 aires' },
+      { coords: [40.2, -3.6], flag: '🇪🇸', name: 'Espagne', count: '833 aires' }
+    ];
+
+    countryLabels.forEach(c => {
+      const icon = L.divIcon({
+        className: 'country-badge-marker',
+        html: `<div class="country-badge-pill">${c.flag} ${c.name} <span class="country-count-tag">• ${c.count}</span></div>`,
+        iconSize: [140, 26],
+        iconAnchor: [70, 13]
+      });
+      L.marker(c.coords, { icon, interactive: false }).addTo(map);
+    });
+  } catch (err) {
+    console.warn('Erreur chargement pays couverts:', err);
   }
 }
 
@@ -679,6 +742,7 @@ function fitMapToRouteAndStations() {
       : { padding: [45, 45], maxZoom: 15, animate: false };
 
     map.fitBounds(bounds, paddingOptions);
+    if (coveredCountriesLayer) coveredCountriesLayer.bringToBack();
   }
 }
 
