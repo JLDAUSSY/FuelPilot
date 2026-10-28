@@ -31,16 +31,12 @@ function getFuelPrice(prixObj, fuel) {
 function setMobileView(view) {
   const btnMap = document.getElementById('btn-tab-map');
   const btnList = document.getElementById('btn-tab-list');
-  const hdrBtnMap = document.getElementById('hdr-btn-map');
-  const hdrBtnList = document.getElementById('hdr-btn-list');
 
   if (view === 'map') {
     document.body.classList.remove('mobile-view-list');
     document.body.classList.add('mobile-view-map');
     if (btnMap) btnMap.classList.add('active');
     if (btnList) btnList.classList.remove('active');
-    if (hdrBtnMap) hdrBtnMap.classList.add('active');
-    if (hdrBtnList) hdrBtnList.classList.remove('active');
     setTimeout(() => {
       if (map) map.invalidateSize();
     }, 150);
@@ -49,8 +45,6 @@ function setMobileView(view) {
     document.body.classList.add('mobile-view-list');
     if (btnList) btnList.classList.add('active');
     if (btnMap) btnMap.classList.remove('active');
-    if (hdrBtnList) hdrBtnList.classList.add('active');
-    if (hdrBtnMap) hdrBtnMap.classList.remove('active');
   }
 }
 
@@ -250,12 +244,8 @@ function setupEventListeners() {
   document.body.classList.add('mobile-view-map');
   const btnMap = document.getElementById('btn-tab-map');
   const btnList = document.getElementById('btn-tab-list');
-  const hdrBtnMap = document.getElementById('hdr-btn-map');
-  const hdrBtnList = document.getElementById('hdr-btn-list');
   if (btnMap) btnMap.addEventListener('click', () => setMobileView('map'));
   if (btnList) btnList.addEventListener('click', () => setMobileView('list'));
-  if (hdrBtnMap) hdrBtnMap.addEventListener('click', () => setMobileView('map'));
-  if (hdrBtnList) hdrBtnList.addEventListener('click', () => setMobileView('list'));
 
   // Fuel selector dropdown
   const fuelSelect = document.getElementById('select-fuel');
