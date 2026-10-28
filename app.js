@@ -27,6 +27,89 @@ function getFuelPrice(prixObj, fuel) {
   return prixObj[fuel] || null;
 }
 
+// Helper to format proper nouns / names with correct French & Spanish title casing
+function formatProperName(text) {
+  if (!text) return '';
+  let t = String(text).trim();
+  if (t.toLowerCase().startsWith('aide de')) t = 'Aire de' + t.substring(7);
+  t = t.replace(/^aut(?:oroute)?\.?\s*([a-z0-9]+)\s*-\s*aire\s+de\s+(.*)/i, (m, g1, g2) => `${g1.toUpperCase()} - Aire de ${g2}`);
+  t = t.replace(/^aut(?:oroute)?\s+([a-z])\s*(\d+)$/i, (m, g1, g2) => `Autoroute ${g1.toUpperCase()}${g2}`);
+  t = t.replace(/^aut(?:oroute)?\s+([a-z])\s*(\d+)\s*[-:]?\s*(?:aire\s+)?(.*)/i, (m, g1, g2, g3) => `${g1.toUpperCase()}${g2} - Aire de ${g3}`);
+  t = t.replace(/\bAire\s+de\s+([AEIOUYÀ-ÿ][a-zÀ-ÿ]+)/i, "Aire d'$1");
+
+  const lowerWords = new Set([
+    'de', 'du', 'des', 'en', 'sur', 'sous', 'et', 'au', 'aux', 'a', 'à', 'par', 'vers',
+    'la', 'le', 'les', 'del', 'los', 'las', 'd', 'l', 'y'
+  ]);
+  const acronyms = new Set([
+    'rn', 'rd', 'cd', 'pk', 'km', 'bp', 'es', 'eni', 'q8', 'f6', 'cora',
+    'a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'a10', 'a11', 'a12', 'a13',
+    'a14', 'a15', 'a16', 'a19', 'a20', 'a26', 'a28', 'a29', 'a31', 'a33', 'a34', 'a35',
+    'a36', 'a39', 'a40', 'a41', 'a42', 'a43', 'a48', 'a50', 'a51', 'a52', 'a55', 'a57',
+    'a61', 'a62', 'a63', 'a64', 'a65', 'a71', 'a72', 'a75', 'a77', 'a81', 'a83', 'a84',
+    'a85', 'a86', 'a87', 'a89', 'n104', 'rn104', 'rd104', 'cd419'
+  ]);
+  const accents = {
+    'Macon': 'Mâcon',
+    'Chatellerault': 'Châtellerault',
+    'Vallee': 'Vallée',
+    'Eloi': 'Éloi',
+    'Beziers': 'Béziers',
+    'Broceliande': 'Brocéliande',
+    'Aerodrome': 'Aérodrome',
+    'Peripherique': 'Périphérique',
+    'Exterieur': 'Extérieur',
+    'Interieur': 'Intérieur',
+    'Chambery': 'Chambéry',
+    'Mediterranee': 'Méditerranée',
+    'Cote': 'Côté',
+    'Etoile': 'Étoile',
+    'Foret': 'Forêt',
+    'Leman': 'Léman',
+    'Epernay': 'Épernay',
+    'Nimes': 'Nîmes',
+    'Pyrenees': 'Pyrénées',
+    'Etienne': 'Étienne',
+    'Cevennes': 'Cévennes'
+  };
+
+  const parts = t.split(/([ \t\-\/\',.:()]+)/);
+  let isStart = true;
+  const res = [];
+
+  for (const tok of parts) {
+    if (!tok) continue;
+    if (/^[ \t\-\/\',.:()]+$/.test(tok)) {
+      res.push(tok);
+      if (/[\-\/\':(]/.test(tok)) isStart = true;
+      continue;
+    }
+    const low = tok.toLowerCase();
+    let formatted;
+    if (/^(a|rn|rd|cd|n|d)\d+[a-z]?$/i.test(low) || acronyms.has(low)) {
+      formatted = low.toUpperCase();
+    } else if (lowerWords.has(low) && !isStart) {
+      formatted = low;
+    } else if (low === 'ste') {
+      formatted = 'Sainte';
+    } else if (low === 'st') {
+      formatted = 'Saint';
+    } else {
+      formatted = tok.charAt(0).toUpperCase() + tok.slice(1).toLowerCase();
+      if (accents[formatted]) formatted = accents[formatted];
+    }
+    res.push(formatted);
+    isStart = false;
+  }
+
+  let out = res.join('');
+  out = out.replace(/\b([dDlL])\s*'\s*/g, "$1'");
+  out = out.replace(/\b(Saint|Sainte)\s+([A-ZÀ-ÿ])/g, "$1-$2");
+  out = out.replace(/d'\s+/gi, "d'").replace(/l'\s+/gi, "l'");
+  if (out.startsWith("De ")) out = "De " + out.slice(3);
+  return out;
+}
+
 // Global Mobile View Switcher
 function setMobileView(view) {
   const btnMap = document.getElementById('btn-tab-map');
@@ -235,9 +318,10 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
             item.className = 'autocomplete-item';
             item.textContent = itemData.label;
             item.addEventListener('click', () => {
-              input.value = itemData.cleanName;
+              const formattedName = formatProperName(itemData.cleanName);
+              input.value = formattedName;
               dropdown.style.display = 'none';
-              onSelect(itemData.coords, itemData.cleanName);
+              onSelect(itemData.coords, formattedName);
             });
             dropdown.appendChild(item);
           });
@@ -348,19 +432,21 @@ function setupEventListeners() {
 
 // Helper to set preset route
 function applyPreset(startLabel, startCoords, endLabel, endCoords) {
+  const formattedStart = formatProperName(startLabel);
+  const formattedEnd = formatProperName(endLabel);
   const inStart = document.getElementById('input-depart') || document.getElementById('input-start');
   if (inStart) {
-    inStart.value = startLabel;
+    inStart.value = formattedStart;
     inStart.classList.remove('input-attention-pulse');
   }
-  startPoint = { coords: startCoords, label: startLabel };
+  startPoint = { coords: startCoords, label: formattedStart };
 
   const inEnd = document.getElementById('input-arrivee') || document.getElementById('input-end');
   if (inEnd) {
-    inEnd.value = endLabel;
+    inEnd.value = formattedEnd;
     inEnd.classList.remove('input-attention-pulse');
   }
-  endPoint = { coords: endCoords, label: endLabel };
+  endPoint = { coords: endCoords, label: formattedEnd };
 
   const fuelSel = document.getElementById('select-fuel');
   if (fuelSel) fuelSel.classList.remove('input-attention-pulse');
@@ -444,8 +530,8 @@ async function calculateItinerary() {
     const startLbl = document.getElementById('sum-start-label');
     const endLbl = document.getElementById('sum-end-label');
     const metaLbl = document.getElementById('sum-route-meta');
-    if (startLbl && startPoint) startLbl.textContent = startPoint.label.split(',')[0].trim();
-    if (endLbl && endPoint) endLbl.textContent = endPoint.label.split(',')[0].trim();
+    if (startLbl && startPoint) startLbl.textContent = formatProperName(startPoint.label.split(',')[0].trim());
+    if (endLbl && endPoint) endLbl.textContent = formatProperName(endPoint.label.split(',')[0].trim());
     if (metaLbl && data.routes[0]) {
       const dist = (data.routes[0].distance / 1000).toFixed(0);
       metaLbl.textContent = `• ${dist} km`;
@@ -805,12 +891,16 @@ function renderCurrentRouteStations() {
 
     // Popup content
     const flag = st.pays === 'ES' ? '🇪🇸' : '🇫🇷';
+    const nomFormatted = formatProperName(st.nom);
+    const villeFormatted = formatProperName(st.ville);
+    const sensFormatted = st.sens ? formatProperName(st.sens) : '';
+
     const popupContent = `
       <div class="station-popup">
-        <div class="popup-title"><span class="flag-icon">${flag}</span> ${st.enseigne} - ${st.nom}</div>
+        <div class="popup-title"><span class="flag-icon">${flag}</span> ${st.enseigne} - ${nomFormatted}</div>
         <div class="popup-pk">📍 ${st.autoroute || 'Autoroute'} • Borne km ${st.displayedPk}</div>
-        <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:6px;">${st.adresse} (${st.ville})</div>
-        <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:8px;">Sens : ${st.sens || 'Sens direct'} • À ${st.distOnRoute.toFixed(0)} km du départ</div>
+        <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:6px;">${formatProperName(st.adresse)} (${villeFormatted})</div>
+        <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:8px;">Sens : ${sensFormatted || 'Sens direct'} • À ${st.distOnRoute.toFixed(0)} km du départ</div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; font-size:0.8rem;">
           ${renderPopupPrices(st.prix, selectedFuel)}
         </div>
@@ -842,11 +932,11 @@ function renderCurrentRouteStations() {
         </div>
       </div>
 
-      <div class="station-name">${st.nom}</div>
+      <div class="station-name">${nomFormatted}</div>
       <div class="station-details">
         <span class="distance-countdown">⏱️ À ${st.distOnRoute.toFixed(1)} km du départ</span>
-        ${st.sens ? `<span class="sens-tag">${st.sens}</span>` : ''}
-        <span>• ${st.ville}</span>
+        ${sensFormatted ? `<span class="sens-tag">${sensFormatted}</span>` : ''}
+        <span>• ${villeFormatted}</span>
       </div>
 
       <div class="prices-container">

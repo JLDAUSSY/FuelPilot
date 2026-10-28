@@ -221,6 +221,7 @@ header {
   padding: 9px 10px 9px 30px;
   border-radius: 8px;
   font-size: 0.86rem;
+  text-transform: capitalize;
   transition: all 0.2s ease;
 }
 
@@ -449,6 +450,7 @@ header {
 
 .summary-point {
   color: #f8fafc;
+  text-transform: capitalize;
 }
 
 .summary-arrow {
