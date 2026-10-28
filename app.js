@@ -117,12 +117,19 @@ function formatProperName(text) {
 function setMobileView(view) {
   const btnMap = document.getElementById('btn-tab-map');
   const btnList = document.getElementById('btn-tab-list');
+  const mapBar = document.getElementById('map-routes-bar');
 
   if (view === 'map') {
     document.body.classList.remove('mobile-view-list');
     document.body.classList.add('mobile-view-map');
     if (btnMap) btnMap.classList.add('active');
     if (btnList) btnList.classList.remove('active');
+    if (mapBar && alternativeRoutes && alternativeRoutes.length > 1) {
+      mapBar.style.display = 'flex';
+      mapBar.style.position = 'fixed';
+      mapBar.style.bottom = 'calc(82px + env(safe-area-inset-bottom, 0px))';
+      mapBar.style.zIndex = '1950';
+    }
     setTimeout(() => {
       if (map) {
         map.invalidateSize();
@@ -137,6 +144,9 @@ function setMobileView(view) {
     document.body.classList.add('mobile-view-list');
     if (btnList) btnList.classList.add('active');
     if (btnMap) btnMap.classList.remove('active');
+    if (mapBar) {
+      mapBar.style.display = 'none';
+    }
   }
 }
 
@@ -674,6 +684,15 @@ function renderRouteAlternatives() {
   if (mapBar) {
     mapBar.style.display = 'flex';
     mapBar.innerHTML = '';
+    if (window.innerWidth <= 1080) {
+      mapBar.style.position = 'fixed';
+      mapBar.style.bottom = 'calc(82px + env(safe-area-inset-bottom, 0px))';
+      mapBar.style.zIndex = '1950';
+    } else {
+      mapBar.style.position = '';
+      mapBar.style.bottom = '';
+      mapBar.style.zIndex = '';
+    }
   }
 
   const baseDuration = alternativeRoutes[0]?.duration || 0;

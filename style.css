@@ -1526,17 +1526,17 @@ header {
     height: calc(100dvh - 56px);
   }
 
-  /* Floating Route Selector on Mobile: Fixed above mobile-nav-bar with guaranteed spacing */
+  /* Floating Route Selector on Mobile: Fixed above mobile-nav-bar with generous guaranteed 26px spacing */
   .map-routes-bar {
     position: fixed !important;
-    bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
+    bottom: calc(82px + env(safe-area-inset-bottom, 0px)) !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
-    width: calc(100% - 20px) !important;
+    width: calc(100% - 24px) !important;
     max-width: 420px !important;
     z-index: 1950 !important;
-    padding: 5px !important;
-    gap: 6px !important;
+    padding: 6px !important;
+    gap: 8px !important;
     border-radius: 14px !important;
   }
 
