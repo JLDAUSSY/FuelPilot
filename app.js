@@ -648,7 +648,7 @@ function getSmartRouteSummary(route) {
   const isChamonix = coords.some(c => c[0] >= 6.0 && c[0] <= 7.2 && c[1] >= 45.8 && c[1] <= 46.2);
 
   const hwStr = highways.slice(0, 2).join(', ');
-  const viaCountry = isSwiss ? 'Suisse (Gothard)' : (isChamonix ? 'France (Mont-Blanc)' : '');
+  const viaCountry = isSwiss ? 'Suisse' : (isChamonix ? 'France' : '');
   const parts = [hwStr, viaCountry].filter(Boolean);
   return parts.length > 0 ? 'via ' + parts.join(' • ') : (route.legs?.[0]?.summary ? 'via ' + route.legs[0].summary : 'Itinéraire direct');
 }
@@ -691,11 +691,12 @@ function renderRouteAlternatives() {
     // A. Card in Sidebar
     if (container) {
       const card = document.createElement('div');
-      card.className = `route-card ${idx === 0 ? 'active' : ''}`;
+      const cardColorClass = idx === 0 ? 'route-card-blue' : 'route-card-orange';
+      card.className = `route-card ${cardColorClass} ${idx === 0 ? 'active' : ''}`;
       card.id = `route-card-${idx}`;
       card.innerHTML = `
         <div class="route-card-header">
-          <span class="route-badge">${idx === 0 ? 'Recommandé' : 'Option ' + (idx + 1)}</span>
+          <span class="route-badge ${idx === 0 ? 'badge-blue' : 'badge-orange'}">${idx === 0 ? '🔵 Recommandé' : '🟠 Option ' + (idx + 1)}</span>
           <span class="route-stats">${timeStr} ${diffStr ? `<span class="time-diff">(${diffStr})</span>` : ''} • ${distKm} km</span>
         </div>
         <div class="route-desc">${summary}</div>
@@ -707,11 +708,12 @@ function renderRouteAlternatives() {
     // B. Floating Button on Map
     if (mapBar) {
       const btn = document.createElement('div');
-      btn.className = `map-route-btn ${idx === 0 ? 'active' : ''}`;
+      const btnColorClass = idx === 0 ? 'map-route-btn-blue' : 'map-route-btn-orange';
+      btn.className = `map-route-btn ${btnColorClass} ${idx === 0 ? 'active' : ''}`;
       btn.id = `map-route-btn-${idx}`;
       btn.innerHTML = `
         <div class="map-route-btn-header">
-          <span class="map-route-badge">${idx === 0 ? 'Recommandé' : 'Option ' + (idx + 1)}</span>
+          <span class="map-route-badge ${idx === 0 ? 'badge-blue' : 'badge-orange'}">${idx === 0 ? '🔵 Recommandé' : '🟠 Option ' + (idx + 1)}</span>
           <span class="map-route-time">${timeStr} ${diffStr ? `<span class="map-route-time-diff">${diffStr}</span>` : ''}</span>
         </div>
         <div class="map-route-meta">${distKm} km • ${summary}</div>
@@ -751,7 +753,7 @@ function selectRoute(routeIndex) {
   }
 }
 
-// Draw the routes on Leaflet (active in vibrant cyan, alternatives in distinct purple-violet with clickable midpoint badges)
+// Draw the routes on Leaflet (active in vibrant cyan, alternatives in glowing neon orange with clickable badges)
 function drawRoutesOnMap(activeIdx) {
   // Clear old route polylines and markers
   routeLayers.forEach(l => map.removeLayer(l));
@@ -762,19 +764,27 @@ function drawRoutesOnMap(activeIdx) {
     if (idx === activeIdx) return;
     const latlngs = route.geometry.coordinates.map(c => [c[1], c[0]]);
 
-    // 1. Dark outline for contrast
-    const altOutline = L.polyline(latlngs, {
-      color: '#0f172a',
-      weight: 9,
-      opacity: 0.75,
+    // 1. Glowing Sunset Orange Aura
+    const altAura = L.polyline(latlngs, {
+      color: '#ff6600',
+      weight: 16,
+      opacity: 0.35,
       lineJoin: 'round'
     }).addTo(map);
 
-    // 2. High-contrast vibrant purple-violet polyline
+    // 2. High-contrast dark outline
+    const altOutline = L.polyline(latlngs, {
+      color: '#090d16',
+      weight: 11,
+      opacity: 0.95,
+      lineJoin: 'round'
+    }).addTo(map);
+
+    // 3. Ultra-vibrant Neon Sunset Orange line (solid, thick, 100% visible)
     const altPolyline = L.polyline(latlngs, {
-      color: '#8b5cf6',
-      weight: 5.5,
-      opacity: 0.9,
+      color: '#ff6600',
+      weight: 7,
+      opacity: 1.0,
       lineJoin: 'round'
     }).addTo(map);
 
@@ -782,16 +792,16 @@ function drawRoutesOnMap(activeIdx) {
       selectRoute(idx);
     };
 
+    altAura.on('click', onAltClick);
     altOutline.on('click', onAltClick);
     altPolyline.on('click', onAltClick);
 
+    routeLayers.push(altAura);
     routeLayers.push(altOutline);
     routeLayers.push(altPolyline);
 
-    // 3. Interactive Midpoint Marker Pill on the alternative route
-    if (latlngs.length > 6) {
-      const midIdx = Math.floor(latlngs.length / 2);
-      const midPoint = latlngs[midIdx];
+    // 4. Interactive Clickable Marker Pill placed at the maximum deviation point from the active route
+    if (latlngs.length > 10) {
       const hours = Math.floor(route.duration / 3600);
       const mins = Math.round((route.duration % 3600) / 60);
       const timeStr = hours > 0 ? `${hours}h ${mins}min` : `${mins} min`;
@@ -801,17 +811,64 @@ function drawRoutesOnMap(activeIdx) {
       const diffMins = Math.round(diffSec / 60);
       const diffText = diffMins > 0 ? `+${diffMins} min` : (diffMins < 0 ? `${diffMins} min` : '');
 
+      // Find the optimal point along the first half of the alternative route
+      // Prioritize points with high deviation from active route and good eastern clearance
+      let bestPoint = latlngs[Math.floor(latlngs.length * 0.15)];
+      const activeCoords = alternativeRoutes[activeIdx]?.geometry?.coordinates || [];
+      if (activeCoords.length > 0) {
+        const stepActive = Math.max(1, Math.floor(activeCoords.length / 80));
+        const activeSample = [];
+        for (let i = 0; i < activeCoords.length; i += stepActive) {
+          activeSample.push([activeCoords[i][1], activeCoords[i][0]]);
+        }
+
+        let maxScore = -1;
+        const startIdx = Math.floor(latlngs.length * 0.10);
+        const endIdx = Math.floor(latlngs.length * 0.45);
+        const stepAlt = Math.max(1, Math.floor((endIdx - startIdx) / 40));
+
+        for (let i = startIdx; i < endIdx; i += stepAlt) {
+          const pt = latlngs[i];
+          let minDistToActive = Infinity;
+          for (let j = 0; j < activeSample.length; j++) {
+            const dLat = pt[0] - activeSample[j][0];
+            const dLng = pt[1] - activeSample[j][1];
+            const d2 = dLat * dLat + dLng * dLng;
+            if (d2 < minDistToActive) {
+              minDistToActive = d2;
+            }
+          }
+          // Score balances route deviation while preferring mid latitudes for clean layout
+          const score = minDistToActive * (1 + (pt[0] > 46.8 ? 0.4 : 0));
+          if (score > maxScore) {
+            maxScore = score;
+            bestPoint = pt;
+          }
+        }
+      }
+
+      // Smart inward anchor: if the point is in the western half of the route bounds, float east;
+      // if in the eastern half, float west. This guarantees zero edge clipping on mobile screens!
+      let centerLng = 7.5;
+      try {
+        if (map && map.getBounds && map.getBounds().isValid()) {
+          centerLng = map.getBounds().getCenter().lng;
+        }
+      } catch (e) {}
+      const isWest = bestPoint[1] < centerLng;
+      const anchorX = isWest ? -6 : 206;
+
       const altBadgeIcon = L.divIcon({
         className: 'route-midpoint-marker',
         html: `<div class="route-midpoint-pill" title="Cliquer pour choisir cet itinéraire">
           <span class="route-midpoint-tag">Option ${idx + 1}</span>
-          <span>${timeStr} ${diffText ? `<span style="color:#f59e0b">(${diffText})</span>` : ''} • ${distKm} km</span>
+          <span class="route-midpoint-text">${timeStr} ${diffText ? `<span class="pill-diff">(${diffText})</span>` : ''}</span>
         </div>`,
-        iconSize: [180, 28],
-        iconAnchor: [90, 14]
+        iconSize: [200, 32],
+        iconAnchor: [anchorX, 16]
       });
 
-      const altMarker = L.marker(midPoint, { icon: altBadgeIcon }).addTo(map);
+      const altMarker = L.marker(bestPoint, { icon: altBadgeIcon, zIndexOffset: 1200 }).addTo(map);
       altMarker.on('click', onAltClick);
       routeLayers.push(altMarker);
     }
@@ -823,9 +880,9 @@ function drawRoutesOnMap(activeIdx) {
 
     // Outline
     const outline = L.polyline(latlngs, {
-      color: '#0f172a',
-      weight: 9,
-      opacity: 0.85,
+      color: '#090d16',
+      weight: 12,
+      opacity: 0.9,
       lineJoin: 'round'
     }).addTo(map);
     routeLayers.push(outline);
@@ -833,8 +890,8 @@ function drawRoutesOnMap(activeIdx) {
     // Main line (vibrant cyan)
     const mainLine = L.polyline(latlngs, {
       color: '#0284c7',
-      weight: 6,
-      opacity: 0.95,
+      weight: 7.5,
+      opacity: 1.0,
       lineJoin: 'round'
     }).addTo(map);
     routeLayers.push(mainLine);
@@ -843,13 +900,18 @@ function drawRoutesOnMap(activeIdx) {
   }
 }
 
-// Fit map to show the entire route, departure, arrival, and all stations along it
+// Fit map to show the entire route, alternative routes, departure, arrival, and all stations along it
 function fitMapToRouteAndStations() {
   if (!map) return;
 
   const bounds = L.latLngBounds();
 
-  if (activeRouteData && activeRouteData.geometry && activeRouteData.geometry.coordinates) {
+  // Include all routes (active + alternatives) so the whole comparison is visible on screen
+  if (alternativeRoutes && alternativeRoutes.length > 0) {
+    alternativeRoutes.forEach(r => {
+      (r.geometry?.coordinates || []).forEach(c => bounds.extend([c[1], c[0]]));
+    });
+  } else if (activeRouteData && activeRouteData.geometry && activeRouteData.geometry.coordinates) {
     activeRouteData.geometry.coordinates.forEach(c => bounds.extend([c[1], c[0]]));
   } else if (startPoint && startPoint.coords && endPoint && endPoint.coords) {
     bounds.extend([startPoint.coords[1], startPoint.coords[0]]);
@@ -866,8 +928,8 @@ function fitMapToRouteAndStations() {
   if (bounds.isValid()) {
     const isMobile = window.innerWidth <= 1080;
     const paddingOptions = isMobile
-      ? { padding: [30, 30], maxZoom: 15, animate: false }
-      : { padding: [45, 45], maxZoom: 15, animate: false };
+      ? { paddingTopLeft: [45, 25], paddingBottomRight: [25, 115], maxZoom: 15, animate: false }
+      : { padding: [50, 50], maxZoom: 15, animate: false };
 
     map.fitBounds(bounds, paddingOptions);
     if (coveredCountriesLayer) coveredCountriesLayer.bringToBack();
