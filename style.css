@@ -877,8 +877,8 @@ header {
   margin-bottom: 4px;
 }
 
-/* Header View Toggle (Carte / Liste) - Hidden on large desktop */
-.header-view-toggle {
+/* Top Big Nav Switcher - Hidden on large desktop */
+.top-nav-switcher {
   display: none;
 }
 
@@ -890,19 +890,19 @@ header {
 /* Responsive & Mobile Mode Carte / Mode Liste (Tablets & Smartphones) */
 @media (max-width: 1080px) {
   header {
-    padding: 6px 12px;
-    height: 70px;
+    padding: 6px 14px;
+    height: 64px;
     gap: 8px;
   }
 
   .brand-logo-img {
-    width: 54px;
-    height: 54px;
-    border-radius: 14px;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
   }
 
   .brand-title h1 {
-    font-size: 1.18rem;
+    font-size: 1.25rem;
   }
 
   .creator-signature {
@@ -917,53 +917,210 @@ header {
     display: none;
   }
 
-  /* Header View Toggle Button (Visible on mobile/tablet) */
-  .header-view-toggle {
+  /* Big Dedicated Top View Mode Switcher (Carte / Liste) */
+  .top-nav-switcher {
     display: flex;
-    align-items: center;
-    background: rgba(15, 23, 42, 0.75);
-    border: 1.5px solid rgba(255, 255, 255, 0.18);
-    border-radius: 24px;
-    padding: 3px;
-    gap: 4px;
+    background: #1e293b;
+    border-bottom: 2px solid #334155;
+    padding: 8px 12px;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 1001;
   }
 
-  .view-toggle-btn {
-    background: transparent;
-    border: none;
+  .nav-switch-btn {
+    flex: 1;
+    height: 54px;
+    background: #0f172a;
+    border: 1.5px solid #334155;
+    border-radius: 12px;
     color: #94a3b8;
-    padding: 6px 12px;
-    border-radius: 18px;
-    font-size: 0.85rem;
-    font-weight: 700;
+    font-size: 1.15rem;
+    font-weight: 800;
     display: flex;
     align-items: center;
-    gap: 5px;
+    justify-content: center;
+    gap: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
   }
 
-  .view-toggle-btn.active {
+  .nav-switch-btn .switch-icon {
+    font-size: 1.35rem;
+  }
+
+  .nav-switch-btn.active {
     background: linear-gradient(135deg, #0284c7, #0369a1);
     color: #ffffff;
-    box-shadow: 0 2px 10px rgba(2, 132, 199, 0.5);
+    border-color: #38bdf8;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.45);
   }
 
-  .view-toggle-btn .tab-badge {
+  .nav-switch-btn .tab-badge {
     background: #e11d48;
-    color: #fff;
-    font-size: 0.7rem;
-    font-weight: 800;
-    padding: 1px 6px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 900;
+    padding: 2px 8px;
     border-radius: 10px;
-    margin-left: 2px;
   }
 
-  /* Floating Bottom Navigation Bar */
+  /* Boosted typography across Zone 1, 2, 3 on mobile */
+  .section-title {
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+  }
+
+  .address-input {
+    font-size: 1.15rem !important;
+    padding: 14px 14px 14px 44px !important;
+    height: 52px !important;
+    border-radius: 10px !important;
+  }
+
+  .input-icon {
+    font-size: 1.35rem !important;
+    left: 12px !important;
+  }
+
+  .btn-calculate {
+    font-size: 1.15rem !important;
+    padding: 14px 20px !important;
+    height: 52px !important;
+    font-weight: 800 !important;
+  }
+
+  .btn-add-step {
+    font-size: 1.05rem !important;
+    padding: 12px 18px !important;
+    height: 52px !important;
+  }
+
+  .filter-label {
+    font-size: 0.95rem !important;
+    font-weight: 800 !important;
+    margin-bottom: 6px !important;
+  }
+
+  .select-filter {
+    font-size: 1.1rem !important;
+    padding: 12px 14px !important;
+    height: 50px !important;
+    border-radius: 10px !important;
+    font-weight: 700 !important;
+  }
+
+  .stations-count {
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+    color: #38bdf8 !important;
+  }
+
+  .select-sort {
+    font-size: 1.05rem !important;
+    padding: 10px 14px !important;
+    height: 48px !important;
+  }
+
+  /* Station Cards - Large, clear & readable */
+  .station-card {
+    padding: 18px !important;
+    border-radius: 14px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .station-rank {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 0.95rem !important;
+    font-weight: 800 !important;
+  }
+
+  .flag-icon {
+    font-size: 1.3rem !important;
+  }
+
+  .brand-badge {
+    font-size: 0.95rem !important;
+    padding: 5px 12px !important;
+    border-radius: 8px !important;
+  }
+
+  .pk-marker-badge {
+    font-size: 1.05rem !important;
+    padding: 5px 12px !important;
+    border-radius: 8px !important;
+    font-weight: 800 !important;
+  }
+
+  .station-name {
+    font-size: 1.45rem !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    margin: 8px 0 6px 0 !important;
+    line-height: 1.25 !important;
+  }
+
+  .station-details {
+    font-size: 1rem !important;
+    color: #94a3b8 !important;
+    margin-bottom: 12px !important;
+    line-height: 1.4 !important;
+  }
+
+  .distance-countdown {
+    color: #38bdf8 !important;
+    font-weight: 700 !important;
+  }
+
+  .sens-tag {
+    font-size: 0.9rem !important;
+    padding: 3px 8px !important;
+  }
+
+  .prices-single-row {
+    padding: 14px 18px !important;
+    border-radius: 12px !important;
+  }
+
+  .single-fuel-label .fuel-icon {
+    font-size: 1.5rem !important;
+  }
+
+  .single-fuel-label .fuel-name {
+    font-size: 1.25rem !important;
+    font-weight: 800 !important;
+  }
+
+  .price-val-large {
+    font-size: 1.95rem !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.5px !important;
+  }
+
+  .price-val-unavail {
+    font-size: 1.1rem !important;
+    font-weight: 800 !important;
+  }
+
+  .best-price-ribbon {
+    font-size: 0.95rem !important;
+    padding: 5px 14px !important;
+    font-weight: 800 !important;
+  }
+
+  .rupture-badge {
+    font-size: 0.9rem !important;
+    padding: 4px 10px !important;
+    font-weight: 700 !important;
+  }
+
+  /* Big Floating Bottom Navigation Bar */
   .mobile-nav-bar {
     display: flex;
     position: fixed;
-    bottom: 20px;
+    bottom: 24px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2000;
@@ -971,25 +1128,29 @@ header {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 30px;
-    padding: 5px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-    gap: 6px;
+    border-radius: 36px;
+    padding: 6px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.75);
+    gap: 8px;
   }
 
   .mobile-tab-btn {
     background: transparent;
     border: none;
     color: #94a3b8;
-    padding: 10px 20px;
-    border-radius: 24px;
-    font-size: 0.9rem;
-    font-weight: 700;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-size: 1.15rem;
+    font-weight: 800;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
+  }
+
+  .mobile-tab-btn .tab-icon {
+    font-size: 1.35rem;
   }
 
   .mobile-tab-btn.active {
@@ -1001,15 +1162,15 @@ header {
   .tab-badge {
     background: #e11d48;
     color: #fff;
-    font-size: 0.72rem;
-    font-weight: 800;
-    padding: 2px 7px;
+    font-size: 0.85rem;
+    font-weight: 900;
+    padding: 3px 9px;
     border-radius: 12px;
   }
 
   .app-container {
     flex-direction: column;
-    height: calc(100vh - 70px);
+    height: calc(100vh - 128px);
   }
 
   /* Default on mobile: Carte is visible, Sidebar is hidden */
@@ -1030,20 +1191,15 @@ header {
     min-width: 0 !important;
     max-width: 100% !important;
     height: 100% !important;
-    padding-bottom: 90px;
+    padding-bottom: 110px;
   }
 
   body.mobile-view-list .compact-section {
-    padding: 8px 12px;
+    padding: 12px 14px;
   }
 
   body.mobile-view-list .stations-section {
-    padding: 8px 12px;
-  }
-
-  body.mobile-view-list .sidebar-section .section-title {
-    margin-bottom: 6px;
-    font-size: 0.78rem;
+    padding: 12px 14px;
   }
 
   body.mobile-view-list .map-container {
