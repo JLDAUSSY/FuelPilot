@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2.2">
 </head>
 <body>
 
@@ -33,6 +33,16 @@
         <h1>Fuel<span>Pilot</span></h1>
         <div class="creator-signature">JLDApps 2026</div>
       </div>
+    </div>
+
+    <!-- Header View Toggle (Carte / Liste) -->
+    <div class="header-view-toggle" id="header-view-toggle">
+      <button type="button" class="view-toggle-btn active" id="hdr-btn-map" title="Afficher la Carte">
+        <span>🗺️</span> Carte
+      </button>
+      <button type="button" class="view-toggle-btn" id="hdr-btn-list" title="Afficher la Liste des stations">
+        <span>📋</span> Liste <span class="tab-badge" id="hdr-badge-count">0</span>
+      </button>
     </div>
 
     <div class="header-status">
@@ -101,10 +111,10 @@
           <div>
             <label for="select-fuel" class="filter-label">Carburant :</label>
             <select id="select-fuel" class="select-filter" style="width: 100%;">
+              <option value="e10" selected>SP95</option>
               <option value="gazole">Gazole</option>
-              <option value="e10" selected>SP95-E10</option>
               <option value="sp98">SP98</option>
-              <option value="sp95">SP95</option>
+              <option value="sp95">SP95 (Pur)</option>
               <option value="e85">E85</option>
               <option value="gplc">GPLc</option>
               <option value="all">Tous les carburants</option>
@@ -166,6 +176,6 @@
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=2.2"></script>
 </body>
 </html>

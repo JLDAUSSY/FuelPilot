@@ -10,21 +10,37 @@ let alternativeRoutes = [];
 let currentWaypoints = []; // [{ id, text, coords: [lon, lat] }]
 let startPoint = null;
 let endPoint = null;
-let selectedFuel = 'gazole';
+let selectedFuel = 'e10'; // Default to SP95
 let selectedBrand = 'all';
 let currentSort = 'route'; // 'route', 'price', 'dist'
 let maxDistanceKm = 0.45; // 450m tolerance for highway service areas
+
+// Helper to safely get fuel price with SP95/E10 equivalence
+function getFuelPrice(prixObj, fuel) {
+  if (!prixObj) return null;
+  if (fuel === 'e10') {
+    return (prixObj.e10 && prixObj.e10 > 0) ? prixObj.e10 : ((prixObj.sp95 && prixObj.sp95 > 0) ? prixObj.sp95 : null);
+  }
+  if (fuel === 'sp95') {
+    return (prixObj.sp95 && prixObj.sp95 > 0) ? prixObj.sp95 : ((prixObj.e10 && prixObj.e10 > 0) ? prixObj.e10 : null);
+  }
+  return prixObj[fuel] || null;
+}
 
 // Global Mobile View Switcher
 function setMobileView(view) {
   const btnMap = document.getElementById('btn-tab-map');
   const btnList = document.getElementById('btn-tab-list');
+  const hdrBtnMap = document.getElementById('hdr-btn-map');
+  const hdrBtnList = document.getElementById('hdr-btn-list');
 
   if (view === 'map') {
     document.body.classList.remove('mobile-view-list');
     document.body.classList.add('mobile-view-map');
     if (btnMap) btnMap.classList.add('active');
     if (btnList) btnList.classList.remove('active');
+    if (hdrBtnMap) hdrBtnMap.classList.add('active');
+    if (hdrBtnList) hdrBtnList.classList.remove('active');
     setTimeout(() => {
       if (map) map.invalidateSize();
     }, 150);
@@ -33,14 +49,16 @@ function setMobileView(view) {
     document.body.classList.add('mobile-view-list');
     if (btnList) btnList.classList.add('active');
     if (btnMap) btnMap.classList.remove('active');
+    if (hdrBtnList) hdrBtnList.classList.add('active');
+    if (hdrBtnMap) hdrBtnMap.classList.remove('active');
   }
 }
 
 const FUEL_LABELS = {
+  e10: 'SP95',
   gazole: 'Gazole',
-  e10: 'SP95-E10',
   sp98: 'SP98',
-  sp95: 'SP95',
+  sp95: 'SP95 (Pur)',
   e85: 'E85',
   gplc: 'GPLc'
 };
@@ -228,12 +246,16 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
 
 // Event Listeners for Filters and Controls
 function setupEventListeners() {
-  // Mobile tab buttons
+  // Mobile tab buttons (floating bar & header toggle)
   document.body.classList.add('mobile-view-map');
   const btnMap = document.getElementById('btn-tab-map');
   const btnList = document.getElementById('btn-tab-list');
+  const hdrBtnMap = document.getElementById('hdr-btn-map');
+  const hdrBtnList = document.getElementById('hdr-btn-list');
   if (btnMap) btnMap.addEventListener('click', () => setMobileView('map'));
   if (btnList) btnList.addEventListener('click', () => setMobileView('list'));
+  if (hdrBtnMap) hdrBtnMap.addEventListener('click', () => setMobileView('map'));
+  if (hdrBtnList) hdrBtnList.addEventListener('click', () => setMobileView('list'));
 
   // Fuel selector dropdown
   const fuelSelect = document.getElementById('select-fuel');
@@ -596,7 +618,7 @@ function renderCurrentRouteStations() {
   let lowestPrice = 999;
   if (selectedFuel !== 'all') {
     filtered.forEach(s => {
-      const p = s.prix ? s.prix[selectedFuel] : null;
+      const p = getFuelPrice(s.prix, selectedFuel);
       if (p && p < lowestPrice) lowestPrice = p;
     });
   }
@@ -606,8 +628,8 @@ function renderCurrentRouteStations() {
     filtered.sort((a, b) => a.distOnRoute - b.distOnRoute);
   } else if (currentSort === 'price') {
     filtered.sort((a, b) => {
-      const pa = a.prix ? (a.prix[selectedFuel] || 999) : 999;
-      const pb = b.prix ? (b.prix[selectedFuel] || 999) : 999;
+      const pa = getFuelPrice(a.prix, selectedFuel) || 999;
+      const pb = getFuelPrice(b.prix, selectedFuel) || 999;
       return pa - pb;
     });
   } else if (currentSort === 'dist') {
@@ -623,6 +645,10 @@ function renderCurrentRouteStations() {
   const mobileBadge = document.getElementById('mobile-badge-count');
   if (mobileBadge) {
     mobileBadge.textContent = filtered.length;
+  }
+  const hdrBadge = document.getElementById('hdr-badge-count');
+  if (hdrBadge) {
+    hdrBadge.textContent = filtered.length;
   }
 
   const listContainer = document.getElementById('stations-list');
@@ -641,7 +667,7 @@ function renderCurrentRouteStations() {
 
   // Render cards and map markers
   filtered.forEach((st, idx) => {
-    const fuelPrice = st.prix ? st.prix[selectedFuel] : null;
+    const fuelPrice = (selectedFuel !== 'all') ? getFuelPrice(st.prix, selectedFuel) : (st.prix ? Object.values(st.prix)[0] : null);
     const isCheapest = fuelPrice && fuelPrice === lowestPrice;
     const brandClass = getBrandClass(st.enseigne);
 
@@ -743,9 +769,9 @@ function renderCardPrices(prices, featuredFuel, isCheapest) {
     `;
   }
 
-  // When a specific fuel is filtered (default behavior: gazole, e10, sp98, etc.)
+  // When a specific fuel is filtered (default behavior: e10/sp95, gazole, sp98, etc.)
   if (featuredFuel && featuredFuel !== 'all') {
-    const p = prices[featuredFuel];
+    const p = getFuelPrice(prices, featuredFuel);
     const fuelName = FUEL_LABELS[featuredFuel] || featuredFuel.toUpperCase();
 
     if (p && p > 0) {
@@ -796,7 +822,7 @@ function renderCardPrices(prices, featuredFuel, isCheapest) {
 function renderPopupPrices(prices, featuredFuel) {
   if (!prices) return '<span>Aucun prix disponible</span>';
   if (featuredFuel && featuredFuel !== 'all') {
-    const p = prices[featuredFuel];
+    const p = getFuelPrice(prices, featuredFuel);
     const fuelName = FUEL_LABELS[featuredFuel] || featuredFuel.toUpperCase();
     if (p && p > 0) {
       return `
