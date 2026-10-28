@@ -38,7 +38,13 @@ function setMobileView(view) {
     if (btnMap) btnMap.classList.add('active');
     if (btnList) btnList.classList.remove('active');
     setTimeout(() => {
-      if (map) map.invalidateSize();
+      if (map) {
+        map.invalidateSize();
+        // If no station popup is actively open, re-fit to show the entire route & stations
+        if (!map._popup || !map._popup.isOpen()) {
+          fitMapToRouteAndStations();
+        }
+      }
     }, 150);
   } else {
     document.body.classList.remove('mobile-view-map');
@@ -322,12 +328,18 @@ function setupEventListeners() {
 
 // Helper to set preset route
 function applyPreset(startLabel, startCoords, endLabel, endCoords) {
-  document.getElementById('input-start').value = startLabel;
+  const inStart = document.getElementById('input-depart') || document.getElementById('input-start');
+  if (inStart) inStart.value = startLabel;
   startPoint = { coords: startCoords, label: startLabel };
-  document.getElementById('input-end').value = endLabel;
+
+  const inEnd = document.getElementById('input-arrivee') || document.getElementById('input-end');
+  if (inEnd) inEnd.value = endLabel;
   endPoint = { coords: endCoords, label: endLabel };
+
   currentWaypoints = [];
-  document.getElementById('waypoints-container').innerHTML = '';
+  const wpContainer = document.getElementById('waypoints-container');
+  if (wpContainer) wpContainer.innerHTML = '';
+
   calculateItinerary();
 }
 
@@ -413,6 +425,8 @@ async function calculateItinerary() {
       document.body.classList.add('mobile-route-collapsed');
       const btnToggle = document.getElementById('btn-toggle-route-edit');
       if (btnToggle) btnToggle.innerHTML = '<span>✏️</span> Modifier';
+      // Switch to map view to display full route overview and stations
+      setMobileView('map');
     }
   } catch (err) {
     console.error("Erreur calcul d'itinéraire:", err);
@@ -519,7 +533,37 @@ function drawRoutesOnMap(activeIdx) {
     }).addTo(map);
     routeLayers.push(mainLine);
 
-    map.fitBounds(mainLine.getBounds(), { padding: [40, 40] });
+    fitMapToRouteAndStations();
+  }
+}
+
+// Fit map to show the entire route, departure, arrival, and all stations along it
+function fitMapToRouteAndStations() {
+  if (!map) return;
+
+  const bounds = L.latLngBounds();
+
+  if (activeRouteData && activeRouteData.geometry && activeRouteData.geometry.coordinates) {
+    activeRouteData.geometry.coordinates.forEach(c => bounds.extend([c[1], c[0]]));
+  } else if (startPoint && startPoint.coords && endPoint && endPoint.coords) {
+    bounds.extend([startPoint.coords[1], startPoint.coords[0]]);
+    bounds.extend([endPoint.coords[1], endPoint.coords[0]]);
+  }
+
+  // Also include all station coordinates
+  if (currentRouteStations && currentRouteStations.length > 0) {
+    currentRouteStations.forEach(st => {
+      if (st.lat && st.lon) bounds.extend([st.lat, st.lon]);
+    });
+  }
+
+  if (bounds.isValid()) {
+    const isMobile = window.innerWidth <= 1080;
+    const paddingOptions = isMobile
+      ? { padding: [30, 30], maxZoom: 15, animate: false }
+      : { padding: [45, 45], maxZoom: 15, animate: false };
+
+    map.fitBounds(bounds, paddingOptions);
   }
 }
 
@@ -534,14 +578,14 @@ function getDistanceKm(lat1, lon1, lat2, lon2) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
-// Project a point onto a line segment and return distance & projected progress
+// Project a point onto a line segment and return distance, progress t, and signed cross product
 function distPointToSegment(px, py, x1, y1, x2, y2) {
   const dx = x2 - x1;
   const dy = y2 - y1;
   const lenSq = dx * dx + dy * dy;
 
   if (lenSq === 0) {
-    return { dist: getDistanceKm(py, px, y1, x1), t: 0 };
+    return { dist: getDistanceKm(py, px, y1, x1), t: 0, cross: 0 };
   }
 
   let t = ((px - x1) * dx + (py - y1) * dy) / lenSq;
@@ -550,8 +594,12 @@ function distPointToSegment(px, py, x1, y1, x2, y2) {
   const projX = x1 + t * dx;
   const projY = y1 + t * dy;
   const dist = getDistanceKm(py, px, projY, projX);
+  // Signed 2D cross product: dx*(py - y1) - dy*(px - x1)
+  // cross < 0 -> Station is on the RIGHT side (driver's lane in France/Spain)
+  // cross > 0 -> Station is on the LEFT side (opposing highway carriageway / sens inverse)
+  const cross = dx * (py - y1) - dy * (px - x1);
 
-  return { dist, t };
+  return { dist, t, cross };
 }
 
 // Find all highway stations along the route, ordered chronologically
@@ -591,6 +639,7 @@ function processStationsOnRoute(route) {
     // Find nearest point on route polyline
     let minDist = 99999;
     let bestKmOnRoute = 0;
+    let bestCross = 0;
 
     for (let i = 0; i < coords.length - 1; i++) {
       const p1 = coords[i];
@@ -600,11 +649,24 @@ function processStationsOnRoute(route) {
         minDist = res.dist;
         const segLen = cumDist[i+1] - cumDist[i];
         bestKmOnRoute = cumDist[i] + res.t * segLen;
+        bestCross = res.cross;
       }
     }
 
     if (minDist <= maxDistanceKm) {
-      // Station is along this highway route!
+      // Directional check: in France/Spain, vehicles drive on the right.
+      // Highway stations accessible in the direction of travel are on the RIGHT (bestCross < 0).
+      // Stations on the opposite carriageway (bestCross >= 0) are excluded,
+      // unless explicitly marked as bidirectional ("Double sens").
+      const isDoubleSens = s.sens && s.sens.toLowerCase().includes('double');
+      const isRightSide = bestCross < 0;
+
+      if (!isRightSide && !isDoubleSens) {
+        // Exclude twin station on opposing carriageway
+        return;
+      }
+
+      // Station is along this highway route in the driver's direction of travel!
       // Compute highway Point Kilométrique (PK)
       let displayedPk = s.pk_text;
       if (!displayedPk) {
@@ -623,6 +685,7 @@ function processStationsOnRoute(route) {
 
   currentRouteStations = matched;
   renderCurrentRouteStations();
+  fitMapToRouteAndStations();
 }
 
 // Render stations in sidebar and on map
@@ -1055,3 +1118,10 @@ function getBrandLogoSvg(brand) {
     <text x="50" y="76" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="14" fill="#38bdf8" text-anchor="middle">${initial}</text>
   </svg>`;
 }
+
+// Global window bindings for navigation and testing
+window.applyPreset = applyPreset;
+window.calculateItinerary = calculateItinerary;
+window.setMobileView = setMobileView;
+window.fitMapToRouteAndStations = fitMapToRouteAndStations;
+window.getCurrentRouteStations = () => currentRouteStations;
