@@ -619,78 +619,202 @@ async function calculateItinerary() {
   }
 }
 
-// Render Alternative Route Cards (like Waze)
+// Extract human-readable summary of highways and regions from OSRM steps
+function getSmartRouteSummary(route) {
+  const highways = [];
+  const seen = new Set();
+  const legs = route.legs || [];
+
+  legs.forEach(leg => {
+    (leg.steps || []).forEach(step => {
+      const ref = (step.ref || '').trim();
+      const name = (step.name || '').trim();
+      if (ref) {
+        const cleanRef = ref.split(';')[0].replace(/\s+/g, '').toUpperCase();
+        if (!seen.has(cleanRef) && /^(A\d+|T\d+|AP\d+|SS\d+)/i.test(cleanRef)) {
+          highways.push(cleanRef);
+          seen.add(cleanRef);
+        }
+      } else if (name && !ref && /autoroute|autostrada/i.test(name) && !seen.has(name)) {
+        const shortName = name.split('-')[0].trim();
+        highways.push(shortName);
+        seen.add(name);
+      }
+    });
+  });
+
+  const coords = route.geometry?.coordinates || [];
+  const isSwiss = coords.some(c => c[0] >= 7.5 && c[0] <= 9.0 && c[1] >= 46.0 && c[1] <= 47.5);
+  const isChamonix = coords.some(c => c[0] >= 6.0 && c[0] <= 7.2 && c[1] >= 45.8 && c[1] <= 46.2);
+
+  const hwStr = highways.slice(0, 2).join(', ');
+  const viaCountry = isSwiss ? 'Suisse (Gothard)' : (isChamonix ? 'France (Mont-Blanc)' : '');
+  const parts = [hwStr, viaCountry].filter(Boolean);
+  return parts.length > 0 ? 'via ' + parts.join(' • ') : (route.legs?.[0]?.summary ? 'via ' + route.legs[0].summary : 'Itinéraire direct');
+}
+
+// Render Alternative Route Selectors (both in sidebar/list & floating on the map)
 function renderRouteAlternatives() {
   const container = document.getElementById('routes-container');
+  const mapBar = document.getElementById('map-routes-bar');
+
   if (alternativeRoutes.length <= 1) {
-    container.style.display = 'none';
+    if (container) container.style.display = 'none';
+    if (mapBar) mapBar.style.display = 'none';
     return;
   }
 
-  container.style.display = 'flex';
-  container.innerHTML = '';
+  // 1. Sidebar Container (Mode Liste)
+  if (container) {
+    container.style.display = 'flex';
+    container.innerHTML = '';
+  }
+
+  // 2. Floating Map Bar (Mode Carte)
+  if (mapBar) {
+    mapBar.style.display = 'flex';
+    mapBar.innerHTML = '';
+  }
+
+  const baseDuration = alternativeRoutes[0]?.duration || 0;
 
   alternativeRoutes.forEach((route, idx) => {
     const distKm = (route.distance / 1000).toFixed(0);
     const hours = Math.floor(route.duration / 3600);
     const mins = Math.round((route.duration % 3600) / 60);
     const timeStr = hours > 0 ? `${hours}h ${mins}min` : `${mins} min`;
-    const summary = route.legs.map(l => l.summary).filter(Boolean).join(', ') || `Option ${idx + 1}`;
+    const summary = getSmartRouteSummary(route);
 
-    const card = document.createElement('div');
-    card.className = `route-card ${idx === 0 ? 'active' : ''}`;
-    card.innerHTML = `
-      <div class="route-card-header">
-        <span class="route-badge">${idx === 0 ? 'Recommandé' : 'Alternative ' + (idx + 1)}</span>
-        <span class="route-stats">${timeStr} • ${distKm} km</span>
-      </div>
-      <div class="route-desc">${summary}</div>
-    `;
+    const diffMins = Math.round((route.duration - baseDuration) / 60);
+    const diffStr = idx > 0 && diffMins > 0 ? `+${diffMins} min` : (idx > 0 && diffMins < 0 ? `${diffMins} min` : '');
 
-    card.addEventListener('click', () => {
-      document.querySelectorAll('.route-card').forEach(c => c.classList.remove('active'));
-      card.classList.add('active');
-      selectRoute(idx);
-    });
+    // A. Card in Sidebar
+    if (container) {
+      const card = document.createElement('div');
+      card.className = `route-card ${idx === 0 ? 'active' : ''}`;
+      card.id = `route-card-${idx}`;
+      card.innerHTML = `
+        <div class="route-card-header">
+          <span class="route-badge">${idx === 0 ? 'Recommandé' : 'Option ' + (idx + 1)}</span>
+          <span class="route-stats">${timeStr} ${diffStr ? `<span class="time-diff">(${diffStr})</span>` : ''} • ${distKm} km</span>
+        </div>
+        <div class="route-desc">${summary}</div>
+      `;
+      card.addEventListener('click', () => selectRoute(idx));
+      container.appendChild(card);
+    }
 
-    container.appendChild(card);
+    // B. Floating Button on Map
+    if (mapBar) {
+      const btn = document.createElement('div');
+      btn.className = `map-route-btn ${idx === 0 ? 'active' : ''}`;
+      btn.id = `map-route-btn-${idx}`;
+      btn.innerHTML = `
+        <div class="map-route-btn-header">
+          <span class="map-route-badge">${idx === 0 ? 'Recommandé' : 'Option ' + (idx + 1)}</span>
+          <span class="map-route-time">${timeStr} ${diffStr ? `<span class="map-route-time-diff">${diffStr}</span>` : ''}</span>
+        </div>
+        <div class="map-route-meta">${distKm} km • ${summary}</div>
+      `;
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        selectRoute(idx);
+      });
+      mapBar.appendChild(btn);
+    }
   });
 }
 
 // Select an active route and compute stations along it
 function selectRoute(routeIndex) {
   activeRouteData = alternativeRoutes[routeIndex];
+
+  // Update active state in sidebar cards and map floating pills
+  document.querySelectorAll('.route-card').forEach((c, idx) => {
+    c.classList.toggle('active', idx === routeIndex);
+  });
+  document.querySelectorAll('.map-route-btn').forEach((b, idx) => {
+    b.classList.toggle('active', idx === routeIndex);
+  });
+
+  // Redraw map with prominent contrast for active vs alternative routes
   drawRoutesOnMap(routeIndex);
+
+  // Re-match stations along the selected route
   processStationsOnRoute(activeRouteData);
+
+  // Update summary bar metadata
+  const metaLbl = document.getElementById('sum-route-meta');
+  if (metaLbl && activeRouteData) {
+    const dist = (activeRouteData.distance / 1000).toFixed(0);
+    metaLbl.textContent = `• ${dist} km`;
+  }
 }
 
-// Draw the routes on Leaflet (active in vibrant cyan, alternatives in semi-transparent)
+// Draw the routes on Leaflet (active in vibrant cyan, alternatives in distinct purple-violet with clickable midpoint badges)
 function drawRoutesOnMap(activeIdx) {
-  // Clear old route polylines
+  // Clear old route polylines and markers
   routeLayers.forEach(l => map.removeLayer(l));
   routeLayers = [];
 
-  // Draw alternative routes first (behind)
+  // Draw alternative routes first (behind active route)
   alternativeRoutes.forEach((route, idx) => {
     if (idx === activeIdx) return;
     const latlngs = route.geometry.coordinates.map(c => [c[1], c[0]]);
 
-    const polyline = L.polyline(latlngs, {
-      color: '#64748b',
-      weight: 5,
-      opacity: 0.6,
-      dashArray: '6, 8',
+    // 1. Dark outline for contrast
+    const altOutline = L.polyline(latlngs, {
+      color: '#0f172a',
+      weight: 9,
+      opacity: 0.75,
       lineJoin: 'round'
     }).addTo(map);
 
-    polyline.on('click', () => {
-      selectRoute(idx);
-      document.querySelectorAll('.route-card').forEach((c, ci) => {
-        c.classList.toggle('active', ci === idx);
-      });
-    });
+    // 2. High-contrast vibrant purple-violet polyline
+    const altPolyline = L.polyline(latlngs, {
+      color: '#8b5cf6',
+      weight: 5.5,
+      opacity: 0.9,
+      lineJoin: 'round'
+    }).addTo(map);
 
-    routeLayers.push(polyline);
+    const onAltClick = () => {
+      selectRoute(idx);
+    };
+
+    altOutline.on('click', onAltClick);
+    altPolyline.on('click', onAltClick);
+
+    routeLayers.push(altOutline);
+    routeLayers.push(altPolyline);
+
+    // 3. Interactive Midpoint Marker Pill on the alternative route
+    if (latlngs.length > 6) {
+      const midIdx = Math.floor(latlngs.length / 2);
+      const midPoint = latlngs[midIdx];
+      const hours = Math.floor(route.duration / 3600);
+      const mins = Math.round((route.duration % 3600) / 60);
+      const timeStr = hours > 0 ? `${hours}h ${mins}min` : `${mins} min`;
+      const distKm = (route.distance / 1000).toFixed(0);
+
+      const diffSec = route.duration - (alternativeRoutes[activeIdx]?.duration || 0);
+      const diffMins = Math.round(diffSec / 60);
+      const diffText = diffMins > 0 ? `+${diffMins} min` : (diffMins < 0 ? `${diffMins} min` : '');
+
+      const altBadgeIcon = L.divIcon({
+        className: 'route-midpoint-marker',
+        html: `<div class="route-midpoint-pill" title="Cliquer pour choisir cet itinéraire">
+          <span class="route-midpoint-tag">Option ${idx + 1}</span>
+          <span>${timeStr} ${diffText ? `<span style="color:#f59e0b">(${diffText})</span>` : ''} • ${distKm} km</span>
+        </div>`,
+        iconSize: [180, 28],
+        iconAnchor: [90, 14]
+      });
+
+      const altMarker = L.marker(midPoint, { icon: altBadgeIcon }).addTo(map);
+      altMarker.on('click', onAltClick);
+      routeLayers.push(altMarker);
+    }
   });
 
   // Draw active route with high-contrast outline (like Waze)
@@ -700,16 +824,16 @@ function drawRoutesOnMap(activeIdx) {
     // Outline
     const outline = L.polyline(latlngs, {
       color: '#0f172a',
-      weight: 8,
-      opacity: 0.8,
+      weight: 9,
+      opacity: 0.85,
       lineJoin: 'round'
     }).addTo(map);
     routeLayers.push(outline);
 
-    // Main line
+    // Main line (vibrant cyan)
     const mainLine = L.polyline(latlngs, {
       color: '#0284c7',
-      weight: 5,
+      weight: 6,
       opacity: 0.95,
       lineJoin: 'round'
     }).addTo(map);
