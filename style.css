@@ -574,8 +574,16 @@ header {
 .card-top {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 8px;
+  align-items: center;
+  margin-bottom: 6px;
+  gap: 8px;
+}
+
+.card-top-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
 }
 
 .station-rank {
@@ -638,19 +646,6 @@ header {
   border: 1px solid #cbd5e1;
 }
 
-.card-mid-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin: 3px 0 6px 0;
-}
-
-.station-name-col {
-  flex: 1;
-  min-width: 0;
-}
-
 .station-name {
   font-size: 0.95rem;
   font-weight: 700;
@@ -659,14 +654,10 @@ header {
   line-height: 1.25;
 }
 
-.station-name-col .station-details {
-  margin-bottom: 0;
-}
-
 .station-details {
   font-size: 0.78rem;
   color: var(--text-muted);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   display: flex;
   gap: 8px;
   align-items: center;
@@ -675,13 +666,13 @@ header {
 
 .station-logo-badge {
   flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  background: var(--bg-secondary);
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1169,9 +1160,9 @@ header {
   }
 
   .station-logo-badge {
-    width: 42px !important;
-    height: 42px !important;
-    border-radius: 9px !important;
+    width: 24px !important;
+    height: 24px !important;
+    border-radius: 5px !important;
   }
 
   .station-details {

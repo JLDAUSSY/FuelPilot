@@ -740,23 +740,21 @@ function renderCurrentRouteStations() {
           <span class="flag-icon">${flag}</span>
           <span class="brand-badge ${brandClass}">${st.enseigne}</span>
         </div>
-        <span class="pk-marker-badge">
-          🛣️ ${st.autoroute || 'Autoroute'} • Borne km ${st.displayedPk}
-        </span>
+        <div class="card-top-right">
+          <div class="station-logo-badge" title="${st.enseigne}">
+            ${getBrandLogoSvg(st.enseigne)}
+          </div>
+          <span class="pk-marker-badge">
+            🛣️ ${st.autoroute || 'Autoroute'} • Borne km ${st.displayedPk}
+          </span>
+        </div>
       </div>
 
-      <div class="card-mid-row">
-        <div class="station-name-col">
-          <div class="station-name">${st.nom}</div>
-          <div class="station-details">
-            <span class="distance-countdown">⏱️ À ${st.distOnRoute.toFixed(1)} km du départ</span>
-            ${st.sens ? `<span class="sens-tag">${st.sens}</span>` : ''}
-            <span>• ${st.ville}</span>
-          </div>
-        </div>
-        <div class="station-logo-badge" title="${st.enseigne}">
-          ${getBrandLogoSvg(st.enseigne)}
-        </div>
+      <div class="station-name">${st.nom}</div>
+      <div class="station-details">
+        <span class="distance-countdown">⏱️ À ${st.distOnRoute.toFixed(1)} km du départ</span>
+        ${st.sens ? `<span class="sens-tag">${st.sens}</span>` : ''}
+        <span>• ${st.ville}</span>
       </div>
 
       <div class="prices-container">
@@ -901,20 +899,22 @@ function getBrandLogoSvg(brand) {
 
   // TotalEnergies
   if (b.includes('total')) {
-    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="100" rx="18" fill="#ffffff"/>
+    return `<svg viewBox="40 -85 480 480" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect x="40" y="-85" width="480" height="480" rx="90" fill="#ffffff"/>
       <defs>
-        <linearGradient id="teGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#ef4444"/>
-          <stop offset="30%" stop-color="#f97316"/>
-          <stop offset="60%" stop-color="#eab308"/>
-          <stop offset="85%" stop-color="#10b981"/>
-          <stop offset="100%" stop-color="#0284c7"/>
-        </linearGradient>
+        <linearGradient id="teGrad1" x1="130.8" y1="29.7" x2="245" y2="153.7" gradientUnits="userSpaceOnUse"><stop style="stop-color:#0186f5" offset="0"/><stop style="stop-color:#35c2b0" offset="0.3"/><stop style="stop-color:#aad825" offset="0.67"/><stop style="stop-color:#fed700" offset="1"/></linearGradient>
+        <linearGradient id="teGrad2" x1="133.8" y1="10.3" x2="260" y2="12.7" gradientUnits="userSpaceOnUse"><stop style="stop-color:#0186f5" offset="0"/><stop style="stop-color:#3156fd" offset="1"/></linearGradient>
+        <linearGradient id="teGrad3" x1="266.8" y1="57.7" x2="278.5" y2="34.8" gradientUnits="userSpaceOnUse"><stop style="stop-color:#8434d5" offset="0"/><stop style="stop-color:#3156fd" offset="1"/></linearGradient>
+        <linearGradient id="teGrad4" x1="253.9" y1="70.5" x2="157.1" y2="75.1" gradientUnits="userSpaceOnUse"><stop style="stop-color:#8434d5" offset="0"/><stop style="stop-color:#fe0201" offset="1"/></linearGradient>
+        <linearGradient id="teGrad5" x1="37" y1="162.2" x2="38" y2="84.3" gradientUnits="userSpaceOnUse"><stop style="stop-color:#ff7f00" offset="0"/><stop style="stop-color:#fe0201" offset="1"/></linearGradient>
       </defs>
-      <circle cx="50" cy="44" r="26" fill="none" stroke="url(#teGrad)" stroke-width="11" stroke-dasharray="140 25" stroke-linecap="round"/>
-      <path d="M50 20 L50 68 M36 32 L64 32" stroke="#ef4444" stroke-width="7" stroke-linecap="round"/>
-      <text x="50" y="88" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="11" fill="#0f172a" text-anchor="middle" letter-spacing="0.5">TOTAL</text>
+      <g transform="translate(179.4, 96.4)">
+        <path style="fill:url(#teGrad1);stroke:none;" d="M 124.96,-5.78 C 111.3,5.1 98.2,19.5 90.6,35.28 74.98,67.68 83.64,97.47 90.34,116.8 c 9.12,26.32 27.58,39.61 49.6,49.31 31.38,13.84 70.83,14.77 106.64,5.52 12.63,-3.26 32.23,-10.04 36.51,-16.36 4.63,-6.85 5.36,-20.1 -4.59,-25.91 -9.71,-5.67 -10.65,-1.34 -39.56,5.08 -20.12,4.47 -42.09,5.24 -68.47,-6.15 -26.65,-11.58 -37.91,-22.61 -41.76,-37.68 -11.03,-43.22 12.81,-59.25 17.46,-62.18 Z" />
+        <path style="fill:url(#teGrad5);stroke:none;" d="M 157.84,45.11 C 145.42,43.46 108.98,39.6 70.85,32.83 11.84,22.37 -57.53,7.85 -79.67,6.3 c -42.62,-2.98 -49.73,52.39 -15.7,61.86 19.27,5.36 72.3,-0.27 85.18,25.18 3.93,7.75 14.32,36.98 26.08,73.17 4.61,14.19 42.12,11.96 35.15,-18.27 -4.09,-17.27 -13.16,-63.9 -13.16,-63.9 0,0 107.59,11.41 116.35,12.17 z" />
+        <path style="fill:url(#teGrad2);stroke:none;" d="m 214.5,16.63 c 13.66,0.36 37.44,3.87 48.14,11.03 l 59.71,11.77 c 0.57,-33.14 -17.61,-50.97 -37.97,-61.25 -15.46,-7.8 -37.15,-14.16 -69.69,-12.77 -31.12,1.33 -63.84,8.15 -89.94,28.94 l 31.19,38.68 c 14.72,-9.27 33.21,-17.07 58.56,-16.4 z" />
+        <path style="fill:url(#teGrad3);stroke:none;" d="m 261.69,27.06 c 0,0 3.15,2.01 4.51,3.26 6.5,5.94 8.66,13.04 -11.07,16.3 l 15.6,48.25 c 35.5,-9.51 51.17,-30.46 51.61,-56.04 z" />
+        <path style="fill:url(#teGrad4);stroke:none;" d="m 255.72,46.54 c -17.49,2.89 -51.4,4.76 -98.14,-1.43 l -3.52,51.4 c 75.92,6.57 102.61,2.09 117.26,-1.84 z" />
+      </g>
     </svg>`;
   }
 
