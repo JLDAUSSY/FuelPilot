@@ -66,22 +66,36 @@ const FUEL_LABELS = {
 // Initialize Application
 document.addEventListener('DOMContentLoaded', async () => {
   initMap();
+
+  const startInput = document.getElementById('input-start');
+  const endInput = document.getElementById('input-end');
+
   setupAutocomplete('input-start', 'dropdown-start', (coords, label) => {
     startPoint = { coords, label };
+    if (startInput) startInput.classList.remove('input-attention-pulse');
   });
   setupAutocomplete('input-end', 'dropdown-end', (coords, label) => {
     endPoint = { coords, label };
+    if (endInput) endInput.classList.remove('input-attention-pulse');
   });
+
+  if (startInput) {
+    startInput.addEventListener('input', () => {
+      if (startInput.value.trim().length > 0) {
+        startInput.classList.remove('input-attention-pulse');
+      }
+    });
+  }
+  if (endInput) {
+    endInput.addEventListener('input', () => {
+      if (endInput.value.trim().length > 0) {
+        endInput.classList.remove('input-attention-pulse');
+      }
+    });
+  }
 
   setupEventListeners();
   await loadStationsData();
-
-  // Load a default preset (Paris -> Lyon) only if inputs are empty
-  const startInput = document.getElementById('input-start');
-  const endInput = document.getElementById('input-end');
-  if (startInput && endInput && !startInput.value && !endInput.value) {
-    applyPreset('Paris', [2.3522, 48.8566], 'Lyon', [4.8357, 45.7640]);
-  }
 });
 
 // Initialize Leaflet Map
@@ -248,7 +262,7 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
 function setupEventListeners() {
   // Mobile tab buttons (floating bar)
   const urlParams = new URLSearchParams(window.location.search);
-  const initialView = urlParams.get('view') === 'list' ? 'list' : 'map';
+  const initialView = urlParams.get('view') === 'map' ? 'map' : 'list';
   setMobileView(initialView);
   const btnMap = document.getElementById('btn-tab-map');
   const btnList = document.getElementById('btn-tab-list');
@@ -276,6 +290,7 @@ function setupEventListeners() {
     fuelSelect.value = selectedFuel;
     fuelSelect.addEventListener('change', (e) => {
       selectedFuel = e.target.value;
+      fuelSelect.classList.remove('input-attention-pulse');
       renderCurrentRouteStations();
     });
   }
@@ -286,7 +301,10 @@ function setupEventListeners() {
       document.querySelectorAll('.fuel-pill').forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
       selectedFuel = pill.dataset.fuel;
-      if (fuelSelect) fuelSelect.value = selectedFuel;
+      if (fuelSelect) {
+        fuelSelect.value = selectedFuel;
+        fuelSelect.classList.remove('input-attention-pulse');
+      }
       renderCurrentRouteStations();
     });
   });
@@ -305,6 +323,8 @@ function setupEventListeners() {
 
   // Calculate button
   document.getElementById('btn-calculate').addEventListener('click', () => {
+    const fuelSel = document.getElementById('select-fuel');
+    if (fuelSel) fuelSel.classList.remove('input-attention-pulse');
     calculateItinerary();
   });
 
@@ -329,12 +349,21 @@ function setupEventListeners() {
 // Helper to set preset route
 function applyPreset(startLabel, startCoords, endLabel, endCoords) {
   const inStart = document.getElementById('input-depart') || document.getElementById('input-start');
-  if (inStart) inStart.value = startLabel;
+  if (inStart) {
+    inStart.value = startLabel;
+    inStart.classList.remove('input-attention-pulse');
+  }
   startPoint = { coords: startCoords, label: startLabel };
 
   const inEnd = document.getElementById('input-arrivee') || document.getElementById('input-end');
-  if (inEnd) inEnd.value = endLabel;
+  if (inEnd) {
+    inEnd.value = endLabel;
+    inEnd.classList.remove('input-attention-pulse');
+  }
   endPoint = { coords: endCoords, label: endLabel };
+
+  const fuelSel = document.getElementById('select-fuel');
+  if (fuelSel) fuelSel.classList.remove('input-attention-pulse');
 
   currentWaypoints = [];
   const wpContainer = document.getElementById('waypoints-container');
