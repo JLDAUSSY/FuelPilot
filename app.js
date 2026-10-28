@@ -39,15 +39,18 @@ function formatProperName(text) {
 
   const lowerWords = new Set([
     'de', 'du', 'des', 'en', 'sur', 'sous', 'et', 'au', 'aux', 'a', 'à', 'par', 'vers',
-    'la', 'le', 'les', 'del', 'los', 'las', 'd', 'l', 'y'
+    'la', 'le', 'les', 'del', 'los', 'las', 'd', 'l', 'y',
+    'di', 'della', 'delle', 'dei', 'degli', 'al', 'alla', 'alle', 'ai', 'agli',
+    'sul', 'sulla', 'sulle', 'sui', 'sugli', 'da', 'in', 'con', 'per', 'tra', 'fra'
   ]);
   const acronyms = new Set([
-    'rn', 'rd', 'cd', 'pk', 'km', 'bp', 'es', 'eni', 'q8', 'f6', 'cora',
+    'rn', 'rd', 'cd', 'pk', 'km', 'bp', 'es', 'eni', 'q8', 'f6', 'cora', 'ip',
     'a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'a10', 'a11', 'a12', 'a13',
-    'a14', 'a15', 'a16', 'a19', 'a20', 'a26', 'a28', 'a29', 'a31', 'a33', 'a34', 'a35',
-    'a36', 'a39', 'a40', 'a41', 'a42', 'a43', 'a48', 'a50', 'a51', 'a52', 'a55', 'a57',
-    'a61', 'a62', 'a63', 'a64', 'a65', 'a71', 'a72', 'a75', 'a77', 'a81', 'a83', 'a84',
-    'a85', 'a86', 'a87', 'a89', 'n104', 'rn104', 'rd104', 'cd419'
+    'a14', 'a15', 'a16', 'a19', 'a20', 'a21', 'a22', 'a23', 'a24', 'a25', 'a26', 'a28',
+    'a29', 'a30', 'a31', 'a32', 'a33', 'a34', 'a35', 'a36', 'a39', 'a40', 'a41', 'a42',
+    'a43', 'a48', 'a50', 'a51', 'a52', 'a55', 'a56', 'a57', 'a61', 'a62', 'a63', 'a64',
+    'a65', 'a71', 'a72', 'a75', 'a77', 'a81', 'a83', 'a84', 'a85', 'a86', 'a87', 'a89',
+    't1', 't2', 't3', 't4', 'n104', 'rn104', 'rd104', 'cd419'
   ]);
   const accents = {
     'Macon': 'Mâcon',
@@ -86,7 +89,7 @@ function formatProperName(text) {
     }
     const low = tok.toLowerCase();
     let formatted;
-    if (/^(a|rn|rd|cd|n|d)\d+[a-z]?$/i.test(low) || acronyms.has(low)) {
+    if (/^(a|rn|rd|cd|n|d|ss|sr|sp|ra|t)\d+[a-z]?$/i.test(low) || acronyms.has(low)) {
       formatted = low.toUpperCase();
     } else if (lowerWords.has(low) && !isStart) {
       formatted = low;
@@ -184,11 +187,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Initialize Leaflet Map
 function initMap() {
-  // Center to encompass both France & Spain coverage
-  const initialZoom = window.innerWidth <= 768 ? 5 : 5.5;
+  // Center to encompass France, Spain & Italy coverage
+  const initialZoom = window.innerWidth <= 768 ? 4.8 : 5.2;
   map = L.map('map', {
     zoomControl: false
-  }).setView([44.2, 0.5], initialZoom);
+  }).setView([43.5, 4.5], initialZoom);
 
   L.control.zoom({ position: 'topright' }).addTo(map);
 
@@ -277,10 +280,11 @@ async function loadCoveredCountries() {
 
     coveredCountriesLayer.bringToBack();
 
-    // Central Country Badges (France & Spain)
+    // Central Country Badges (France, Spain & Italy)
     const countryLabels = [
       { coords: [46.6, 2.5], flag: '🇫🇷', name: 'France', count: '438 aires' },
-      { coords: [40.2, -3.6], flag: '🇪🇸', name: 'Espagne', count: '833 aires' }
+      { coords: [40.2, -3.6], flag: '🇪🇸', name: 'Espagne', count: '833 aires' },
+      { coords: [42.6, 12.8], flag: '🇮🇹', name: 'Italie', count: '615 aires' }
     ];
 
     countryLabels.forEach(c => {
@@ -954,15 +958,16 @@ function renderCurrentRouteStations() {
     const marker = L.marker([st.lat, st.lon], { icon: customIcon }).addTo(map);
 
     // Popup content
-    const flag = st.pays === 'ES' ? '🇪🇸' : '🇫🇷';
+    const flag = st.pays === 'ES' ? '🇪🇸' : (st.pays === 'IT' ? '🇮🇹' : '🇫🇷');
     const nomFormatted = formatProperName(st.nom);
     const villeFormatted = formatProperName(st.ville);
     const sensFormatted = st.sens ? formatProperName(st.sens) : '';
+    const cleanPk = String(st.displayedPk || '').replace(/^km\s*/i, '').trim();
 
     const popupContent = `
       <div class="station-popup">
         <div class="popup-title"><span class="flag-icon">${flag}</span> ${st.enseigne} - ${nomFormatted}</div>
-        <div class="popup-pk">📍 ${st.autoroute || 'Autoroute'} • Borne km ${st.displayedPk}</div>
+        <div class="popup-pk">📍 ${st.autoroute || 'Autoroute'} • Borne km ${cleanPk}</div>
         <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:6px;">${formatProperName(st.adresse)} (${villeFormatted})</div>
         <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:8px;">Sens : ${sensFormatted || 'Sens direct'} • À ${st.distOnRoute.toFixed(0)} km du départ</div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; font-size:0.8rem;">
@@ -991,7 +996,7 @@ function renderCurrentRouteStations() {
             ${getBrandLogoSvg(st.enseigne)}
           </div>
           <span class="pk-marker-badge">
-            🛣️ ${st.autoroute || 'Autoroute'} • Borne km ${st.displayedPk}
+            🛣️ ${st.autoroute || 'Autoroute'} • Borne km ${cleanPk}
           </span>
         </div>
       </div>
@@ -1136,6 +1141,10 @@ function getBrandClass(brand) {
   if (b.includes('cepsa')) return 'badge-cepsa';
   if (b.includes('galp')) return 'badge-galp';
   if (b.includes('petronor')) return 'badge-petronor';
+  if (b.includes('ip') || b.includes('api')) return 'badge-ip';
+  if (b.includes('q8')) return 'badge-q8';
+  if (b.includes('tamoil')) return 'badge-tamoil';
+  if (b.includes('sarni')) return 'badge-sarni';
   return 'badge-default';
 }
 
@@ -1290,6 +1299,49 @@ function getBrandLogoSvg(brand) {
       <rect width="100" height="100" rx="18" fill="#004b93"/>
       <path d="M32 30 L50 45 L68 30" fill="none" stroke="#e31b23" stroke-width="7" stroke-linecap="round"/>
       <text x="50" y="73" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="14" fill="#ffffff" text-anchor="middle">petronor</text>
+    </svg>`;
+  }
+
+  // IP (Gruppo API / Italiana Petroli)
+  if (b.includes('ip') || b.includes('api')) {
+    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#002b80"/>
+      <circle cx="36" cy="30" r="7" fill="#ff6a00"/>
+      <rect x="29" y="42" width="14" height="34" rx="4" fill="#ffffff"/>
+      <rect x="52" y="42" width="14" height="42" rx="4" fill="#ffffff"/>
+      <path d="M56 42 Q78 42 78 57 Q78 72 56 72 Z" fill="#ffffff"/>
+      <path d="M64 51 Q70 51 70 57 Q70 63 64 63 Z" fill="#002b80"/>
+    </svg>`;
+  }
+
+  // Q8 (Kuwait Petroleum)
+  if (b.includes('q8')) {
+    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#ffffff"/>
+      <path d="M30 44 C32 24 45 15 52 14 C50 24 46 37 30 44 Z" fill="#003882"/>
+      <path d="M52 14 C58 23 62 34 60 44 C50 44 48 29 52 14 Z" fill="#ffcc00"/>
+      <path d="M59 27 C64 33 68 39 68 44 C62 44 60 37 59 27 Z" fill="#dc2626"/>
+      <text x="50" y="80" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-weight="900" font-size="34" fill="#003882" letter-spacing="-1">Q8</text>
+    </svg>`;
+  }
+
+  // Tamoil
+  if (b.includes('tamoil')) {
+    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#dc2626"/>
+      <circle cx="50" cy="40" r="22" fill="#ffffff"/>
+      <circle cx="50" cy="40" r="18" fill="#003399"/>
+      <path d="M40 40 L60 40 L50 25 Z" fill="#ffffff"/>
+      <text x="50" y="80" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-weight="900" font-size="16" fill="#ffffff" letter-spacing="1">TAMOIL</text>
+    </svg>`;
+  }
+
+  // Sarni Oil
+  if (b.includes('sarni')) {
+    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#059669"/>
+      <text x="50" y="48" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-weight="900" font-size="20" fill="#ffffff" letter-spacing="1">SARNI</text>
+      <text x="50" y="72" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-weight="800" font-size="14" fill="#facc15" letter-spacing="2">OIL</text>
     </svg>`;
   }
 

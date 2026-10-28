@@ -646,6 +646,10 @@ header {
 .badge-cepsa { background: linear-gradient(135deg, #b91c1c, #881337); color: #fff; }
 .badge-galp { background: linear-gradient(135deg, #f97316, #ea580c); color: #fff; }
 .badge-petronor { background: linear-gradient(135deg, #0284c7, #1e40af); color: #fff; }
+.badge-ip { background: linear-gradient(135deg, #002b80, #001a4d); color: #fff; }
+.badge-q8 { background: linear-gradient(135deg, #002878, #001b52); color: #facc15; }
+.badge-tamoil { background: linear-gradient(135deg, #dc2626, #991b1b); color: #fff; }
+.badge-sarni { background: linear-gradient(135deg, #059669, #047857); color: #fff; }
 .badge-default { background: var(--bg-tertiary); }
 
 .flag-icon {
