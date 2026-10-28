@@ -928,7 +928,7 @@ function fitMapToRouteAndStations() {
   if (bounds.isValid()) {
     const isMobile = window.innerWidth <= 1080;
     const paddingOptions = isMobile
-      ? { paddingTopLeft: [45, 25], paddingBottomRight: [25, 115], maxZoom: 15, animate: false }
+      ? { paddingTopLeft: [45, 25], paddingBottomRight: [25, 135], maxZoom: 15, animate: false }
       : { padding: [50, 50], maxZoom: 15, animate: false };
 
     map.fitBounds(bounds, paddingOptions);

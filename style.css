@@ -1470,7 +1470,7 @@ header {
   .mobile-nav-bar {
     display: flex;
     position: fixed;
-    bottom: 12px;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
     left: 50%;
     transform: translateX(-50%);
     z-index: 2000;
@@ -1523,6 +1523,60 @@ header {
   .app-container {
     flex-direction: column;
     height: calc(100vh - 56px);
+    height: calc(100dvh - 56px);
+  }
+
+  /* Floating Route Selector on Mobile: Fixed above mobile-nav-bar with guaranteed spacing */
+  .map-routes-bar {
+    position: fixed !important;
+    bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: calc(100% - 20px) !important;
+    max-width: 420px !important;
+    z-index: 1950 !important;
+    padding: 5px !important;
+    gap: 6px !important;
+    border-radius: 14px !important;
+  }
+
+  .map-route-btn {
+    padding: 5px 8px !important;
+    border-radius: 11px !important;
+  }
+
+  .map-route-btn-header {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 4px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .map-route-badge {
+    font-size: 0.68rem !important;
+    padding: 2px 6px !important;
+    white-space: nowrap !important;
+  }
+
+  .map-route-time {
+    font-size: 0.84rem !important;
+    white-space: nowrap !important;
+  }
+
+  .map-route-time-diff {
+    font-size: 0.72rem !important;
+    margin-left: 2px !important;
+  }
+
+  .map-route-meta {
+    font-size: 0.68rem !important;
+    margin-top: 2px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    width: 100% !important;
   }
 
   /* Default on mobile: Carte is visible, Sidebar is hidden */
@@ -1544,9 +1598,11 @@ header {
     max-width: 100% !important;
     height: 100% !important;
     overflow-y: auto !important;
+    padding-bottom: calc(75px + env(safe-area-inset-bottom, 0px)) !important;
   }
 
-  body.mobile-view-list .map-container {
+  body.mobile-view-list .map-container,
+  body.mobile-view-list .map-routes-bar {
     display: none !important;
   }
 }
