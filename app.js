@@ -1179,6 +1179,30 @@ function renderCurrentRouteStations() {
     return;
   }
 
+  function createAmazonCard() {
+    const amazonCard = document.createElement('div');
+    amazonCard.className = 'partner-card partner-amazon';
+    amazonCard.id = 'partner-amazon-card';
+    amazonCard.innerHTML = `
+      <div class="partner-badge amazon-badge">🛒 ÉQUIPEMENT TRAJET RECOMMANDÉ</div>
+      <div class="amazon-items-list">
+        ${AFFILIATE_CONFIG.amazon.items.map(item => `
+          <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="amazon-item-row" title="Voir sur Amazon">
+            <span class="amazon-item-icon">${item.icon}</span>
+            <div class="amazon-item-details">
+              <span class="amazon-item-name">${item.name}</span>
+              <span class="amazon-item-sub">${item.sub}</span>
+            </div>
+            <span class="amazon-item-arrow">Voir ➔</span>
+          </a>
+        `).join('')}
+      </div>
+    `;
+    return amazonCard;
+  }
+
+  let amazonInserted = false;
+
   // Render cards and map markers
   filtered.forEach((st, idx) => {
     const fuelPrice = (selectedFuel !== 'all') ? getFuelPrice(st.prix, selectedFuel) : (st.prix ? Object.values(st.prix)[0] : null);
@@ -1279,29 +1303,17 @@ function renderCurrentRouteStations() {
     });
 
     listContainer.appendChild(card);
+
+    // Insérer l'encart Amazon juste après la 2e station pour qu'il soit immédiatement visible sans faire défiler tout l'écran
+    if (idx === 1 && AFFILIATE_CONFIG.amazon.enabled) {
+      listContainer.appendChild(createAmazonCard());
+      amazonInserted = true;
+    }
   });
 
-  // Bloc Partenaire Amazon Équipement Route
-  if (AFFILIATE_CONFIG.amazon.enabled && filtered.length > 0) {
-    const amazonCard = document.createElement('div');
-    amazonCard.className = 'partner-card partner-amazon';
-    amazonCard.id = 'partner-amazon-card';
-    amazonCard.innerHTML = `
-      <div class="partner-badge amazon-badge">🛒 ÉQUIPEMENT TRAJET RECOMMANDÉ</div>
-      <div class="amazon-items-list">
-        ${AFFILIATE_CONFIG.amazon.items.map(item => `
-          <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="amazon-item-row" title="Voir sur Amazon">
-            <span class="amazon-item-icon">${item.icon}</span>
-            <div class="amazon-item-details">
-              <span class="amazon-item-name">${item.name}</span>
-              <span class="amazon-item-sub">${item.sub}</span>
-            </div>
-            <span class="amazon-item-arrow">Voir ➔</span>
-          </a>
-        `).join('')}
-      </div>
-    `;
-    listContainer.appendChild(amazonCard);
+  // Si l'itinéraire a moins de 2 stations, l'insérer à la fin
+  if (!amazonInserted && AFFILIATE_CONFIG.amazon.enabled && filtered.length > 0) {
+    listContainer.appendChild(createAmazonCard());
   }
 }
 

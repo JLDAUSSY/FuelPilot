@@ -1702,9 +1702,51 @@ header {
 
 /* Ulys Card Styling */
 .partner-ulys {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98));
-  border: 1px solid rgba(56, 189, 248, 0.35);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, rgba(30, 20, 25, 0.95), rgba(15, 23, 42, 0.98));
+  border: 2px solid #ef4444;
+  box-shadow: 0 0 14px rgba(239, 68, 68, 0.6), inset 0 0 8px rgba(239, 68, 68, 0.2);
+  animation: pulse-ulys-red 2.2s infinite ease-in-out;
+}
+
+@keyframes pulse-ulys-red {
+  0%, 100% {
+    border-color: #ef4444;
+    box-shadow: 0 0 14px rgba(239, 68, 68, 0.6), inset 0 0 8px rgba(239, 68, 68, 0.2);
+  }
+  50% {
+    border-color: #f97316;
+    box-shadow: 0 0 24px rgba(249, 115, 22, 0.85), inset 0 0 12px rgba(249, 115, 22, 0.35);
+  }
+}
+
+.ulys-badge-alert {
+  background: #dc2626 !important;
+  color: #ffffff !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.6px !important;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.6);
+  animation: badge-blink 1.8s infinite ease-in-out;
+}
+
+@keyframes badge-blink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.88; transform: scale(1.03); }
+}
+
+.btn-ulys-cta {
+  background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+  color: #ffffff !important;
+  font-size: 0.82rem !important;
+  font-weight: 800 !important;
+  padding: 8px 14px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 3px 12px rgba(239, 68, 68, 0.6) !important;
+  animation: cta-pulse 2s infinite ease-in-out;
+}
+
+@keyframes cta-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
 }
 
 .partner-badge {
