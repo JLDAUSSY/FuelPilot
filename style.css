@@ -77,6 +77,15 @@ header {
   font-weight: 700;
   letter-spacing: -0.3px;
   color: #fff;
+  line-height: 1.1;
+}
+
+.brand-tagline {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #38bdf8;
+  white-space: nowrap;
+  letter-spacing: -0.1px;
 }
 
 .brand-title span {
@@ -1244,6 +1253,15 @@ header {
     font-size: 1.15rem;
   }
 
+  .brand-tagline {
+    display: block !important;
+    font-size: 0.65rem !important;
+    color: #38bdf8 !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    line-height: 1.1;
+  }
+
   .creator-signature {
     display: none;
   }
@@ -1693,7 +1711,8 @@ header {
   margin: 6px 0;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   position: relative;
-  overflow: hidden;
+  overflow: visible !important;
+  flex-shrink: 0 !important;
 }
 
 .partner-card:hover {
@@ -1809,75 +1828,84 @@ header {
 
 /* Amazon Equipment Card */
 .partner-amazon {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(20, 28, 45, 0.95));
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
-  margin-top: 8px;
-  margin-bottom: 8px;
+  flex-shrink: 0 !important;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(20, 28, 45, 0.98)) !important;
+  border: 1.5px solid #f59e0b !important;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.25) !important;
+  border-radius: 10px !important;
+  padding: 10px 12px !important;
+  margin: 10px 0 !important;
+  display: block !important;
+  visibility: visible !important;
+  min-height: 125px !important;
 }
 
 .amazon-badge {
-  color: #f59e0b;
-  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b !important;
+  background: rgba(245, 158, 11, 0.15) !important;
+  font-weight: 800 !important;
 }
 
 .amazon-items-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 6px;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  margin-top: 8px !important;
+  visibility: visible !important;
 }
 
 .amazon-item-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 8px;
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 6px;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 8px 10px !important;
+  background: rgba(15, 23, 42, 0.85) !important;
+  border: 1px solid rgba(245, 158, 11, 0.35) !important;
+  border-radius: 8px !important;
   text-decoration: none !important;
-  transition: all 0.15s ease;
+  transition: all 0.15s ease !important;
+  visibility: visible !important;
 }
 
 .amazon-item-row:hover, .amazon-item-row:active {
-  background: rgba(15, 23, 42, 0.9);
-  border-color: rgba(245, 158, 11, 0.4);
-  transform: translateX(2px);
+  background: rgba(15, 23, 42, 1) !important;
+  border-color: #f59e0b !important;
+  transform: translateX(2px) !important;
 }
 
 .amazon-item-icon {
-  font-size: 1.1rem;
-  flex-shrink: 0;
+  font-size: 1.3rem !important;
+  flex-shrink: 0 !important;
 }
 
 .amazon-item-details {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
+  flex: 1 !important;
+  min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .amazon-item-name {
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: #f1f5f9;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
 .amazon-item-sub {
-  font-size: 0.68rem;
-  color: #94a3b8;
+  font-size: 0.72rem !important;
+  color: #94a3b8 !important;
 }
 
 .amazon-item-arrow {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: #f59e0b;
-  padding: 3px 7px;
-  border-radius: 4px;
-  background: rgba(245, 158, 11, 0.1);
-  flex-shrink: 0;
+  font-size: 0.75rem !important;
+  font-weight: 800 !important;
+  color: #f59e0b !important;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+  background: rgba(245, 158, 11, 0.15) !important;
+  border: 1px solid rgba(245, 158, 11, 0.4) !important;
+  flex-shrink: 0 !important;
 }
