@@ -1,6 +1,38 @@
 // Essence sur Autoroute - Application Waze-like
 // Trajet point A à point B, étapes, alternatives, stations en ordre chronologique avec PK, enseignes et prix
 
+// ============================================================================
+// Configuration des partenariats & affiliations (Ulys Télépéage & Amazon)
+// ============================================================================
+const AFFILIATE_CONFIG = {
+  ulys: {
+    enabled: true,
+    url: "https://ulys.vinci-autoroutes.com/", // À mettre à jour dès validation Awin
+    badge: "🚗 BON PLAN PÉAGE",
+    title: "Badge Télépéage Ulys",
+    desc: "Passez les barrières sans attente en France, Espagne et Italie. Sans engagement.",
+    cta: "Profiter de l'offre ➔"
+  },
+  amazon: {
+    enabled: true,
+    tag: "watermetrics-21",
+    items: [
+      {
+        icon: "📱",
+        name: "Support Smartphone Grille / MagSafe",
+        sub: "Maintien ultra-stable pour guidage GPS",
+        url: "https://www.amazon.fr/s?k=support+telephone+voiture+grille+aeration&tag=watermetrics-21"
+      },
+      {
+        icon: "⚡",
+        name: "Chargeur Allume-Cigare USB-C Rapide",
+        sub: "Recharge rapide 65W pendant votre trajet",
+        url: "https://www.amazon.fr/s?k=chargeur+allume+cigare+rapide+usb+c&tag=watermetrics-21"
+      }
+    ]
+  }
+};
+
 let map;
 let allStations = [];
 let routeLayers = [];
@@ -602,6 +634,14 @@ async function calculateItinerary() {
     alternativeRoutes = data.routes;
     selectRoute(0);
     renderRouteAlternatives();
+
+    // Afficher le bon plan Télépéage Ulys
+    const ulysCard = document.getElementById('partner-ulys-card');
+    if (ulysCard && AFFILIATE_CONFIG.ulys.enabled) {
+      ulysCard.style.display = 'block';
+      const ulysLink = document.getElementById('link-partner-ulys');
+      if (ulysLink) ulysLink.href = AFFILIATE_CONFIG.ulys.url;
+    }
 
     // Update and auto-collapse itinerary summary on mobile
     const startLbl = document.getElementById('sum-start-label');
@@ -1240,6 +1280,29 @@ function renderCurrentRouteStations() {
 
     listContainer.appendChild(card);
   });
+
+  // Bloc Partenaire Amazon Équipement Route
+  if (AFFILIATE_CONFIG.amazon.enabled && filtered.length > 0) {
+    const amazonCard = document.createElement('div');
+    amazonCard.className = 'partner-card partner-amazon';
+    amazonCard.id = 'partner-amazon-card';
+    amazonCard.innerHTML = `
+      <div class="partner-badge amazon-badge">🛒 ÉQUIPEMENT TRAJET RECOMMANDÉ</div>
+      <div class="amazon-items-list">
+        ${AFFILIATE_CONFIG.amazon.items.map(item => `
+          <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="amazon-item-row" title="Voir sur Amazon">
+            <span class="amazon-item-icon">${item.icon}</span>
+            <div class="amazon-item-details">
+              <span class="amazon-item-name">${item.name}</span>
+              <span class="amazon-item-sub">${item.sub}</span>
+            </div>
+            <span class="amazon-item-arrow">Voir ➔</span>
+          </a>
+        `).join('')}
+      </div>
+    `;
+    listContainer.appendChild(amazonCard);
+  }
 }
 
 // Render fuel prices inside card
