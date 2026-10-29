@@ -643,6 +643,12 @@ async function calculateItinerary() {
       if (ulysLink) ulysLink.href = AFFILIATE_CONFIG.ulys.url;
     }
 
+    // Afficher l'encart Amazon Équipement Route
+    const amazonCard = document.getElementById('partner-amazon-card');
+    if (amazonCard && AFFILIATE_CONFIG.amazon.enabled) {
+      amazonCard.style.display = 'block';
+    }
+
     // Update and auto-collapse itinerary summary on mobile
     const startLbl = document.getElementById('sum-start-label');
     const endLbl = document.getElementById('sum-end-label');
