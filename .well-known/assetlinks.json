@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "fr.jldapps.fuelpilot",
+      "sha256_cert_fingerprints": [
+        "F5:1B:0F:EA:FA:9C:5C:42:93:D9:16:B3:DF:01:30:9F:08:25:1C:5A:E8:7E:F0:DB:D9:03:45:F1:74:70:A0:B3"
+      ]
+    }
+  }
+]
