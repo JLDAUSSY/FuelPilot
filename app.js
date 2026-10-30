@@ -184,31 +184,77 @@ function setMobileView(view) {
   }
 }
 
-const FUEL_LABELS = {
-  e10: 'SP95',
-  gazole: 'Gazole',
-  sp98: 'SP98',
-  sp95: 'SP95 (Pur)',
-  e85: 'E85',
-  gplc: 'GPLc'
-};
-
-const FUEL_LABELS_UK = {
-  e10: 'Unleaded (E10)',
-  gazole: 'Diesel (B7)',
-  sp98: 'Super Unleaded (E5)',
-  sp95: 'Unleaded (E10)',
-  e85: 'E85',
-  gplc: 'LPG'
+// Official fuel denominations per country (Government open-data registries: FR, ES, IT, GB)
+const FUEL_LABELS_BY_COUNTRY = {
+  FR: {
+    e10: 'SP95-E10',
+    gazole: 'Gazole (B7)',
+    sp98: 'SP98 (E5)',
+    sp95: 'SP95 (E5)',
+    e85: 'Superéthanol E85',
+    gplc: 'GPLc',
+    all: 'Tous carburants'
+  },
+  ES: {
+    e10: 'Gasolina 95 E5',
+    gazole: 'Gasóleo A (B7)',
+    sp98: 'Gasolina 98 E5',
+    sp95: 'Gasolina 95 E5',
+    e85: 'Bioetanol E85',
+    gplc: 'GLP (Autogás)',
+    all: 'Todos los carburantes'
+  },
+  IT: {
+    e10: 'Benzina (E5)',
+    gazole: 'Gasolio (B7)',
+    sp98: 'Benzina Speciale 98',
+    sp95: 'Benzina (E5)',
+    e85: 'Bioetanolo E85',
+    gplc: 'GPL',
+    metano: 'Metano (CNG)',
+    all: 'Tutti i carburanti'
+  },
+  GB: {
+    e10: 'Unleaded (E10)',
+    gazole: 'Diesel (B7)',
+    sp98: 'Super Unleaded (E5)',
+    sp95: 'Unleaded (E10)',
+    e85: 'Bioethanol E85',
+    gplc: 'LPG Autogas',
+    all: 'All fuels'
+  }
 };
 
 function getFuelLabel(fuel, pays) {
-  const dict = pays === 'GB' ? FUEL_LABELS_UK : FUEL_LABELS;
-  return dict[fuel] || (fuel ? fuel.toUpperCase() : '');
+  const countryCode = (pays && FUEL_LABELS_BY_COUNTRY[pays]) ? pays : 'FR';
+  const dict = FUEL_LABELS_BY_COUNTRY[countryCode];
+  return dict[fuel] || FUEL_LABELS_BY_COUNTRY.FR[fuel] || (fuel ? fuel.toUpperCase() : '');
+}
+
+// Return actual served fuel label for a station (distinguishes SP95-E10 vs SP95 (E5) in France)
+function getServedFuelLabel(prices, requestedFuel, pays) {
+  const c = pays || 'FR';
+  if (c === 'FR' && prices) {
+    if (requestedFuel === 'e10' && (!prices.e10 || prices.e10 <= 0) && prices.sp95 > 0) {
+      return getFuelLabel('sp95', 'FR');
+    }
+    if (requestedFuel === 'sp95' && (!prices.sp95 || prices.sp95 <= 0) && prices.e10 > 0) {
+      return getFuelLabel('e10', 'FR');
+    }
+  }
+  return getFuelLabel(requestedFuel, c);
+}
+
+// Distinct fuels to display when "All fuels" is selected in a given country (avoids duplicating e10/sp95 in ES, IT, GB)
+function getDistinctCountryFuels(pays) {
+  if (pays === 'GB') return ['gazole', 'e10', 'sp98', 'gplc'];
+  if (pays === 'ES') return ['gazole', 'sp95', 'sp98', 'gplc', 'e85'];
+  if (pays === 'IT') return ['gazole', 'sp95', 'sp98', 'gplc', 'metano'];
+  return ['gazole', 'e10', 'sp98', 'sp95', 'e85', 'gplc'];
 }
 
 // Initialize Application
-const APP_VERSION = '5.0';
+const APP_VERSION = '5.1';
 
 // Dynamically calibrate mobile bottom nav bar position using VisualViewport & Screen APIs
 // Validated across 14 smartphone models (Samsung, Google Pixel, Xiaomi, Apple iPhone, OnePlus, Honor/Huawei, Motorola, Sony, Oppo)
@@ -1495,16 +1541,29 @@ function renderCurrentRouteStations() {
 
   let amazonInserted = false;
 
-  // Dynamically adapt Fuel Selector dropdown labels when on a UK route
-  const isUkRoute = currentRouteStations.length > 0 && currentRouteStations.every(s => s.pays === 'GB');
+  // Dynamically adapt Fuel Selector dropdown labels according to the route's country/countries
+  const routeCountries = [...new Set(currentRouteStations.map(s => s.pays || 'FR'))];
   const fuelSelectEl = document.getElementById('select-fuel');
-  if (fuelSelectEl) {
-    const dict = isUkRoute ? FUEL_LABELS_UK : FUEL_LABELS;
+  if (fuelSelectEl && routeCountries.length > 0) {
+    const singleCountry = routeCountries.length === 1 ? routeCountries[0] : null;
+    const hasFrance = routeCountries.includes('FR');
     Array.from(fuelSelectEl.options).forEach(opt => {
-      if (opt.value === 'all') {
-        opt.textContent = isUkRoute ? '⛽ All fuels (Tous)' : '⛽ Tous carburants';
-      } else if (dict[opt.value]) {
-        opt.textContent = `⛽ ${dict[opt.value]}`;
+      const fKey = opt.value;
+      // Hide separate SP95 (E5) option when route does not include France (since ES, IT, GB have a single Unleaded 95 category)
+      if (fKey === 'sp95') {
+        opt.style.display = hasFrance ? '' : 'none';
+      }
+      if (singleCountry) {
+        const dict = FUEL_LABELS_BY_COUNTRY[singleCountry] || FUEL_LABELS_BY_COUNTRY.FR;
+        if (dict[fKey]) {
+          opt.textContent = `⛽ ${dict[fKey]}`;
+        }
+      } else {
+        // Cross-border route: combine unique official names across the traversed countries
+        const names = [...new Set(routeCountries.map(c => (FUEL_LABELS_BY_COUNTRY[c] || FUEL_LABELS_BY_COUNTRY.FR)[fKey]).filter(Boolean))];
+        if (names.length > 0) {
+          opt.textContent = `⛽ ${names.join(' / ')}`;
+        }
       }
     });
   }
@@ -1669,7 +1728,7 @@ function renderCardPrices(prices, featuredFuel, isCheapest, pays) {
   // When a specific fuel is filtered (default behavior: e10/sp95, gazole, sp98, etc.)
   if (featuredFuel && featuredFuel !== 'all') {
     const p = getFuelPrice(prices, featuredFuel);
-    const fuelName = getFuelLabel(featuredFuel, pays);
+    const fuelName = getServedFuelLabel(prices, featuredFuel, pays);
 
     if (p && p > 0) {
       return `
@@ -1698,8 +1757,8 @@ function renderCardPrices(prices, featuredFuel, isCheapest, pays) {
     }
   }
 
-  // If "Tous les carburants" (all) is selected, render standard multi-fuel grid
-  const fuels = isUK ? ['gazole', 'e10', 'sp98', 'gplc'] : ['gazole', 'e10', 'sp98', 'sp95', 'e85', 'gplc'];
+  // If "Tous les carburants" (all) is selected, render official country-specific multi-fuel grid
+  const fuels = getDistinctCountryFuels(pays);
   let html = '<div class="prices-grid">';
   fuels.forEach(f => {
     if (prices[f]) {
@@ -1723,7 +1782,7 @@ function renderPopupPrices(prices, featuredFuel, pays) {
   if (!prices) return '<span>Aucun prix disponible</span>';
   if (featuredFuel && featuredFuel !== 'all') {
     const p = getFuelPrice(prices, featuredFuel);
-    const fuelName = getFuelLabel(featuredFuel, pays);
+    const fuelName = getServedFuelLabel(prices, featuredFuel, pays);
     if (p && p > 0) {
       return `
         <div style="grid-column: span 2; background: rgba(16, 185, 129, 0.15); border: 1.5px solid #10b981; padding: 6px 12px; border-radius: 8px; display:flex; justify-content:space-between; align-items:center;">
@@ -1739,8 +1798,8 @@ function renderPopupPrices(prices, featuredFuel, pays) {
       `;
     }
   }
-  const keys = isUK ? Object.keys(prices).filter(k => k !== 'sp95') : Object.keys(prices);
-  return keys.map(f => `
+  const fuels = getDistinctCountryFuels(pays).filter(f => prices[f]);
+  return fuels.map(f => `
     <div style="background:rgba(255,255,255,0.06); padding:3px 6px; border-radius:4px;">
       <span style="color:#94a3b8; font-size:0.7rem;">${getFuelLabel(f, pays)}:</span>
       <b style="color:#fff;">${formatPrice(prices[f])}</b>
