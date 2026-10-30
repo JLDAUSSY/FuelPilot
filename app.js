@@ -264,7 +264,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '6.3';
+const APP_VERSION = '6.4';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -992,8 +992,11 @@ function setAppLanguage(lang, isManual = false) {
   if (brandSelect) {
     brandSelect.title = tr.filterBrandTitle;
     if (brandSelect.options.length > 0 && brandSelect.options[0].value === 'all') {
-      const totalCount = allStations && allStations.length > 0 ? ` (${allStations.length})` : '';
-      brandSelect.options[0].textContent = `${tr.allBrands}${totalCount}`;
+      const distinctBrandsCount = allStations && allStations.length > 0
+        ? new Set(allStations.map(s => s.enseigne || 'Indépendant')).size
+        : 0;
+      const countSuffix = distinctBrandsCount > 0 ? ` (${distinctBrandsCount})` : '';
+      brandSelect.options[0].textContent = `${tr.allBrands}${countSuffix}`;
     }
   }
 
@@ -1171,6 +1174,22 @@ async function detectCountryAndSetLanguage() {
   }
 }
 
+function updateFuelScrollArrows() {
+  const bodyEl = document.getElementById('fuel-info-body');
+  const leftBtn = document.getElementById('fuel-scroll-left');
+  const rightBtn = document.getElementById('fuel-scroll-right');
+  if (!bodyEl || !leftBtn || !rightBtn) return;
+
+  const maxScroll = bodyEl.scrollWidth - bodyEl.clientWidth;
+  if (maxScroll <= 6) {
+    leftBtn.style.display = 'none';
+    rightBtn.style.display = 'none';
+    return;
+  }
+  leftBtn.style.display = bodyEl.scrollLeft > 8 ? 'inline-flex' : 'none';
+  rightBtn.style.display = bodyEl.scrollLeft < maxScroll - 8 ? 'inline-flex' : 'none';
+}
+
 function renderFuelInfoModal() {
   const tr = t();
   const infoBtn = document.getElementById('btn-fuel-info');
@@ -1252,12 +1271,14 @@ function renderFuelInfoModal() {
       </tbody>
     </table>
   `;
+  setTimeout(updateFuelScrollArrows, 30);
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
   checkAndAutoUpdateApp();
   ensureMobileNavBarVisible();
   window.addEventListener('resize', ensureMobileNavBarVisible);
+  window.addEventListener('resize', updateFuelScrollArrows);
   if (window.visualViewport) {
     window.visualViewport.addEventListener('resize', ensureMobileNavBarVisible);
     window.visualViewport.addEventListener('scroll', ensureMobileNavBarVisible);
@@ -1274,10 +1295,30 @@ document.addEventListener('DOMContentLoaded', async () => {
   const fuelInfoBtn = document.getElementById('btn-fuel-info');
   const fuelInfoModal = document.getElementById('fuel-info-modal');
   const closeFuelInfoBtn = document.getElementById('btn-close-fuel-info');
+  const fuelInfoBody = document.getElementById('fuel-info-body');
+  const fuelScrollLeftBtn = document.getElementById('fuel-scroll-left');
+  const fuelScrollRightBtn = document.getElementById('fuel-scroll-right');
+  if (fuelInfoBody) {
+    fuelInfoBody.addEventListener('scroll', updateFuelScrollArrows);
+  }
+  if (fuelScrollLeftBtn && fuelInfoBody) {
+    fuelScrollLeftBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      fuelInfoBody.scrollBy({ left: -180, behavior: 'smooth' });
+    });
+  }
+  if (fuelScrollRightBtn && fuelInfoBody) {
+    fuelScrollRightBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      fuelInfoBody.scrollBy({ left: 180, behavior: 'smooth' });
+    });
+  }
   if (fuelInfoBtn && fuelInfoModal) {
     fuelInfoBtn.addEventListener('click', () => {
       renderFuelInfoModal();
       fuelInfoModal.style.display = 'flex';
+      if (fuelInfoBody) fuelInfoBody.scrollLeft = 0;
+      setTimeout(updateFuelScrollArrows, 40);
     });
   }
   if (closeFuelInfoBtn && fuelInfoModal) {
@@ -1443,7 +1484,7 @@ function populateBrandFilter() {
   });
 
   const sortedBrands = Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
-  brandSelect.innerHTML = `<option value="all">${t().allBrands} (${allStations.length})</option>`;
+  brandSelect.innerHTML = `<option value="all">${t().allBrands} (${sortedBrands.length})</option>`;
   sortedBrands.forEach(b => {
     brandSelect.innerHTML += `<option value="${b}">${b} (${counts[b]})</option>`;
   });
