@@ -204,6 +204,15 @@ const FUEL_LABELS_BY_COUNTRY = {
     gplc: 'Autogas (LPG)',
     all: 'Alle Kraftstoffe'
   },
+  BE: {
+    e10: 'Super 95 (E10)',
+    gazole: 'Diesel (B7)',
+    sp98: 'Super 98 (E5)',
+    sp95: 'Super 95 (E10)',
+    e85: 'Bioéthanol E85',
+    gplc: 'LPG',
+    all: 'Tous carburants'
+  },
   ES: {
     e10: 'Gasolina 95 E5',
     gazole: 'Gasóleo A (B7)',
@@ -256,7 +265,7 @@ function getServedFuelLabel(prices, requestedFuel, pays) {
 
 // Distinct fuels to display when "All fuels" is selected in a given country (avoids duplicating e10/sp95 in ES, IT, GB)
 function getDistinctCountryFuels(pays) {
-  if (pays === 'GB') return ['gazole', 'e10', 'sp98', 'gplc'];
+  if (pays === 'GB' || pays === 'BE') return ['gazole', 'e10', 'sp98', 'gplc'];
   if (pays === 'DE') return ['gazole', 'e10', 'sp95', 'sp98', 'gplc'];
   if (pays === 'ES') return ['gazole', 'sp95', 'sp98', 'gplc', 'e85'];
   if (pays === 'IT') return ['gazole', 'sp95', 'sp98', 'gplc', 'metano'];
@@ -264,7 +273,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '6.4';
+const APP_VERSION = '6.5';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -356,7 +365,7 @@ const I18N_DICT = {
     sortDist: "Tri : Distance",
     tabMap: "Carte",
     tabList: "Liste & Filtres",
-    coverage: "Réseau couvert : 🇫🇷 France • 🇩🇪 Allemagne • 🇮🇹 Italie • 🇪🇸 Espagne • 🇬🇧 Royaume-Uni",
+    coverage: "Réseau couvert : 🇫🇷 France • 🇩🇪 Allemagne • 🇧🇪 Belgique • 🇮🇹 Italie • 🇪🇸 Espagne • 🇬🇧 Royaume-Uni",
     recentHdr: "🕒 10 dernières localités",
     bestPrice: "⭐ PRIX LE PLUS BAS",
     fromStart: (km) => `⏱️ À ${km} km du départ`,
@@ -443,7 +452,7 @@ const I18N_DICT = {
     sortDist: "Sortierung: Entfernung",
     tabMap: "Karte",
     tabList: "Liste & Filter",
-    coverage: "Abgedecktes Netz: 🇫🇷 Frankreich • 🇩🇪 Deutschland • 🇮🇹 Italien • 🇪🇸 Spanien • 🇬🇧 Vereinigtes Königreich",
+    coverage: "Abgedecktes Netz: 🇫🇷 Frankreich • 🇩🇪 Deutschland • 🇧🇪 Belgien • 🇮🇹 Italien • 🇪🇸 Spanien • 🇬🇧 Vereinigtes Königreich",
     recentHdr: "🕒 Letzte 10 Orte",
     bestPrice: "⭐ NIEDRIGSTER PREIS",
     fromStart: (km) => `⏱️ ${km} km ab Start`,
@@ -530,7 +539,7 @@ const I18N_DICT = {
     sortDist: "Sort: Distance",
     tabMap: "Map",
     tabList: "List & Filters",
-    coverage: "Covered network: 🇫🇷 France • 🇩🇪 Germany • 🇮🇹 Italy • 🇪🇸 Spain • 🇬🇧 UK",
+    coverage: "Covered network: 🇫🇷 France • 🇩🇪 Germany • 🇧🇪 Belgium • 🇮🇹 Italy • 🇪🇸 Spain • 🇬🇧 UK",
     recentHdr: "🕒 10 recent locations",
     bestPrice: "⭐ LOWEST PRICE",
     fromStart: (km) => `⏱️ ${km} km from start`,
@@ -617,7 +626,7 @@ const I18N_DICT = {
     sortDist: "Ordine: Distanza",
     tabMap: "Mappa",
     tabList: "Lista e Filtri",
-    coverage: "Rete coperta: 🇫🇷 Francia • 🇩🇪 Germania • 🇮🇹 Italia • 🇪🇸 Spagna • 🇬🇧 Regno Unito",
+    coverage: "Rete coperta: 🇫🇷 Francia • 🇩🇪 Germania • 🇧🇪 Belgio • 🇮🇹 Italia • 🇪🇸 Spagna • 🇬🇧 Regno Unito",
     recentHdr: "🕒 Ultime 10 località",
     bestPrice: "⭐ PREZZO PIÙ BASSO",
     fromStart: (km) => `⏱️ A ${km} km dalla partenza`,
@@ -704,7 +713,7 @@ const I18N_DICT = {
     sortDist: "Orden: Distancia",
     tabMap: "Mapa",
     tabList: "Lista y Filtros",
-    coverage: "Red cubierta: 🇫🇷 Francia • 🇩🇪 Alemania • 🇮🇹 Italia • 🇪🇸 España • 🇬🇧 Reino Unido",
+    coverage: "Red cubierta: 🇫🇷 Francia • 🇩🇪 Alemania • 🇧🇪 Bélgica • 🇮🇹 Italia • 🇪🇸 España • 🇬🇧 Reino Unido",
     recentHdr: "🕒 10 últimas localidades",
     bestPrice: "⭐ PRECIO MÁS BAJO",
     fromStart: (km) => `⏱️ A ${km} km de la salida`,
@@ -876,6 +885,7 @@ function renderCountryBadgesOnMap() {
   const countryLabels = [
     { coords: [46.6, 2.5], flag: '🇫🇷', name: tr.countryFR, count: tr.areasCount(438) },
     { coords: [51.1, 10.4], flag: '🇩🇪', name: tr.countryDE, count: tr.areasCount(218) },
+    { coords: [50.55, 4.7], flag: '🇧🇪', name: tr.countryBE, count: tr.areasCount(76) },
     { coords: [42.6, 12.8], flag: '🇮🇹', name: tr.countryIT, count: tr.areasCount(615) },
     { coords: [40.2, -3.6], flag: '🇪🇸', name: tr.countryES, count: tr.areasCount(833) },
     { coords: [52.8, -1.8], flag: '🇬🇧', name: tr.countryGB, count: tr.areasCount(158) }
@@ -1182,12 +1192,12 @@ function updateFuelScrollArrows() {
 
   const maxScroll = bodyEl.scrollWidth - bodyEl.clientWidth;
   if (maxScroll <= 6) {
-    leftBtn.style.display = 'none';
-    rightBtn.style.display = 'none';
+    leftBtn.style.visibility = 'hidden';
+    rightBtn.style.visibility = 'hidden';
     return;
   }
-  leftBtn.style.display = bodyEl.scrollLeft > 8 ? 'inline-flex' : 'none';
-  rightBtn.style.display = bodyEl.scrollLeft < maxScroll - 8 ? 'inline-flex' : 'none';
+  leftBtn.style.visibility = bodyEl.scrollLeft > 8 ? 'visible' : 'hidden';
+  rightBtn.style.visibility = bodyEl.scrollLeft < maxScroll - 8 ? 'visible' : 'hidden';
 }
 
 function renderFuelInfoModal() {
@@ -1214,6 +1224,7 @@ function renderFuelInfoModal() {
           <th>${tr.fuelColNorm}</th>
           <th>🇫🇷 ${tr.countryFR}</th>
           <th>🇩🇪 ${tr.countryDE}</th>
+          <th>🇧🇪 ${tr.countryBE}</th>
           <th>🇮🇹 ${tr.countryIT}</th>
           <th>🇪🇸 ${tr.countryES}</th>
           <th>🇬🇧 ${tr.countryGB}</th>
@@ -1224,6 +1235,7 @@ function renderFuelInfoModal() {
           <td><span class="eu-pump-tag eu-tag-gasoline">E10</span> <b>${tr.fuelCatE10}</b></td>
           <td><b>SP95-E10</b></td>
           <td><b>Super E10</b></td>
+          <td><b>Super 95 (E10)</b></td>
           <td>Benzina (E5/E10)</td>
           <td>Gasolina 95 E5/E10</td>
           <td><b>Unleaded (E10)</b></td>
@@ -1232,6 +1244,7 @@ function renderFuelInfoModal() {
           <td><span class="eu-pump-tag eu-tag-gasoline">E5</span> <b>${tr.fuelCatE5}</b></td>
           <td><b>SP95 (E5)</b></td>
           <td><b>Super E5 (95)</b></td>
+          <td>Super 95 (E5)</td>
           <td><b>Benzina (E5)</b></td>
           <td><b>Gasolina 95 E5</b></td>
           <td>Unleaded 95</td>
@@ -1239,6 +1252,7 @@ function renderFuelInfoModal() {
         <tr>
           <td><span class="eu-pump-tag eu-tag-diesel">B7</span> <b>${tr.fuelCatDiesel}</b></td>
           <td><b>Gazole (B7)</b></td>
+          <td><b>Diesel (B7)</b></td>
           <td><b>Diesel (B7)</b></td>
           <td><b>Gasolio (B7)</b></td>
           <td><b>Gasóleo A (B7)</b></td>
@@ -1248,6 +1262,7 @@ function renderFuelInfoModal() {
           <td><span class="eu-pump-tag eu-tag-gasoline">E5</span> <b>${tr.fuelCatSp98}</b></td>
           <td><b>SP98 (E5)</b></td>
           <td><b>Super Plus (98)</b></td>
+          <td><b>Super 98 (E5)</b></td>
           <td><b>Benzina Speciale 98/100</b></td>
           <td><b>Gasolina 98 E5</b></td>
           <td><b>Super Unleaded (E5)</b></td>
@@ -1256,6 +1271,7 @@ function renderFuelInfoModal() {
           <td><span class="eu-pump-tag eu-tag-lpg">LPG</span> <b>${tr.fuelCatLpg}</b></td>
           <td><b>GPLc</b></td>
           <td><b>Autogas (LPG)</b></td>
+          <td><b>LPG</b></td>
           <td><b>GPL</b></td>
           <td><b>GLP (Autogás)</b></td>
           <td><b>LPG Autogas</b></td>
@@ -1264,6 +1280,7 @@ function renderFuelInfoModal() {
           <td><span class="eu-pump-tag eu-tag-gasoline">E85</span> <b>${tr.fuelCatE85}</b></td>
           <td><b>Superéthanol E85</b></td>
           <td>Bioethanol E85</td>
+          <td>Bioéthanol E85</td>
           <td><b>Metano (CNG)</b> / E85</td>
           <td><b>Bioetanol E85</b></td>
           <td>Bioethanol E85</td>
@@ -1565,7 +1582,18 @@ const BILINGUAL_CITIES_INDEX = [
   { names: ['Nice'], display: 'Nice', country: 'France', flag: '🇫🇷', coords: [7.2620, 43.7102] },
   { names: ['Nantes'], display: 'Nantes', country: 'France', flag: '🇫🇷', coords: [-1.5536, 47.2184] },
   { names: ['Strasbourg'], display: 'Strasbourg', country: 'France', flag: '🇫🇷', coords: [7.7521, 48.5734] },
-  { names: ['Bruxelles', 'Brussels', 'Brussel'], display: 'Bruxelles (Brussels)', country: 'Belgique', flag: '🇧🇪', coords: [4.3517, 50.8503] },
+  { names: ['Bruxelles', 'Brussels', 'Brussel', 'Brüssel', 'Bruselas'], display: 'Bruxelles (Brussels)', country: 'Belgique', flag: '🇧🇪', coords: [4.3517, 50.8503] },
+  { names: ['Anvers', 'Antwerpen', 'Antwerp', 'Anversa', 'Amberes'], display: 'Antwerpen (Anvers)', country: 'Belgique', flag: '🇧🇪', coords: [4.4025, 51.2194] },
+  { names: ['Gand', 'Gent', 'Ghent', 'Gante'], display: 'Gent (Gand)', country: 'Belgique', flag: '🇧🇪', coords: [3.7174, 51.0543] },
+  { names: ['Liège', 'Liege', 'Luik', 'Lüttich', 'Lieja'], display: 'Liège', country: 'Belgique', flag: '🇧🇪', coords: [5.5797, 50.6326] },
+  { names: ['Charleroi'], display: 'Charleroi', country: 'Belgique', flag: '🇧🇪', coords: [4.4446, 50.4108] },
+  { names: ['Namur', 'Namen'], display: 'Namur', country: 'Belgique', flag: '🇧🇪', coords: [4.8719, 50.4674] },
+  { names: ['Mons', 'Bergen'], display: 'Mons', country: 'Belgique', flag: '🇧🇪', coords: [3.9523, 50.4542] },
+  { names: ['Bruges', 'Brugge'], display: 'Brugge (Bruges)', country: 'Belgique', flag: '🇧🇪', coords: [3.2247, 51.2093] },
+  { names: ['Louvain', 'Leuven', 'Löwen'], display: 'Leuven (Louvain)', country: 'Belgique', flag: '🇧🇪', coords: [4.7005, 50.8798] },
+  { names: ['Tournai', 'Doornik'], display: 'Tournai', country: 'Belgique', flag: '🇧🇪', coords: [3.3878, 50.6058] },
+  { names: ['Arlon', 'Aarlen'], display: 'Arlon', country: 'Belgique', flag: '🇧🇪', coords: [5.8167, 49.6833] },
+  { names: ['Ostende', 'Oostende', 'Ostend'], display: 'Oostende (Ostende)', country: 'Belgique', flag: '🇧🇪', coords: [2.9195, 51.2254] },
   { names: ['Genève', 'Geneve', 'Geneva'], display: 'Genève (Geneva)', country: 'Suisse', flag: '🇨🇭', coords: [6.1432, 46.2044] },
 
   // Germany
@@ -2767,7 +2795,7 @@ function renderCurrentRouteStations() {
     const marker = L.marker([st.lat, st.lon], { icon: customIcon }).addTo(map);
 
     // Popup content
-    const flag = st.pays === 'GB' ? '🇬🇧' : (st.pays === 'DE' ? '🇩🇪' : (st.pays === 'ES' ? '🇪🇸' : (st.pays === 'IT' ? '🇮🇹' : '🇫🇷')));
+    const flag = st.pays === 'GB' ? '🇬🇧' : (st.pays === 'DE' ? '🇩🇪' : (st.pays === 'BE' ? '🇧🇪' : (st.pays === 'ES' ? '🇪🇸' : (st.pays === 'IT' ? '🇮🇹' : '🇫🇷'))));
     const nomFormatted = isNativeCase ? st.nom : formatProperName(st.nom);
     const villeFormatted = isNativeCase ? st.ville : formatProperName(st.ville);
     const sensFormatted = st.sens ? translateSens(st.sens, isNativeCase) : '';

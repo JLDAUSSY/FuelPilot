@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=6.4">
+  <link rel="stylesheet" href="style.css?v=6.5">
 </head>
 <body class="mobile-view-list">
 
@@ -226,7 +226,7 @@
       <!-- Floating Map Coverage Indicator Badge -->
       <div class="map-coverage-badge" id="map-coverage-badge">
         <span class="coverage-dot"></span>
-        <span class="coverage-text">Réseau couvert : 🇫🇷 France • 🇩🇪 Allemagne • 🇮🇹 Italie • 🇪🇸 Espagne • 🇬🇧 Royaume-Uni</span>
+        <span class="coverage-text">Réseau couvert : 🇫🇷 France • 🇩🇪 Allemagne • 🇧🇪 Belgique • 🇮🇹 Italie • 🇪🇸 Espagne • 🇬🇧 Royaume-Uni</span>
       </div>
       <!-- Floating Map Route Alternatives Bar (Waze / Google Maps style) -->
       <div id="map-routes-bar" class="map-routes-bar" style="display: none;"></div>
@@ -258,15 +258,17 @@
         <button type="button" class="btn-close-fuel-info" id="btn-close-fuel-info" aria-label="Fermer">✖</button>
       </div>
       <div class="fuel-table-scroll-wrapper">
-        <button type="button" class="fuel-scroll-arrow fuel-scroll-left" id="fuel-scroll-left" aria-label="Défiler à gauche" style="display: none;">◀</button>
+        <div class="fuel-scroll-top-bar" id="fuel-scroll-top-bar">
+          <button type="button" class="fuel-scroll-arrow fuel-scroll-left" id="fuel-scroll-left" aria-label="Défiler à gauche" style="visibility: hidden;">◀</button>
+          <button type="button" class="fuel-scroll-arrow fuel-scroll-right" id="fuel-scroll-right" aria-label="Défiler à droite" style="visibility: hidden;">▶</button>
+        </div>
         <div class="fuel-info-body" id="fuel-info-body"></div>
-        <button type="button" class="fuel-scroll-arrow fuel-scroll-right" id="fuel-scroll-right" aria-label="Défiler à droite" style="display: none;">▶</button>
       </div>
     </div>
   </div>
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="app.js?v=6.4"></script>
+  <script src="app.js?v=6.5"></script>
 </body>
 </html>
