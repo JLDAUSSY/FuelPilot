@@ -254,7 +254,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '5.3';
+const APP_VERSION = '5.4';
 
 // Dynamically calibrate mobile bottom nav bar position using VisualViewport & Screen APIs
 // Validated across 14 smartphone models (Samsung, Google Pixel, Xiaomi, Apple iPhone, OnePlus, Honor/Huawei, Motorola, Sony, Oppo)
@@ -629,6 +629,18 @@ async function searchLocationsBilingual(q) {
     }
   };
 
+  const getPoiIcon = (cat, type) => {
+    const c = (cat || '').toLowerCase();
+    const t = (type || '').toLowerCase();
+    if (c === 'aeroway' || t.includes('aerodrome') || t.includes('airport')) return '✈️ ';
+    if (c === 'railway' || t === 'station' || t === 'halt') return '🚉 ';
+    if (t === 'ferry_terminal') return '⛴️ ';
+    if (t === 'theme_park' || t === 'zoo' || t === 'aquarium') return '🎢 ';
+    if (t === 'stadium' || t === 'sports_centre' || c === 'leisure') return '🏟️ ';
+    if (c === 'tourism' || c === 'historic' || t === 'monument' || t === 'castle' || t === 'museum' || t === 'attraction' || t === 'viewpoint' || t === 'tower' || t === 'amphitheatre' || t === 'palace' || t === 'place_of_worship') return '🏛️ ';
+    return '';
+  };
+
   const parsePhotonFeatures = (features) => {
     if (!features) return;
     features.forEach(f => {
@@ -638,9 +650,11 @@ async function searchLocationsBilingual(q) {
       const flag = getCountryFlag(p.countrycode, country);
       const isCity = ['city', 'town', 'village', 'municipality', 'administrative'].includes(p.osm_value || p.type);
       const isStreetOrHouse = ['street', 'house', 'residential', 'secondary', 'primary', 'tertiary', 'living_street', 'pedestrian', 'postcode'].includes(p.osm_value || p.type);
+      const poiIcon = (!isCity && !isStreetOrHouse) ? getPoiIcon(p.osm_key, p.osm_value || p.type) : '';
+      const isLandmark = Boolean(poiIcon);
       const isCoveredCountry = ['🇬🇧', '🇫🇷', '🇪🇸', '🇮🇹', '🇮🇪', '🇧🇪', '🇨🇭'].includes(flag);
 
-      // Build rich city/district/postcode context for street-level searches (e.g. "Joubert Street, London (SW11 5AE)")
+      // Build rich city/district/postcode context for street-level & landmark searches
       const rawCity = p.city || p.town || p.village || p.county || '';
       const shortCity = rawCity.replace(/^London Borough of\s+/i, 'London — ').replace(/^Royal Borough of\s+/i, 'London — ');
       const streetLabel = p.housenumber ? `${p.housenumber} ${p.name}` : p.name;
@@ -650,6 +664,9 @@ async function searchLocationsBilingual(q) {
       if (isStreetOrHouse) {
         nameParts = [streetLabel, p.district, shortCity, p.postcode, country].filter(Boolean);
         cleanName = [streetLabel, shortCity || p.state, p.postcode].filter(Boolean).join(', ');
+      } else if (isLandmark) {
+        nameParts = [p.name, shortCity && shortCity !== p.name ? shortCity : p.district, country].filter(Boolean);
+        cleanName = [p.name, shortCity && shortCity !== p.name ? shortCity : null].filter(Boolean).join(', ');
       } else {
         nameParts = [p.name, shortCity && shortCity !== p.name ? shortCity : null, p.state, country].filter(Boolean);
         cleanName = p.name;
@@ -657,15 +674,15 @@ async function searchLocationsBilingual(q) {
 
       // Deduplicate consecutive identical parts
       const uniqueParts = nameParts.filter((part, idx) => idx === 0 || part.toLowerCase() !== nameParts[idx - 1].toLowerCase());
-      const label = `${flag} ${uniqueParts.join(', ')}`;
+      const label = `${flag} ${poiIcon}${uniqueParts.join(', ')}`;
       const coords = f.geometry.coordinates;
 
-      // Boost priority when the result matches both street name and city in the query
+      // Boost priority when the result matches both street/landmark name and city in the query
       const fullTextNorm = uniqueParts.join(' ').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
       const queryTokens = qNorm.split(/\s+/).filter(t => t.length >= 2);
       const allTokensMatched = queryTokens.length > 0 && queryTokens.every(tok => fullTextNorm.includes(tok) || (tok === 'londres' && fullTextNorm.includes('london')));
 
-      const priority = (isCity ? 60 : (isStreetOrHouse ? 55 : 30)) + (isCoveredCountry ? 20 : 0) + (allTokensMatched ? 30 : 0);
+      const priority = (isCity ? 60 : (isLandmark ? 62 : (isStreetOrHouse ? 55 : 35))) + (isCoveredCountry ? 20 : 0) + (allTokensMatched ? 30 : 0);
 
       addResultIfUnique({
         label,
@@ -680,7 +697,7 @@ async function searchLocationsBilingual(q) {
     parsePhotonFeatures(photonDefaultRes.value.features);
   }
 
-  // Parse Nominatim OpenStreetMap results (handles exact UK/ES/IT/FR streets, postcodes & house numbers)
+  // Parse Nominatim OpenStreetMap results (handles exact UK/ES/IT/FR streets, postcodes, house numbers & famous landmarks/POIs)
   if (nominatimRes.status === 'fulfilled' && Array.isArray(nominatimRes.value)) {
     nominatimRes.value.forEach(n => {
       const addr = n.address || {};
@@ -689,24 +706,29 @@ async function searchLocationsBilingual(q) {
       const coords = [ parseFloat(n.lon), parseFloat(n.lat) ];
       if (isNaN(coords[0]) || isNaN(coords[1])) return;
 
-      const road = addr.road || addr.pedestrian || addr.suburb || n.name || '';
+      const poiIcon = getPoiIcon(n.category, n.type);
+      const isLandmark = Boolean(poiIcon) || (n.name && ['tourism', 'aeroway', 'railway', 'historic', 'amenity', 'leisure', 'man_made', 'building'].includes(n.category));
+      const road = addr.road || addr.pedestrian || addr.suburb || '';
       const house = addr.house_number ? `${addr.house_number} ` : '';
       const rawCity = addr.city || addr.town || addr.village || addr.municipality || addr.city_district || addr.county || '';
       const shortCity = rawCity.replace(/^London Borough of\s+/i, 'London — ').replace(/^Greater London$/i, 'London');
       const suburb = (addr.suburb || addr.city_district || '').replace(/^London Borough of\s+/i, '');
       const postcode = addr.postcode || '';
 
-      const primary = (house + road).trim() || shortCity || (n.display_name || '').split(',')[0];
-      const parts = [primary, suburb && suburb !== primary ? suburb : null, shortCity && shortCity !== primary ? shortCity : null, postcode, addr.country].filter(Boolean);
+      // If it's a landmark/POI (e.g. "Tour Eiffel", "Heathrow Airport", "Sagrada Família"), use n.name as primary label instead of the adjacent street
+      const primary = (isLandmark && n.name) ? n.name : ((house + road).trim() || n.name || shortCity || (n.display_name || '').split(',')[0]);
+      const parts = [primary, suburb && suburb !== primary ? suburb : null, shortCity && shortCity !== primary ? shortCity : null, isLandmark ? null : postcode, addr.country].filter(Boolean);
       const uniqueParts = parts.filter((part, idx) => idx === 0 || part.toLowerCase() !== parts[idx - 1].toLowerCase());
-      const label = `${flag} ${uniqueParts.join(', ')}`;
-      const cleanName = [primary, shortCity && shortCity !== primary ? shortCity : null, postcode].filter(Boolean).join(', ');
+      const label = `${flag} ${poiIcon}${uniqueParts.join(', ')}`;
+      const cleanName = isLandmark
+        ? [primary, shortCity && shortCity !== primary ? shortCity : null].filter(Boolean).join(', ')
+        : [primary, shortCity && shortCity !== primary ? shortCity : null, postcode].filter(Boolean).join(', ');
 
       const fullTextNorm = uniqueParts.join(' ').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
       const queryTokens = qNorm.split(/\s+/).filter(t => t.length >= 2);
       const allTokensMatched = queryTokens.length > 0 && queryTokens.every(tok => fullTextNorm.includes(tok) || (tok === 'londres' && fullTextNorm.includes('london')));
 
-      const priority = 58 + (isCoveredCountry ? 20 : 0) + (allTokensMatched ? 30 : 0);
+      const priority = (isLandmark ? 65 : 58) + (isCoveredCountry ? 20 : 0) + (allTokensMatched ? 30 : 0);
       addResultIfUnique({
         label,
         cleanName,
