@@ -938,10 +938,12 @@ function renderRouteAlternatives() {
       card.id = `route-card-${idx}`;
       card.innerHTML = `
         <div class="route-card-header">
-          <span class="route-badge ${idx === 0 ? 'badge-blue' : 'badge-orange'}">${idx === 0 ? '🔵 Recommandé' : '🟠 Option ' + (idx + 1)}</span>
+          <div class="route-card-left">
+            <span class="route-badge ${idx === 0 ? 'badge-blue' : 'badge-orange'}">${idx === 0 ? '🔵 Recommandé' : '🟠 Option ' + (idx + 1)}</span>
+            <span class="route-desc">${summary}</span>
+          </div>
           <span class="route-stats">${timeStr} ${diffStr ? `<span class="time-diff">(${diffStr})</span>` : ''} • ${distKm} km</span>
         </div>
-        <div class="route-desc">${summary}</div>
       `;
       card.addEventListener('click', () => selectRoute(idx));
       container.appendChild(card);

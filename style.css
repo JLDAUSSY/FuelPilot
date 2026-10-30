@@ -383,15 +383,15 @@ header {
 .routes-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-top: 10px;
+  gap: 5px;
+  margin-top: 6px;
 }
 
 .route-card {
   background: var(--bg-primary);
   border: 2px solid var(--border-color);
-  border-radius: 10px;
-  padding: 12px 14px;
+  border-radius: 9px;
+  padding: 7px 10px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -406,16 +406,27 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 4px;
+  gap: 8px;
+  margin-bottom: 0;
+}
+
+.route-card-left {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  flex: 1;
 }
 
 .route-badge {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   padding: 2px 8px;
   border-radius: 12px;
   background: var(--bg-tertiary);
   color: var(--text-primary);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .route-card.active .route-badge {
@@ -424,14 +435,19 @@ header {
 }
 
 .route-stats {
-  font-size: 0.88rem;
-  font-weight: 600;
+  font-size: 0.82rem;
+  font-weight: 700;
   color: var(--text-primary);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .route-desc {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .time-diff {
@@ -1366,29 +1382,34 @@ header {
 
   /* Zone 3 Header */
   .stations-section {
-    padding: 6px 10px 100px 10px !important;
+    padding: 4px 10px 0 10px !important;
   }
 
   .stations-header {
-    margin-bottom: 6px !important;
+    margin-bottom: 5px !important;
+  }
+
+  .stations-header .section-title {
+    display: none !important;
   }
 
   .stations-count {
-    font-size: 0.82rem !important;
-    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+    font-weight: 800 !important;
     color: #38bdf8 !important;
   }
 
   .select-sort {
     font-size: 0.8rem !important;
     padding: 2px 6px !important;
-    height: 32px !important;
+    height: 30px !important;
     border-radius: 6px !important;
   }
 
   /* Station Cards - Compact & High-density */
   .stations-scroll {
     gap: 8px !important;
+    padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px)) !important;
   }
 
   .station-card {
@@ -1626,8 +1647,8 @@ header {
     min-width: 0 !important;
     max-width: 100% !important;
     height: 100% !important;
-    overflow-y: auto !important;
-    padding-bottom: calc(75px + env(safe-area-inset-bottom, 0px)) !important;
+    overflow: hidden !important;
+    padding-bottom: 0 !important;
   }
 
   body.mobile-view-list .map-container,
