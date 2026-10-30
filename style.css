@@ -276,6 +276,17 @@ header {
   display: none;
 }
 
+.autocomplete-recent-header {
+  padding: 5px 12px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #38bdf8;
+  background: rgba(14, 165, 233, 0.1);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+}
+
 .autocomplete-item {
   padding: 10px 14px;
   font-size: 0.88rem;
@@ -1409,7 +1420,7 @@ header {
   /* Station Cards - Compact & High-density */
   .stations-scroll {
     gap: 8px !important;
-    padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px)) !important;
+    padding-bottom: calc(82px + env(safe-area-inset-bottom, 16px)) !important;
   }
 
   .station-card {
@@ -1516,23 +1527,24 @@ header {
     margin-top: 3px !important;
   }
 
-  /* Sleek Floating Bottom Navigation Bar */
+  /* Sleek Floating Bottom Navigation Bar - Guaranteed visible on all phone models with white border */
   .mobile-nav-bar {
-    display: flex;
-    position: fixed;
-    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2000;
-    background: rgba(15, 23, 42, 0.95);
+    display: flex !important;
+    position: fixed !important;
+    bottom: max(18px, calc(14px + env(safe-area-inset-bottom, 0px))) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 99999 !important;
+    background: rgba(15, 23, 42, 0.96) !important;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 26px;
-    padding: 3px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
+    border: 2px solid #ffffff !important;
+    border-radius: 26px !important;
+    padding: 3px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8), 0 0 12px rgba(255, 255, 255, 0.28) !important;
     gap: 4px;
     height: 46px;
+    max-width: calc(100vw - 20px);
   }
 
   .mobile-tab-btn {

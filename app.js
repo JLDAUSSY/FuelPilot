@@ -161,7 +161,7 @@ function setMobileView(view) {
     if (mapBar && alternativeRoutes && alternativeRoutes.length > 1) {
       mapBar.style.display = 'flex';
       mapBar.style.position = 'fixed';
-      mapBar.style.bottom = 'calc(82px + env(safe-area-inset-bottom, 0px))';
+      mapBar.style.bottom = 'max(76px, calc(70px + env(safe-area-inset-bottom, 0px)))';
       mapBar.style.zIndex = '1950';
     }
     setTimeout(() => {
@@ -554,39 +554,130 @@ async function searchLocationsBilingual(q) {
   return results;
 }
 
-// Address Autocomplete: Bilingual UK/FR/ES/IT Cities + Photon + French BAN
+// ============================================================================
+// Memory of the 6 most recent departure / arrival localities (localStorage)
+// ============================================================================
+const RECENT_LOCATIONS_KEY = 'fuelpilot_recent_locations_v1';
+
+function getRecentLocations() {
+  try {
+    const raw = localStorage.getItem(RECENT_LOCATIONS_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed.slice(0, 6) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveRecentLocation(cleanName, coords, fullLabel) {
+  if (!cleanName || !Array.isArray(coords) || coords.length < 2) return;
+  try {
+    const list = getRecentLocations();
+    const normName = cleanName.trim().toLowerCase();
+    const filtered = list.filter(item => {
+      const sameName = (item.cleanName || '').trim().toLowerCase() === normName;
+      const sameCoords = item.coords &&
+        Math.abs(item.coords[0] - coords[0]) < 0.03 &&
+        Math.abs(item.coords[1] - coords[1]) < 0.03;
+      return !sameName && !sameCoords;
+    });
+    filtered.unshift({
+      cleanName: cleanName.trim(),
+      label: fullLabel || cleanName.trim(),
+      coords: [Number(coords[0]), Number(coords[1])]
+    });
+    localStorage.setItem(RECENT_LOCATIONS_KEY, JSON.stringify(filtered.slice(0, 6)));
+  } catch (e) {}
+}
+
+// Address Autocomplete: Bilingual UK/FR/ES/IT Cities + Photon + French BAN + 6 Recent Localities
 function setupAutocomplete(inputId, dropdownId, onSelect) {
   const input = document.getElementById(inputId);
   const dropdown = document.getElementById(dropdownId);
   let debounceTimer;
 
+  function renderDropdownItems(items, isRecentHeader = false) {
+    if (!items || items.length === 0) {
+      dropdown.style.display = 'none';
+      return;
+    }
+    dropdown.innerHTML = '';
+    if (isRecentHeader) {
+      const hdr = document.createElement('div');
+      hdr.className = 'autocomplete-recent-header';
+      hdr.textContent = '🕒 6 dernières localités';
+      dropdown.appendChild(hdr);
+    }
+    items.slice(0, 6).forEach(itemData => {
+      const item = document.createElement('div');
+      item.className = 'autocomplete-item';
+      item.textContent = isRecentHeader ? `🕒 ${itemData.label || itemData.cleanName}` : itemData.label;
+      item.addEventListener('click', () => {
+        const formattedName = itemData.cleanName;
+        input.value = formattedName;
+        dropdown.style.display = 'none';
+        saveRecentLocation(formattedName, itemData.coords, itemData.label);
+        onSelect(itemData.coords, formattedName);
+      });
+      dropdown.appendChild(item);
+    });
+    dropdown.style.display = 'block';
+  }
+
+  function showRecentIfAvailable() {
+    const recents = getRecentLocations();
+    if (recents.length > 0) {
+      renderDropdownItems(recents, true);
+    }
+  }
+
+  input.addEventListener('focus', () => {
+    if (input.value.trim().length < 2) {
+      showRecentIfAvailable();
+    } else {
+      showRecentIfAvailable();
+    }
+  });
+
+  input.addEventListener('click', () => {
+    if (dropdown.style.display === 'none' || !dropdown.style.display) {
+      showRecentIfAvailable();
+    }
+  });
+
   input.addEventListener('input', () => {
     clearTimeout(debounceTimer);
     const q = input.value.trim();
     if (q.length < 2) {
-      dropdown.style.display = 'none';
+      showRecentIfAvailable();
       return;
     }
 
     debounceTimer = setTimeout(async () => {
       try {
         const results = await searchLocationsBilingual(q);
+        // Prepend matching recent locations at the very top
+        const qLow = q.toLowerCase();
+        const matchingRecents = getRecentLocations()
+          .filter(r => (r.cleanName || '').toLowerCase().includes(qLow) || (r.label || '').toLowerCase().includes(qLow))
+          .map(r => ({
+            label: `🕒 ${r.label || r.cleanName}`,
+            cleanName: r.cleanName,
+            coords: r.coords,
+            priority: 200
+          }));
 
-        if (results.length > 0) {
-          dropdown.innerHTML = '';
-          results.slice(0, 6).forEach(itemData => {
-            const item = document.createElement('div');
-            item.className = 'autocomplete-item';
-            item.textContent = itemData.label;
-            item.addEventListener('click', () => {
-              const formattedName = itemData.cleanName;
-              input.value = formattedName;
-              dropdown.style.display = 'none';
-              onSelect(itemData.coords, formattedName);
-            });
-            dropdown.appendChild(item);
-          });
-          dropdown.style.display = 'block';
+        const combined = [...matchingRecents];
+        results.forEach(res => {
+          const isDup = combined.some(c =>
+            Math.abs(c.coords[0] - res.coords[0]) < 0.05 && Math.abs(c.coords[1] - res.coords[1]) < 0.05
+          );
+          if (!isDup) combined.push(res);
+        });
+
+        if (combined.length > 0) {
+          renderDropdownItems(combined, false);
         } else {
           dropdown.style.display = 'none';
         }
@@ -784,6 +875,10 @@ async function calculateItinerary() {
     alert("Veuillez renseigner un point de départ et un point d'arrivée.");
     return;
   }
+
+  // Save both departure and arrival in the 6 recent localities memory
+  saveRecentLocation(startPoint.label, startPoint.coords, startPoint.label);
+  saveRecentLocation(endPoint.label, endPoint.coords, endPoint.label);
 
   const btn = document.getElementById('btn-calculate');
   btn.innerHTML = `<span class="pulse-dot" style="background:#fff"></span> Calcul en cours...`;
