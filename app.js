@@ -254,7 +254,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '5.7';
+const APP_VERSION = '5.8';
 let currentLang = localStorage.getItem('fuelpilot_lang') || 'fr';
 
 const I18N_DICT = {
