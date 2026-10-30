@@ -343,7 +343,7 @@ async function loadCoveredCountries() {
       { coords: [46.6, 2.5], flag: '🇫🇷', name: 'France', count: '438 aires' },
       { coords: [40.2, -3.6], flag: '🇪🇸', name: 'Espagne', count: '833 aires' },
       { coords: [42.6, 12.8], flag: '🇮🇹', name: 'Italie', count: '615 aires' },
-      { coords: [52.8, -1.8], flag: '🇬🇧', name: 'Royaume-Uni', count: '146 aires' }
+      { coords: [52.8, -1.8], flag: '🇬🇧', name: 'Royaume-Uni', count: '158 aires' }
     ];
 
     countryLabels.forEach(c => {
@@ -376,7 +376,185 @@ function populateBrandFilter() {
   });
 }
 
-// Address Autocomplete: French BAN + European Photon (Spain, Italy, Belgium...)
+// Bilingual European Cities Index (instant support for English, French, Spanish & Italian names)
+const BILINGUAL_CITIES_INDEX = [
+  // United Kingdom & Ireland
+  { names: ['London', 'Londres'], display: 'London (Londres)', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-0.1276, 51.5072] },
+  { names: ['Folkestone'], display: 'Folkestone', country: 'Royaume-Uni', flag: '🇬🇧', coords: [1.1560, 51.0814] },
+  { names: ['Dover', 'Douvres'], display: 'Dover (Douvres)', country: 'Royaume-Uni', flag: '🇬🇧', coords: [1.3134, 51.1279] },
+  { names: ['Edinburgh', 'Edimbourg', 'Édimbourg'], display: 'Edinburgh (Édimbourg)', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-3.1883, 55.9533] },
+  { names: ['Manchester'], display: 'Manchester', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-2.2426, 53.4808] },
+  { names: ['Birmingham'], display: 'Birmingham', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.8904, 52.4862] },
+  { names: ['Liverpool'], display: 'Liverpool', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-2.9916, 53.4084] },
+  { names: ['Glasgow'], display: 'Glasgow', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-4.2518, 55.8642] },
+  { names: ['Belfast'], display: 'Belfast', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-5.9301, 54.5973] },
+  { names: ['Bristol'], display: 'Bristol', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-2.5879, 51.4545] },
+  { names: ['Leeds'], display: 'Leeds', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.5491, 53.8008] },
+  { names: ['Cardiff'], display: 'Cardiff', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-3.1791, 51.4816] },
+  { names: ['Newcastle', 'Newcastle upon Tyne'], display: 'Newcastle upon Tyne', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.6178, 54.9783] },
+  { names: ['Sheffield'], display: 'Sheffield', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.4701, 53.3811] },
+  { names: ['Nottingham'], display: 'Nottingham', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.1581, 52.9548] },
+  { names: ['Southampton'], display: 'Southampton', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.4044, 50.9097] },
+  { names: ['Portsmouth'], display: 'Portsmouth', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.0880, 50.8198] },
+  { names: ['Brighton'], display: 'Brighton', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-0.1372, 50.8225] },
+  { names: ['Oxford'], display: 'Oxford', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.2577, 51.7520] },
+  { names: ['Cambridge'], display: 'Cambridge', country: 'Royaume-Uni', flag: '🇬🇧', coords: [0.1218, 52.2053] },
+  { names: ['Canterbury', 'Cantorbéry', 'Cantorbery'], display: 'Canterbury (Cantorbéry)', country: 'Royaume-Uni', flag: '🇬🇧', coords: [1.0789, 51.2802] },
+  { names: ['Maidstone'], display: 'Maidstone', country: 'Royaume-Uni', flag: '🇬🇧', coords: [0.5217, 51.2704] },
+  { names: ['Ashford'], display: 'Ashford', country: 'Royaume-Uni', flag: '🇬🇧', coords: [0.8738, 51.1465] },
+  { names: ['Exeter'], display: 'Exeter', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-3.5339, 50.7184] },
+  { names: ['Plymouth'], display: 'Plymouth', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-4.1427, 50.3755] },
+  { names: ['York'], display: 'York', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.0873, 53.9599] },
+  { names: ['Swansea'], display: 'Swansea', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-3.9436, 51.6214] },
+  { names: ['Reading'], display: 'Reading', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-0.9781, 51.4543] },
+  { names: ['Coventry'], display: 'Coventry', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.5197, 52.4068] },
+  { names: ['Leicester'], display: 'Leicester', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.1398, 52.6369] },
+  { names: ['Carlisle'], display: 'Carlisle', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-2.9329, 54.8925] },
+  { names: ['Inverness'], display: 'Inverness', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-4.2247, 57.4778] },
+  { names: ['Aberdeen'], display: 'Aberdeen', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-2.0943, 57.1497] },
+  { names: ['Dublin'], display: 'Dublin', country: 'Irlande', flag: '🇮🇪', coords: [-6.2603, 53.3498] },
+
+  // Italy
+  { names: ['Milano', 'Milan'], display: 'Milano (Milan)', country: 'Italie', flag: '🇮🇹', coords: [9.1900, 45.4642] },
+  { names: ['Roma', 'Rome'], display: 'Roma (Rome)', country: 'Italie', flag: '🇮🇹', coords: [12.4964, 41.9028] },
+  { names: ['Torino', 'Turin'], display: 'Torino (Turin)', country: 'Italie', flag: '🇮🇹', coords: [7.6869, 45.0703] },
+  { names: ['Venezia', 'Venise', 'Venice'], display: 'Venezia (Venise)', country: 'Italie', flag: '🇮🇹', coords: [12.3155, 45.4408] },
+  { names: ['Firenze', 'Florence'], display: 'Firenze (Florence)', country: 'Italie', flag: '🇮🇹', coords: [11.2558, 43.7696] },
+  { names: ['Napoli', 'Naples'], display: 'Napoli (Naples)', country: 'Italie', flag: '🇮🇹', coords: [14.2681, 40.8518] },
+  { names: ['Genova', 'Gênes', 'Genes', 'Genoa'], display: 'Genova (Gênes)', country: 'Italie', flag: '🇮🇹', coords: [8.9463, 44.4056] },
+  { names: ['Bologna', 'Bologne'], display: 'Bologna (Bologne)', country: 'Italie', flag: '🇮🇹', coords: [11.3426, 44.4949] },
+  { names: ['Verona', 'Vérone', 'Verone'], display: 'Verona (Vérone)', country: 'Italie', flag: '🇮🇹', coords: [10.9916, 45.4384] },
+  { names: ['Bari'], display: 'Bari', country: 'Italie', flag: '🇮🇹', coords: [16.8719, 41.1171] },
+  { names: ['Palermo', 'Palerme'], display: 'Palermo (Palerme)', country: 'Italie', flag: '🇮🇹', coords: [13.3615, 38.1157] },
+
+  // Spain
+  { names: ['Barcelona', 'Barcelone'], display: 'Barcelona (Barcelone)', country: 'Espagne', flag: '🇪🇸', coords: [2.1734, 41.3851] },
+  { names: ['Madrid'], display: 'Madrid', country: 'Espagne', flag: '🇪🇸', coords: [-3.7038, 40.4168] },
+  { names: ['Valencia', 'Valence'], display: 'Valencia (Valence)', country: 'Espagne', flag: '🇪🇸', coords: [-0.3763, 39.4699] },
+  { names: ['Sevilla', 'Séville', 'Seville'], display: 'Sevilla (Séville)', country: 'Espagne', flag: '🇪🇸', coords: [-5.9845, 37.3891] },
+  { names: ['Zaragoza', 'Saragosse', 'Saragossa'], display: 'Zaragoza (Saragosse)', country: 'Espagne', flag: '🇪🇸', coords: [-0.8891, 41.6488] },
+  { names: ['Málaga', 'Malaga'], display: 'Málaga', country: 'Espagne', flag: '🇪🇸', coords: [-4.4214, 36.7213] },
+  { names: ['Bilbao'], display: 'Bilbao', country: 'Espagne', flag: '🇪🇸', coords: [-2.9350, 43.2630] },
+  { names: ['San Sebastián', 'Donostia', 'Saint-Sébastien', 'San Sebastian'], display: 'San Sebastián (Saint-Sébastien)', country: 'Espagne', flag: '🇪🇸', coords: [-1.9812, 43.3183] },
+  { names: ['Girona', 'Gérone', 'Gerone'], display: 'Girona (Gérone)', country: 'Espagne', flag: '🇪🇸', coords: [2.8214, 41.9794] },
+  { names: ['Alicante'], display: 'Alicante', country: 'Espagne', flag: '🇪🇸', coords: [-0.4810, 38.3452] },
+
+  // France & Neighbors
+  { names: ['Paris'], display: 'Paris', country: 'France', flag: '🇫🇷', coords: [2.3522, 48.8566] },
+  { names: ['Lyon', 'Lyons'], display: 'Lyon', country: 'France', flag: '🇫🇷', coords: [4.8357, 45.7640] },
+  { names: ['Marseille', 'Marseilles'], display: 'Marseille', country: 'France', flag: '🇫🇷', coords: [5.3698, 43.2965] },
+  { names: ['Lille'], display: 'Lille', country: 'France', flag: '🇫🇷', coords: [3.0573, 50.6292] },
+  { names: ['Calais'], display: 'Calais', country: 'France', flag: '🇫🇷', coords: [1.8587, 50.9513] },
+  { names: ['Dunkerque', 'Dunkirk'], display: 'Dunkerque (Dunkirk)', country: 'France', flag: '🇫🇷', coords: [2.3768, 51.0344] },
+  { names: ['Bordeaux'], display: 'Bordeaux', country: 'France', flag: '🇫🇷', coords: [-0.5792, 44.8378] },
+  { names: ['Toulouse'], display: 'Toulouse', country: 'France', flag: '🇫🇷', coords: [1.4442, 43.6047] },
+  { names: ['Nice'], display: 'Nice', country: 'France', flag: '🇫🇷', coords: [7.2620, 43.7102] },
+  { names: ['Nantes'], display: 'Nantes', country: 'France', flag: '🇫🇷', coords: [-1.5536, 47.2184] },
+  { names: ['Strasbourg'], display: 'Strasbourg', country: 'France', flag: '🇫🇷', coords: [7.7521, 48.5734] },
+  { names: ['Bruxelles', 'Brussels', 'Brussel'], display: 'Bruxelles (Brussels)', country: 'Belgique', flag: '🇧🇪', coords: [4.3517, 50.8503] },
+  { names: ['Genève', 'Geneve', 'Geneva'], display: 'Genève (Geneva)', country: 'Suisse', flag: '🇨🇭', coords: [6.1432, 46.2044] }
+];
+
+async function searchLocationsBilingual(q) {
+  const qNorm = q.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const results = [];
+
+  // 1. Instant Bilingual Major Cities Match (English + French + Native names)
+  BILINGUAL_CITIES_INDEX.forEach(city => {
+    const matched = city.names.some(n => {
+      const nNorm = n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      return nNorm.startsWith(qNorm) || qNorm === nNorm;
+    });
+    if (matched) {
+      results.push({
+        label: `${city.flag} ${city.display}, ${city.country}`,
+        cleanName: city.display,
+        coords: city.coords,
+        priority: 100
+      });
+    }
+  });
+
+  // 2. Query European Photon (default multilingual + FR) & French BAN in parallel
+  const [banRes, photonDefaultRes, photonFrRes] = await Promise.allSettled([
+    fetch(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(q)}&limit=5`).then(r => r.json()),
+    fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=6`).then(r => r.json()),
+    fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=5&lang=fr`).then(r => r.json())
+  ]);
+
+  const parsePhotonFeatures = (features) => {
+    if (!features) return;
+    features.forEach(f => {
+      const p = f.properties || {};
+      if (!p.name) return;
+      const country = p.country || '';
+      const cLow = country.toLowerCase();
+      const cc = (p.countrycode || '').toUpperCase();
+      const flag = (cc === 'GB' || cc === 'UK' || cLow.includes('royaume-uni') || cLow.includes('united kingdom') || cLow.includes('great britain') || cLow.includes('england') || cLow.includes('scotland') || cLow.includes('wales')) ? '🇬🇧' :
+                   (cc === 'ES' || cLow.includes('esp') || cLow.includes('spain')) ? '🇪🇸' :
+                   (cc === 'IT' || cLow.includes('ital')) ? '🇮🇹' :
+                   (cc === 'FR' || cLow.includes('fran')) ? '🇫🇷' :
+                   (cc === 'IE' || cLow.includes('ireland') || cLow.includes('irlande')) ? '🇮🇪' :
+                   (cc === 'DE' || cLow.includes('allem') || cLow.includes('germ')) ? '🇩🇪' :
+                   (cc === 'BE' || cLow.includes('belg')) ? '🇧🇪' :
+                   (cc === 'CH' || cLow.includes('suis') || cLow.includes('switz')) ? '🇨🇭' :
+                   (cc === 'LU' || cLow.includes('lux')) ? '🇱🇺' : '🌍';
+
+      const isCity = ['city', 'town', 'village', 'municipality', 'administrative'].includes(p.osm_value || p.type);
+      const isCoveredCountry = ['🇬🇧', '🇫🇷', '🇪🇸', '🇮🇹', '🇮🇪', '🇧🇪', '🇨🇭'].includes(flag);
+      const priority = (isCity ? 60 : 25) + (isCoveredCountry ? 20 : 0);
+
+      const nameParts = [p.name, p.state, country].filter(Boolean);
+      const label = `${flag} ${nameParts.join(', ')}`;
+      const coords = f.geometry.coordinates;
+
+      const isDup = results.some(r =>
+        Math.abs(r.coords[0] - coords[0]) < 0.08 && Math.abs(r.coords[1] - coords[1]) < 0.08
+      );
+      if (!isDup) {
+        results.push({
+          label,
+          cleanName: p.name,
+          coords,
+          priority
+        });
+      }
+    });
+  };
+
+  if (photonDefaultRes.status === 'fulfilled' && photonDefaultRes.value) {
+    parsePhotonFeatures(photonDefaultRes.value.features);
+  }
+  if (photonFrRes.status === 'fulfilled' && photonFrRes.value) {
+    parsePhotonFeatures(photonFrRes.value.features);
+  }
+
+  if (banRes.status === 'fulfilled' && banRes.value && banRes.value.features) {
+    banRes.value.features.forEach(f => {
+      const p = f.properties || {};
+      const coords = f.geometry.coordinates;
+      // Prioritize French municipalities/cities over minor street names ("Rue de London")
+      const isMunicipality = p.type === 'municipality';
+      const priority = isMunicipality ? 85 : 30;
+      const isDup = results.some(r =>
+        Math.abs(r.coords[0] - coords[0]) < 0.05 && Math.abs(r.coords[1] - coords[1]) < 0.05
+      );
+      if (!isDup) {
+        results.push({
+          label: '🇫🇷 ' + p.label,
+          cleanName: p.label,
+          coords,
+          priority
+        });
+      }
+    });
+  }
+
+  results.sort((a, b) => b.priority - a.priority);
+  return results;
+}
+
+// Address Autocomplete: Bilingual UK/FR/ES/IT Cities + Photon + French BAN
 function setupAutocomplete(inputId, dropdownId, onSelect) {
   const input = document.getElementById(inputId);
   const dropdown = document.getElementById(dropdownId);
@@ -392,53 +570,7 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
 
     debounceTimer = setTimeout(async () => {
       try {
-        let results = [];
-        
-        // 1. Try French BAN
-        try {
-          const res = await fetch(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(q)}&limit=5`);
-          const data = await res.json();
-          if (data.features) {
-            data.features.forEach(f => {
-              results.push({
-                label: "🇫🇷 " + f.properties.label,
-                cleanName: f.properties.label,
-                coords: f.geometry.coordinates
-              });
-            });
-          }
-        } catch (e) {}
-
-        // 2. Query European Photon geocoder for cross-border cities (Barcelona, Madrid, Milan, etc.)
-        try {
-          const resEur = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=5&lang=fr`);
-          const dataEur = await resEur.json();
-          if (dataEur.features) {
-            dataEur.features.forEach(f => {
-              const p = f.properties;
-              const country = p.country || '';
-              const cLow = country.toLowerCase();
-              const flag = cLow.includes('esp') || cLow.includes('spain') ? '🇪🇸' :
-                           cLow.includes('ital') ? '🇮🇹' :
-                           cLow.includes('royaume-uni') || cLow.includes('united kingdom') || cLow.includes('uk') || cLow.includes('great britain') || cLow.includes('england') || cLow.includes('scotland') || cLow.includes('wales') ? '🇬🇧' :
-                           cLow.includes('fran') ? '🇫🇷' :
-                           cLow.includes('allem') || cLow.includes('germ') ? '🇩🇪' :
-                           cLow.includes('belg') ? '🇧🇪' :
-                           cLow.includes('suis') || cLow.includes('switz') ? '🇨🇭' :
-                           cLow.includes('lux') ? '🇱🇺' : '🌍';
-              const nameParts = [p.name, p.state, country].filter(Boolean);
-              const label = `${flag} ${nameParts.join(', ')}`;
-              // avoid duplicate if same name already in results
-              if (!results.some(r => r.cleanName.toLowerCase() === p.name.toLowerCase())) {
-                results.push({
-                  label: label,
-                  cleanName: p.name,
-                  coords: f.geometry.coordinates
-                });
-              }
-            });
-          }
-        } catch (e) {}
+        const results = await searchLocationsBilingual(q);
 
         if (results.length > 0) {
           dropdown.innerHTML = '';
@@ -447,7 +579,7 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
             item.className = 'autocomplete-item';
             item.textContent = itemData.label;
             item.addEventListener('click', () => {
-              const formattedName = formatProperName(itemData.cleanName);
+              const formattedName = itemData.cleanName;
               input.value = formattedName;
               dropdown.style.display = 'none';
               onSelect(itemData.coords, formattedName);
@@ -461,7 +593,7 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
       } catch (e) {
         console.error(e);
       }
-    }, 250);
+    }, 200);
   });
 
   document.addEventListener('click', (e) => {
@@ -623,6 +755,31 @@ function addWaypointInput() {
 
 // Calculate Itinerary with OSRM (supports alternatives)
 async function calculateItinerary() {
+  const startInput = document.getElementById('input-start');
+  const endInput = document.getElementById('input-end');
+
+  // Auto-resolve typed text (e.g. "London", "Folkestone") if user didn't click the dropdown
+  if (startInput && startInput.value.trim().length >= 2) {
+    const typedStart = startInput.value.trim();
+    if (!startPoint || startPoint.label.toLowerCase() !== typedStart.toLowerCase()) {
+      const matches = await searchLocationsBilingual(typedStart);
+      if (matches.length > 0) {
+        startPoint = { coords: matches[0].coords, label: matches[0].cleanName };
+        startInput.value = matches[0].cleanName;
+      }
+    }
+  }
+  if (endInput && endInput.value.trim().length >= 2) {
+    const typedEnd = endInput.value.trim();
+    if (!endPoint || endPoint.label.toLowerCase() !== typedEnd.toLowerCase()) {
+      const matches = await searchLocationsBilingual(typedEnd);
+      if (matches.length > 0) {
+        endPoint = { coords: matches[0].coords, label: matches[0].cleanName };
+        endInput.value = matches[0].cleanName;
+      }
+    }
+  }
+
   if (!startPoint || !endPoint) {
     alert("Veuillez renseigner un point de départ et un point d'arrivée.");
     return;

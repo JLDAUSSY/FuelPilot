@@ -53069,6 +53069,123 @@
   {
     "id": "GB-MSA-027",
     "pays": "GB",
+    "enseigne": "Euro Garages (Shell)",
+    "autoroute": "A2",
+    "nom": "Falconwood Services",
+    "sens": "Double sens",
+    "adresse": "A2 Junction Eltham, London SE9 2RN",
+    "ville": "London",
+    "cp": "SE9 2RN",
+    "departement": "United Kingdom",
+    "lat": 51.4589,
+    "lon": 0.0371,
+    "pk_text": "Eltham",
+    "prix": {
+      "e10": 1.689,
+      "sp95": 1.689,
+      "gazole": 1.969,
+      "sp98": 1.839
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-028",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "A2",
+    "nom": "Bluewater Bean Services",
+    "sens": "Double sens",
+    "adresse": "A2 Junction J2, Dartford DA2 8AH",
+    "ville": "Dartford",
+    "cp": "DA2 8AH",
+    "departement": "United Kingdom",
+    "lat": 51.426,
+    "lon": 0.2355,
+    "pk_text": "J2",
+    "prix": {
+      "e10": 1.563,
+      "sp95": 1.563,
+      "gazole": 1.633,
+      "sp98": 1.683
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-029",
+    "pays": "GB",
+    "enseigne": "Moto (Esso)",
+    "autoroute": "A2",
+    "nom": "Gravesend Cobham Services",
+    "sens": "Double sens",
+    "adresse": "A2 Junction Shorne, Gravesend DA12 3AN",
+    "ville": "Gravesend",
+    "cp": "DA12 3AN",
+    "departement": "United Kingdom",
+    "lat": 51.4019,
+    "lon": 0.4094,
+    "pk_text": "Shorne",
+    "prix": {
+      "e10": 1.503,
+      "sp95": 1.503,
+      "gazole": 1.573,
+      "sp98": 1.623
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-030",
+    "pays": "GB",
+    "enseigne": "Euro Garages (Shell)",
+    "autoroute": "A229",
+    "nom": "Blue Bell Hill Services",
+    "sens": "Double sens",
+    "adresse": "A229 Junction M2 J3, Chatham ME5 9UR",
+    "ville": "Chatham",
+    "cp": "ME5 9UR",
+    "departement": "United Kingdom",
+    "lat": 51.3458,
+    "lon": 0.5032,
+    "pk_text": "M2 J3",
+    "prix": {
+      "e10": 1.515,
+      "sp95": 1.515,
+      "gazole": 1.585,
+      "sp98": 1.635,
+      "gplc": 0.902
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-031",
+    "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M2",
     "nom": "Medway Services (Eastbound)",
@@ -53096,7 +53213,7 @@
     ]
   },
   {
-    "id": "GB-MSA-028",
+    "id": "GB-MSA-032",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M2",
@@ -53125,7 +53242,95 @@
     ]
   },
   {
-    "id": "GB-MSA-029",
+    "id": "GB-MSA-033",
+    "pays": "GB",
+    "enseigne": "Euro Garages (BP)",
+    "autoroute": "A20",
+    "nom": "Sidcup Crittals Services",
+    "sens": "Double sens",
+    "adresse": "A20 Junction Sidcup, Sidcup DA14 5",
+    "ville": "Sidcup",
+    "cp": "DA14 5",
+    "departement": "United Kingdom",
+    "lat": 51.4165,
+    "lon": 0.0893,
+    "pk_text": "Sidcup",
+    "prix": {
+      "e10": 1.509,
+      "sp95": 1.509,
+      "gazole": 1.579,
+      "sp98": 1.629,
+      "gplc": 0.904
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-034",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Esso)",
+    "autoroute": "M20",
+    "nom": "Brands Hatch Wrotham Services",
+    "sens": "Double sens",
+    "adresse": "M20 Junction J2, Wrotham DA3 8",
+    "ville": "Wrotham",
+    "cp": "DA3 8",
+    "departement": "United Kingdom",
+    "lat": 51.3547,
+    "lon": 0.2728,
+    "pk_text": "J2",
+    "prix": {
+      "e10": 1.539,
+      "sp95": 1.539,
+      "gazole": 1.609,
+      "sp98": 1.659
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-035",
+    "pays": "GB",
+    "enseigne": "Extra (Shell)",
+    "autoroute": "M20",
+    "nom": "Maidstone Aylesford Services",
+    "sens": "Double sens",
+    "adresse": "M20 Junction J6, Maidstone ME14 3",
+    "ville": "Maidstone",
+    "cp": "ME14 3",
+    "departement": "United Kingdom",
+    "lat": 51.299,
+    "lon": 0.5199,
+    "pk_text": "J6",
+    "prix": {
+      "e10": 1.503,
+      "sp95": 1.503,
+      "gazole": 1.573,
+      "sp98": 1.623
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-036",
     "pays": "GB",
     "enseigne": "Roadchef (BP)",
     "autoroute": "M20",
@@ -53139,10 +53344,11 @@
     "lon": 0.6186,
     "pk_text": "J8",
     "prix": {
-      "e10": 1.573,
-      "sp95": 1.573,
-      "gazole": 1.643,
-      "sp98": 1.693
+      "e10": 1.564,
+      "sp95": 1.564,
+      "gazole": 1.634,
+      "sp98": 1.684,
+      "gplc": 0.931
     },
     "ruptures": [],
     "services": [
@@ -53154,7 +53360,95 @@
     ]
   },
   {
-    "id": "GB-MSA-030",
+    "id": "GB-MSA-037",
+    "pays": "GB",
+    "enseigne": "Euro Garages (Texaco)",
+    "autoroute": "M20",
+    "nom": "Lenham Harrietsham Services",
+    "sens": "Double sens",
+    "adresse": "M20 Junction J8/J9, Maidstone ME17 1",
+    "ville": "Maidstone",
+    "cp": "ME17 1",
+    "departement": "United Kingdom",
+    "lat": 51.224,
+    "lon": 0.7065,
+    "pk_text": "J8/J9",
+    "prix": {
+      "e10": 1.478,
+      "sp95": 1.478,
+      "gazole": 1.548,
+      "sp98": 1.598
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-038",
+    "pays": "GB",
+    "enseigne": "Extra (Shell)",
+    "autoroute": "M20",
+    "nom": "Ashford Eureka Services",
+    "sens": "Double sens",
+    "adresse": "M20 Junction J9, Ashford TN25 4BN",
+    "ville": "Ashford",
+    "cp": "TN25 4BN",
+    "departement": "United Kingdom",
+    "lat": 51.188,
+    "lon": 0.8267,
+    "pk_text": "J9",
+    "prix": {
+      "e10": 1.516,
+      "sp95": 1.516,
+      "gazole": 1.586,
+      "sp98": 1.636
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-039",
+    "pays": "GB",
+    "enseigne": "Moto (Esso)",
+    "autoroute": "M20",
+    "nom": "Ashford Orbital Services",
+    "sens": "Double sens",
+    "adresse": "M20 Junction J10, Ashford TN24 0GA",
+    "ville": "Ashford",
+    "cp": "TN24 0GA",
+    "departement": "United Kingdom",
+    "lat": 51.1328,
+    "lon": 0.9014,
+    "pk_text": "J10",
+    "prix": {
+      "e10": 1.494,
+      "sp95": 1.494,
+      "gazole": 1.564,
+      "sp98": 1.614,
+      "gplc": 0.887
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-040",
     "pays": "GB",
     "enseigne": "Stop24 (Shell)",
     "autoroute": "M20",
@@ -53168,11 +53462,10 @@
     "lon": 1.0539,
     "pk_text": "J11",
     "prix": {
-      "e10": 1.493,
-      "sp95": 1.493,
-      "gazole": 1.563,
-      "sp98": 1.613,
-      "gplc": 0.891
+      "e10": 1.53,
+      "sp95": 1.53,
+      "gazole": 1.6,
+      "sp98": 1.65
     },
     "ruptures": [],
     "services": [
@@ -53184,7 +53477,66 @@
     ]
   },
   {
-    "id": "GB-MSA-031",
+    "id": "GB-MSA-041",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M20",
+    "nom": "Cheriton Channel Tunnel Services",
+    "sens": "Double sens",
+    "adresse": "M20 Junction J12, Folkestone CT19 4",
+    "ville": "Folkestone",
+    "cp": "CT19 4",
+    "departement": "United Kingdom",
+    "lat": 51.0938,
+    "lon": 1.1043,
+    "pk_text": "J12",
+    "prix": {
+      "e10": 1.543,
+      "sp95": 1.543,
+      "gazole": 1.613,
+      "sp98": 1.663
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-042",
+    "pays": "GB",
+    "enseigne": "Euro Garages (BP)",
+    "autoroute": "A20",
+    "nom": "Dover Western Docks Services",
+    "sens": "Double sens",
+    "adresse": "A20 Junction Dover, Dover CT17 9",
+    "ville": "Dover",
+    "cp": "CT17 9",
+    "departement": "United Kingdom",
+    "lat": 51.1194,
+    "lon": 1.3097,
+    "pk_text": "Dover",
+    "prix": {
+      "e10": 1.507,
+      "sp95": 1.507,
+      "gazole": 1.577,
+      "sp98": 1.627,
+      "gplc": 0.903
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-043",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M23",
@@ -53213,7 +53565,7 @@
     ]
   },
   {
-    "id": "GB-MSA-032",
+    "id": "GB-MSA-044",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M3",
@@ -53227,10 +53579,10 @@
     "lon": -0.8617,
     "pk_text": "J4A/J5",
     "prix": {
-      "e10": 1.555,
-      "sp95": 1.555,
-      "gazole": 1.625,
-      "sp98": 1.675
+      "e10": 1.552,
+      "sp95": 1.552,
+      "gazole": 1.622,
+      "sp98": 1.672
     },
     "ruptures": [],
     "services": [
@@ -53242,7 +53594,7 @@
     ]
   },
   {
-    "id": "GB-MSA-033",
+    "id": "GB-MSA-045",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M3",
@@ -53256,11 +53608,11 @@
     "lon": -0.8606,
     "pk_text": "J4A/J5",
     "prix": {
-      "e10": 1.539,
-      "sp95": 1.539,
-      "gazole": 1.609,
-      "sp98": 1.659,
-      "gplc": 0.914
+      "e10": 1.534,
+      "sp95": 1.534,
+      "gazole": 1.604,
+      "sp98": 1.654,
+      "gplc": 0.912
     },
     "ruptures": [],
     "services": [
@@ -53272,7 +53624,7 @@
     ]
   },
   {
-    "id": "GB-MSA-034",
+    "id": "GB-MSA-046",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M3",
@@ -53286,10 +53638,10 @@
     "lon": -1.2647,
     "pk_text": "J8/J9",
     "prix": {
-      "e10": 1.579,
-      "sp95": 1.579,
-      "gazole": 1.649,
-      "sp98": 1.699
+      "e10": 1.54,
+      "sp95": 1.54,
+      "gazole": 1.61,
+      "sp98": 1.66
     },
     "ruptures": [],
     "services": [
@@ -53301,7 +53653,7 @@
     ]
   },
   {
-    "id": "GB-MSA-035",
+    "id": "GB-MSA-047",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M3",
@@ -53315,10 +53667,10 @@
     "lon": -1.2636,
     "pk_text": "J8/J9",
     "prix": {
-      "e10": 1.553,
-      "sp95": 1.553,
-      "gazole": 1.623,
-      "sp98": 1.673
+      "e10": 1.569,
+      "sp95": 1.569,
+      "gazole": 1.639,
+      "sp98": 1.689
     },
     "ruptures": [],
     "services": [
@@ -53330,7 +53682,7 @@
     ]
   },
   {
-    "id": "GB-MSA-036",
+    "id": "GB-MSA-048",
     "pays": "GB",
     "enseigne": "Roadchef (BP)",
     "autoroute": "M27",
@@ -53344,11 +53696,11 @@
     "lon": -1.4647,
     "pk_text": "J3/J4",
     "prix": {
-      "e10": 1.564,
-      "sp95": 1.564,
-      "gazole": 1.634,
-      "sp98": 1.684,
-      "gplc": 0.931
+      "e10": 1.539,
+      "sp95": 1.539,
+      "gazole": 1.609,
+      "sp98": 1.659,
+      "gplc": 0.919
     },
     "ruptures": [],
     "services": [
@@ -53360,7 +53712,7 @@
     ]
   },
   {
-    "id": "GB-MSA-037",
+    "id": "GB-MSA-049",
     "pays": "GB",
     "enseigne": "Roadchef (BP)",
     "autoroute": "M27",
@@ -53374,10 +53726,10 @@
     "lon": -1.4636,
     "pk_text": "J3/J4",
     "prix": {
-      "e10": 1.578,
-      "sp95": 1.578,
-      "gazole": 1.648,
-      "sp98": 1.698
+      "e10": 1.558,
+      "sp95": 1.558,
+      "gazole": 1.628,
+      "sp98": 1.678
     },
     "ruptures": [],
     "services": [
@@ -53389,7 +53741,7 @@
     ]
   },
   {
-    "id": "GB-MSA-038",
+    "id": "GB-MSA-050",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M4",
@@ -53418,7 +53770,7 @@
     ]
   },
   {
-    "id": "GB-MSA-039",
+    "id": "GB-MSA-051",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M4",
@@ -53447,7 +53799,7 @@
     ]
   },
   {
-    "id": "GB-MSA-040",
+    "id": "GB-MSA-052",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M4",
@@ -53461,10 +53813,10 @@
     "lon": -1.0439,
     "pk_text": "J11/J12",
     "prix": {
-      "e10": 1.566,
-      "sp95": 1.566,
-      "gazole": 1.636,
-      "sp98": 1.686
+      "e10": 1.538,
+      "sp95": 1.538,
+      "gazole": 1.608,
+      "sp98": 1.658
     },
     "ruptures": [],
     "services": [
@@ -53476,7 +53828,7 @@
     ]
   },
   {
-    "id": "GB-MSA-041",
+    "id": "GB-MSA-053",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M4",
@@ -53490,10 +53842,10 @@
     "lon": -1.0428,
     "pk_text": "J11/J12",
     "prix": {
-      "e10": 1.534,
-      "sp95": 1.534,
-      "gazole": 1.604,
-      "sp98": 1.654
+      "e10": 1.58,
+      "sp95": 1.58,
+      "gazole": 1.65,
+      "sp98": 1.7
     },
     "ruptures": [],
     "services": [
@@ -53505,7 +53857,7 @@
     ]
   },
   {
-    "id": "GB-MSA-042",
+    "id": "GB-MSA-054",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M4",
@@ -53534,7 +53886,7 @@
     ]
   },
   {
-    "id": "GB-MSA-043",
+    "id": "GB-MSA-055",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M4",
@@ -53548,10 +53900,10 @@
     "lon": -1.5553,
     "pk_text": "J14/J15",
     "prix": {
-      "e10": 1.57,
-      "sp95": 1.57,
-      "gazole": 1.64,
-      "sp98": 1.69
+      "e10": 1.544,
+      "sp95": 1.544,
+      "gazole": 1.614,
+      "sp98": 1.664
     },
     "ruptures": [],
     "services": [
@@ -53563,7 +53915,7 @@
     ]
   },
   {
-    "id": "GB-MSA-044",
+    "id": "GB-MSA-056",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M4",
@@ -53577,10 +53929,10 @@
     "lon": -1.5542,
     "pk_text": "J14/J15",
     "prix": {
-      "e10": 1.533,
-      "sp95": 1.533,
-      "gazole": 1.603,
-      "sp98": 1.653
+      "e10": 1.553,
+      "sp95": 1.553,
+      "gazole": 1.623,
+      "sp98": 1.673
     },
     "ruptures": [],
     "services": [
@@ -53592,7 +53944,7 @@
     ]
   },
   {
-    "id": "GB-MSA-045",
+    "id": "GB-MSA-057",
     "pays": "GB",
     "enseigne": "Moto (Esso)",
     "autoroute": "M4",
@@ -53621,7 +53973,7 @@
     ]
   },
   {
-    "id": "GB-MSA-046",
+    "id": "GB-MSA-058",
     "pays": "GB",
     "enseigne": "Moto (Esso)",
     "autoroute": "M4",
@@ -53650,7 +54002,7 @@
     ]
   },
   {
-    "id": "GB-MSA-047",
+    "id": "GB-MSA-059",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M4",
@@ -53679,7 +54031,7 @@
     ]
   },
   {
-    "id": "GB-MSA-048",
+    "id": "GB-MSA-060",
     "pays": "GB",
     "enseigne": "Roadchef (Shell)",
     "autoroute": "M4",
@@ -53693,11 +54045,11 @@
     "lon": -2.8669,
     "pk_text": "J23A",
     "prix": {
-      "e10": 1.537,
-      "sp95": 1.537,
-      "gazole": 1.607,
-      "sp98": 1.657,
-      "gplc": 0.913
+      "e10": 1.569,
+      "sp95": 1.569,
+      "gazole": 1.639,
+      "sp98": 1.689,
+      "gplc": 0.929
     },
     "ruptures": [],
     "services": [
@@ -53709,7 +54061,7 @@
     ]
   },
   {
-    "id": "GB-MSA-049",
+    "id": "GB-MSA-061",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M4",
@@ -53723,10 +54075,10 @@
     "lon": -3.1325,
     "pk_text": "J30",
     "prix": {
-      "e10": 1.552,
-      "sp95": 1.552,
-      "gazole": 1.622,
-      "sp98": 1.672
+      "e10": 1.536,
+      "sp95": 1.536,
+      "gazole": 1.606,
+      "sp98": 1.656
     },
     "ruptures": [],
     "services": [
@@ -53738,7 +54090,7 @@
     ]
   },
   {
-    "id": "GB-MSA-050",
+    "id": "GB-MSA-062",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M4",
@@ -53752,10 +54104,10 @@
     "lon": -3.3017,
     "pk_text": "J33",
     "prix": {
-      "e10": 1.544,
-      "sp95": 1.544,
-      "gazole": 1.614,
-      "sp98": 1.664
+      "e10": 1.538,
+      "sp95": 1.538,
+      "gazole": 1.608,
+      "sp98": 1.658
     },
     "ruptures": [],
     "services": [
@@ -53767,7 +54119,7 @@
     ]
   },
   {
-    "id": "GB-MSA-051",
+    "id": "GB-MSA-063",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M4",
@@ -53781,11 +54133,11 @@
     "lon": -3.5758,
     "pk_text": "J36",
     "prix": {
-      "e10": 1.53,
-      "sp95": 1.53,
-      "gazole": 1.6,
-      "sp98": 1.65,
-      "gplc": 0.91
+      "e10": 1.561,
+      "sp95": 1.561,
+      "gazole": 1.631,
+      "sp98": 1.681,
+      "gplc": 0.925
     },
     "ruptures": [],
     "services": [
@@ -53797,7 +54149,7 @@
     ]
   },
   {
-    "id": "GB-MSA-052",
+    "id": "GB-MSA-064",
     "pays": "GB",
     "enseigne": "Moto (Esso)",
     "autoroute": "M4",
@@ -53826,7 +54178,7 @@
     ]
   },
   {
-    "id": "GB-MSA-053",
+    "id": "GB-MSA-065",
     "pays": "GB",
     "enseigne": "Roadchef (Shell)",
     "autoroute": "M4",
@@ -53840,10 +54192,10 @@
     "lon": -4.0631,
     "pk_text": "J49",
     "prix": {
-      "e10": 1.559,
-      "sp95": 1.559,
-      "gazole": 1.629,
-      "sp98": 1.679
+      "e10": 1.57,
+      "sp95": 1.57,
+      "gazole": 1.64,
+      "sp98": 1.69
     },
     "ruptures": [],
     "services": [
@@ -53855,7 +54207,7 @@
     ]
   },
   {
-    "id": "GB-MSA-054",
+    "id": "GB-MSA-066",
     "pays": "GB",
     "enseigne": "Extra (Shell)",
     "autoroute": "M40",
@@ -53869,10 +54221,10 @@
     "lon": -0.6258,
     "pk_text": "J2",
     "prix": {
-      "e10": 1.489,
-      "sp95": 1.489,
-      "gazole": 1.559,
-      "sp98": 1.609,
+      "e10": 1.488,
+      "sp95": 1.488,
+      "gazole": 1.558,
+      "sp98": 1.608,
       "gplc": 0.889
     },
     "ruptures": [],
@@ -53885,7 +54237,7 @@
     ]
   },
   {
-    "id": "GB-MSA-055",
+    "id": "GB-MSA-067",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M40",
@@ -53899,10 +54251,10 @@
     "lon": -1.1061,
     "pk_text": "J8A",
     "prix": {
-      "e10": 1.548,
-      "sp95": 1.548,
-      "gazole": 1.618,
-      "sp98": 1.668
+      "e10": 1.574,
+      "sp95": 1.574,
+      "gazole": 1.644,
+      "sp98": 1.694
     },
     "ruptures": [],
     "services": [
@@ -53914,7 +54266,7 @@
     ]
   },
   {
-    "id": "GB-MSA-056",
+    "id": "GB-MSA-068",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M40",
@@ -53928,10 +54280,10 @@
     "lon": -1.2133,
     "pk_text": "J10",
     "prix": {
-      "e10": 1.538,
-      "sp95": 1.538,
-      "gazole": 1.608,
-      "sp98": 1.658
+      "e10": 1.539,
+      "sp95": 1.539,
+      "gazole": 1.609,
+      "sp98": 1.659
     },
     "ruptures": [],
     "services": [
@@ -53943,7 +54295,7 @@
     ]
   },
   {
-    "id": "GB-MSA-057",
+    "id": "GB-MSA-069",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M40",
@@ -53957,11 +54309,11 @@
     "lon": -1.5094,
     "pk_text": "J12/J13",
     "prix": {
-      "e10": 1.57,
-      "sp95": 1.57,
-      "gazole": 1.64,
-      "sp98": 1.69,
-      "gplc": 0.929
+      "e10": 1.546,
+      "sp95": 1.546,
+      "gazole": 1.616,
+      "sp98": 1.666,
+      "gplc": 0.918
     },
     "ruptures": [],
     "services": [
@@ -53973,7 +54325,7 @@
     ]
   },
   {
-    "id": "GB-MSA-058",
+    "id": "GB-MSA-070",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M40",
@@ -53987,10 +54339,10 @@
     "lon": -1.5083,
     "pk_text": "J12/J13",
     "prix": {
-      "e10": 1.544,
-      "sp95": 1.544,
-      "gazole": 1.614,
-      "sp98": 1.664
+      "e10": 1.537,
+      "sp95": 1.537,
+      "gazole": 1.607,
+      "sp98": 1.657
     },
     "ruptures": [],
     "services": [
@@ -54002,7 +54354,7 @@
     ]
   },
   {
-    "id": "GB-MSA-059",
+    "id": "GB-MSA-071",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M5",
@@ -54031,7 +54383,7 @@
     ]
   },
   {
-    "id": "GB-MSA-060",
+    "id": "GB-MSA-072",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M5",
@@ -54060,7 +54412,7 @@
     ]
   },
   {
-    "id": "GB-MSA-061",
+    "id": "GB-MSA-073",
     "pays": "GB",
     "enseigne": "Roadchef (BP)",
     "autoroute": "M5",
@@ -54074,10 +54426,10 @@
     "lon": -2.1453,
     "pk_text": "J7/J8",
     "prix": {
-      "e10": 1.563,
-      "sp95": 1.563,
-      "gazole": 1.633,
-      "sp98": 1.683
+      "e10": 1.545,
+      "sp95": 1.545,
+      "gazole": 1.615,
+      "sp98": 1.665
     },
     "ruptures": [],
     "services": [
@@ -54089,7 +54441,7 @@
     ]
   },
   {
-    "id": "GB-MSA-062",
+    "id": "GB-MSA-074",
     "pays": "GB",
     "enseigne": "Roadchef (BP)",
     "autoroute": "M5",
@@ -54103,10 +54455,10 @@
     "lon": -2.1442,
     "pk_text": "J7/J8",
     "prix": {
-      "e10": 1.579,
-      "sp95": 1.579,
-      "gazole": 1.649,
-      "sp98": 1.699
+      "e10": 1.55,
+      "sp95": 1.55,
+      "gazole": 1.62,
+      "sp98": 1.67
     },
     "ruptures": [],
     "services": [
@@ -54118,7 +54470,7 @@
     ]
   },
   {
-    "id": "GB-MSA-063",
+    "id": "GB-MSA-075",
     "pays": "GB",
     "enseigne": "Westmorland (Shell)",
     "autoroute": "M5",
@@ -54132,11 +54484,11 @@
     "lon": -2.2308,
     "pk_text": "J11A/J12",
     "prix": {
-      "e10": 1.496,
-      "sp95": 1.496,
-      "gazole": 1.566,
-      "sp98": 1.616,
-      "gplc": 0.893
+      "e10": 1.526,
+      "sp95": 1.526,
+      "gazole": 1.596,
+      "sp98": 1.646,
+      "gplc": 0.908
     },
     "ruptures": [],
     "services": [
@@ -54148,7 +54500,7 @@
     ]
   },
   {
-    "id": "GB-MSA-064",
+    "id": "GB-MSA-076",
     "pays": "GB",
     "enseigne": "Westmorland (Shell)",
     "autoroute": "M5",
@@ -54162,10 +54514,10 @@
     "lon": -2.2297,
     "pk_text": "J11A/J12",
     "prix": {
-      "e10": 1.488,
-      "sp95": 1.488,
-      "gazole": 1.558,
-      "sp98": 1.608
+      "e10": 1.514,
+      "sp95": 1.514,
+      "gazole": 1.584,
+      "sp98": 1.634
     },
     "ruptures": [],
     "services": [
@@ -54177,7 +54529,7 @@
     ]
   },
   {
-    "id": "GB-MSA-065",
+    "id": "GB-MSA-077",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M5",
@@ -54191,10 +54543,10 @@
     "lon": -2.4161,
     "pk_text": "J13/J14",
     "prix": {
-      "e10": 1.561,
-      "sp95": 1.561,
-      "gazole": 1.631,
-      "sp98": 1.681
+      "e10": 1.537,
+      "sp95": 1.537,
+      "gazole": 1.607,
+      "sp98": 1.657
     },
     "ruptures": [],
     "services": [
@@ -54206,7 +54558,7 @@
     ]
   },
   {
-    "id": "GB-MSA-066",
+    "id": "GB-MSA-078",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M5",
@@ -54220,11 +54572,11 @@
     "lon": -2.415,
     "pk_text": "J13/J14",
     "prix": {
-      "e10": 1.57,
-      "sp95": 1.57,
-      "gazole": 1.64,
-      "sp98": 1.69,
-      "gplc": 0.929
+      "e10": 1.566,
+      "sp95": 1.566,
+      "gazole": 1.636,
+      "sp98": 1.686,
+      "gplc": 0.927
     },
     "ruptures": [],
     "services": [
@@ -54236,7 +54588,7 @@
     ]
   },
   {
-    "id": "GB-MSA-067",
+    "id": "GB-MSA-079",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M5",
@@ -54250,10 +54602,10 @@
     "lon": -2.7128,
     "pk_text": "J19",
     "prix": {
-      "e10": 1.528,
-      "sp95": 1.528,
-      "gazole": 1.598,
-      "sp98": 1.648
+      "e10": 1.55,
+      "sp95": 1.55,
+      "gazole": 1.62,
+      "sp98": 1.67
     },
     "ruptures": [],
     "services": [
@@ -54265,7 +54617,7 @@
     ]
   },
   {
-    "id": "GB-MSA-068",
+    "id": "GB-MSA-080",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M5",
@@ -54279,10 +54631,10 @@
     "lon": -2.9231,
     "pk_text": "J21/J22",
     "prix": {
-      "e10": 1.574,
-      "sp95": 1.574,
-      "gazole": 1.644,
-      "sp98": 1.694
+      "e10": 1.534,
+      "sp95": 1.534,
+      "gazole": 1.604,
+      "sp98": 1.654
     },
     "ruptures": [],
     "services": [
@@ -54294,7 +54646,7 @@
     ]
   },
   {
-    "id": "GB-MSA-069",
+    "id": "GB-MSA-081",
     "pays": "GB",
     "enseigne": "Roadchef (BP)",
     "autoroute": "M5",
@@ -54308,11 +54660,11 @@
     "lon": -2.9219,
     "pk_text": "J21/J22",
     "prix": {
-      "e10": 1.539,
-      "sp95": 1.539,
-      "gazole": 1.609,
-      "sp98": 1.659,
-      "gplc": 0.919
+      "e10": 1.561,
+      "sp95": 1.561,
+      "gazole": 1.631,
+      "sp98": 1.681,
+      "gplc": 0.93
     },
     "ruptures": [],
     "services": [
@@ -54324,7 +54676,7 @@
     ]
   },
   {
-    "id": "GB-MSA-070",
+    "id": "GB-MSA-082",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M5",
@@ -54353,7 +54705,7 @@
     ]
   },
   {
-    "id": "GB-MSA-071",
+    "id": "GB-MSA-083",
     "pays": "GB",
     "enseigne": "Roadchef (BP)",
     "autoroute": "M5",
@@ -54367,10 +54719,10 @@
     "lon": -3.1497,
     "pk_text": "J25/J26",
     "prix": {
-      "e10": 1.556,
-      "sp95": 1.556,
-      "gazole": 1.626,
-      "sp98": 1.676
+      "e10": 1.547,
+      "sp95": 1.547,
+      "gazole": 1.617,
+      "sp98": 1.667
     },
     "ruptures": [],
     "services": [
@@ -54382,7 +54734,7 @@
     ]
   },
   {
-    "id": "GB-MSA-072",
+    "id": "GB-MSA-084",
     "pays": "GB",
     "enseigne": "Roadchef (BP)",
     "autoroute": "M5",
@@ -54396,11 +54748,11 @@
     "lon": -3.1486,
     "pk_text": "J25/J26",
     "prix": {
-      "e10": 1.547,
-      "sp95": 1.547,
-      "gazole": 1.617,
-      "sp98": 1.667,
-      "gplc": 0.923
+      "e10": 1.581,
+      "sp95": 1.581,
+      "gazole": 1.651,
+      "sp98": 1.701,
+      "gplc": 0.94
     },
     "ruptures": [],
     "services": [
@@ -54412,7 +54764,7 @@
     ]
   },
   {
-    "id": "GB-MSA-073",
+    "id": "GB-MSA-085",
     "pays": "GB",
     "enseigne": "Moto (Shell)",
     "autoroute": "M5",
@@ -54441,7 +54793,7 @@
     ]
   },
   {
-    "id": "GB-MSA-074",
+    "id": "GB-MSA-086",
     "pays": "GB",
     "enseigne": "Extra (Texaco)",
     "autoroute": "M5",
@@ -54455,10 +54807,10 @@
     "lon": -3.3831,
     "pk_text": "J28",
     "prix": {
-      "e10": 1.445,
-      "sp95": 1.445,
-      "gazole": 1.515,
-      "sp98": 1.565
+      "e10": 1.475,
+      "sp95": 1.475,
+      "gazole": 1.545,
+      "sp98": 1.595
     },
     "ruptures": [],
     "services": [
@@ -54470,7 +54822,7 @@
     ]
   },
   {
-    "id": "GB-MSA-075",
+    "id": "GB-MSA-087",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M5",
@@ -54499,7 +54851,7 @@
     ]
   },
   {
-    "id": "GB-MSA-076",
+    "id": "GB-MSA-088",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M6",
@@ -54513,10 +54865,10 @@
     "lon": -1.5472,
     "pk_text": "J3/J3A",
     "prix": {
-      "e10": 1.54,
-      "sp95": 1.54,
-      "gazole": 1.61,
-      "sp98": 1.66
+      "e10": 1.556,
+      "sp95": 1.556,
+      "gazole": 1.626,
+      "sp98": 1.676
     },
     "ruptures": [],
     "services": [
@@ -54528,7 +54880,7 @@
     ]
   },
   {
-    "id": "GB-MSA-077",
+    "id": "GB-MSA-089",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M6",
@@ -54542,10 +54894,10 @@
     "lon": -1.5483,
     "pk_text": "J3/J3A",
     "prix": {
-      "e10": 1.566,
-      "sp95": 1.566,
-      "gazole": 1.636,
-      "sp98": 1.686
+      "e10": 1.528,
+      "sp95": 1.528,
+      "gazole": 1.598,
+      "sp98": 1.648
     },
     "ruptures": [],
     "services": [
@@ -54557,7 +54909,7 @@
     ]
   },
   {
-    "id": "GB-MSA-078",
+    "id": "GB-MSA-090",
     "pays": "GB",
     "enseigne": "Roadchef (BP)",
     "autoroute": "M6 Toll",
@@ -54571,11 +54923,11 @@
     "lon": -1.9767,
     "pk_text": "T6/T7",
     "prix": {
-      "e10": 1.564,
-      "sp95": 1.564,
-      "gazole": 1.634,
-      "sp98": 1.684,
-      "gplc": 0.931
+      "e10": 1.582,
+      "sp95": 1.582,
+      "gazole": 1.652,
+      "sp98": 1.702,
+      "gplc": 0.941
     },
     "ruptures": [],
     "services": [
@@ -54587,7 +54939,7 @@
     ]
   },
   {
-    "id": "GB-MSA-079",
+    "id": "GB-MSA-091",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M6",
@@ -54616,7 +54968,7 @@
     ]
   },
   {
-    "id": "GB-MSA-080",
+    "id": "GB-MSA-092",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M6",
@@ -54645,7 +54997,7 @@
     ]
   },
   {
-    "id": "GB-MSA-081",
+    "id": "GB-MSA-093",
     "pays": "GB",
     "enseigne": "Moto (Esso)",
     "autoroute": "M6",
@@ -54659,11 +55011,11 @@
     "lon": -2.1747,
     "pk_text": "J14/J15",
     "prix": {
-      "e10": 1.507,
-      "sp95": 1.507,
-      "gazole": 1.577,
-      "sp98": 1.627,
-      "gplc": 0.893
+      "e10": 1.529,
+      "sp95": 1.529,
+      "gazole": 1.599,
+      "sp98": 1.649,
+      "gplc": 0.904
     },
     "ruptures": [],
     "services": [
@@ -54675,7 +55027,7 @@
     ]
   },
   {
-    "id": "GB-MSA-082",
+    "id": "GB-MSA-094",
     "pays": "GB",
     "enseigne": "Roadchef (BP)",
     "autoroute": "M6",
@@ -54704,7 +55056,7 @@
     ]
   },
   {
-    "id": "GB-MSA-083",
+    "id": "GB-MSA-095",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M6",
@@ -54718,10 +55070,10 @@
     "lon": -2.2903,
     "pk_text": "J15/J16",
     "prix": {
-      "e10": 1.55,
-      "sp95": 1.55,
-      "gazole": 1.62,
-      "sp98": 1.67
+      "e10": 1.548,
+      "sp95": 1.548,
+      "gazole": 1.618,
+      "sp98": 1.668
     },
     "ruptures": [],
     "services": [
@@ -54733,7 +55085,7 @@
     ]
   },
   {
-    "id": "GB-MSA-084",
+    "id": "GB-MSA-096",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M6",
@@ -54747,11 +55099,11 @@
     "lon": -2.2892,
     "pk_text": "J15/J16",
     "prix": {
-      "e10": 1.534,
-      "sp95": 1.534,
-      "gazole": 1.604,
-      "sp98": 1.654,
-      "gplc": 0.912
+      "e10": 1.532,
+      "sp95": 1.532,
+      "gazole": 1.602,
+      "sp98": 1.652,
+      "gplc": 0.911
     },
     "ruptures": [],
     "services": [
@@ -54763,7 +55115,7 @@
     ]
   },
   {
-    "id": "GB-MSA-085",
+    "id": "GB-MSA-097",
     "pays": "GB",
     "enseigne": "Roadchef (BP)",
     "autoroute": "M6",
@@ -54777,10 +55129,10 @@
     "lon": -2.3392,
     "pk_text": "J16/J17",
     "prix": {
-      "e10": 1.561,
-      "sp95": 1.561,
-      "gazole": 1.631,
-      "sp98": 1.681
+      "e10": 1.575,
+      "sp95": 1.575,
+      "gazole": 1.645,
+      "sp98": 1.695
     },
     "ruptures": [],
     "services": [
@@ -54792,7 +55144,7 @@
     ]
   },
   {
-    "id": "GB-MSA-086",
+    "id": "GB-MSA-098",
     "pays": "GB",
     "enseigne": "Roadchef (BP)",
     "autoroute": "M6",
@@ -54806,10 +55158,10 @@
     "lon": -2.3381,
     "pk_text": "J16/J17",
     "prix": {
-      "e10": 1.547,
-      "sp95": 1.547,
-      "gazole": 1.617,
-      "sp98": 1.667
+      "e10": 1.536,
+      "sp95": 1.536,
+      "gazole": 1.606,
+      "sp98": 1.656
     },
     "ruptures": [],
     "services": [
@@ -54821,7 +55173,7 @@
     ]
   },
   {
-    "id": "GB-MSA-087",
+    "id": "GB-MSA-099",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M6",
@@ -54850,7 +55202,7 @@
     ]
   },
   {
-    "id": "GB-MSA-088",
+    "id": "GB-MSA-100",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M6",
@@ -54879,7 +55231,7 @@
     ]
   },
   {
-    "id": "GB-MSA-089",
+    "id": "GB-MSA-101",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M6",
@@ -54893,10 +55245,10 @@
     "lon": -2.4958,
     "pk_text": "J20/J21",
     "prix": {
-      "e10": 1.581,
-      "sp95": 1.581,
-      "gazole": 1.651,
-      "sp98": 1.701
+      "e10": 1.576,
+      "sp95": 1.576,
+      "gazole": 1.646,
+      "sp98": 1.696
     },
     "ruptures": [],
     "services": [
@@ -54908,7 +55260,7 @@
     ]
   },
   {
-    "id": "GB-MSA-090",
+    "id": "GB-MSA-102",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M6",
@@ -54922,11 +55274,11 @@
     "lon": -2.6908,
     "pk_text": "J27/J28",
     "prix": {
-      "e10": 1.565,
-      "sp95": 1.565,
-      "gazole": 1.635,
-      "sp98": 1.685,
-      "gplc": 0.927
+      "e10": 1.559,
+      "sp95": 1.559,
+      "gazole": 1.629,
+      "sp98": 1.679,
+      "gplc": 0.924
     },
     "ruptures": [],
     "services": [
@@ -54938,7 +55290,7 @@
     ]
   },
   {
-    "id": "GB-MSA-091",
+    "id": "GB-MSA-103",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M6",
@@ -54952,10 +55304,10 @@
     "lon": -2.6897,
     "pk_text": "J27/J28",
     "prix": {
-      "e10": 1.556,
-      "sp95": 1.556,
-      "gazole": 1.626,
-      "sp98": 1.676
+      "e10": 1.542,
+      "sp95": 1.542,
+      "gazole": 1.612,
+      "sp98": 1.662
     },
     "ruptures": [],
     "services": [
@@ -54967,7 +55319,7 @@
     ]
   },
   {
-    "id": "GB-MSA-092",
+    "id": "GB-MSA-104",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M6",
@@ -54996,7 +55348,7 @@
     ]
   },
   {
-    "id": "GB-MSA-093",
+    "id": "GB-MSA-105",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M6",
@@ -55025,7 +55377,7 @@
     ]
   },
   {
-    "id": "GB-MSA-094",
+    "id": "GB-MSA-106",
     "pays": "GB",
     "enseigne": "Moto (Esso)",
     "autoroute": "M6",
@@ -55039,10 +55391,10 @@
     "lon": -2.7258,
     "pk_text": "J35/J36",
     "prix": {
-      "e10": 1.498,
-      "sp95": 1.498,
-      "gazole": 1.568,
-      "sp98": 1.618
+      "e10": 1.534,
+      "sp95": 1.534,
+      "gazole": 1.604,
+      "sp98": 1.654
     },
     "ruptures": [],
     "services": [
@@ -55054,7 +55406,7 @@
     ]
   },
   {
-    "id": "GB-MSA-095",
+    "id": "GB-MSA-107",
     "pays": "GB",
     "enseigne": "Roadchef (BP)",
     "autoroute": "M6",
@@ -55083,7 +55435,7 @@
     ]
   },
   {
-    "id": "GB-MSA-096",
+    "id": "GB-MSA-108",
     "pays": "GB",
     "enseigne": "Westmorland (Shell)",
     "autoroute": "M6",
@@ -55097,11 +55449,11 @@
     "lon": -2.5922,
     "pk_text": "J38/J39",
     "prix": {
-      "e10": 1.519,
-      "sp95": 1.519,
-      "gazole": 1.589,
-      "sp98": 1.639,
-      "gplc": 0.904
+      "e10": 1.529,
+      "sp95": 1.529,
+      "gazole": 1.599,
+      "sp98": 1.649,
+      "gplc": 0.909
     },
     "ruptures": [],
     "services": [
@@ -55113,7 +55465,7 @@
     ]
   },
   {
-    "id": "GB-MSA-097",
+    "id": "GB-MSA-109",
     "pays": "GB",
     "enseigne": "Westmorland (Shell)",
     "autoroute": "M6",
@@ -55127,10 +55479,10 @@
     "lon": -2.5911,
     "pk_text": "J38/J39",
     "prix": {
-      "e10": 1.526,
-      "sp95": 1.526,
-      "gazole": 1.596,
-      "sp98": 1.646
+      "e10": 1.502,
+      "sp95": 1.502,
+      "gazole": 1.572,
+      "sp98": 1.622
     },
     "ruptures": [],
     "services": [
@@ -55142,7 +55494,7 @@
     ]
   },
   {
-    "id": "GB-MSA-098",
+    "id": "GB-MSA-110",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M6",
@@ -55156,10 +55508,10 @@
     "lon": -2.8464,
     "pk_text": "J41/J42",
     "prix": {
-      "e10": 1.558,
-      "sp95": 1.558,
-      "gazole": 1.628,
-      "sp98": 1.678
+      "e10": 1.55,
+      "sp95": 1.55,
+      "gazole": 1.62,
+      "sp98": 1.67
     },
     "ruptures": [],
     "services": [
@@ -55171,7 +55523,7 @@
     ]
   },
   {
-    "id": "GB-MSA-099",
+    "id": "GB-MSA-111",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M6",
@@ -55185,11 +55537,11 @@
     "lon": -2.8453,
     "pk_text": "J41/J42",
     "prix": {
-      "e10": 1.542,
-      "sp95": 1.542,
-      "gazole": 1.612,
-      "sp98": 1.662,
-      "gplc": 0.921
+      "e10": 1.569,
+      "sp95": 1.569,
+      "gazole": 1.639,
+      "sp98": 1.689,
+      "gplc": 0.934
     },
     "ruptures": [],
     "services": [
@@ -55201,7 +55553,7 @@
     ]
   },
   {
-    "id": "GB-MSA-100",
+    "id": "GB-MSA-112",
     "pays": "GB",
     "enseigne": "Euro Garages (Esso)",
     "autoroute": "M6",
@@ -55215,10 +55567,10 @@
     "lon": -2.9772,
     "pk_text": "J44",
     "prix": {
-      "e10": 1.495,
-      "sp95": 1.495,
-      "gazole": 1.565,
-      "sp98": 1.615
+      "e10": 1.473,
+      "sp95": 1.473,
+      "gazole": 1.543,
+      "sp98": 1.593
     },
     "ruptures": [],
     "services": [
@@ -55230,7 +55582,7 @@
     ]
   },
   {
-    "id": "GB-MSA-101",
+    "id": "GB-MSA-113",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M42",
@@ -55244,10 +55596,10 @@
     "lon": -1.9617,
     "pk_text": "J2",
     "prix": {
-      "e10": 1.526,
-      "sp95": 1.526,
-      "gazole": 1.596,
-      "sp98": 1.646
+      "e10": 1.533,
+      "sp95": 1.533,
+      "gazole": 1.603,
+      "sp98": 1.653
     },
     "ruptures": [],
     "services": [
@@ -55259,7 +55611,7 @@
     ]
   },
   {
-    "id": "GB-MSA-102",
+    "id": "GB-MSA-114",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M42",
@@ -55273,11 +55625,11 @@
     "lon": -1.6408,
     "pk_text": "J10",
     "prix": {
-      "e10": 1.576,
-      "sp95": 1.576,
-      "gazole": 1.646,
-      "sp98": 1.696,
-      "gplc": 0.938
+      "e10": 1.537,
+      "sp95": 1.537,
+      "gazole": 1.607,
+      "sp98": 1.657,
+      "gplc": 0.918
     },
     "ruptures": [],
     "services": [
@@ -55289,7 +55641,7 @@
     ]
   },
   {
-    "id": "GB-MSA-103",
+    "id": "GB-MSA-115",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M54",
@@ -55303,10 +55655,10 @@
     "lon": -2.3931,
     "pk_text": "J4",
     "prix": {
-      "e10": 1.559,
-      "sp95": 1.559,
-      "gazole": 1.629,
-      "sp98": 1.679
+      "e10": 1.528,
+      "sp95": 1.528,
+      "gazole": 1.598,
+      "sp98": 1.648
     },
     "ruptures": [],
     "services": [
@@ -55318,7 +55670,7 @@
     ]
   },
   {
-    "id": "GB-MSA-104",
+    "id": "GB-MSA-116",
     "pays": "GB",
     "enseigne": "Roadchef (BP)",
     "autoroute": "M56",
@@ -55332,10 +55684,10 @@
     "lon": -2.8017,
     "pk_text": "J14",
     "prix": {
-      "e10": 1.552,
-      "sp95": 1.552,
-      "gazole": 1.622,
-      "sp98": 1.672
+      "e10": 1.571,
+      "sp95": 1.571,
+      "gazole": 1.641,
+      "sp98": 1.691
     },
     "ruptures": [],
     "services": [
@@ -55347,7 +55699,7 @@
     ]
   },
   {
-    "id": "GB-MSA-105",
+    "id": "GB-MSA-117",
     "pays": "GB",
     "enseigne": "Euro Garages (Texaco)",
     "autoroute": "M61",
@@ -55361,11 +55713,11 @@
     "lon": -2.5789,
     "pk_text": "J6/J8",
     "prix": {
-      "e10": 1.474,
-      "sp95": 1.474,
-      "gazole": 1.544,
-      "sp98": 1.594,
-      "gplc": 0.877
+      "e10": 1.455,
+      "sp95": 1.455,
+      "gazole": 1.525,
+      "sp98": 1.575,
+      "gplc": 0.867
     },
     "ruptures": [],
     "services": [
@@ -55377,7 +55729,7 @@
     ]
   },
   {
-    "id": "GB-MSA-106",
+    "id": "GB-MSA-118",
     "pays": "GB",
     "enseigne": "Euro Garages (Texaco)",
     "autoroute": "M61",
@@ -55391,10 +55743,10 @@
     "lon": -2.5778,
     "pk_text": "J6/J8",
     "prix": {
-      "e10": 1.482,
-      "sp95": 1.482,
-      "gazole": 1.552,
-      "sp98": 1.602
+      "e10": 1.472,
+      "sp95": 1.472,
+      "gazole": 1.542,
+      "sp98": 1.592
     },
     "ruptures": [],
     "services": [
@@ -55406,7 +55758,7 @@
     ]
   },
   {
-    "id": "GB-MSA-107",
+    "id": "GB-MSA-119",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M62",
@@ -55435,7 +55787,7 @@
     ]
   },
   {
-    "id": "GB-MSA-108",
+    "id": "GB-MSA-120",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M62",
@@ -55465,7 +55817,7 @@
     ]
   },
   {
-    "id": "GB-MSA-109",
+    "id": "GB-MSA-121",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M62",
@@ -55479,10 +55831,10 @@
     "lon": -2.2122,
     "pk_text": "J18/J19",
     "prix": {
-      "e10": 1.55,
-      "sp95": 1.55,
-      "gazole": 1.62,
-      "sp98": 1.67
+      "e10": 1.546,
+      "sp95": 1.546,
+      "gazole": 1.616,
+      "sp98": 1.666
     },
     "ruptures": [],
     "services": [
@@ -55494,7 +55846,7 @@
     ]
   },
   {
-    "id": "GB-MSA-110",
+    "id": "GB-MSA-122",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M62",
@@ -55507,6 +55859,65 @@
     "lat": 53.5697,
     "lon": -2.2111,
     "pk_text": "J18/J19",
+    "prix": {
+      "e10": 1.559,
+      "sp95": 1.559,
+      "gazole": 1.629,
+      "sp98": 1.679
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-123",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M62",
+    "nom": "Hartshead Moor Services (Eastbound)",
+    "sens": "Eastbound",
+    "adresse": "M62 Junction J25/J26, Cleckheaton HD6 4JX",
+    "ville": "Cleckheaton",
+    "cp": "HD6 4JX",
+    "departement": "United Kingdom",
+    "lat": 53.7128,
+    "lon": -1.7458,
+    "pk_text": "J25/J26",
+    "prix": {
+      "e10": 1.574,
+      "sp95": 1.574,
+      "gazole": 1.644,
+      "sp98": 1.694,
+      "gplc": 0.931
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-124",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M62",
+    "nom": "Hartshead Moor Services (Westbound)",
+    "sens": "Westbound",
+    "adresse": "M62 Junction J25/J26, Cleckheaton HD6 4JX",
+    "ville": "Cleckheaton",
+    "cp": "HD6 4JX",
+    "departement": "United Kingdom",
+    "lat": 53.7119,
+    "lon": -1.7447,
+    "pk_text": "J25/J26",
     "prix": {
       "e10": 1.569,
       "sp95": 1.569,
@@ -55523,66 +55934,7 @@
     ]
   },
   {
-    "id": "GB-MSA-111",
-    "pays": "GB",
-    "enseigne": "Welcome Break (Shell)",
-    "autoroute": "M62",
-    "nom": "Hartshead Moor Services (Eastbound)",
-    "sens": "Eastbound",
-    "adresse": "M62 Junction J25/J26, Cleckheaton HD6 4JX",
-    "ville": "Cleckheaton",
-    "cp": "HD6 4JX",
-    "departement": "United Kingdom",
-    "lat": 53.7128,
-    "lon": -1.7458,
-    "pk_text": "J25/J26",
-    "prix": {
-      "e10": 1.543,
-      "sp95": 1.543,
-      "gazole": 1.613,
-      "sp98": 1.663,
-      "gplc": 0.916
-    },
-    "ruptures": [],
-    "services": [
-      "Restauration",
-      "Boutique",
-      "Toilettes",
-      "Recharge EV",
-      "Parking Poids Lourds"
-    ]
-  },
-  {
-    "id": "GB-MSA-112",
-    "pays": "GB",
-    "enseigne": "Welcome Break (Shell)",
-    "autoroute": "M62",
-    "nom": "Hartshead Moor Services (Westbound)",
-    "sens": "Westbound",
-    "adresse": "M62 Junction J25/J26, Cleckheaton HD6 4JX",
-    "ville": "Cleckheaton",
-    "cp": "HD6 4JX",
-    "departement": "United Kingdom",
-    "lat": 53.7119,
-    "lon": -1.7447,
-    "pk_text": "J25/J26",
-    "prix": {
-      "e10": 1.533,
-      "sp95": 1.533,
-      "gazole": 1.603,
-      "sp98": 1.653
-    },
-    "ruptures": [],
-    "services": [
-      "Restauration",
-      "Boutique",
-      "Toilettes",
-      "Recharge EV",
-      "Parking Poids Lourds"
-    ]
-  },
-  {
-    "id": "GB-MSA-113",
+    "id": "GB-MSA-125",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M62",
@@ -55611,7 +55963,7 @@
     ]
   },
   {
-    "id": "GB-MSA-114",
+    "id": "GB-MSA-126",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M11",
@@ -55625,11 +55977,11 @@
     "lon": 0.2008,
     "pk_text": "J8",
     "prix": {
-      "e10": 1.527,
-      "sp95": 1.527,
-      "gazole": 1.597,
-      "sp98": 1.647,
-      "gplc": 0.908
+      "e10": 1.563,
+      "sp95": 1.563,
+      "gazole": 1.633,
+      "sp98": 1.683,
+      "gplc": 0.926
     },
     "ruptures": [],
     "services": [
@@ -55641,7 +55993,7 @@
     ]
   },
   {
-    "id": "GB-MSA-115",
+    "id": "GB-MSA-127",
     "pays": "GB",
     "enseigne": "Extra (Shell)",
     "autoroute": "A14",
@@ -55655,10 +56007,10 @@
     "lon": -0.0258,
     "pk_text": "J24",
     "prix": {
-      "e10": 1.488,
-      "sp95": 1.488,
-      "gazole": 1.558,
-      "sp98": 1.608
+      "e10": 1.532,
+      "sp95": 1.532,
+      "gazole": 1.602,
+      "sp98": 1.652
     },
     "ruptures": [],
     "services": [
@@ -55670,7 +56022,7 @@
     ]
   },
   {
-    "id": "GB-MSA-116",
+    "id": "GB-MSA-128",
     "pays": "GB",
     "enseigne": "Extra (Shell)",
     "autoroute": "A1(M)",
@@ -55684,10 +56036,10 @@
     "lon": -0.1989,
     "pk_text": "J10",
     "prix": {
-      "e10": 1.521,
-      "sp95": 1.521,
-      "gazole": 1.591,
-      "sp98": 1.641
+      "e10": 1.497,
+      "sp95": 1.497,
+      "gazole": 1.567,
+      "sp98": 1.617
     },
     "ruptures": [],
     "services": [
@@ -55699,7 +56051,7 @@
     ]
   },
   {
-    "id": "GB-MSA-117",
+    "id": "GB-MSA-129",
     "pays": "GB",
     "enseigne": "Extra (Shell)",
     "autoroute": "A1(M)",
@@ -55713,11 +56065,11 @@
     "lon": -0.3236,
     "pk_text": "J17",
     "prix": {
-      "e10": 1.505,
-      "sp95": 1.505,
-      "gazole": 1.575,
-      "sp98": 1.625,
-      "gplc": 0.897
+      "e10": 1.493,
+      "sp95": 1.493,
+      "gazole": 1.563,
+      "sp98": 1.613,
+      "gplc": 0.891
     },
     "ruptures": [],
     "services": [
@@ -55729,7 +56081,7 @@
     ]
   },
   {
-    "id": "GB-MSA-118",
+    "id": "GB-MSA-130",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "A1(M)",
@@ -55743,10 +56095,10 @@
     "lon": -1.0597,
     "pk_text": "J35",
     "prix": {
-      "e10": 1.572,
-      "sp95": 1.572,
-      "gazole": 1.642,
-      "sp98": 1.692
+      "e10": 1.551,
+      "sp95": 1.551,
+      "gazole": 1.621,
+      "sp98": 1.671
     },
     "ruptures": [],
     "services": [
@@ -55758,7 +56110,7 @@
     ]
   },
   {
-    "id": "GB-MSA-119",
+    "id": "GB-MSA-131",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "A1(M)",
@@ -55787,7 +56139,7 @@
     ]
   },
   {
-    "id": "GB-MSA-120",
+    "id": "GB-MSA-132",
     "pays": "GB",
     "enseigne": "Moto (Esso)",
     "autoroute": "A1(M)",
@@ -55801,11 +56153,11 @@
     "lon": -1.5642,
     "pk_text": "J51/J52",
     "prix": {
-      "e10": 1.539,
-      "sp95": 1.539,
-      "gazole": 1.609,
-      "sp98": 1.659,
-      "gplc": 0.909
+      "e10": 1.496,
+      "sp95": 1.496,
+      "gazole": 1.566,
+      "sp98": 1.616,
+      "gplc": 0.888
     },
     "ruptures": [],
     "services": [
@@ -55817,7 +56169,7 @@
     ]
   },
   {
-    "id": "GB-MSA-121",
+    "id": "GB-MSA-133",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "A1(M)",
@@ -55831,10 +56183,10 @@
     "lon": -1.6606,
     "pk_text": "J52/J53",
     "prix": {
-      "e10": 1.552,
-      "sp95": 1.552,
-      "gazole": 1.622,
-      "sp98": 1.672
+      "e10": 1.55,
+      "sp95": 1.55,
+      "gazole": 1.62,
+      "sp98": 1.67
     },
     "ruptures": [],
     "services": [
@@ -55846,7 +56198,7 @@
     ]
   },
   {
-    "id": "GB-MSA-122",
+    "id": "GB-MSA-134",
     "pays": "GB",
     "enseigne": "Roadchef (BP)",
     "autoroute": "A1(M)",
@@ -55860,10 +56212,10 @@
     "lon": -1.5228,
     "pk_text": "J61",
     "prix": {
-      "e10": 1.546,
-      "sp95": 1.546,
-      "gazole": 1.616,
-      "sp98": 1.666
+      "e10": 1.584,
+      "sp95": 1.584,
+      "gazole": 1.654,
+      "sp98": 1.704
     },
     "ruptures": [],
     "services": [
@@ -55875,7 +56227,7 @@
     ]
   },
   {
-    "id": "GB-MSA-123",
+    "id": "GB-MSA-135",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "A1(M)",
@@ -55904,7 +56256,7 @@
     ]
   },
   {
-    "id": "GB-MSA-124",
+    "id": "GB-MSA-136",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "A1(M)",
@@ -55933,7 +56285,7 @@
     ]
   },
   {
-    "id": "GB-MSA-125",
+    "id": "GB-MSA-137",
     "pays": "GB",
     "enseigne": "Roadchef (Shell)",
     "autoroute": "M74",
@@ -55947,10 +56299,10 @@
     "lon": -3.4286,
     "pk_text": "J16",
     "prix": {
-      "e10": 1.549,
-      "sp95": 1.549,
-      "gazole": 1.619,
-      "sp98": 1.669
+      "e10": 1.572,
+      "sp95": 1.572,
+      "gazole": 1.642,
+      "sp98": 1.692
     },
     "ruptures": [],
     "services": [
@@ -55962,7 +56314,7 @@
     ]
   },
   {
-    "id": "GB-MSA-126",
+    "id": "GB-MSA-138",
     "pays": "GB",
     "enseigne": "Welcome Break (Shell)",
     "autoroute": "M74",
@@ -55976,11 +56328,11 @@
     "lon": -3.6947,
     "pk_text": "J13",
     "prix": {
-      "e10": 1.574,
-      "sp95": 1.574,
-      "gazole": 1.644,
-      "sp98": 1.694,
-      "gplc": 0.931
+      "e10": 1.571,
+      "sp95": 1.571,
+      "gazole": 1.641,
+      "sp98": 1.691,
+      "gplc": 0.93
     },
     "ruptures": [],
     "services": [
@@ -55992,7 +56344,7 @@
     ]
   },
   {
-    "id": "GB-MSA-127",
+    "id": "GB-MSA-139",
     "pays": "GB",
     "enseigne": "Westmorland (Shell)",
     "autoroute": "M74",
@@ -56006,10 +56358,10 @@
     "lon": -3.8294,
     "pk_text": "J11/J12",
     "prix": {
-      "e10": 1.529,
-      "sp95": 1.529,
-      "gazole": 1.599,
-      "sp98": 1.649
+      "e10": 1.49,
+      "sp95": 1.49,
+      "gazole": 1.56,
+      "sp98": 1.61
     },
     "ruptures": [],
     "services": [
@@ -56021,7 +56373,7 @@
     ]
   },
   {
-    "id": "GB-MSA-128",
+    "id": "GB-MSA-140",
     "pays": "GB",
     "enseigne": "Roadchef (BP)",
     "autoroute": "M74",
@@ -56035,10 +56387,10 @@
     "lon": -4.0369,
     "pk_text": "J5/J6",
     "prix": {
-      "e10": 1.573,
-      "sp95": 1.573,
-      "gazole": 1.643,
-      "sp98": 1.693
+      "e10": 1.54,
+      "sp95": 1.54,
+      "gazole": 1.61,
+      "sp98": 1.66
     },
     "ruptures": [],
     "services": [
@@ -56050,7 +56402,7 @@
     ]
   },
   {
-    "id": "GB-MSA-129",
+    "id": "GB-MSA-141",
     "pays": "GB",
     "enseigne": "Roadchef (BP)",
     "autoroute": "M74",
@@ -56064,11 +56416,11 @@
     "lon": -4.0594,
     "pk_text": "J4/J5",
     "prix": {
-      "e10": 1.582,
-      "sp95": 1.582,
-      "gazole": 1.652,
-      "sp98": 1.702,
-      "gplc": 0.941
+      "e10": 1.541,
+      "sp95": 1.541,
+      "gazole": 1.611,
+      "sp98": 1.661,
+      "gplc": 0.92
     },
     "ruptures": [],
     "services": [
@@ -56080,7 +56432,7 @@
     ]
   },
   {
-    "id": "GB-MSA-130",
+    "id": "GB-MSA-142",
     "pays": "GB",
     "enseigne": "Roadchef (BP)",
     "autoroute": "M8",
@@ -56092,35 +56444,6 @@
     "departement": "United Kingdom",
     "lat": 55.8594,
     "lon": -3.7483,
-    "pk_text": "J4/J5",
-    "prix": {
-      "e10": 1.547,
-      "sp95": 1.547,
-      "gazole": 1.617,
-      "sp98": 1.667
-    },
-    "ruptures": [],
-    "services": [
-      "Restauration",
-      "Boutique",
-      "Toilettes",
-      "Recharge EV",
-      "Parking Poids Lourds"
-    ]
-  },
-  {
-    "id": "GB-MSA-131",
-    "pays": "GB",
-    "enseigne": "Roadchef (BP)",
-    "autoroute": "M8",
-    "nom": "Harthill Services (Westbound)",
-    "sens": "Westbound",
-    "adresse": "M8 Junction J4/J5, Shotts ML7 5TG",
-    "ville": "Shotts",
-    "cp": "ML7 5TG",
-    "departement": "United Kingdom",
-    "lat": 55.8586,
-    "lon": -3.7472,
     "pk_text": "J4/J5",
     "prix": {
       "e10": 1.543,
@@ -56138,7 +56461,36 @@
     ]
   },
   {
-    "id": "GB-MSA-132",
+    "id": "GB-MSA-143",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M8",
+    "nom": "Harthill Services (Westbound)",
+    "sens": "Westbound",
+    "adresse": "M8 Junction J4/J5, Shotts ML7 5TG",
+    "ville": "Shotts",
+    "cp": "ML7 5TG",
+    "departement": "United Kingdom",
+    "lat": 55.8586,
+    "lon": -3.7472,
+    "pk_text": "J4/J5",
+    "prix": {
+      "e10": 1.536,
+      "sp95": 1.536,
+      "gazole": 1.606,
+      "sp98": 1.656
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-144",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M9",
@@ -56167,7 +56519,7 @@
     ]
   },
   {
-    "id": "GB-MSA-133",
+    "id": "GB-MSA-145",
     "pays": "GB",
     "enseigne": "Moto (BP)",
     "autoroute": "M90",
@@ -56196,7 +56548,7 @@
     ]
   },
   {
-    "id": "GB-MSA-134",
+    "id": "GB-MSA-146",
     "pays": "GB",
     "enseigne": "Applegreen (BP)",
     "autoroute": "M2",
@@ -56209,329 +56561,6 @@
     "lat": 54.6967,
     "lon": -6.0489,
     "pk_text": "J5",
-    "prix": {
-      "e10": 1.551,
-      "sp95": 1.551,
-      "gazole": 1.621,
-      "sp98": 1.671
-    },
-    "ruptures": [],
-    "services": [
-      "Restauration",
-      "Boutique",
-      "Toilettes",
-      "Recharge EV",
-      "Parking Poids Lourds"
-    ]
-  },
-  {
-    "id": "GB-MSA-135",
-    "pays": "GB",
-    "enseigne": "Applegreen (BP)",
-    "autoroute": "M2",
-    "nom": "Templepatrick Services (Southbound)",
-    "sens": "Southbound",
-    "adresse": "M2 Junction J5, Ballyclare BT39 0AT",
-    "ville": "Ballyclare",
-    "cp": "BT39 0AT",
-    "departement": "United Kingdom",
-    "lat": 54.6958,
-    "lon": -6.0481,
-    "pk_text": "J5",
-    "prix": {
-      "e10": 1.536,
-      "sp95": 1.536,
-      "gazole": 1.606,
-      "sp98": 1.656,
-      "gplc": 0.918
-    },
-    "ruptures": [],
-    "services": [
-      "Restauration",
-      "Boutique",
-      "Toilettes",
-      "Recharge EV",
-      "Parking Poids Lourds"
-    ]
-  },
-  {
-    "id": "GB-MSA-136",
-    "pays": "GB",
-    "enseigne": "Applegreen (BP)",
-    "autoroute": "M1",
-    "nom": "Lisburn Services (Southbound)",
-    "sens": "Southbound",
-    "adresse": "M1 Junction J6, Lisburn BT27 5SG",
-    "ville": "Lisburn",
-    "cp": "BT27 5SG",
-    "departement": "United Kingdom",
-    "lat": 54.5136,
-    "lon": -6.013,
-    "pk_text": "J6",
-    "prix": {
-      "e10": 1.55,
-      "sp95": 1.55,
-      "gazole": 1.62,
-      "sp98": 1.67
-    },
-    "ruptures": [],
-    "services": [
-      "Restauration",
-      "Boutique",
-      "Toilettes",
-      "Recharge EV",
-      "Parking Poids Lourds"
-    ]
-  },
-  {
-    "id": "GB-MSA-137",
-    "pays": "GB",
-    "enseigne": "Applegreen (BP)",
-    "autoroute": "M1",
-    "nom": "Lisburn Services (Northbound)",
-    "sens": "Northbound",
-    "adresse": "M1 Junction J6, Lisburn BT27 5SG",
-    "ville": "Lisburn",
-    "cp": "BT27 5SG",
-    "departement": "United Kingdom",
-    "lat": 54.5142,
-    "lon": -6.0122,
-    "pk_text": "J6",
-    "prix": {
-      "e10": 1.584,
-      "sp95": 1.584,
-      "gazole": 1.654,
-      "sp98": 1.704
-    },
-    "ruptures": [],
-    "services": [
-      "Restauration",
-      "Boutique",
-      "Toilettes",
-      "Recharge EV",
-      "Parking Poids Lourds"
-    ]
-  },
-  {
-    "id": "GB-MSA-138",
-    "pays": "GB",
-    "enseigne": "Maxol (Shell)",
-    "autoroute": "M1",
-    "nom": "Sprucefield Services",
-    "sens": "Double sens",
-    "adresse": "M1 Junction J7/J8, Lisburn BT27 5UQ",
-    "ville": "Lisburn",
-    "cp": "BT27 5UQ",
-    "departement": "United Kingdom",
-    "lat": 54.4881,
-    "lon": -6.0649,
-    "pk_text": "J7/J8",
-    "prix": {
-      "e10": 1.572,
-      "sp95": 1.572,
-      "gazole": 1.642,
-      "sp98": 1.692,
-      "gplc": 0.93
-    },
-    "ruptures": [],
-    "services": [
-      "Restauration",
-      "Boutique",
-      "Toilettes",
-      "Recharge EV",
-      "Parking Poids Lourds"
-    ]
-  },
-  {
-    "id": "GB-MSA-139",
-    "pays": "GB",
-    "enseigne": "Maxol (BP)",
-    "autoroute": "A1",
-    "nom": "Hillsborough Dromore Services",
-    "sens": "Double sens",
-    "adresse": "A1 Junction J9, Dromore BT25 1JT",
-    "ville": "Dromore",
-    "cp": "BT25 1JT",
-    "departement": "United Kingdom",
-    "lat": 54.4152,
-    "lon": -6.1592,
-    "pk_text": "J9",
-    "prix": {
-      "e10": 1.581,
-      "sp95": 1.581,
-      "gazole": 1.651,
-      "sp98": 1.701
-    },
-    "ruptures": [],
-    "services": [
-      "Restauration",
-      "Boutique",
-      "Toilettes",
-      "Recharge EV",
-      "Parking Poids Lourds"
-    ]
-  },
-  {
-    "id": "GB-MSA-140",
-    "pays": "GB",
-    "enseigne": "Applegreen (Texaco)",
-    "autoroute": "A1",
-    "nom": "Banbridge Loughbrickland Services",
-    "sens": "Double sens",
-    "adresse": "A1 Junction J13, Banbridge BT32 3NH",
-    "ville": "Banbridge",
-    "cp": "BT32 3NH",
-    "departement": "United Kingdom",
-    "lat": 54.3187,
-    "lon": -6.2995,
-    "pk_text": "J13",
-    "prix": {
-      "e10": 1.48,
-      "sp95": 1.48,
-      "gazole": 1.55,
-      "sp98": 1.6
-    },
-    "ruptures": [],
-    "services": [
-      "Restauration",
-      "Boutique",
-      "Toilettes",
-      "Recharge EV",
-      "Parking Poids Lourds"
-    ]
-  },
-  {
-    "id": "GB-MSA-141",
-    "pays": "GB",
-    "enseigne": "Euro Garages (Texaco)",
-    "autoroute": "A1",
-    "nom": "Newry Cloghoge Services",
-    "sens": "Double sens",
-    "adresse": "A1 Junction J20, Newry BT35 8RJ",
-    "ville": "Newry",
-    "cp": "BT35 8RJ",
-    "departement": "United Kingdom",
-    "lat": 54.1384,
-    "lon": -6.3436,
-    "pk_text": "J20",
-    "prix": {
-      "e10": 1.44,
-      "sp95": 1.44,
-      "gazole": 1.51,
-      "sp98": 1.56,
-      "gplc": 0.86
-    },
-    "ruptures": [],
-    "services": [
-      "Restauration",
-      "Boutique",
-      "Toilettes",
-      "Recharge EV",
-      "Parking Poids Lourds"
-    ]
-  },
-  {
-    "id": "GB-MSA-142",
-    "pays": "GB",
-    "enseigne": "Euro Garages (Shell)",
-    "autoroute": "A55",
-    "nom": "Holyhead Services",
-    "sens": "Double sens",
-    "adresse": "A55 Junction J2, Holyhead LL65 2UQ",
-    "ville": "Holyhead",
-    "cp": "LL65 2UQ",
-    "departement": "United Kingdom",
-    "lat": 53.2993,
-    "lon": -4.6228,
-    "pk_text": "J2",
-    "prix": {
-      "e10": 1.491,
-      "sp95": 1.491,
-      "gazole": 1.561,
-      "sp98": 1.611
-    },
-    "ruptures": [],
-    "services": [
-      "Restauration",
-      "Boutique",
-      "Toilettes",
-      "Recharge EV",
-      "Parking Poids Lourds"
-    ]
-  },
-  {
-    "id": "GB-MSA-143",
-    "pays": "GB",
-    "enseigne": "Extra (Shell)",
-    "autoroute": "A55",
-    "nom": "Bangor Llandygai Services",
-    "sens": "Double sens",
-    "adresse": "A55 Junction J11, Bangor LL57 4BG",
-    "ville": "Bangor",
-    "cp": "LL57 4BG",
-    "departement": "United Kingdom",
-    "lat": 53.2043,
-    "lon": -4.1475,
-    "pk_text": "J11",
-    "prix": {
-      "e10": 1.493,
-      "sp95": 1.493,
-      "gazole": 1.563,
-      "sp98": 1.613
-    },
-    "ruptures": [],
-    "services": [
-      "Restauration",
-      "Boutique",
-      "Toilettes",
-      "Recharge EV",
-      "Parking Poids Lourds"
-    ]
-  },
-  {
-    "id": "GB-MSA-144",
-    "pays": "GB",
-    "enseigne": "Euro Garages (Texaco)",
-    "autoroute": "A55",
-    "nom": "Kinmel Park Services",
-    "sens": "Double sens",
-    "adresse": "A55 Junction J25, Bodelwyddan LL18 5SR",
-    "ville": "Bodelwyddan",
-    "cp": "LL18 5SR",
-    "departement": "United Kingdom",
-    "lat": 53.2668,
-    "lon": -3.5142,
-    "pk_text": "J25",
-    "prix": {
-      "e10": 1.436,
-      "sp95": 1.436,
-      "gazole": 1.506,
-      "sp98": 1.556,
-      "gplc": 0.858
-    },
-    "ruptures": [],
-    "services": [
-      "Restauration",
-      "Boutique",
-      "Toilettes",
-      "Recharge EV",
-      "Parking Poids Lourds"
-    ]
-  },
-  {
-    "id": "GB-MSA-145",
-    "pays": "GB",
-    "enseigne": "Moto (BP)",
-    "autoroute": "A55",
-    "nom": "Halkyn Services",
-    "sens": "Double sens",
-    "adresse": "A55 Junction J32A, Holywell CH8 8RF",
-    "ville": "Holywell",
-    "cp": "CH8 8RF",
-    "departement": "United Kingdom",
-    "lat": 53.2404,
-    "lon": -3.1875,
-    "pk_text": "J32A",
     "prix": {
       "e10": 1.536,
       "sp95": 1.536,
@@ -56548,7 +56577,330 @@
     ]
   },
   {
-    "id": "GB-MSA-146",
+    "id": "GB-MSA-147",
+    "pays": "GB",
+    "enseigne": "Applegreen (BP)",
+    "autoroute": "M2",
+    "nom": "Templepatrick Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M2 Junction J5, Ballyclare BT39 0AT",
+    "ville": "Ballyclare",
+    "cp": "BT39 0AT",
+    "departement": "United Kingdom",
+    "lat": 54.6958,
+    "lon": -6.0481,
+    "pk_text": "J5",
+    "prix": {
+      "e10": 1.561,
+      "sp95": 1.561,
+      "gazole": 1.631,
+      "sp98": 1.681,
+      "gplc": 0.93
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-148",
+    "pays": "GB",
+    "enseigne": "Applegreen (BP)",
+    "autoroute": "M1",
+    "nom": "Lisburn Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M1 Junction J6, Lisburn BT27 5SG",
+    "ville": "Lisburn",
+    "cp": "BT27 5SG",
+    "departement": "United Kingdom",
+    "lat": 54.5136,
+    "lon": -6.013,
+    "pk_text": "J6",
+    "prix": {
+      "e10": 1.549,
+      "sp95": 1.549,
+      "gazole": 1.619,
+      "sp98": 1.669
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-149",
+    "pays": "GB",
+    "enseigne": "Applegreen (BP)",
+    "autoroute": "M1",
+    "nom": "Lisburn Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M1 Junction J6, Lisburn BT27 5SG",
+    "ville": "Lisburn",
+    "cp": "BT27 5SG",
+    "departement": "United Kingdom",
+    "lat": 54.5142,
+    "lon": -6.0122,
+    "pk_text": "J6",
+    "prix": {
+      "e10": 1.539,
+      "sp95": 1.539,
+      "gazole": 1.609,
+      "sp98": 1.659
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-150",
+    "pays": "GB",
+    "enseigne": "Maxol (Shell)",
+    "autoroute": "M1",
+    "nom": "Sprucefield Services",
+    "sens": "Double sens",
+    "adresse": "M1 Junction J7/J8, Lisburn BT27 5UQ",
+    "ville": "Lisburn",
+    "cp": "BT27 5UQ",
+    "departement": "United Kingdom",
+    "lat": 54.4881,
+    "lon": -6.0649,
+    "pk_text": "J7/J8",
+    "prix": {
+      "e10": 1.563,
+      "sp95": 1.563,
+      "gazole": 1.633,
+      "sp98": 1.683,
+      "gplc": 0.926
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-151",
+    "pays": "GB",
+    "enseigne": "Maxol (BP)",
+    "autoroute": "A1",
+    "nom": "Hillsborough Dromore Services",
+    "sens": "Double sens",
+    "adresse": "A1 Junction J9, Dromore BT25 1JT",
+    "ville": "Dromore",
+    "cp": "BT25 1JT",
+    "departement": "United Kingdom",
+    "lat": 54.4152,
+    "lon": -6.1592,
+    "pk_text": "J9",
+    "prix": {
+      "e10": 1.58,
+      "sp95": 1.58,
+      "gazole": 1.65,
+      "sp98": 1.7
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-152",
+    "pays": "GB",
+    "enseigne": "Applegreen (Texaco)",
+    "autoroute": "A1",
+    "nom": "Banbridge Loughbrickland Services",
+    "sens": "Double sens",
+    "adresse": "A1 Junction J13, Banbridge BT32 3NH",
+    "ville": "Banbridge",
+    "cp": "BT32 3NH",
+    "departement": "United Kingdom",
+    "lat": 54.3187,
+    "lon": -6.2995,
+    "pk_text": "J13",
+    "prix": {
+      "e10": 1.477,
+      "sp95": 1.477,
+      "gazole": 1.547,
+      "sp98": 1.597
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-153",
+    "pays": "GB",
+    "enseigne": "Euro Garages (Texaco)",
+    "autoroute": "A1",
+    "nom": "Newry Cloghoge Services",
+    "sens": "Double sens",
+    "adresse": "A1 Junction J20, Newry BT35 8RJ",
+    "ville": "Newry",
+    "cp": "BT35 8RJ",
+    "departement": "United Kingdom",
+    "lat": 54.1384,
+    "lon": -6.3436,
+    "pk_text": "J20",
+    "prix": {
+      "e10": 1.466,
+      "sp95": 1.466,
+      "gazole": 1.536,
+      "sp98": 1.586,
+      "gplc": 0.873
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-154",
+    "pays": "GB",
+    "enseigne": "Euro Garages (Shell)",
+    "autoroute": "A55",
+    "nom": "Holyhead Services",
+    "sens": "Double sens",
+    "adresse": "A55 Junction J2, Holyhead LL65 2UQ",
+    "ville": "Holyhead",
+    "cp": "LL65 2UQ",
+    "departement": "United Kingdom",
+    "lat": 53.2993,
+    "lon": -4.6228,
+    "pk_text": "J2",
+    "prix": {
+      "e10": 1.515,
+      "sp95": 1.515,
+      "gazole": 1.585,
+      "sp98": 1.635
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-155",
+    "pays": "GB",
+    "enseigne": "Extra (Shell)",
+    "autoroute": "A55",
+    "nom": "Bangor Llandygai Services",
+    "sens": "Double sens",
+    "adresse": "A55 Junction J11, Bangor LL57 4BG",
+    "ville": "Bangor",
+    "cp": "LL57 4BG",
+    "departement": "United Kingdom",
+    "lat": 53.2043,
+    "lon": -4.1475,
+    "pk_text": "J11",
+    "prix": {
+      "e10": 1.491,
+      "sp95": 1.491,
+      "gazole": 1.561,
+      "sp98": 1.611
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-156",
+    "pays": "GB",
+    "enseigne": "Euro Garages (Texaco)",
+    "autoroute": "A55",
+    "nom": "Kinmel Park Services",
+    "sens": "Double sens",
+    "adresse": "A55 Junction J25, Bodelwyddan LL18 5SR",
+    "ville": "Bodelwyddan",
+    "cp": "LL18 5SR",
+    "departement": "United Kingdom",
+    "lat": 53.2668,
+    "lon": -3.5142,
+    "pk_text": "J25",
+    "prix": {
+      "e10": 1.461,
+      "sp95": 1.461,
+      "gazole": 1.531,
+      "sp98": 1.581,
+      "gplc": 0.87
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-157",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "A55",
+    "nom": "Halkyn Services",
+    "sens": "Double sens",
+    "adresse": "A55 Junction J32A, Holywell CH8 8RF",
+    "ville": "Holywell",
+    "cp": "CH8 8RF",
+    "departement": "United Kingdom",
+    "lat": 53.2404,
+    "lon": -3.1875,
+    "pk_text": "J32A",
+    "prix": {
+      "e10": 1.545,
+      "sp95": 1.545,
+      "gazole": 1.615,
+      "sp98": 1.665
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-158",
     "pays": "GB",
     "enseigne": "Euro Garages (Shell)",
     "autoroute": "A55",
@@ -56562,10 +56914,10 @@
     "lon": -3.0628,
     "pk_text": "J34",
     "prix": {
-      "e10": 1.511,
-      "sp95": 1.511,
-      "gazole": 1.581,
-      "sp98": 1.631
+      "e10": 1.504,
+      "sp95": 1.504,
+      "gazole": 1.574,
+      "sp98": 1.624
     },
     "ruptures": [],
     "services": [

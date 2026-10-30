@@ -41,11 +41,23 @@ UK_MSA_CATALOG = [
     ("M1", "J38/J39", "Woolley Edge Services (Southbound)", "Moto", "Esso", "Wakefield", "WF4 4LQ", 53.6114, -1.5382, "Southbound"),
     ("M1", "J45", "Leeds Skelton Lake Services", "Extra", "Texaco", "Leeds", "LS9 0AS", 53.7708, -1.4667, "Double sens"),
 
-    # M2 & M20 Kent / Channel Tunnel / Dover
+    # M2, A2, A20 & M20 Kent / London - Folkestone - Channel Tunnel - Dover Corridor
+    ("A2", "Eltham", "Falconwood Services", "Euro Garages", "Shell", "London", "SE9 2RN", 51.4589, 0.0371, "Double sens"),
+    ("A2", "J2", "Bluewater Bean Services", "Welcome Break", "Shell", "Dartford", "DA2 8AH", 51.4260, 0.2355, "Double sens"),
+    ("A2", "Shorne", "Gravesend Cobham Services", "Moto", "Esso", "Gravesend", "DA12 3AN", 51.4019, 0.4094, "Double sens"),
+    ("A229", "M2 J3", "Blue Bell Hill Services", "Euro Garages", "Shell", "Chatham", "ME5 9UR", 51.3458, 0.5032, "Double sens"),
     ("M2", "J4/J5", "Medway Services (Eastbound)", "Moto", "BP", "Gillingham", "ME8 8PQ", 51.3408, 0.5944, "Eastbound"),
     ("M2", "J4/J5", "Medway Services (Westbound)", "Moto", "BP", "Gillingham", "ME8 8PQ", 51.3401, 0.5931, "Westbound"),
+    ("A20", "Sidcup", "Sidcup Crittals Services", "Euro Garages", "BP", "Sidcup", "DA14 5", 51.4165, 0.0893, "Double sens"),
+    ("M20", "J2", "Brands Hatch Wrotham Services", "Welcome Break", "Esso", "Wrotham", "DA3 8", 51.3547, 0.2728, "Double sens"),
+    ("M20", "J6", "Maidstone Aylesford Services", "Extra", "Shell", "Maidstone", "ME14 3", 51.2990, 0.5199, "Double sens"),
     ("M20", "J8", "Maidstone Services", "Roadchef", "BP", "Hollingbourne", "ME17 1SS", 51.2636, 0.6186, "Double sens"),
+    ("M20", "J8/J9", "Lenham Harrietsham Services", "Euro Garages", "Texaco", "Maidstone", "ME17 1", 51.2240, 0.7065, "Double sens"),
+    ("M20", "J9", "Ashford Eureka Services", "Extra", "Shell", "Ashford", "TN25 4BN", 51.1880, 0.8267, "Double sens"),
+    ("M20", "J10", "Ashford Orbital Services", "Moto", "Esso", "Ashford", "TN24 0GA", 51.1328, 0.9014, "Double sens"),
     ("M20", "J11", "Folkestone Eurotunnel Services", "Stop24", "Shell", "Hythe", "CT21 4BL", 51.0964, 1.0539, "Double sens"),
+    ("M20", "J12", "Cheriton Channel Tunnel Services", "Moto", "BP", "Folkestone", "CT19 4", 51.0938, 1.1043, "Double sens"),
+    ("A20", "Dover", "Dover Western Docks Services", "Euro Garages", "BP", "Dover", "CT17 9", 51.1194, 1.3097, "Double sens"),
 
     # M23 London - Brighton / Gatwick
     ("M23", "J10/J11", "Pease Pottage Services", "Moto", "BP", "Crawley", "RH11 9YA", 51.0806, -0.1939, "Double sens"),
