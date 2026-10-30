@@ -264,8 +264,11 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '6.0';
+const APP_VERSION = '6.1';
 let userManuallySelectedLang = false;
+
+// Clean up legacy v5.7/v5.8 localStorage key so it never forces an old test language (e.g. 'it') over geolocation
+try { localStorage.removeItem('fuelpilot_lang'); } catch (e) {}
 
 function mapCountryToLang(countryCode, lat, lon) {
   if (!countryCode) return null;
@@ -868,7 +871,6 @@ function setAppLanguage(lang, isManual = false) {
     userManuallySelectedLang = true;
     try {
       if (typeof sessionStorage !== 'undefined') sessionStorage.setItem('fuelpilot_manual_lang', lang);
-      localStorage.setItem('fuelpilot_lang', lang);
     } catch (e) {}
   }
 
@@ -1215,7 +1217,7 @@ function initMap() {
 // Load stations from JSON
 async function loadStationsData() {
   try {
-    const res = await fetch('stations_autoroute.json');
+    const res = await fetch(`stations_autoroute.json?v=${APP_VERSION}`);
     allStations = await res.json();
     populateBrandFilter();
     const badge = document.getElementById('total-stations-badge');
@@ -1227,10 +1229,10 @@ async function loadStationsData() {
 
 let coveredCountriesLayer = null;
 
-// Load covered countries boundary overlay (France & Spain)
+// Load covered countries boundary overlay (France, Germany, Italy, Spain & UK)
 async function loadCoveredCountries() {
   try {
-    const res = await fetch('pays_couverts.json');
+    const res = await fetch(`pays_couverts.json?v=${APP_VERSION}`);
     if (!res.ok) return;
     const geojsonData = await res.json();
 
