@@ -254,7 +254,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '5.1';
+const APP_VERSION = '5.2';
 
 // Dynamically calibrate mobile bottom nav bar position using VisualViewport & Screen APIs
 // Validated across 14 smartphone models (Samsung, Google Pixel, Xiaomi, Apple iPhone, OnePlus, Honor/Huawei, Motorola, Sony, Oppo)
@@ -1675,11 +1675,11 @@ function renderCurrentRouteStations() {
         ${renderCardPrices(st.prix, selectedFuel, isCheapest, st.pays)}
       </div>
 
-      ${st.ruptures && st.ruptures.length > 0 ? `
-        <div>
-          <span class="rupture-badge">⚠️ Rupture : ${st.ruptures.join(', ')}</span>
-        </div>
-      ` : ''}
+      ${(() => {
+        if (selectedFuel !== 'all' || !st.ruptures || st.ruptures.length === 0) return '';
+        const realRuptures = st.ruptures.filter(r => !(r.toUpperCase() === 'SP95' && st.prix && st.prix.e10 > 0));
+        return realRuptures.length > 0 ? `<div><span class="rupture-badge">⚠️ Rupture : ${realRuptures.join(', ')}</span></div>` : '';
+      })()}
     `;
 
     // Click card to zoom map to station
