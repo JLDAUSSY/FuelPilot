@@ -555,7 +555,7 @@ async function searchLocationsBilingual(q) {
 }
 
 // ============================================================================
-// Memory of the 6 most recent departure / arrival localities (localStorage)
+// Memory of the 10 most recent departure / arrival localities (localStorage)
 // ============================================================================
 const RECENT_LOCATIONS_KEY = 'fuelpilot_recent_locations_v1';
 
@@ -564,7 +564,7 @@ function getRecentLocations() {
     const raw = localStorage.getItem(RECENT_LOCATIONS_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed.slice(0, 6) : [];
+    return Array.isArray(parsed) ? parsed.slice(0, 10) : [];
   } catch (e) {
     return [];
   }
@@ -587,11 +587,11 @@ function saveRecentLocation(cleanName, coords, fullLabel) {
       label: fullLabel || cleanName.trim(),
       coords: [Number(coords[0]), Number(coords[1])]
     });
-    localStorage.setItem(RECENT_LOCATIONS_KEY, JSON.stringify(filtered.slice(0, 6)));
+    localStorage.setItem(RECENT_LOCATIONS_KEY, JSON.stringify(filtered.slice(0, 10)));
   } catch (e) {}
 }
 
-// Address Autocomplete: Bilingual UK/FR/ES/IT Cities + Photon + French BAN + 6 Recent Localities
+// Address Autocomplete: Bilingual UK/FR/ES/IT Cities + Photon + French BAN + 10 Recent Localities
 function setupAutocomplete(inputId, dropdownId, onSelect) {
   const input = document.getElementById(inputId);
   const dropdown = document.getElementById(dropdownId);
@@ -606,10 +606,11 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
     if (isRecentHeader) {
       const hdr = document.createElement('div');
       hdr.className = 'autocomplete-recent-header';
-      hdr.textContent = '🕒 6 dernières localités';
+      hdr.textContent = '🕒 10 dernières localités';
       dropdown.appendChild(hdr);
     }
-    items.slice(0, 6).forEach(itemData => {
+    const maxItems = isRecentHeader ? 10 : 8;
+    items.slice(0, maxItems).forEach(itemData => {
       const item = document.createElement('div');
       item.className = 'autocomplete-item';
       item.textContent = isRecentHeader ? `🕒 ${itemData.label || itemData.cleanName}` : itemData.label;
