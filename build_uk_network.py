@@ -171,6 +171,23 @@ UK_MSA_CATALOG = [
     ("M8", "J4/J5", "Harthill Services (Westbound)", "Roadchef", "BP", "Shotts", "ML7 5TG", 55.8586, -3.7472, "Westbound"),
     ("M9", "J9", "Stirling Services", "Moto", "BP", "Stirling", "FK7 8EU", 56.0825, -3.9317, "Double sens"),
     ("M90", "J6", "Kinross Services", "Moto", "BP", "Kinross", "KY13 0NQ", 56.2089, -3.4422, "Double sens"),
+
+    # Northern Ireland: M1, M2 & A1 Belfast - Newry Corridor
+    ("M2", "J5", "Templepatrick Services (Northbound)", "Applegreen", "BP", "Ballyclare", "BT39 0AT", 54.6967, -6.0489, "Northbound"),
+    ("M2", "J5", "Templepatrick Services (Southbound)", "Applegreen", "BP", "Ballyclare", "BT39 0AT", 54.6958, -6.0481, "Southbound"),
+    ("M1", "J6", "Lisburn Services (Southbound)", "Applegreen", "BP", "Lisburn", "BT27 5SG", 54.5136, -6.0130, "Southbound"),
+    ("M1", "J6", "Lisburn Services (Northbound)", "Applegreen", "BP", "Lisburn", "BT27 5SG", 54.5142, -6.0122, "Northbound"),
+    ("M1", "J7/J8", "Sprucefield Services", "Maxol", "Shell", "Lisburn", "BT27 5UQ", 54.4881, -6.0649, "Double sens"),
+    ("A1", "J9", "Hillsborough Dromore Services", "Maxol", "BP", "Dromore", "BT25 1JT", 54.4152, -6.1592, "Double sens"),
+    ("A1", "J13", "Banbridge Loughbrickland Services", "Applegreen", "Texaco", "Banbridge", "BT32 3NH", 54.3187, -6.2995, "Double sens"),
+    ("A1", "J20", "Newry Cloghoge Services", "Euro Garages", "Texaco", "Newry", "BT35 8RJ", 54.1384, -6.3436, "Double sens"),
+
+    # North Wales: A55 Holyhead - Bangor - Chester Expressway
+    ("A55", "J2", "Holyhead Services", "Euro Garages", "Shell", "Holyhead", "LL65 2UQ", 53.2993, -4.6228, "Double sens"),
+    ("A55", "J11", "Bangor Llandygai Services", "Extra", "Shell", "Bangor", "LL57 4BG", 53.2043, -4.1475, "Double sens"),
+    ("A55", "J25", "Kinmel Park Services", "Euro Garages", "Texaco", "Bodelwyddan", "LL18 5SR", 53.2668, -3.5142, "Double sens"),
+    ("A55", "J32A", "Halkyn Services", "Moto", "BP", "Holywell", "CH8 8RF", 53.2404, -3.1875, "Double sens"),
+    ("A55", "J34", "Northop Hall Ewloe Services", "Euro Garages", "Shell", "Deeside", "CH7 6HB", 53.1881, -3.0628, "Double sens"),
 ]
 
 # Realistic UK Motorway pricing baseline by operator/brand in GBP (£)

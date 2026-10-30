@@ -56194,5 +56194,386 @@
       "Recharge EV",
       "Parking Poids Lourds"
     ]
+  },
+  {
+    "id": "GB-MSA-134",
+    "pays": "GB",
+    "enseigne": "Applegreen (BP)",
+    "autoroute": "M2",
+    "nom": "Templepatrick Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M2 Junction J5, Ballyclare BT39 0AT",
+    "ville": "Ballyclare",
+    "cp": "BT39 0AT",
+    "departement": "United Kingdom",
+    "lat": 54.6967,
+    "lon": -6.0489,
+    "pk_text": "J5",
+    "prix": {
+      "e10": 1.551,
+      "sp95": 1.551,
+      "gazole": 1.621,
+      "sp98": 1.671
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-135",
+    "pays": "GB",
+    "enseigne": "Applegreen (BP)",
+    "autoroute": "M2",
+    "nom": "Templepatrick Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M2 Junction J5, Ballyclare BT39 0AT",
+    "ville": "Ballyclare",
+    "cp": "BT39 0AT",
+    "departement": "United Kingdom",
+    "lat": 54.6958,
+    "lon": -6.0481,
+    "pk_text": "J5",
+    "prix": {
+      "e10": 1.536,
+      "sp95": 1.536,
+      "gazole": 1.606,
+      "sp98": 1.656,
+      "gplc": 0.918
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-136",
+    "pays": "GB",
+    "enseigne": "Applegreen (BP)",
+    "autoroute": "M1",
+    "nom": "Lisburn Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M1 Junction J6, Lisburn BT27 5SG",
+    "ville": "Lisburn",
+    "cp": "BT27 5SG",
+    "departement": "United Kingdom",
+    "lat": 54.5136,
+    "lon": -6.013,
+    "pk_text": "J6",
+    "prix": {
+      "e10": 1.55,
+      "sp95": 1.55,
+      "gazole": 1.62,
+      "sp98": 1.67
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-137",
+    "pays": "GB",
+    "enseigne": "Applegreen (BP)",
+    "autoroute": "M1",
+    "nom": "Lisburn Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M1 Junction J6, Lisburn BT27 5SG",
+    "ville": "Lisburn",
+    "cp": "BT27 5SG",
+    "departement": "United Kingdom",
+    "lat": 54.5142,
+    "lon": -6.0122,
+    "pk_text": "J6",
+    "prix": {
+      "e10": 1.584,
+      "sp95": 1.584,
+      "gazole": 1.654,
+      "sp98": 1.704
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-138",
+    "pays": "GB",
+    "enseigne": "Maxol (Shell)",
+    "autoroute": "M1",
+    "nom": "Sprucefield Services",
+    "sens": "Double sens",
+    "adresse": "M1 Junction J7/J8, Lisburn BT27 5UQ",
+    "ville": "Lisburn",
+    "cp": "BT27 5UQ",
+    "departement": "United Kingdom",
+    "lat": 54.4881,
+    "lon": -6.0649,
+    "pk_text": "J7/J8",
+    "prix": {
+      "e10": 1.572,
+      "sp95": 1.572,
+      "gazole": 1.642,
+      "sp98": 1.692,
+      "gplc": 0.93
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-139",
+    "pays": "GB",
+    "enseigne": "Maxol (BP)",
+    "autoroute": "A1",
+    "nom": "Hillsborough Dromore Services",
+    "sens": "Double sens",
+    "adresse": "A1 Junction J9, Dromore BT25 1JT",
+    "ville": "Dromore",
+    "cp": "BT25 1JT",
+    "departement": "United Kingdom",
+    "lat": 54.4152,
+    "lon": -6.1592,
+    "pk_text": "J9",
+    "prix": {
+      "e10": 1.581,
+      "sp95": 1.581,
+      "gazole": 1.651,
+      "sp98": 1.701
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-140",
+    "pays": "GB",
+    "enseigne": "Applegreen (Texaco)",
+    "autoroute": "A1",
+    "nom": "Banbridge Loughbrickland Services",
+    "sens": "Double sens",
+    "adresse": "A1 Junction J13, Banbridge BT32 3NH",
+    "ville": "Banbridge",
+    "cp": "BT32 3NH",
+    "departement": "United Kingdom",
+    "lat": 54.3187,
+    "lon": -6.2995,
+    "pk_text": "J13",
+    "prix": {
+      "e10": 1.48,
+      "sp95": 1.48,
+      "gazole": 1.55,
+      "sp98": 1.6
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-141",
+    "pays": "GB",
+    "enseigne": "Euro Garages (Texaco)",
+    "autoroute": "A1",
+    "nom": "Newry Cloghoge Services",
+    "sens": "Double sens",
+    "adresse": "A1 Junction J20, Newry BT35 8RJ",
+    "ville": "Newry",
+    "cp": "BT35 8RJ",
+    "departement": "United Kingdom",
+    "lat": 54.1384,
+    "lon": -6.3436,
+    "pk_text": "J20",
+    "prix": {
+      "e10": 1.44,
+      "sp95": 1.44,
+      "gazole": 1.51,
+      "sp98": 1.56,
+      "gplc": 0.86
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-142",
+    "pays": "GB",
+    "enseigne": "Euro Garages (Shell)",
+    "autoroute": "A55",
+    "nom": "Holyhead Services",
+    "sens": "Double sens",
+    "adresse": "A55 Junction J2, Holyhead LL65 2UQ",
+    "ville": "Holyhead",
+    "cp": "LL65 2UQ",
+    "departement": "United Kingdom",
+    "lat": 53.2993,
+    "lon": -4.6228,
+    "pk_text": "J2",
+    "prix": {
+      "e10": 1.491,
+      "sp95": 1.491,
+      "gazole": 1.561,
+      "sp98": 1.611
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-143",
+    "pays": "GB",
+    "enseigne": "Extra (Shell)",
+    "autoroute": "A55",
+    "nom": "Bangor Llandygai Services",
+    "sens": "Double sens",
+    "adresse": "A55 Junction J11, Bangor LL57 4BG",
+    "ville": "Bangor",
+    "cp": "LL57 4BG",
+    "departement": "United Kingdom",
+    "lat": 53.2043,
+    "lon": -4.1475,
+    "pk_text": "J11",
+    "prix": {
+      "e10": 1.493,
+      "sp95": 1.493,
+      "gazole": 1.563,
+      "sp98": 1.613
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-144",
+    "pays": "GB",
+    "enseigne": "Euro Garages (Texaco)",
+    "autoroute": "A55",
+    "nom": "Kinmel Park Services",
+    "sens": "Double sens",
+    "adresse": "A55 Junction J25, Bodelwyddan LL18 5SR",
+    "ville": "Bodelwyddan",
+    "cp": "LL18 5SR",
+    "departement": "United Kingdom",
+    "lat": 53.2668,
+    "lon": -3.5142,
+    "pk_text": "J25",
+    "prix": {
+      "e10": 1.436,
+      "sp95": 1.436,
+      "gazole": 1.506,
+      "sp98": 1.556,
+      "gplc": 0.858
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-145",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "A55",
+    "nom": "Halkyn Services",
+    "sens": "Double sens",
+    "adresse": "A55 Junction J32A, Holywell CH8 8RF",
+    "ville": "Holywell",
+    "cp": "CH8 8RF",
+    "departement": "United Kingdom",
+    "lat": 53.2404,
+    "lon": -3.1875,
+    "pk_text": "J32A",
+    "prix": {
+      "e10": 1.536,
+      "sp95": 1.536,
+      "gazole": 1.606,
+      "sp98": 1.656
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-146",
+    "pays": "GB",
+    "enseigne": "Euro Garages (Shell)",
+    "autoroute": "A55",
+    "nom": "Northop Hall Ewloe Services",
+    "sens": "Double sens",
+    "adresse": "A55 Junction J34, Deeside CH7 6HB",
+    "ville": "Deeside",
+    "cp": "CH7 6HB",
+    "departement": "United Kingdom",
+    "lat": 53.1881,
+    "lon": -3.0628,
+    "pk_text": "J34",
+    "prix": {
+      "e10": 1.511,
+      "sp95": 1.511,
+      "gazole": 1.581,
+      "sp98": 1.631
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
   }
 ]

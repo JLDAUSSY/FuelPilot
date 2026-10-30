@@ -343,7 +343,7 @@ async function loadCoveredCountries() {
       { coords: [46.6, 2.5], flag: '🇫🇷', name: 'France', count: '438 aires' },
       { coords: [40.2, -3.6], flag: '🇪🇸', name: 'Espagne', count: '833 aires' },
       { coords: [42.6, 12.8], flag: '🇮🇹', name: 'Italie', count: '615 aires' },
-      { coords: [52.8, -1.8], flag: '🇬🇧', name: 'Royaume-Uni', count: '133 aires' }
+      { coords: [52.8, -1.8], flag: '🇬🇧', name: 'Royaume-Uni', count: '146 aires' }
     ];
 
     countryLabels.forEach(c => {
@@ -1278,8 +1278,8 @@ function renderCurrentRouteStations() {
     const customIcon = L.divIcon({
       html: pinHtml,
       className: 'station-div-icon',
-      iconSize: [80, 26],
-      iconAnchor: [40, 13]
+      iconSize: [104, 26],
+      iconAnchor: [52, 13]
     });
 
     const marker = L.marker([st.lat, st.lon], { icon: customIcon }).addTo(map);
