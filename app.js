@@ -1239,14 +1239,28 @@ function renderCurrentRouteStations() {
     const sensFormatted = st.sens ? formatProperName(st.sens) : '';
     const cleanPk = String(st.displayedPk || '').replace(/^km\s*/i, '').trim();
 
+    const wazeUrl = `https://waze.com/ul?ll=${st.lat},${st.lon}&navigate=yes`;
+    const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${st.lat},${st.lon}&travelmode=driving`;
+
+    const wazeSvg = `<svg class="nav-btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.5 10.5c0-4.4-3.8-8-8.5-8S2.5 6.1 2.5 10.5c0 1.9.7 3.6 1.8 5-.5 1.2-1.4 2.1-2.3 2.5-.4.2-.5.7-.2 1 .3.3.9.5 1.8.5 1.3 0 2.6-.4 3.6-.9 1.2.5 2.5.8 3.8.8 4.7 0 8.5-3.6 8.5-8.9zm-11 0c-.8 0-1.5-.7-1.5-1.5S7.7 7.5 8.5 7.5 10 8.2 10 9s-.7 1.5-1.5 1.5zm6 0c-.8 0-1.5-.7-1.5-1.5S13.7 7.5 14.5 7.5 16 8.2 16 9s-.7 1.5-1.5 1.5zm-3 5.2c-1.9 0-3.5-1-4.2-2.5-.2-.4 0-.8.4-1 .4-.2.8 0 1 .4.5 1 1.6 1.6 2.8 1.6s2.3-.6 2.8-1.6c.2-.4.6-.6 1-.4.4.2.6.6.4 1-.7 1.5-2.3 2.5-4.2 2.5z"/></svg>`;
+    const gmapsSvg = `<svg class="nav-btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`;
+
     const popupContent = `
       <div class="station-popup">
         <div class="popup-title"><span class="flag-icon">${flag}</span> ${st.enseigne} - ${nomFormatted}</div>
         <div class="popup-pk">📍 ${st.autoroute || 'Autoroute'} • Borne km ${cleanPk}</div>
         <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:6px;">${formatProperName(st.adresse)} (${villeFormatted})</div>
         <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:8px;">Sens : ${sensFormatted || 'Sens direct'} • À ${st.distOnRoute.toFixed(0)} km du départ</div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; font-size:0.8rem;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; font-size:0.8rem; margin-bottom:10px;">
           ${renderPopupPrices(st.prix, selectedFuel)}
+        </div>
+        <div class="station-nav-actions popup-nav-actions">
+          <a href="${wazeUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-waze" title="Lancer le guidage Waze vers cette station">
+            ${wazeSvg} <span>Waze</span>
+          </a>
+          <a href="${gmapsUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-gmaps" title="Lancer Google Maps vers cette station">
+            ${gmapsSvg} <span>Maps</span>
+          </a>
         </div>
       </div>
     `;
@@ -1276,7 +1290,17 @@ function renderCurrentRouteStations() {
         </div>
       </div>
 
-      <div class="station-name">${nomFormatted}</div>
+      <div class="station-name-row">
+        <div class="station-name">${nomFormatted}</div>
+        <div class="station-nav-actions">
+          <a href="${wazeUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-waze" onclick="event.stopPropagation();" title="Y aller avec Waze">
+            ${wazeSvg} <span>Waze</span>
+          </a>
+          <a href="${gmapsUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-gmaps" onclick="event.stopPropagation();" title="Y aller avec Google Maps">
+            ${gmapsSvg} <span>Maps</span>
+          </a>
+        </div>
+      </div>
       <div class="station-details">
         <span class="distance-countdown">⏱️ À ${st.distOnRoute.toFixed(1)} km du départ</span>
         ${sensFormatted ? `<span class="sens-tag">${sensFormatted}</span>` : ''}

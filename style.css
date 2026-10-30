@@ -1909,3 +1909,90 @@ header {
   border: 1px solid rgba(245, 158, 11, 0.4) !important;
   flex-shrink: 0 !important;
 }
+
+/* ==========================================================================
+   Waze & Google Maps Direct Navigation Buttons
+   ========================================================================== */
+.station-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.station-name-row .station-name {
+  margin-bottom: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.station-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.popup-nav-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-gps-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-decoration: none !important;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.popup-nav-actions .btn-gps-nav {
+  padding: 6px 10px;
+  font-size: 0.76rem;
+}
+
+.nav-btn-icon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
+.btn-waze {
+  background: rgba(51, 204, 255, 0.14);
+  color: #38bdf8 !important;
+  border: 1px solid rgba(51, 204, 255, 0.4);
+}
+
+.btn-waze:hover, .btn-waze:active {
+  background: rgba(51, 204, 255, 0.28);
+  border-color: #38bdf8;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(56, 189, 248, 0.35);
+}
+
+.btn-gmaps {
+  background: rgba(52, 211, 153, 0.14);
+  color: #34d399 !important;
+  border: 1px solid rgba(52, 211, 153, 0.4);
+}
+
+.btn-gmaps:hover, .btn-gmaps:active {
+  background: rgba(52, 211, 153, 0.28);
+  border-color: #34d399;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(52, 211, 153, 0.35);
+}
