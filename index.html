@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=5.5">
+  <link rel="stylesheet" href="style.css?v=5.6">
 </head>
 <body class="mobile-view-list">
 
@@ -34,18 +34,55 @@
       <img src="icon.png" alt="FuelPilot Logo" class="brand-logo-img">
       <div>
         <h1>Fuel<span>Pilot</span></h1>
-        <div class="brand-tagline">Prix carburant & aires d'autoroute</div>
+        <div class="brand-tagline" id="i18n-tagline">Prix carburant & aires d'autoroute</div>
       </div>
     </div>
 
     <div class="header-status">
-      <div class="badge-jld">JLDApps 2026 • <a href="privacy.html" style="color: inherit; text-decoration: none;" title="Politique de Confidentialité">Confidentialité</a></div>
+      <div class="header-badges-group">
+        <div class="badge-jld">JLDApps 2026</div>
+        <a href="privacy.html" class="badge-privacy" id="i18n-privacy" title="Politique de Confidentialité">Confidentialité</a>
+      </div>
       <div class="badge-live">
         <span class="pulse-dot"></span>
-        <span class="live-text">Prix en direct</span>
+        <span class="live-text" id="i18n-live-text">Prix en direct</span>
       </div>
     </div>
   </header>
+
+  <!-- Language Selection Bar (4 Country Flags: EN / FR / IT / ES) -->
+  <div class="lang-bar" id="lang-bar" role="navigation" aria-label="Choix de la langue">
+    <button type="button" class="lang-flag-btn" data-lang="en" title="English (UK)">
+      <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+        <rect width="60" height="36" rx="4" fill="#012169"/>
+        <path d="M0,0 L60,36 M60,0 L0,36" stroke="#ffffff" stroke-width="7"/>
+        <path d="M0,0 L60,36 M60,0 L0,36" stroke="#C8102E" stroke-width="4"/>
+        <path d="M30,0 V36 M0,18 H60" stroke="#ffffff" stroke-width="11"/>
+        <path d="M30,0 V36 M0,18 H60" stroke="#C8102E" stroke-width="6.5"/>
+      </svg>
+    </button>
+    <button type="button" class="lang-flag-btn active" data-lang="fr" title="Français">
+      <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+        <rect width="20" height="36" fill="#002395"/>
+        <rect x="20" width="20" height="36" fill="#ffffff"/>
+        <rect x="40" width="20" height="36" fill="#ED2939"/>
+      </svg>
+    </button>
+    <button type="button" class="lang-flag-btn" data-lang="it" title="Italiano">
+      <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+        <rect width="20" height="36" fill="#009246"/>
+        <rect x="20" width="20" height="36" fill="#ffffff"/>
+        <rect x="40" width="20" height="36" fill="#CE2B37"/>
+      </svg>
+    </button>
+    <button type="button" class="lang-flag-btn" data-lang="es" title="Español">
+      <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+        <rect width="60" height="9" fill="#AA151B"/>
+        <rect y="9" width="60" height="18" fill="#F1BF00"/>
+        <rect y="27" width="60" height="9" fill="#AA151B"/>
+      </svg>
+    </button>
+  </div>
 
   <!-- Main Container -->
   <div class="app-container">
@@ -204,6 +241,6 @@
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="app.js?v=5.5"></script>
+  <script src="app.js?v=5.6"></script>
 </body>
 </html>

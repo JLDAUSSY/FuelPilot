@@ -254,7 +254,215 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '5.5';
+const APP_VERSION = '5.6';
+let currentLang = localStorage.getItem('fuelpilot_lang') || 'fr';
+
+const I18N_DICT = {
+  fr: {
+    tagline: "Prix carburant & aires d'autoroute",
+    privacy: "Confidentialité",
+    live: "Prix en direct",
+    sec1: "1. Choix de l'itinéraire",
+    startPlaceholder: "Ville ou lieu de départ...",
+    endPlaceholder: "Ville ou lieu d'arrivée...",
+    addStep: "+ Étape",
+    calcBtn: "<span>🚀</span> Calculer l'itinéraire",
+    editBtn: "<span>✏️</span> Modifier",
+    closeBtn: "<span>✖</span> Fermer",
+    allBrands: "🏢 Toutes les enseignes",
+    sec3: "3. Stations d'autoroute",
+    sortRoute: "Tri : Ordre du trajet",
+    sortPrice: "Tri : Moins cher d'abord",
+    sortDist: "Tri : Distance",
+    tabMap: "Carte",
+    tabList: "Liste & Filtres",
+    coverage: "Réseau couvert : 🇫🇷 France • 🇪🇸 Espagne • 🇮🇹 Italie • 🇬🇧 Royaume-Uni",
+    recentHdr: "🕒 10 dernières localités",
+    bestPrice: "⭐ PRIX LE PLUS BAS",
+    fromStart: (km) => `⏱️ À ${km} km du départ`,
+    stationsCount: (n) => `${n} station${n > 1 ? 's' : ''} sur le trajet`,
+    unavail: "⚠️ Non disponible",
+    recommended: "🔵 Recommandé",
+    optionN: (n) => `🟠 Option ${n}`,
+    defaultCountry: "FR"
+  },
+  en: {
+    tagline: "Motorway fuel prices & service areas",
+    privacy: "Privacy",
+    live: "Live prices",
+    sec1: "1. Route planner",
+    startPlaceholder: "Departure city or place...",
+    endPlaceholder: "Arrival city or place...",
+    addStep: "+ Stop",
+    calcBtn: "<span>🚀</span> Calculate route",
+    editBtn: "<span>✏️</span> Edit",
+    closeBtn: "<span>✖</span> Close",
+    allBrands: "🏢 All brands",
+    sec3: "3. Motorway stations",
+    sortRoute: "Sort: Route order",
+    sortPrice: "Sort: Cheapest first",
+    sortDist: "Sort: Distance",
+    tabMap: "Map",
+    tabList: "List & Filters",
+    coverage: "Covered network: 🇬🇧 UK • 🇫🇷 France • 🇪🇸 Spain • 🇮🇹 Italy",
+    recentHdr: "🕒 10 recent locations",
+    bestPrice: "⭐ LOWEST PRICE",
+    fromStart: (km) => `⏱️ ${km} km from start`,
+    stationsCount: (n) => `${n} station${n !== 1 ? 's' : ''} on route`,
+    unavail: "⚠️ Unavailable",
+    recommended: "🔵 Recommended",
+    optionN: (n) => `🟠 Option ${n}`,
+    defaultCountry: "GB"
+  },
+  it: {
+    tagline: "Prezzi carburante e aree autostradali",
+    privacy: "Privacy",
+    live: "Prezzi live",
+    sec1: "1. Scelta dell'itinerario",
+    startPlaceholder: "Città o luogo di partenza...",
+    endPlaceholder: "Città o luogo di arrivo...",
+    addStep: "+ Tappa",
+    calcBtn: "<span>🚀</span> Calcola itinerario",
+    editBtn: "<span>✏️</span> Modifica",
+    closeBtn: "<span>✖</span> Chiudi",
+    allBrands: "🏢 Tutti i marchi",
+    sec3: "3. Stazioni autostradali",
+    sortRoute: "Ordine: Percorso",
+    sortPrice: "Ordine: Più economico",
+    sortDist: "Ordine: Distanza",
+    tabMap: "Mappa",
+    tabList: "Lista e Filtri",
+    coverage: "Rete coperta: 🇮🇹 Italia • 🇫🇷 Francia • 🇪🇸 Spagna • 🇬🇧 Regno Unito",
+    recentHdr: "🕒 Ultime 10 località",
+    bestPrice: "⭐ PREZZO PIÙ BASSO",
+    fromStart: (km) => `⏱️ A ${km} km dalla partenza`,
+    stationsCount: (n) => `${n} stazion${n === 1 ? 'e' : 'i'} sul percorso`,
+    unavail: "⚠️ Non disponibile",
+    recommended: "🔵 Consigliato",
+    optionN: (n) => `🟠 Opzione ${n}`,
+    defaultCountry: "IT"
+  },
+  es: {
+    tagline: "Precios de carburante y áreas de autopista",
+    privacy: "Privacidad",
+    live: "Precios en vivo",
+    sec1: "1. Elección de ruta",
+    startPlaceholder: "Ciudad o lugar de salida...",
+    endPlaceholder: "Ciudad o lugar de llegada...",
+    addStep: "+ Etapa",
+    calcBtn: "<span>🚀</span> Calcular ruta",
+    editBtn: "<span>✏️</span> Modificar",
+    closeBtn: "<span>✖</span> Cerrar",
+    allBrands: "🏢 Todas las marcas",
+    sec3: "3. Estaciones de autopista",
+    sortRoute: "Orden: En ruta",
+    sortPrice: "Orden: Más barato",
+    sortDist: "Orden: Distancia",
+    tabMap: "Mapa",
+    tabList: "Lista y Filtros",
+    coverage: "Red cubierta: 🇪🇸 España • 🇫🇷 Francia • 🇮🇹 Italia • 🇬🇧 Reino Unido",
+    recentHdr: "🕒 10 últimas localidades",
+    bestPrice: "⭐ PRECIO MÁS BAJO",
+    fromStart: (km) => `⏱️ A ${km} km de la salida`,
+    stationsCount: (n) => `${n} estaci${n === 1 ? 'ón' : 'ones'} en ruta`,
+    unavail: "⚠️ No disponible",
+    recommended: "🔵 Recomendado",
+    optionN: (n) => `🟠 Opción ${n}`,
+    defaultCountry: "ES"
+  }
+};
+
+function t() {
+  return I18N_DICT[currentLang] || I18N_DICT.fr;
+}
+
+function setAppLanguage(lang) {
+  if (!I18N_DICT[lang]) lang = 'fr';
+  currentLang = lang;
+  try { localStorage.setItem('fuelpilot_lang', lang); } catch (e) {}
+
+  document.querySelectorAll('#lang-bar .lang-flag-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+
+  const tr = t();
+  const taglineEl = document.getElementById('i18n-tagline') || document.querySelector('.brand-tagline');
+  if (taglineEl) taglineEl.textContent = tr.tagline;
+
+  const privEl = document.getElementById('i18n-privacy');
+  if (privEl) privEl.textContent = tr.privacy;
+
+  const liveEl = document.getElementById('i18n-live-text') || document.querySelector('.live-text');
+  if (liveEl) liveEl.textContent = tr.live;
+
+  const sec1El = document.querySelector('#itinerary-full-form .section-title span');
+  if (sec1El) sec1El.textContent = tr.sec1;
+
+  const startEl = document.getElementById('input-start');
+  if (startEl) startEl.placeholder = tr.startPlaceholder;
+
+  const endEl = document.getElementById('input-end');
+  if (endEl) endEl.placeholder = tr.endPlaceholder;
+
+  const addWpBtn = document.getElementById('btn-add-waypoint');
+  if (addWpBtn) addWpBtn.textContent = tr.addStep;
+
+  const calcBtn = document.getElementById('btn-calculate');
+  if (calcBtn && !calcBtn.disabled) calcBtn.innerHTML = tr.calcBtn;
+
+  const editBtn = document.getElementById('btn-toggle-route-edit');
+  if (editBtn) {
+    const isCollapsed = document.body.classList.contains('mobile-route-collapsed');
+    editBtn.innerHTML = isCollapsed ? tr.editBtn : tr.closeBtn;
+  }
+
+  const brandSelect = document.getElementById('select-brand');
+  if (brandSelect && brandSelect.options.length > 0 && brandSelect.options[0].value === 'all') {
+    brandSelect.options[0].textContent = tr.allBrands;
+  }
+
+  // Update fuel dropdown default labels when no route is active
+  const fuelSelectEl = document.getElementById('select-fuel');
+  if (fuelSelectEl && (!currentRouteStations || currentRouteStations.length === 0)) {
+    const dict = FUEL_LABELS_BY_COUNTRY[tr.defaultCountry] || FUEL_LABELS_BY_COUNTRY.FR;
+    const hasFr = tr.defaultCountry === 'FR';
+    Array.from(fuelSelectEl.options).forEach(opt => {
+      if (opt.value === 'sp95') opt.style.display = hasFr ? '' : 'none';
+      if (dict[opt.value]) opt.textContent = `⛽ ${dict[opt.value]}`;
+    });
+  }
+
+  const sortSelect = document.getElementById('select-sort');
+  if (sortSelect) {
+    Array.from(sortSelect.options).forEach(opt => {
+      if (opt.value === 'route') opt.textContent = tr.sortRoute;
+      if (opt.value === 'price') opt.textContent = tr.sortPrice;
+      if (opt.value === 'dist') opt.textContent = tr.sortDist;
+    });
+  }
+
+  const sec3El = document.querySelector('.stations-header .section-title span');
+  if (sec3El) sec3El.textContent = tr.sec3;
+
+  const tabMapLbl = document.querySelector('#btn-tab-map .tab-label');
+  if (tabMapLbl) tabMapLbl.textContent = tr.tabMap;
+
+  const tabListLbl = document.querySelector('#btn-tab-list .tab-label');
+  if (tabListLbl) tabListLbl.textContent = tr.tabList;
+
+  const covEl = document.querySelector('.coverage-text');
+  if (covEl) covEl.textContent = tr.coverage;
+
+  if (alternativeRoutes && alternativeRoutes.length > 1) {
+    renderRouteAlternatives();
+  }
+  if (currentRouteStations && currentRouteStations.length > 0) {
+    renderCurrentRouteStations();
+  } else {
+    const countLabel = document.getElementById('stations-count-label');
+    if (countLabel) countLabel.textContent = tr.stationsCount(0);
+  }
+}
 
 // Dynamically calibrate mobile bottom nav bar position using VisualViewport & Screen APIs
 // Validated across 14 smartphone models (Samsung, Google Pixel, Xiaomi, Apple iPhone, OnePlus, Honor/Huawei, Motorola, Sony, Oppo)
@@ -319,6 +527,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       window.location.replace(`index.html?_v=${Date.now()}`);
     });
   }
+  document.querySelectorAll('#lang-bar .lang-flag-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      setAppLanguage(btn.dataset.lang);
+    });
+  });
+  setAppLanguage(currentLang);
   initMap();
 
   const startInput = document.getElementById('input-start');
@@ -846,7 +1060,7 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
     if (isRecentHeader) {
       const hdr = document.createElement('div');
       hdr.className = 'autocomplete-recent-header';
-      hdr.textContent = '🕒 10 dernières localités';
+      hdr.textContent = t().recentHdr;
       dropdown.appendChild(hdr);
     }
     const maxItems = 10;
@@ -1628,7 +1842,7 @@ function renderCurrentRouteStations() {
   // Update counter
   const countLabel = document.getElementById('stations-count-label');
   if (countLabel) {
-    countLabel.textContent = `${filtered.length} station${filtered.length > 1 ? 's' : ''} sur le trajet`;
+    countLabel.textContent = t().stationsCount(filtered.length);
   }
 
   const mobileBadge = document.getElementById('mobile-badge-count');
@@ -1774,7 +1988,7 @@ function renderCurrentRouteStations() {
     card.id = `card-${st.id}`;
 
     card.innerHTML = `
-      ${isCheapest ? `<div class="best-price-ribbon">⭐ PRIX LE PLUS BAS</div>` : ''}
+      ${isCheapest ? `<div class="best-price-ribbon">${t().bestPrice}</div>` : ''}
       <div class="card-top">
         <div style="display:flex; align-items:center;">
           <span class="station-rank">#${idx + 1}</span>
@@ -1803,7 +2017,7 @@ function renderCurrentRouteStations() {
         </div>
       </div>
       <div class="station-details">
-        <span class="distance-countdown">⏱️ À ${st.distOnRoute.toFixed(1)} km du départ</span>
+        <span class="distance-countdown">${t().fromStart(st.distOnRoute.toFixed(1))}</span>
         ${sensFormatted ? `<span class="sens-tag">${sensFormatted}</span>` : ''}
         <span>• ${villeFormatted}</span>
       </div>
