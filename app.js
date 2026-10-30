@@ -184,7 +184,7 @@ function setMobileView(view) {
   }
 }
 
-// Official fuel denominations per country (Government open-data registries: FR, ES, IT, GB)
+// Official fuel denominations per country (Government open-data registries: FR, DE, ES, IT, GB)
 const FUEL_LABELS_BY_COUNTRY = {
   FR: {
     e10: 'SP95-E10',
@@ -194,6 +194,15 @@ const FUEL_LABELS_BY_COUNTRY = {
     e85: 'Superéthanol E85',
     gplc: 'GPLc',
     all: 'Tous carburants'
+  },
+  DE: {
+    e10: 'Super E10',
+    gazole: 'Diesel (B7)',
+    sp98: 'Super Plus (98)',
+    sp95: 'Super E5 (95)',
+    e85: 'Bioethanol E85',
+    gplc: 'Autogas (LPG)',
+    all: 'Alle Kraftstoffe'
   },
   ES: {
     e10: 'Gasolina 95 E5',
@@ -231,15 +240,15 @@ function getFuelLabel(fuel, pays) {
   return dict[fuel] || FUEL_LABELS_BY_COUNTRY.FR[fuel] || (fuel ? fuel.toUpperCase() : '');
 }
 
-// Return actual served fuel label for a station (distinguishes SP95-E10 vs SP95 (E5) in France)
+// Return actual served fuel label for a station (distinguishes SP95-E10 vs SP95 (E5) in France & Germany)
 function getServedFuelLabel(prices, requestedFuel, pays) {
   const c = pays || 'FR';
-  if (c === 'FR' && prices) {
+  if ((c === 'FR' || c === 'DE') && prices) {
     if (requestedFuel === 'e10' && (!prices.e10 || prices.e10 <= 0) && prices.sp95 > 0) {
-      return getFuelLabel('sp95', 'FR');
+      return getFuelLabel('sp95', c);
     }
     if (requestedFuel === 'sp95' && (!prices.sp95 || prices.sp95 <= 0) && prices.e10 > 0) {
-      return getFuelLabel('e10', 'FR');
+      return getFuelLabel('e10', c);
     }
   }
   return getFuelLabel(requestedFuel, c);
@@ -248,13 +257,14 @@ function getServedFuelLabel(prices, requestedFuel, pays) {
 // Distinct fuels to display when "All fuels" is selected in a given country (avoids duplicating e10/sp95 in ES, IT, GB)
 function getDistinctCountryFuels(pays) {
   if (pays === 'GB') return ['gazole', 'e10', 'sp98', 'gplc'];
+  if (pays === 'DE') return ['gazole', 'e10', 'sp95', 'sp98', 'gplc'];
   if (pays === 'ES') return ['gazole', 'sp95', 'sp98', 'gplc', 'e85'];
   if (pays === 'IT') return ['gazole', 'sp95', 'sp98', 'gplc', 'metano'];
   return ['gazole', 'e10', 'sp98', 'sp95', 'e85', 'gplc'];
 }
 
 // Initialize Application
-const APP_VERSION = '5.8';
+const APP_VERSION = '5.9';
 let currentLang = localStorage.getItem('fuelpilot_lang') || 'fr';
 
 const I18N_DICT = {
@@ -285,7 +295,7 @@ const I18N_DICT = {
     sortDist: "Tri : Distance",
     tabMap: "Carte",
     tabList: "Liste & Filtres",
-    coverage: "Réseau couvert : 🇫🇷 France • 🇪🇸 Espagne • 🇮🇹 Italie • 🇬🇧 Royaume-Uni",
+    coverage: "Réseau couvert : 🇫🇷 France • 🇩🇪 Allemagne • 🇮🇹 Italie • 🇪🇸 Espagne • 🇬🇧 Royaume-Uni",
     recentHdr: "🕒 10 dernières localités",
     bestPrice: "⭐ PRIX LE PLUS BAS",
     fromStart: (km) => `⏱️ À ${km} km du départ`,
@@ -299,6 +309,7 @@ const I18N_DICT = {
     directRoute: "Itinéraire direct",
     countryCH: "Suisse",
     countryFR: "France",
+    countryDE: "Allemagne",
     countryES: "Espagne",
     countryIT: "Italie",
     countryGB: "Royaume-Uni",
@@ -334,6 +345,83 @@ const I18N_DICT = {
     ],
     defaultCountry: "FR"
   },
+  de: {
+    pageTitle: "FuelPilot • Autobahn-Tankstellen & Kraftstoffpreise",
+    tagline: "Kraftstoffpreise & Autobahnraststätten",
+    privacy: "Datenschutz",
+    live: "Live-Preise",
+    refreshTitle: "FuelPilot aktualisieren",
+    sec1: "1. Routenwahl",
+    startPlaceholder: "Startort oder Adresse...",
+    endPlaceholder: "Zielort oder Adresse...",
+    stepPlaceholder: (n) => `Zwischenstopp ${n} (z. B. Köln, Nürnberg...)`,
+    removeStepTitle: "Zwischenstopp entfernen",
+    addStep: "+ Stopp",
+    calcBtn: "<span>🚀</span> Route berechnen",
+    calcInProgress: "Route wird berechnet...",
+    editBtn: "<span>✏️</span> Ändern",
+    closeBtn: "<span>✖</span> Schließen",
+    editBtnTitle: "Route ändern",
+    allBrands: "🏢 Alle Marken",
+    filterBrandTitle: "Nach Marke filtern",
+    filterFuelTitle: "Nach Kraftstoff filtern",
+    sortTitle: "Sortierung",
+    sec3: "3. Autobahntankstellen",
+    sortRoute: "Sortierung: Routenverlauf",
+    sortPrice: "Sortierung: Günstigste zuerst",
+    sortDist: "Sortierung: Entfernung",
+    tabMap: "Karte",
+    tabList: "Liste & Filter",
+    coverage: "Abgedecktes Netz: 🇫🇷 Frankreich • 🇩🇪 Deutschland • 🇮🇹 Italien • 🇪🇸 Spanien • 🇬🇧 Vereinigtes Königreich",
+    recentHdr: "🕒 Letzte 10 Orte",
+    bestPrice: "⭐ NIEDRIGSTER PREIS",
+    fromStart: (km) => `⏱️ ${km} km ab Start`,
+    stationsCount: (n) => `${n} Tankstelle${n !== 1 ? 'n' : ''} auf der Route`,
+    unavail: "⚠️ Nicht verfügbar",
+    noPrice: "Keine Preisangabe",
+    priceLbl: "Preis",
+    outOfStock: "⚠️ Ausverkauft:",
+    recommended: "🔵 Empfohlen",
+    optionN: (n) => `🟠 Option ${n}`,
+    directRoute: "Direkte Route",
+    countryCH: "Schweiz",
+    countryFR: "Frankreich",
+    countryDE: "Deutschland",
+    countryES: "Spanien",
+    countryIT: "Italien",
+    countryGB: "Vereinigtes Königreich",
+    countryIE: "Irland",
+    countryBE: "Belgien",
+    areasCount: (n) => `${n} Raststätten`,
+    areasListed: (n) => `${n} Autobahnraststätten • Live-Preise`,
+    kmMarker: (hw, pk) => `${hw || 'Autobahn'} • km ${pk}`,
+    popupDirDist: (dir, km) => `Richtung: ${dir} • ${km} km ab Start`,
+    sensDirect: "Fahrtrichtung",
+    sensInverse: "Gegenrichtung",
+    sensDouble: "Beide Richtungen",
+    wazeTitle: "Mit Waze navigieren",
+    gmapsTitle: "Mit Google Maps navigieren",
+    mapRoad: "🗺️ Straßenkarte",
+    mapOsm: "🌍 OpenStreetMap",
+    mapSat: "🛰️ Satellitenansicht",
+    emptyInitial: "Wählen Sie einen Start- und Zielort, um Autobahntankstellen und deren Kilometrierung anzuzeigen.",
+    emptyFilteredTitle: "Keine Autobahntankstelle mit diesen Kriterien gefunden.",
+    emptyFilteredSub: "Versuchen Sie „Alle Marken“ oder einen anderen Kraftstoff auszuwählen.",
+    alertMissingPoints: "Bitte geben Sie einen Startort und einen Zielort ein.",
+    alertNoRoute: "Keine Straßenroute gefunden.",
+    alertServerError: "Routenserver nicht erreichbar. Bitte versuchen Sie es erneut.",
+    ulysBadge: "🔥 MAUT-ANGEBOT • 0 € GRUNDGEBÜHR",
+    ulysTitle: "Ulys Mautbox (Vinci)",
+    ulysDesc: "Ohne Wartezeit durch die Mautstellen in Frankreich, Spanien & Italien. Ohne Vertragsbindung.",
+    ulysCta: "Angebot sichern ➔",
+    amazonBadge: "🛒 EMPFOHLENES REISEZUBEHÖR",
+    amazonView: "Ansehen ➔",
+    amazonItems: [
+      { icon: "📱", name: "Kfz-Handyhalterung Lüftung / MagSafe", sub: "Ultrastabiler Halt für die GPS-Navigation" },
+      { icon: "⚡", name: "65W USB-C Schnellladegerät fürs Auto", sub: "Schnelles Aufladen während der Fahrt" }
+    ],
+    defaultCountry: "DE"
+  },
   en: {
     pageTitle: "FuelPilot • Motorway Fuel Prices & Service Areas",
     tagline: "Motorway fuel prices & service areas",
@@ -361,7 +449,7 @@ const I18N_DICT = {
     sortDist: "Sort: Distance",
     tabMap: "Map",
     tabList: "List & Filters",
-    coverage: "Covered network: 🇬🇧 UK • 🇫🇷 France • 🇪🇸 Spain • 🇮🇹 Italy",
+    coverage: "Covered network: 🇫🇷 France • 🇩🇪 Germany • 🇮🇹 Italy • 🇪🇸 Spain • 🇬🇧 UK",
     recentHdr: "🕒 10 recent locations",
     bestPrice: "⭐ LOWEST PRICE",
     fromStart: (km) => `⏱️ ${km} km from start`,
@@ -375,6 +463,7 @@ const I18N_DICT = {
     directRoute: "Direct route",
     countryCH: "Switzerland",
     countryFR: "France",
+    countryDE: "Germany",
     countryES: "Spain",
     countryIT: "Italy",
     countryGB: "United Kingdom",
@@ -437,7 +526,7 @@ const I18N_DICT = {
     sortDist: "Ordine: Distanza",
     tabMap: "Mappa",
     tabList: "Lista e Filtri",
-    coverage: "Rete coperta: 🇮🇹 Italia • 🇫🇷 Francia • 🇪🇸 Spagna • 🇬🇧 Regno Unito",
+    coverage: "Rete coperta: 🇫🇷 Francia • 🇩🇪 Germania • 🇮🇹 Italia • 🇪🇸 Spagna • 🇬🇧 Regno Unito",
     recentHdr: "🕒 Ultime 10 località",
     bestPrice: "⭐ PREZZO PIÙ BASSO",
     fromStart: (km) => `⏱️ A ${km} km dalla partenza`,
@@ -451,6 +540,7 @@ const I18N_DICT = {
     directRoute: "Itinerario diretto",
     countryCH: "Svizzera",
     countryFR: "Francia",
+    countryDE: "Germania",
     countryES: "Spagna",
     countryIT: "Italia",
     countryGB: "Regno Unito",
@@ -513,7 +603,7 @@ const I18N_DICT = {
     sortDist: "Orden: Distancia",
     tabMap: "Mapa",
     tabList: "Lista y Filtros",
-    coverage: "Red cubierta: 🇪🇸 España • 🇫🇷 Francia • 🇮🇹 Italia • 🇬🇧 Reino Unido",
+    coverage: "Red cubierta: 🇫🇷 Francia • 🇩🇪 Alemania • 🇮🇹 Italia • 🇪🇸 España • 🇬🇧 Reino Unido",
     recentHdr: "🕒 10 últimas localidades",
     bestPrice: "⭐ PRECIO MÁS BAJO",
     fromStart: (km) => `⏱️ A ${km} km de la salida`,
@@ -527,6 +617,7 @@ const I18N_DICT = {
     directRoute: "Ruta directa",
     countryCH: "Suiza",
     countryFR: "Francia",
+    countryDE: "Alemania",
     countryES: "España",
     countryIT: "Italia",
     countryGB: "Reino Unido",
@@ -572,32 +663,35 @@ function translateCountryName(rawName) {
   if (!rawName) return '';
   const tr = t();
   const n = rawName.trim().toLowerCase();
-  if (n === 'france' || n === 'francia') return tr.countryFR;
-  if (n === 'espagne' || n === 'spain' || n === 'spagna' || n === 'españa') return tr.countryES;
-  if (n === 'italie' || n === 'italy' || n === 'italia') return tr.countryIT;
-  if (n === 'royaume-uni' || n === 'united kingdom' || n === 'regno unito' || n === 'reino unido') return tr.countryGB;
-  if (n === 'suisse' || n === 'switzerland' || n === 'svizzera' || n === 'suiza') return tr.countryCH;
-  if (n === 'irlande' || n === 'ireland' || n === 'irlanda') return tr.countryIE;
-  if (n === 'belgique' || n === 'belgium' || n === 'belgio' || n === 'bélgica') return tr.countryBE;
+  if (n === 'france' || n === 'francia' || n === 'frankreich') return tr.countryFR;
+  if (n === 'allemagne' || n === 'germany' || n === 'deutschland' || n === 'germania' || n === 'alemania') return tr.countryDE;
+  if (n === 'espagne' || n === 'spain' || n === 'spagna' || n === 'españa' || n === 'spanien') return tr.countryES;
+  if (n === 'italie' || n === 'italy' || n === 'italia' || n === 'italien') return tr.countryIT;
+  if (n === 'royaume-uni' || n === 'united kingdom' || n === 'regno unito' || n === 'reino unido' || n === 'vereinigtes königreich') return tr.countryGB;
+  if (n === 'suisse' || n === 'switzerland' || n === 'svizzera' || n === 'suiza' || n === 'schweiz') return tr.countryCH;
+  if (n === 'irlande' || n === 'ireland' || n === 'irlanda' || n === 'irland') return tr.countryIE;
+  if (n === 'belgique' || n === 'belgium' || n === 'belgio' || n === 'bélgica' || n === 'belgien') return tr.countryBE;
   return rawName;
 }
 
-function translateSens(sensStr, isUK) {
+function translateSens(sensStr, isNativeCase) {
   if (!sensStr) return t().sensDirect;
   const sLow = sensStr.trim().toLowerCase();
   if (sLow.includes('double')) return t().sensDouble;
   if (sLow === 'sens direct') return t().sensDirect;
   if (sLow === 'sens inverse') return t().sensInverse;
-  if (currentLang === 'fr') return isUK ? sensStr : formatProperName(sensStr);
+  if (currentLang === 'fr') return isNativeCase ? sensStr : formatProperName(sensStr);
 
   if (sLow === 'sens gauche (i)') {
+    if (currentLang === 'de') return 'Linke Seite (L)';
     return currentLang === 'en' ? 'Left side (L)' : (currentLang === 'it' ? 'Lato sinistro (S)' : 'Margen izquierdo (I)');
   }
   if (sLow === 'sens droite (d)') {
+    if (currentLang === 'de') return 'Rechte Seite (R)';
     return currentLang === 'en' ? 'Right side (R)' : (currentLang === 'it' ? 'Lato destro (D)' : 'Margen derecho (D)');
   }
 
-  let out = isUK ? sensStr : formatProperName(sensStr);
+  let out = isNativeCase ? sensStr : formatProperName(sensStr);
   if (currentLang === 'en') {
     out = out
       .replace(/^Côté\s+/i, 'Side ')
@@ -610,7 +704,23 @@ function translateSens(sensStr, isUK) {
       .replace(/\bExtérieur\b/gi, 'Outer')
       .replace(/\bEspagne\b/gi, 'Spain')
       .replace(/\bItalie\b/gi, 'Italy')
+      .replace(/\bAllemagne\b/gi, 'Germany')
       .replace(/\bSuisse\b/gi, 'Switzerland');
+  } else if (currentLang === 'de') {
+    out = out
+      .replace(/^Côté\s+/i, 'Seite ')
+      .replace(/^Sens\s+/i, 'Richtung ')
+      .replace(/\bOuest\b/gi, 'West')
+      .replace(/\bEst\b/gi, 'Ost')
+      .replace(/\bNord\b/gi, 'Nord')
+      .replace(/\bSud\b/gi, 'Süd')
+      .replace(/\bIntérieur\b/gi, 'Innenring')
+      .replace(/\bExtérieur\b/gi, 'Außenring')
+      .replace(/\bEspagne\b/gi, 'Spanien')
+      .replace(/\bItalie\b/gi, 'Italien')
+      .replace(/\bFrance\b/gi, 'Frankreich')
+      .replace(/\bAllemagne\b/gi, 'Deutschland')
+      .replace(/\bSuisse\b/gi, 'Schweiz');
   } else if (currentLang === 'it') {
     out = out
       .replace(/^Côté\s+/i, 'Lato ')
@@ -623,6 +733,7 @@ function translateSens(sensStr, isUK) {
       .replace(/\bExtérieur\b/gi, 'Esterno')
       .replace(/\bEspagne\b/gi, 'Spagna')
       .replace(/\bItalie\b/gi, 'Italia')
+      .replace(/\bAllemagne\b/gi, 'Germania')
       .replace(/\bFrance\b/gi, 'Francia');
   } else if (currentLang === 'es') {
     out = out
@@ -636,6 +747,7 @@ function translateSens(sensStr, isUK) {
       .replace(/\bExtérieur\b/gi, 'Exterior')
       .replace(/\bEspagne\b/gi, 'España')
       .replace(/\bItalie\b/gi, 'Italia')
+      .replace(/\bAllemagne\b/gi, 'Alemania')
       .replace(/\bFrance\b/gi, 'Francia');
   }
   return out;
@@ -652,18 +764,40 @@ function renderCountryBadgesOnMap() {
   const tr = t();
   const countryLabels = [
     { coords: [46.6, 2.5], flag: '🇫🇷', name: tr.countryFR, count: tr.areasCount(438) },
-    { coords: [40.2, -3.6], flag: '🇪🇸', name: tr.countryES, count: tr.areasCount(833) },
+    { coords: [51.1, 10.4], flag: '🇩🇪', name: tr.countryDE, count: tr.areasCount(218) },
     { coords: [42.6, 12.8], flag: '🇮🇹', name: tr.countryIT, count: tr.areasCount(615) },
+    { coords: [40.2, -3.6], flag: '🇪🇸', name: tr.countryES, count: tr.areasCount(833) },
     { coords: [52.8, -1.8], flag: '🇬🇧', name: tr.countryGB, count: tr.areasCount(158) }
   ];
   countryLabels.forEach(c => {
     const icon = L.divIcon({
       className: 'country-badge-marker',
       html: `<div class="country-badge-pill">${c.flag} ${c.name} <span class="country-count-tag">• ${c.count}</span></div>`,
-      iconSize: [140, 26],
-      iconAnchor: [70, 13]
+      iconSize: [148, 26],
+      iconAnchor: [74, 13]
     });
     countryBadgeMarkers.push(L.marker(c.coords, { icon, interactive: false }).addTo(map));
+  });
+}
+
+// Enforce the exact flag order in #lang-bar: France, Germany, Italy, Spain, United Kingdom
+function ensureLangBarOrder() {
+  const bar = document.getElementById('lang-bar');
+  if (!bar) return;
+  if (!bar.querySelector('[data-lang="de"]')) {
+    const deBtn = document.createElement('button');
+    deBtn.type = 'button';
+    deBtn.className = 'lang-flag-btn';
+    deBtn.dataset.lang = 'de';
+    deBtn.title = 'Deutsch';
+    deBtn.setAttribute('aria-label', 'Deutsch');
+    deBtn.innerHTML = `<svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="12" fill="#000000"/><rect y="12" width="60" height="12" fill="#DD0000"/><rect y="24" width="60" height="12" fill="#FFCE00"/></svg>`;
+    bar.appendChild(deBtn);
+  }
+  const desiredOrder = ['fr', 'de', 'it', 'es', 'en'];
+  desiredOrder.forEach(code => {
+    const btn = bar.querySelector(`[data-lang="${code}"]`);
+    if (btn) bar.appendChild(btn);
   });
 }
 
@@ -766,9 +900,9 @@ function setAppLanguage(lang) {
     fuelSelectEl.title = tr.filterFuelTitle;
     if (!currentRouteStations || currentRouteStations.length === 0) {
       const dict = FUEL_LABELS_BY_COUNTRY[tr.defaultCountry] || FUEL_LABELS_BY_COUNTRY.FR;
-      const hasFr = tr.defaultCountry === 'FR';
+      const hasSeparateSp95 = tr.defaultCountry === 'FR' || tr.defaultCountry === 'DE';
       Array.from(fuelSelectEl.options).forEach(opt => {
-        if (opt.value === 'sp95') opt.style.display = hasFr ? '' : 'none';
+        if (opt.value === 'sp95') opt.style.display = hasSeparateSp95 ? '' : 'none';
         if (dict[opt.value]) opt.textContent = `⛽ ${dict[opt.value]}`;
       });
     }
@@ -882,6 +1016,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       window.location.replace(`index.html?_v=${Date.now()}`);
     });
   }
+  ensureLangBarOrder();
   document.querySelectorAll('#lang-bar .lang-flag-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       setAppLanguage(btn.dataset.lang);
@@ -1108,7 +1243,29 @@ const BILINGUAL_CITIES_INDEX = [
   { names: ['Nantes'], display: 'Nantes', country: 'France', flag: '🇫🇷', coords: [-1.5536, 47.2184] },
   { names: ['Strasbourg'], display: 'Strasbourg', country: 'France', flag: '🇫🇷', coords: [7.7521, 48.5734] },
   { names: ['Bruxelles', 'Brussels', 'Brussel'], display: 'Bruxelles (Brussels)', country: 'Belgique', flag: '🇧🇪', coords: [4.3517, 50.8503] },
-  { names: ['Genève', 'Geneve', 'Geneva'], display: 'Genève (Geneva)', country: 'Suisse', flag: '🇨🇭', coords: [6.1432, 46.2044] }
+  { names: ['Genève', 'Geneve', 'Geneva'], display: 'Genève (Geneva)', country: 'Suisse', flag: '🇨🇭', coords: [6.1432, 46.2044] },
+
+  // Germany
+  { names: ['Berlin'], display: 'Berlin', country: 'Allemagne', flag: '🇩🇪', coords: [13.4050, 52.5200] },
+  { names: ['München', 'Munchen', 'Munich', 'Monaco di Baviera', 'Múnich'], display: 'München (Munich)', country: 'Allemagne', flag: '🇩🇪', coords: [11.5820, 48.1351] },
+  { names: ['Frankfurt', 'Frankfurt am Main', 'Francfort', 'Francoforte'], display: 'Frankfurt am Main (Francfort)', country: 'Allemagne', flag: '🇩🇪', coords: [8.6821, 50.1109] },
+  { names: ['Köln', 'Koln', 'Cologne', 'Colonia'], display: 'Köln (Cologne)', country: 'Allemagne', flag: '🇩🇪', coords: [6.9603, 50.9375] },
+  { names: ['Hamburg', 'Hambourg', 'Amburgo', 'Hamburgo'], display: 'Hamburg (Hambourg)', country: 'Allemagne', flag: '🇩🇪', coords: [9.9937, 53.5511] },
+  { names: ['Stuttgart', 'Stoccarda'], display: 'Stuttgart', country: 'Allemagne', flag: '🇩🇪', coords: [9.1829, 48.7758] },
+  { names: ['Düsseldorf', 'Dusseldorf'], display: 'Düsseldorf', country: 'Allemagne', flag: '🇩🇪', coords: [6.7735, 51.2277] },
+  { names: ['Dortmund'], display: 'Dortmund', country: 'Allemagne', flag: '🇩🇪', coords: [7.4653, 51.5136] },
+  { names: ['Leipzig', 'Lipsia'], display: 'Leipzig', country: 'Allemagne', flag: '🇩🇪', coords: [12.3731, 51.3397] },
+  { names: ['Dresden', 'Dresde', 'Dresda'], display: 'Dresden (Dresde)', country: 'Allemagne', flag: '🇩🇪', coords: [13.7373, 51.0504] },
+  { names: ['Hannover', 'Hanovre', 'Hanover'], display: 'Hannover (Hanovre)', country: 'Allemagne', flag: '🇩🇪', coords: [9.7320, 52.3759] },
+  { names: ['Nürnberg', 'Nurnberg', 'Nuremberg', 'Norimberga'], display: 'Nürnberg (Nuremberg)', country: 'Allemagne', flag: '🇩🇪', coords: [11.0767, 49.4521] },
+  { names: ['Bremen', 'Brême', 'Breme', 'Brema'], display: 'Bremen (Brême)', country: 'Allemagne', flag: '🇩🇪', coords: [8.8017, 53.0793] },
+  { names: ['Mannheim'], display: 'Mannheim', country: 'Allemagne', flag: '🇩🇪', coords: [8.4660, 49.4875] },
+  { names: ['Karlsruhe'], display: 'Karlsruhe', country: 'Allemagne', flag: '🇩🇪', coords: [8.4037, 49.0069] },
+  { names: ['Freiburg', 'Freiburg im Breisgau', 'Fribourg', 'Fribourg-en-Brisgau', 'Friburgo'], display: 'Freiburg im Breisgau (Fribourg)', country: 'Allemagne', flag: '🇩🇪', coords: [7.8421, 47.9990] },
+  { names: ['Aachen', 'Aix-la-Chapelle', 'Aquisgrana'], display: 'Aachen (Aix-la-Chapelle)', country: 'Allemagne', flag: '🇩🇪', coords: [6.0839, 50.7753] },
+  { names: ['Saarbrücken', 'Saarbrucken', 'Sarrebruck'], display: 'Saarbrücken (Sarrebruck)', country: 'Allemagne', flag: '🇩🇪', coords: [6.9969, 49.2402] },
+  { names: ['Ulm'], display: 'Ulm', country: 'Allemagne', flag: '🇩🇪', coords: [9.9876, 48.4011] },
+  { names: ['Augsburg', 'Augsbourg', 'Augusta'], display: 'Augsburg (Augsbourg)', country: 'Allemagne', flag: '🇩🇪', coords: [10.8978, 48.3705] }
 ];
 
 async function searchLocationsBilingual(q) {
@@ -2235,13 +2392,13 @@ function renderCurrentRouteStations() {
   const fuelSelectEl = document.getElementById('select-fuel');
   if (fuelSelectEl && routeCountries.length > 0) {
     const singleCountry = routeCountries.length === 1 ? routeCountries[0] : null;
-    const hasFrance = routeCountries.includes('FR');
+    const hasSeparateSp95 = routeCountries.includes('FR') || routeCountries.includes('DE');
     const langCountryDict = FUEL_LABELS_BY_COUNTRY[t().defaultCountry] || FUEL_LABELS_BY_COUNTRY.FR;
     Array.from(fuelSelectEl.options).forEach(opt => {
       const fKey = opt.value;
-      // Hide separate SP95 (E5) option when route does not include France (since ES, IT, GB have a single Unleaded 95 category)
+      // Hide separate SP95 (E5) option when route does not include France or Germany (since ES, IT, GB have a single Unleaded 95 category)
       if (fKey === 'sp95') {
-        opt.style.display = hasFrance ? '' : 'none';
+        opt.style.display = hasSeparateSp95 ? '' : 'none';
       }
       if (fKey === 'all') {
         opt.textContent = `⛽ ${langCountryDict.all}`;
@@ -2263,6 +2420,7 @@ function renderCurrentRouteStations() {
   // Render cards and map markers
   filtered.forEach((st, idx) => {
     const isUK = st.pays === 'GB';
+    const isNativeCase = st.pays === 'GB' || st.pays === 'DE';
     const fuelPrice = (selectedFuel !== 'all') ? getFuelPrice(st.prix, selectedFuel) : (st.prix ? Object.values(st.prix)[0] : null);
     const isCheapest = fuelPrice && fuelPrice === lowestPrice;
     const brandClass = getBrandClass(st.enseigne);
@@ -2286,10 +2444,10 @@ function renderCurrentRouteStations() {
     const marker = L.marker([st.lat, st.lon], { icon: customIcon }).addTo(map);
 
     // Popup content
-    const flag = st.pays === 'GB' ? '🇬🇧' : (st.pays === 'ES' ? '🇪🇸' : (st.pays === 'IT' ? '🇮🇹' : '🇫🇷'));
-    const nomFormatted = isUK ? st.nom : formatProperName(st.nom);
-    const villeFormatted = isUK ? st.ville : formatProperName(st.ville);
-    const sensFormatted = st.sens ? translateSens(st.sens, isUK) : '';
+    const flag = st.pays === 'GB' ? '🇬🇧' : (st.pays === 'DE' ? '🇩🇪' : (st.pays === 'ES' ? '🇪🇸' : (st.pays === 'IT' ? '🇮🇹' : '🇫🇷')));
+    const nomFormatted = isNativeCase ? st.nom : formatProperName(st.nom);
+    const villeFormatted = isNativeCase ? st.ville : formatProperName(st.ville);
+    const sensFormatted = st.sens ? translateSens(st.sens, isNativeCase) : '';
     const cleanPk = String(st.displayedPk || '').replace(/^km\s*/i, '').trim();
     const pkBadgeLabel = isUK
       ? `${st.autoroute || 'Motorway'} • ${st.pk_text || ('J' + cleanPk)}`
@@ -2305,7 +2463,7 @@ function renderCurrentRouteStations() {
       <div class="station-popup">
         <div class="popup-title"><span class="flag-icon">${flag}</span> ${st.enseigne} - ${nomFormatted}</div>
         <div class="popup-pk">📍 ${pkBadgeLabel}</div>
-        <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:6px;">${isUK ? st.adresse : formatProperName(st.adresse)} (${villeFormatted})</div>
+        <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:6px;">${isNativeCase ? st.adresse : formatProperName(st.adresse)} (${villeFormatted})</div>
         <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:8px;">${t().popupDirDist(sensFormatted || t().sensDirect, st.distOnRoute.toFixed(0))}</div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; font-size:0.8rem; margin-bottom:10px;">
           ${renderPopupPrices(st.prix, selectedFuel, st.pays)}
@@ -2502,6 +2660,7 @@ function renderPopupPrices(prices, featuredFuel, pays) {
 // Helper for brand badge CSS class
 function getBrandClass(brand) {
   const b = (brand || '').toLowerCase();
+  if (b.includes('aral')) return 'badge-aral';
   if (b.includes('total')) return 'badge-total';
   if (b.includes('shell')) return 'badge-shell';
   if (b.includes('avia')) return 'badge-avia';
@@ -2525,6 +2684,16 @@ function getBrandClass(brand) {
 // Return official brand logo SVG badge
 function getBrandLogoSvg(brand) {
   const b = (brand || '').toLowerCase().trim();
+
+  // Aral (German blue diamond)
+  if (b.includes('aral')) {
+    return `<svg viewBox="0 0 100 100" class="brand-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="18" fill="#ffffff"/>
+      <polygon points="50,6 94,50 50,94 6,50" fill="#00549f" stroke="#00386b" stroke-width="2"/>
+      <polygon points="50,12 88,50 50,88 12,50" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+      <text x="50" y="57" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="21" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">ARAL</text>
+    </svg>`;
+  }
 
   // TotalEnergies
   if (b.includes('total')) {

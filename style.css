@@ -903,6 +903,7 @@ header {
 .badge-q8 { background: linear-gradient(135deg, #002878, #001b52); color: #facc15; }
 .badge-tamoil { background: linear-gradient(135deg, #dc2626, #991b1b); color: #fff; }
 .badge-sarni { background: linear-gradient(135deg, #059669, #047857); color: #fff; }
+.badge-aral { background: linear-gradient(135deg, #00549f, #00386b); color: #fff; }
 .badge-default { background: var(--bg-tertiary); }
 
 .flag-icon {
