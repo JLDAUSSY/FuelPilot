@@ -254,7 +254,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '5.2';
+const APP_VERSION = '5.3';
 
 // Dynamically calibrate mobile bottom nav bar position using VisualViewport & Screen APIs
 // Validated across 14 smartphone models (Samsung, Google Pixel, Xiaomi, Apple iPhone, OnePlus, Honor/Huawei, Motorola, Sony, Oppo)
@@ -569,7 +569,16 @@ async function searchLocationsBilingual(q) {
   const qNorm = q.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   const results = [];
 
+  const fetchWithTimeout = (url, opts = {}, ms = 2200) => {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), ms);
+    return fetch(url, { ...opts, signal: ctrl.signal })
+      .then(r => r.json())
+      .finally(() => clearTimeout(timer));
+  };
+
   // 1. Instant Bilingual Major Cities Match (English + French + Native names)
+  // Only match when the user is typing a city name (not a full street address like "Joubert Street London")
   BILINGUAL_CITIES_INDEX.forEach(city => {
     const matched = city.names.some(n => {
       const nNorm = n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -585,12 +594,40 @@ async function searchLocationsBilingual(q) {
     }
   });
 
-  // 2. Query European Photon (default multilingual + FR) & French BAN in parallel
-  const [banRes, photonDefaultRes, photonFrRes] = await Promise.allSettled([
-    fetch(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(q)}&limit=5`).then(r => r.json()),
-    fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=6`).then(r => r.json()),
-    fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=5&lang=fr`).then(r => r.json())
+  // 2. Query European Photon (bounded to Western Europe), Nominatim OSM (fast street/postcode search), & French BAN in parallel
+  const euroBbox = '-11.0,35.0,19.5,61.0';
+  const [banRes, photonDefaultRes, nominatimRes] = await Promise.allSettled([
+    fetchWithTimeout(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(q)}&limit=5`, {}, 1800),
+    fetchWithTimeout(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&bbox=${euroBbox}&limit=7`, {}, 2200),
+    fetchWithTimeout(`https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=6&viewbox=-11.0,61.0,19.5,35.0&bounded=1&q=${encodeURIComponent(q)}`, { headers: { 'Accept-Language': 'fr,en' } }, 2200)
   ]);
+
+  const getCountryFlag = (cc, countryStr) => {
+    const code = (cc || '').toUpperCase();
+    const cLow = (countryStr || '').toLowerCase();
+    if (code === 'GB' || code === 'UK' || cLow.includes('royaume-uni') || cLow.includes('united kingdom') || cLow.includes('great britain') || cLow.includes('england') || cLow.includes('scotland') || cLow.includes('wales')) return '🇬🇧';
+    if (code === 'ES' || cLow.includes('esp') || cLow.includes('spain')) return '🇪🇸';
+    if (code === 'IT' || cLow.includes('ital')) return '🇮🇹';
+    if (code === 'FR' || cLow.includes('fran')) return '🇫🇷';
+    if (code === 'IE' || cLow.includes('ireland') || cLow.includes('irlande')) return '🇮🇪';
+    if (code === 'DE' || cLow.includes('allem') || cLow.includes('germ')) return '🇩🇪';
+    if (code === 'BE' || cLow.includes('belg')) return '🇧🇪';
+    if (code === 'CH' || cLow.includes('suis') || cLow.includes('switz')) return '🇨🇭';
+    if (code === 'LU' || cLow.includes('lux')) return '🇱🇺';
+    return '🌍';
+  };
+
+  const addResultIfUnique = (item) => {
+    const itemNameNorm = (item.cleanName || '').toLowerCase();
+    const isDup = results.some(r => {
+      const sameCoords = Math.abs(r.coords[0] - item.coords[0]) < 0.003 && Math.abs(r.coords[1] - item.coords[1]) < 0.003;
+      const sameCityCoords = Math.abs(r.coords[0] - item.coords[0]) < 0.04 && Math.abs(r.coords[1] - item.coords[1]) < 0.04 && (r.cleanName || '').toLowerCase() === itemNameNorm;
+      return sameCoords || sameCityCoords;
+    });
+    if (!isDup) {
+      results.push(item);
+    }
+  };
 
   const parsePhotonFeatures = (features) => {
     if (!features) return;
@@ -598,65 +635,103 @@ async function searchLocationsBilingual(q) {
       const p = f.properties || {};
       if (!p.name) return;
       const country = p.country || '';
-      const cLow = country.toLowerCase();
-      const cc = (p.countrycode || '').toUpperCase();
-      const flag = (cc === 'GB' || cc === 'UK' || cLow.includes('royaume-uni') || cLow.includes('united kingdom') || cLow.includes('great britain') || cLow.includes('england') || cLow.includes('scotland') || cLow.includes('wales')) ? '🇬🇧' :
-                   (cc === 'ES' || cLow.includes('esp') || cLow.includes('spain')) ? '🇪🇸' :
-                   (cc === 'IT' || cLow.includes('ital')) ? '🇮🇹' :
-                   (cc === 'FR' || cLow.includes('fran')) ? '🇫🇷' :
-                   (cc === 'IE' || cLow.includes('ireland') || cLow.includes('irlande')) ? '🇮🇪' :
-                   (cc === 'DE' || cLow.includes('allem') || cLow.includes('germ')) ? '🇩🇪' :
-                   (cc === 'BE' || cLow.includes('belg')) ? '🇧🇪' :
-                   (cc === 'CH' || cLow.includes('suis') || cLow.includes('switz')) ? '🇨🇭' :
-                   (cc === 'LU' || cLow.includes('lux')) ? '🇱🇺' : '🌍';
-
+      const flag = getCountryFlag(p.countrycode, country);
       const isCity = ['city', 'town', 'village', 'municipality', 'administrative'].includes(p.osm_value || p.type);
+      const isStreetOrHouse = ['street', 'house', 'residential', 'secondary', 'primary', 'tertiary', 'living_street', 'pedestrian', 'postcode'].includes(p.osm_value || p.type);
       const isCoveredCountry = ['🇬🇧', '🇫🇷', '🇪🇸', '🇮🇹', '🇮🇪', '🇧🇪', '🇨🇭'].includes(flag);
-      const priority = (isCity ? 60 : 25) + (isCoveredCountry ? 20 : 0);
 
-      const nameParts = [p.name, p.state, country].filter(Boolean);
-      const label = `${flag} ${nameParts.join(', ')}`;
+      // Build rich city/district/postcode context for street-level searches (e.g. "Joubert Street, London (SW11 5AE)")
+      const rawCity = p.city || p.town || p.village || p.county || '';
+      const shortCity = rawCity.replace(/^London Borough of\s+/i, 'London — ').replace(/^Royal Borough of\s+/i, 'London — ');
+      const streetLabel = p.housenumber ? `${p.housenumber} ${p.name}` : p.name;
+
+      let nameParts;
+      let cleanName;
+      if (isStreetOrHouse) {
+        nameParts = [streetLabel, p.district, shortCity, p.postcode, country].filter(Boolean);
+        cleanName = [streetLabel, shortCity || p.state, p.postcode].filter(Boolean).join(', ');
+      } else {
+        nameParts = [p.name, shortCity && shortCity !== p.name ? shortCity : null, p.state, country].filter(Boolean);
+        cleanName = p.name;
+      }
+
+      // Deduplicate consecutive identical parts
+      const uniqueParts = nameParts.filter((part, idx) => idx === 0 || part.toLowerCase() !== nameParts[idx - 1].toLowerCase());
+      const label = `${flag} ${uniqueParts.join(', ')}`;
       const coords = f.geometry.coordinates;
 
-      const isDup = results.some(r =>
-        Math.abs(r.coords[0] - coords[0]) < 0.08 && Math.abs(r.coords[1] - coords[1]) < 0.08
-      );
-      if (!isDup) {
-        results.push({
-          label,
-          cleanName: p.name,
-          coords,
-          priority
-        });
-      }
+      // Boost priority when the result matches both street name and city in the query
+      const fullTextNorm = uniqueParts.join(' ').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      const queryTokens = qNorm.split(/\s+/).filter(t => t.length >= 2);
+      const allTokensMatched = queryTokens.length > 0 && queryTokens.every(tok => fullTextNorm.includes(tok) || (tok === 'londres' && fullTextNorm.includes('london')));
+
+      const priority = (isCity ? 60 : (isStreetOrHouse ? 55 : 30)) + (isCoveredCountry ? 20 : 0) + (allTokensMatched ? 30 : 0);
+
+      addResultIfUnique({
+        label,
+        cleanName,
+        coords,
+        priority
+      });
     });
   };
 
   if (photonDefaultRes.status === 'fulfilled' && photonDefaultRes.value) {
     parsePhotonFeatures(photonDefaultRes.value.features);
   }
-  if (photonFrRes.status === 'fulfilled' && photonFrRes.value) {
-    parsePhotonFeatures(photonFrRes.value.features);
+
+  // Parse Nominatim OpenStreetMap results (handles exact UK/ES/IT/FR streets, postcodes & house numbers)
+  if (nominatimRes.status === 'fulfilled' && Array.isArray(nominatimRes.value)) {
+    nominatimRes.value.forEach(n => {
+      const addr = n.address || {};
+      const flag = getCountryFlag(addr.country_code, addr.country);
+      const isCoveredCountry = ['🇬🇧', '🇫🇷', '🇪🇸', '🇮🇹', '🇮🇪', '🇧🇪', '🇨🇭'].includes(flag);
+      const coords = [ parseFloat(n.lon), parseFloat(n.lat) ];
+      if (isNaN(coords[0]) || isNaN(coords[1])) return;
+
+      const road = addr.road || addr.pedestrian || addr.suburb || n.name || '';
+      const house = addr.house_number ? `${addr.house_number} ` : '';
+      const rawCity = addr.city || addr.town || addr.village || addr.municipality || addr.city_district || addr.county || '';
+      const shortCity = rawCity.replace(/^London Borough of\s+/i, 'London — ').replace(/^Greater London$/i, 'London');
+      const suburb = (addr.suburb || addr.city_district || '').replace(/^London Borough of\s+/i, '');
+      const postcode = addr.postcode || '';
+
+      const primary = (house + road).trim() || shortCity || (n.display_name || '').split(',')[0];
+      const parts = [primary, suburb && suburb !== primary ? suburb : null, shortCity && shortCity !== primary ? shortCity : null, postcode, addr.country].filter(Boolean);
+      const uniqueParts = parts.filter((part, idx) => idx === 0 || part.toLowerCase() !== parts[idx - 1].toLowerCase());
+      const label = `${flag} ${uniqueParts.join(', ')}`;
+      const cleanName = [primary, shortCity && shortCity !== primary ? shortCity : null, postcode].filter(Boolean).join(', ');
+
+      const fullTextNorm = uniqueParts.join(' ').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      const queryTokens = qNorm.split(/\s+/).filter(t => t.length >= 2);
+      const allTokensMatched = queryTokens.length > 0 && queryTokens.every(tok => fullTextNorm.includes(tok) || (tok === 'londres' && fullTextNorm.includes('london')));
+
+      const priority = 58 + (isCoveredCountry ? 20 : 0) + (allTokensMatched ? 30 : 0);
+      addResultIfUnique({
+        label,
+        cleanName,
+        coords,
+        priority
+      });
+    });
   }
 
   if (banRes.status === 'fulfilled' && banRes.value && banRes.value.features) {
     banRes.value.features.forEach(f => {
       const p = f.properties || {};
       const coords = f.geometry.coordinates;
-      // Prioritize French municipalities/cities over minor street names ("Rue de London")
       const isMunicipality = p.type === 'municipality';
-      const priority = isMunicipality ? 85 : 30;
-      const isDup = results.some(r =>
-        Math.abs(r.coords[0] - coords[0]) < 0.05 && Math.abs(r.coords[1] - coords[1]) < 0.05
-      );
-      if (!isDup) {
-        results.push({
-          label: '🇫🇷 ' + p.label,
-          cleanName: p.label,
-          coords,
-          priority
-        });
-      }
+      const labelNorm = (p.label || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      const queryTokens = qNorm.split(/\s+/).filter(t => t.length >= 2);
+      const allTokensMatched = queryTokens.length > 0 && queryTokens.every(tok => labelNorm.includes(tok));
+      const priority = (isMunicipality ? 85 : 35) + (allTokensMatched ? 25 : -20);
+
+      addResultIfUnique({
+        label: '🇫🇷 ' + p.label,
+        cleanName: p.label,
+        coords,
+        priority
+      });
     });
   }
 
@@ -757,6 +832,8 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
     }
   });
 
+  let searchSeq = 0;
+
   input.addEventListener('input', () => {
     clearTimeout(debounceTimer);
     const q = input.value.trim();
@@ -765,9 +842,13 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
       return;
     }
 
+    const currentSeq = ++searchSeq;
     debounceTimer = setTimeout(async () => {
       try {
         const results = await searchLocationsBilingual(q);
+        // Ignore stale responses if the user kept typing
+        if (currentSeq !== searchSeq) return;
+
         // Prepend matching recent locations at the very top
         const qLow = q.toLowerCase();
         const matchingRecents = getRecentLocations()
@@ -782,7 +863,8 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
         const combined = [...matchingRecents];
         results.forEach(res => {
           const isDup = combined.some(c =>
-            Math.abs(c.coords[0] - res.coords[0]) < 0.05 && Math.abs(c.coords[1] - res.coords[1]) < 0.05
+            Math.abs(c.coords[0] - res.coords[0]) < 0.003 && Math.abs(c.coords[1] - res.coords[1]) < 0.003 &&
+            (c.cleanName || '').toLowerCase() === (res.cleanName || '').toLowerCase()
           );
           if (!isDup) combined.push(res);
         });
@@ -795,7 +877,7 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
       } catch (e) {
         console.error(e);
       }
-    }, 200);
+    }, 180);
   });
 
   document.addEventListener('click', (e) => {
