@@ -264,11 +264,14 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '6.1';
+const APP_VERSION = '6.2';
 let userManuallySelectedLang = false;
 
-// Clean up legacy v5.7/v5.8 localStorage key so it never forces an old test language (e.g. 'it') over geolocation
-try { localStorage.removeItem('fuelpilot_lang'); } catch (e) {}
+// Clean up legacy localStorage keys so stale IP/test languages never override the physical country
+try {
+  localStorage.removeItem('fuelpilot_lang');
+  localStorage.removeItem('fuelpilot_geo_lang');
+} catch (e) {}
 
 function mapCountryToLang(countryCode, lat, lon) {
   if (!countryCode) return null;
@@ -277,12 +280,26 @@ function mapCountryToLang(countryCode, lat, lon) {
   if (['DE', 'AT', 'LI'].includes(cc)) return 'de';
   if (['IT', 'SM', 'VA'].includes(cc)) return 'it';
   if (['ES', 'AD'].includes(cc)) return 'es';
-  if (['GB', 'UK', 'IE', 'GI', 'US', 'CA', 'AU', 'NZ'].includes(cc)) return 'en';
+  if (['GB', 'UK', 'IE', 'GI'].includes(cc)) return 'en';
   if (cc === 'CH') {
     if (typeof lon === 'number' && lon < 7.15) return 'fr';
     if (typeof lat === 'number' && typeof lon === 'number' && lat < 46.25 && lon > 8.3) return 'it';
     return 'de';
   }
+  return null;
+}
+
+function getTimezoneCountryLang() {
+  try {
+    if (typeof Intl !== 'undefined' && Intl.DateTimeFormat) {
+      const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
+      if (tz.includes('paris') || tz.includes('brussels') || tz.includes('luxembourg') || tz.includes('monaco')) return 'fr';
+      if (tz.includes('berlin') || tz.includes('busingen') || tz.includes('vienna') || tz.includes('vaduz') || tz.includes('zurich')) return 'de';
+      if (tz.includes('rome') || tz.includes('san_marino') || tz.includes('vatican')) return 'it';
+      if (tz.includes('madrid') || tz.includes('canary') || tz.includes('ceuta') || tz.includes('andorra')) return 'es';
+      if (tz.includes('london') || tz.includes('belfast') || tz.includes('dublin') || tz.includes('jersey') || tz.includes('guernsey') || tz.includes('isle_of_man')) return 'en';
+    }
+  } catch (e) {}
   return null;
 }
 
@@ -293,22 +310,17 @@ function getInitialDefaultLang() {
       userManuallySelectedLang = true;
       return manualSession;
     }
-    const cachedGeo = typeof localStorage !== 'undefined' && localStorage.getItem('fuelpilot_geo_lang');
-    if (cachedGeo && ['fr', 'de', 'it', 'es', 'en'].includes(cachedGeo)) {
-      return cachedGeo;
-    }
-    // Instant timezone heuristic before network geolocation resolves
-    if (typeof Intl !== 'undefined' && Intl.DateTimeFormat) {
-      const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
-      if (tz.includes('paris') || tz.includes('brussels') || tz.includes('luxembourg') || tz.includes('monaco')) return 'fr';
-      if (tz.includes('berlin') || tz.includes('busingen') || tz.includes('vienna') || tz.includes('vaduz') || tz.includes('zurich')) return 'de';
-      if (tz.includes('rome') || tz.includes('san_marino') || tz.includes('vatican')) return 'it';
-      if (tz.includes('madrid') || tz.includes('canary') || tz.includes('ceuta') || tz.includes('andorra')) return 'es';
-      if (tz.includes('london') || tz.includes('belfast') || tz.includes('dublin') || tz.includes('jersey') || tz.includes('guernsey') || tz.includes('isle_of_man')) return 'en';
-    }
-    if (typeof navigator !== 'undefined' && navigator.language) {
-      const navLang = navigator.language.slice(0, 2).toLowerCase();
-      if (['fr', 'de', 'it', 'es', 'en'].includes(navLang)) return navLang;
+    const tzLang = getTimezoneCountryLang();
+    if (tzLang) return tzLang;
+
+    if (typeof navigator !== 'undefined') {
+      const langs = Array.isArray(navigator.languages) && navigator.languages.length > 0
+        ? navigator.languages
+        : (navigator.language ? [navigator.language] : []);
+      for (const l of langs) {
+        const short = String(l).slice(0, 2).toLowerCase();
+        if (['fr', 'de', 'it', 'es', 'en'].includes(short)) return short;
+      }
     }
   } catch (e) {}
   return 'fr';
@@ -1060,44 +1072,31 @@ async function detectCountryAndSetLanguage() {
   const applyDetectedCountry = (countryCode, lat, lon) => {
     if (userManuallySelectedLang) return;
     const lang = mapCountryToLang(countryCode, lat, lon);
-    if (lang && I18N_DICT[lang]) {
-      try { localStorage.setItem('fuelpilot_geo_lang', lang); } catch (e) {}
-      if (currentLang !== lang) {
-        setAppLanguage(lang, false);
-      }
+    if (lang && I18N_DICT[lang] && currentLang !== lang) {
+      setAppLanguage(lang, false);
     }
   };
 
-  // 1. Fast IP-based Geolocation (no permission popup required, resolves in ~100ms)
-  (async () => {
-    try {
-      const ctrl = new AbortController();
-      const tId = setTimeout(() => ctrl.abort(), 3000);
-      const res = await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client', { signal: ctrl.signal });
-      clearTimeout(tId);
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.countryCode) {
-          applyDetectedCountry(data.countryCode, data.latitude, data.longitude);
-          return;
+  // Only query IP geolocation if the device's cellular/OS timezone did not already identify a European country
+  // (Prevents iCloud Private Relay / mobile VPN / carrier proxies in UK or US from overriding a phone physically in France)
+  if (!getTimezoneCountryLang()) {
+    (async () => {
+      try {
+        const ctrl = new AbortController();
+        const tId = setTimeout(() => ctrl.abort(), 2500);
+        const res = await fetch('https://get.geojs.io/v1/ip/country.json', { signal: ctrl.signal });
+        clearTimeout(tId);
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.country) {
+            applyDetectedCountry(data.country);
+          }
         }
-      }
-    } catch (e) {}
-    try {
-      const ctrl2 = new AbortController();
-      const tId2 = setTimeout(() => ctrl2.abort(), 3000);
-      const res2 = await fetch('https://get.geojs.io/v1/ip/country.json', { signal: ctrl2.signal });
-      clearTimeout(tId2);
-      if (res2.ok) {
-        const data2 = await res2.json();
-        if (data2 && data2.country) {
-          applyDetectedCountry(data2.country);
-        }
-      }
-    } catch (e) {}
-  })();
+      } catch (e) {}
+    })();
+  }
 
-  // 2. HTML5 GPS Geolocation (precise country detection near borders)
+  // HTML5 GPS Geolocation: uses real physical coordinates (latitude/longitude) when granted
   if (typeof navigator !== 'undefined' && navigator.geolocation) {
     try {
       navigator.geolocation.getCurrentPosition(
@@ -1134,6 +1133,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     liveBadge.style.cursor = 'pointer';
     liveBadge.title = t().refreshTitle;
     liveBadge.addEventListener('click', () => {
+      try { sessionStorage.removeItem('fuelpilot_manual_lang'); } catch (e) {}
       window.location.replace(`index.html?_v=${Date.now()}`);
     });
   }
