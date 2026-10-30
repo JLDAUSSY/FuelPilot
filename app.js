@@ -82,7 +82,9 @@ function formatProperName(text) {
     'a29', 'a30', 'a31', 'a32', 'a33', 'a34', 'a35', 'a36', 'a39', 'a40', 'a41', 'a42',
     'a43', 'a48', 'a50', 'a51', 'a52', 'a55', 'a56', 'a57', 'a61', 'a62', 'a63', 'a64',
     'a65', 'a71', 'a72', 'a75', 'a77', 'a81', 'a83', 'a84', 'a85', 'a86', 'a87', 'a89',
-    't1', 't2', 't3', 't4', 'n104', 'rn104', 'rd104', 'cd419'
+    'm1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm8', 'm9', 'm11', 'm18', 'm20', 'm23', 'm25', 'm27',
+    'm40', 'm42', 'm48', 'm50', 'm54', 'm56', 'm60', 'm61', 'm62', 'm65', 'm74', 'm90',
+    't1', 't2', 't3', 't4', 'n104', 'rn104', 'rd104', 'cd419', 'uk'
   ]);
   const accents = {
     'Macon': 'Mâcon',
@@ -191,6 +193,20 @@ const FUEL_LABELS = {
   gplc: 'GPLc'
 };
 
+const FUEL_LABELS_UK = {
+  e10: 'Unleaded (E10)',
+  gazole: 'Diesel (B7)',
+  sp98: 'Super Unleaded (E5)',
+  sp95: 'Unleaded (E10)',
+  e85: 'E85',
+  gplc: 'LPG'
+};
+
+function getFuelLabel(fuel, pays) {
+  const dict = pays === 'GB' ? FUEL_LABELS_UK : FUEL_LABELS;
+  return dict[fuel] || (fuel ? fuel.toUpperCase() : '');
+}
+
 // Initialize Application
 document.addEventListener('DOMContentLoaded', async () => {
   initMap();
@@ -229,11 +245,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Initialize Leaflet Map
 function initMap() {
-  // Center to encompass France, Spain & Italy coverage
-  const initialZoom = window.innerWidth <= 768 ? 4.8 : 5.2;
+  // Center to encompass France, Spain, Italy & UK coverage
+  const initialZoom = window.innerWidth <= 768 ? 4.5 : 5.0;
   map = L.map('map', {
     zoomControl: false
-  }).setView([43.5, 4.5], initialZoom);
+  }).setView([46.2, 3.0], initialZoom);
 
   L.control.zoom({ position: 'topright' }).addTo(map);
 
@@ -322,11 +338,12 @@ async function loadCoveredCountries() {
 
     coveredCountriesLayer.bringToBack();
 
-    // Central Country Badges (France, Spain & Italy)
+    // Central Country Badges (France, Spain, Italy & UK)
     const countryLabels = [
       { coords: [46.6, 2.5], flag: '🇫🇷', name: 'France', count: '438 aires' },
       { coords: [40.2, -3.6], flag: '🇪🇸', name: 'Espagne', count: '833 aires' },
-      { coords: [42.6, 12.8], flag: '🇮🇹', name: 'Italie', count: '615 aires' }
+      { coords: [42.6, 12.8], flag: '🇮🇹', name: 'Italie', count: '615 aires' },
+      { coords: [52.8, -1.8], flag: '🇬🇧', name: 'Royaume-Uni', count: '133 aires' }
     ];
 
     countryLabels.forEach(c => {
@@ -400,12 +417,15 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
             dataEur.features.forEach(f => {
               const p = f.properties;
               const country = p.country || '';
-              const flag = country.toLowerCase().includes('esp') ? '🇪🇸' :
-                           country.toLowerCase().includes('ital') ? '🇮🇹' :
-                           country.toLowerCase().includes('allem') || country.toLowerCase().includes('germ') ? '🇩🇪' :
-                           country.toLowerCase().includes('belg') ? '🇧🇪' :
-                           country.toLowerCase().includes('suis') ? '🇨🇭' :
-                           country.toLowerCase().includes('lux') ? '🇱🇺' : '🌍';
+              const cLow = country.toLowerCase();
+              const flag = cLow.includes('esp') || cLow.includes('spain') ? '🇪🇸' :
+                           cLow.includes('ital') ? '🇮🇹' :
+                           cLow.includes('royaume-uni') || cLow.includes('united kingdom') || cLow.includes('uk') || cLow.includes('great britain') || cLow.includes('england') || cLow.includes('scotland') || cLow.includes('wales') ? '🇬🇧' :
+                           cLow.includes('fran') ? '🇫🇷' :
+                           cLow.includes('allem') || cLow.includes('germ') ? '🇩🇪' :
+                           cLow.includes('belg') ? '🇧🇪' :
+                           cLow.includes('suis') || cLow.includes('switz') ? '🇨🇭' :
+                           cLow.includes('lux') ? '🇱🇺' : '🌍';
               const nameParts = [p.name, p.state, country].filter(Boolean);
               const label = `${flag} ${nameParts.join(', ')}`;
               // avoid duplicate if same name already in results
@@ -1074,6 +1094,8 @@ function processStationsOnRoute(route) {
     let minDist = 99999;
     let bestKmOnRoute = 0;
     let bestCross = 0;
+    let bestDx = 0;
+    let bestDy = 0;
 
     for (let i = 0; i < coords.length - 1; i++) {
       const p1 = coords[i];
@@ -1084,20 +1106,34 @@ function processStationsOnRoute(route) {
         const segLen = cumDist[i+1] - cumDist[i];
         bestKmOnRoute = cumDist[i] + res.t * segLen;
         bestCross = res.cross;
+        bestDx = p2[0] - p1[0];
+        bestDy = p2[1] - p1[1];
       }
     }
 
-    if (minDist <= maxDistanceKm) {
-      // Directional check: in France/Spain, vehicles drive on the right.
-      // Highway stations accessible in the direction of travel are on the RIGHT (bestCross < 0).
-      // Stations on the opposite carriageway (bestCross >= 0) are excluded,
-      // unless explicitly marked as bidirectional ("Double sens").
-      const isDoubleSens = s.sens && s.sens.toLowerCase().includes('double');
-      const isRightSide = bestCross < 0;
+    const stationToleranceKm = s.pays === 'GB' ? 0.95 : maxDistanceKm;
+    if (minDist <= stationToleranceKm) {
+      const sensLow = (s.sens || '').toLowerCase();
+      const isDoubleSens = sensLow.includes('double');
 
-      if (!isRightSide && !isDoubleSens) {
-        // Exclude twin station on opposing carriageway
-        return;
+      if (s.pays === 'GB') {
+        // UK Motorway Service Areas (MSAs): check cardinal direction if directional twin site
+        if (!isDoubleSens) {
+          if (sensLow.includes('northbound') && bestDy < -0.0001) return;
+          if (sensLow.includes('southbound') && bestDy > 0.0001) return;
+          if (sensLow.includes('eastbound') && bestDx < -0.0001) return;
+          if (sensLow.includes('westbound') && bestDx > 0.0001) return;
+          if (sensLow.includes('clockwise') && !sensLow.includes('anti') && bestCross < 0) return;
+          if (sensLow.includes('anti-clockwise') && bestCross > 0) return;
+        }
+      } else {
+        // Directional check: in France/Spain/Italy, vehicles drive on the right.
+        // Highway stations accessible in the direction of travel are on the RIGHT (bestCross < 0).
+        const isRightSide = bestCross < 0;
+        if (!isRightSide && !isDoubleSens) {
+          // Exclude twin station on opposing carriageway
+          return;
+        }
       }
 
       // Station is along this highway route in the driver's direction of travel!
@@ -1209,17 +1245,33 @@ function renderCurrentRouteStations() {
 
   let amazonInserted = false;
 
+  // Dynamically adapt Fuel Selector dropdown labels when on a UK route
+  const isUkRoute = currentRouteStations.length > 0 && currentRouteStations.every(s => s.pays === 'GB');
+  const fuelSelectEl = document.getElementById('select-fuel');
+  if (fuelSelectEl) {
+    const dict = isUkRoute ? FUEL_LABELS_UK : FUEL_LABELS;
+    Array.from(fuelSelectEl.options).forEach(opt => {
+      if (opt.value === 'all') {
+        opt.textContent = isUkRoute ? '⛽ All fuels (Tous)' : '⛽ Tous carburants';
+      } else if (dict[opt.value]) {
+        opt.textContent = `⛽ ${dict[opt.value]}`;
+      }
+    });
+  }
+
   // Render cards and map markers
   filtered.forEach((st, idx) => {
+    const isUK = st.pays === 'GB';
     const fuelPrice = (selectedFuel !== 'all') ? getFuelPrice(st.prix, selectedFuel) : (st.prix ? Object.values(st.prix)[0] : null);
     const isCheapest = fuelPrice && fuelPrice === lowestPrice;
     const brandClass = getBrandClass(st.enseigne);
+    const pinPriceDisplay = fuelPrice ? (isUK ? `£${fuelPrice.toFixed(3)}` : `${fuelPrice.toFixed(3)}€`) : 'N/D';
 
     // Create Map Marker Pin
     const pinHtml = `
       <div class="custom-station-pin ${isCheapest ? 'cheapest' : ''}" id="pin-${st.id}">
         <span class="brand-badge ${brandClass}" style="padding:1px 4px; font-size:0.65rem;">${st.enseigne.substring(0, 5)}</span>
-        <span>${fuelPrice ? fuelPrice.toFixed(3) + '€' : 'N/D'}</span>
+        <span>${pinPriceDisplay}</span>
       </div>
     `;
 
@@ -1233,11 +1285,14 @@ function renderCurrentRouteStations() {
     const marker = L.marker([st.lat, st.lon], { icon: customIcon }).addTo(map);
 
     // Popup content
-    const flag = st.pays === 'ES' ? '🇪🇸' : (st.pays === 'IT' ? '🇮🇹' : '🇫🇷');
-    const nomFormatted = formatProperName(st.nom);
-    const villeFormatted = formatProperName(st.ville);
-    const sensFormatted = st.sens ? formatProperName(st.sens) : '';
+    const flag = st.pays === 'GB' ? '🇬🇧' : (st.pays === 'ES' ? '🇪🇸' : (st.pays === 'IT' ? '🇮🇹' : '🇫🇷'));
+    const nomFormatted = isUK ? st.nom : formatProperName(st.nom);
+    const villeFormatted = isUK ? st.ville : formatProperName(st.ville);
+    const sensFormatted = st.sens ? (isUK ? st.sens : formatProperName(st.sens)) : '';
     const cleanPk = String(st.displayedPk || '').replace(/^km\s*/i, '').trim();
+    const pkBadgeLabel = isUK
+      ? `${st.autoroute || 'Motorway'} • ${st.pk_text || ('J' + cleanPk)}`
+      : `${st.autoroute || 'Autoroute'} • Borne km ${cleanPk}`;
 
     const wazeUrl = `https://waze.com/ul?ll=${st.lat},${st.lon}&navigate=yes`;
     const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${st.lat},${st.lon}&travelmode=driving`;
@@ -1248,11 +1303,11 @@ function renderCurrentRouteStations() {
     const popupContent = `
       <div class="station-popup">
         <div class="popup-title"><span class="flag-icon">${flag}</span> ${st.enseigne} - ${nomFormatted}</div>
-        <div class="popup-pk">📍 ${st.autoroute || 'Autoroute'} • Borne km ${cleanPk}</div>
-        <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:6px;">${formatProperName(st.adresse)} (${villeFormatted})</div>
+        <div class="popup-pk">📍 ${pkBadgeLabel}</div>
+        <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:6px;">${isUK ? st.adresse : formatProperName(st.adresse)} (${villeFormatted})</div>
         <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:8px;">Sens : ${sensFormatted || 'Sens direct'} • À ${st.distOnRoute.toFixed(0)} km du départ</div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; font-size:0.8rem; margin-bottom:10px;">
-          ${renderPopupPrices(st.prix, selectedFuel)}
+          ${renderPopupPrices(st.prix, selectedFuel, st.pays)}
         </div>
         <div class="station-nav-actions popup-nav-actions">
           <a href="${wazeUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-waze" title="Lancer le guidage Waze vers cette station">
@@ -1285,7 +1340,7 @@ function renderCurrentRouteStations() {
             ${getBrandLogoSvg(st.enseigne)}
           </div>
           <span class="pk-marker-badge">
-            🛣️ ${st.autoroute || 'Autoroute'} • Borne km ${cleanPk}
+            🛣️ ${pkBadgeLabel}
           </span>
         </div>
       </div>
@@ -1308,7 +1363,7 @@ function renderCurrentRouteStations() {
       </div>
 
       <div class="prices-container">
-        ${renderCardPrices(st.prix, selectedFuel, isCheapest)}
+        ${renderCardPrices(st.prix, selectedFuel, isCheapest, st.pays)}
       </div>
 
       ${st.ruptures && st.ruptures.length > 0 ? `
@@ -1348,7 +1403,10 @@ function renderCurrentRouteStations() {
 }
 
 // Render fuel prices inside card
-function renderCardPrices(prices, featuredFuel, isCheapest) {
+function renderCardPrices(prices, featuredFuel, isCheapest, pays) {
+  const isUK = pays === 'GB';
+  const formatPrice = (val) => isUK ? `£${val.toFixed(3)}` : `${val.toFixed(3)} €`;
+
   if (!prices || Object.keys(prices).length === 0) {
     return `
       <div class="prices-single-row">
@@ -1361,7 +1419,7 @@ function renderCardPrices(prices, featuredFuel, isCheapest) {
   // When a specific fuel is filtered (default behavior: e10/sp95, gazole, sp98, etc.)
   if (featuredFuel && featuredFuel !== 'all') {
     const p = getFuelPrice(prices, featuredFuel);
-    const fuelName = FUEL_LABELS[featuredFuel] || featuredFuel.toUpperCase();
+    const fuelName = getFuelLabel(featuredFuel, pays);
 
     if (p && p > 0) {
       return `
@@ -1371,7 +1429,7 @@ function renderCardPrices(prices, featuredFuel, isCheapest) {
             <span class="fuel-name">${fuelName}</span>
           </div>
           <div class="single-fuel-price">
-            <span class="price-val-large ${isCheapest ? 'cheapest' : ''}">${p.toFixed(3)} €</span>
+            <span class="price-val-large ${isCheapest ? 'cheapest' : ''}">${formatPrice(p)}</span>
           </div>
         </div>
       `;
@@ -1391,14 +1449,14 @@ function renderCardPrices(prices, featuredFuel, isCheapest) {
   }
 
   // If "Tous les carburants" (all) is selected, render standard multi-fuel grid
-  const fuels = ['gazole', 'e10', 'sp98', 'sp95', 'e85', 'gplc'];
+  const fuels = isUK ? ['gazole', 'e10', 'sp98', 'gplc'] : ['gazole', 'e10', 'sp98', 'sp95', 'e85', 'gplc'];
   let html = '<div class="prices-grid">';
   fuels.forEach(f => {
     if (prices[f]) {
       html += `
         <div class="price-item">
-          <span class="price-name">${FUEL_LABELS[f]}</span>
-          <span class="price-val">${prices[f].toFixed(3)} €</span>
+          <span class="price-name">${getFuelLabel(f, pays)}</span>
+          <span class="price-val">${formatPrice(prices[f])}</span>
         </div>
       `;
     }
@@ -1408,16 +1466,19 @@ function renderCardPrices(prices, featuredFuel, isCheapest) {
 }
 
 // Render prices in marker popup
-function renderPopupPrices(prices, featuredFuel) {
+function renderPopupPrices(prices, featuredFuel, pays) {
+  const isUK = pays === 'GB';
+  const formatPrice = (val) => isUK ? `£${val.toFixed(3)}` : `${val.toFixed(3)} €`;
+
   if (!prices) return '<span>Aucun prix disponible</span>';
   if (featuredFuel && featuredFuel !== 'all') {
     const p = getFuelPrice(prices, featuredFuel);
-    const fuelName = FUEL_LABELS[featuredFuel] || featuredFuel.toUpperCase();
+    const fuelName = getFuelLabel(featuredFuel, pays);
     if (p && p > 0) {
       return `
         <div style="grid-column: span 2; background: rgba(16, 185, 129, 0.15); border: 1.5px solid #10b981; padding: 6px 12px; border-radius: 8px; display:flex; justify-content:space-between; align-items:center;">
           <span style="color: #a7f3d0; font-size: 0.85rem; font-weight: 700;">⛽ ${fuelName}</span>
-          <b style="color: #ffffff; font-size: 1.15rem; font-family: monospace;">${p.toFixed(3)} €</b>
+          <b style="color: #ffffff; font-size: 1.15rem; font-family: monospace;">${formatPrice(p)}</b>
         </div>
       `;
     } else {
@@ -1428,10 +1489,11 @@ function renderPopupPrices(prices, featuredFuel) {
       `;
     }
   }
-  return Object.keys(prices).map(f => `
+  const keys = isUK ? Object.keys(prices).filter(k => k !== 'sp95') : Object.keys(prices);
+  return keys.map(f => `
     <div style="background:rgba(255,255,255,0.06); padding:3px 6px; border-radius:4px;">
-      <span style="color:#94a3b8; font-size:0.7rem;">${FUEL_LABELS[f] || f}:</span>
-      <b style="color:#fff;">${prices[f].toFixed(3)} €</b>
+      <span style="color:#94a3b8; font-size:0.7rem;">${getFuelLabel(f, pays)}:</span>
+      <b style="color:#fff;">${formatPrice(prices[f])}</b>
     </div>
   `).join('');
 }
@@ -1455,6 +1517,7 @@ function getBrandClass(brand) {
   if (b.includes('q8')) return 'badge-q8';
   if (b.includes('tamoil')) return 'badge-tamoil';
   if (b.includes('sarni')) return 'badge-sarni';
+  if (b.includes('texaco')) return 'badge-esso';
   return 'badge-default';
 }
 

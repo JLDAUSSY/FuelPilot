@@ -52305,5 +52305,3894 @@
       "Toilettes",
       "Restauration"
     ]
+  },
+  {
+    "id": "GB-MSA-001",
+    "pays": "GB",
+    "enseigne": "Extra (Shell)",
+    "autoroute": "M25",
+    "nom": "Cobham Services",
+    "sens": "Double sens",
+    "adresse": "M25 Junction J9/J10, Cobham KT11 3DB",
+    "ville": "Cobham",
+    "cp": "KT11 3DB",
+    "departement": "United Kingdom",
+    "lat": 51.3129,
+    "lon": -0.4131,
+    "pk_text": "J9/J10",
+    "prix": {
+      "e10": 1.511,
+      "sp95": 1.511,
+      "gazole": 1.581,
+      "sp98": 1.631
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-002",
+    "pays": "GB",
+    "enseigne": "Welcome Break (BP)",
+    "autoroute": "M25",
+    "nom": "South Mimms Services",
+    "sens": "Double sens",
+    "adresse": "M25 Junction J23, Potters Bar EN6 3QQ",
+    "ville": "Potters Bar",
+    "cp": "EN6 3QQ",
+    "departement": "United Kingdom",
+    "lat": 51.6894,
+    "lon": -0.2238,
+    "pk_text": "J23",
+    "prix": {
+      "e10": 1.562,
+      "sp95": 1.562,
+      "gazole": 1.632,
+      "sp98": 1.682
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-003",
+    "pays": "GB",
+    "enseigne": "Moto (Esso)",
+    "autoroute": "M25",
+    "nom": "Thurrock Services",
+    "sens": "Double sens",
+    "adresse": "M25 Junction J30/J31, Grays RM16 3BG",
+    "ville": "Grays",
+    "cp": "RM16 3BG",
+    "departement": "United Kingdom",
+    "lat": 51.4908,
+    "lon": 0.2783,
+    "pk_text": "J30/J31",
+    "prix": {
+      "e10": 1.537,
+      "sp95": 1.537,
+      "gazole": 1.607,
+      "sp98": 1.657,
+      "gplc": 0.908
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-004",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M25",
+    "nom": "Clacket Lane Services (Clockwise)",
+    "sens": "Clockwise",
+    "adresse": "M25 Junction J5/J6, Westerham TN16 2ER",
+    "ville": "Westerham",
+    "cp": "TN16 2ER",
+    "departement": "United Kingdom",
+    "lat": 51.2698,
+    "lon": 0.0416,
+    "pk_text": "J5/J6",
+    "prix": {
+      "e10": 1.536,
+      "sp95": 1.536,
+      "gazole": 1.606,
+      "sp98": 1.656
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-005",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M25",
+    "nom": "Clacket Lane Services (Anti-Clockwise)",
+    "sens": "Anti-Clockwise",
+    "adresse": "M25 Junction J5/J6, Westerham TN16 2ER",
+    "ville": "Westerham",
+    "cp": "TN16 2ER",
+    "departement": "United Kingdom",
+    "lat": 51.2687,
+    "lon": 0.0419,
+    "pk_text": "J5/J6",
+    "prix": {
+      "e10": 1.574,
+      "sp95": 1.574,
+      "gazole": 1.644,
+      "sp98": 1.694
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-006",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M1",
+    "nom": "London Gateway Services",
+    "sens": "Double sens",
+    "adresse": "M1 Junction J2/J4, Mill Hill NW7 3HU",
+    "ville": "Mill Hill",
+    "cp": "NW7 3HU",
+    "departement": "United Kingdom",
+    "lat": 51.6305,
+    "lon": -0.2642,
+    "pk_text": "J2/J4",
+    "prix": {
+      "e10": 1.554,
+      "sp95": 1.554,
+      "gazole": 1.624,
+      "sp98": 1.674,
+      "gplc": 0.921
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-007",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M1",
+    "nom": "Toddington Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M1 Junction J11/J12, Toddington LU5 6HR",
+    "ville": "Toddington",
+    "cp": "LU5 6HR",
+    "departement": "United Kingdom",
+    "lat": 51.9442,
+    "lon": -0.5218,
+    "pk_text": "J11/J12",
+    "prix": {
+      "e10": 1.547,
+      "sp95": 1.547,
+      "gazole": 1.617,
+      "sp98": 1.667
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-008",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M1",
+    "nom": "Toddington Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M1 Junction J11/J12, Toddington LU5 6HR",
+    "ville": "Toddington",
+    "cp": "LU5 6HR",
+    "departement": "United Kingdom",
+    "lat": 51.9425,
+    "lon": -0.5204,
+    "pk_text": "J11/J12",
+    "prix": {
+      "e10": 1.548,
+      "sp95": 1.548,
+      "gazole": 1.618,
+      "sp98": 1.668
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-009",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M1",
+    "nom": "Newport Pagnell Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M1 Junction J14/J15, Newport Pagnell MK16 8DS",
+    "ville": "Newport Pagnell",
+    "cp": "MK16 8DS",
+    "departement": "United Kingdom",
+    "lat": 52.0833,
+    "lon": -0.7428,
+    "pk_text": "J14/J15",
+    "prix": {
+      "e10": 1.541,
+      "sp95": 1.541,
+      "gazole": 1.611,
+      "sp98": 1.661,
+      "gplc": 0.915
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-010",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M1",
+    "nom": "Newport Pagnell Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M1 Junction J14/J15, Newport Pagnell MK16 8DS",
+    "ville": "Newport Pagnell",
+    "cp": "MK16 8DS",
+    "departement": "United Kingdom",
+    "lat": 52.0825,
+    "lon": -0.7441,
+    "pk_text": "J14/J15",
+    "prix": {
+      "e10": 1.545,
+      "sp95": 1.545,
+      "gazole": 1.615,
+      "sp98": 1.665
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-011",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M1",
+    "nom": "Northampton Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M1 Junction J15A, Northampton NN4 9QY",
+    "ville": "Northampton",
+    "cp": "NN4 9QY",
+    "departement": "United Kingdom",
+    "lat": 52.2044,
+    "lon": -0.9461,
+    "pk_text": "J15A",
+    "prix": {
+      "e10": 1.583,
+      "sp95": 1.583,
+      "gazole": 1.653,
+      "sp98": 1.703
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-012",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M1",
+    "nom": "Northampton Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M1 Junction J15A, Northampton NN4 9QY",
+    "ville": "Northampton",
+    "cp": "NN4 9QY",
+    "departement": "United Kingdom",
+    "lat": 52.2036,
+    "lon": -0.9448,
+    "pk_text": "J15A",
+    "prix": {
+      "e10": 1.541,
+      "sp95": 1.541,
+      "gazole": 1.611,
+      "sp98": 1.661,
+      "gplc": 0.92
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-013",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M1",
+    "nom": "Watford Gap Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M1 Junction J16/J17, Daventry NN6 7UZ",
+    "ville": "Daventry",
+    "cp": "NN6 7UZ",
+    "departement": "United Kingdom",
+    "lat": 52.3075,
+    "lon": -1.1244,
+    "pk_text": "J16/J17",
+    "prix": {
+      "e10": 1.538,
+      "sp95": 1.538,
+      "gazole": 1.608,
+      "sp98": 1.658
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-014",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M1",
+    "nom": "Watford Gap Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M1 Junction J16/J17, Daventry NN6 7UZ",
+    "ville": "Daventry",
+    "cp": "NN6 7UZ",
+    "departement": "United Kingdom",
+    "lat": 52.3069,
+    "lon": -1.1231,
+    "pk_text": "J16/J17",
+    "prix": {
+      "e10": 1.548,
+      "sp95": 1.548,
+      "gazole": 1.618,
+      "sp98": 1.668
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-015",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M1",
+    "nom": "Leicester Forest East Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M1 Junction J21, Leicester LE3 3GB",
+    "ville": "Leicester",
+    "cp": "LE3 3GB",
+    "departement": "United Kingdom",
+    "lat": 52.6186,
+    "lon": -1.2064,
+    "pk_text": "J21",
+    "prix": {
+      "e10": 1.558,
+      "sp95": 1.558,
+      "gazole": 1.628,
+      "sp98": 1.678,
+      "gplc": 0.923
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-016",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M1",
+    "nom": "Leicester Forest East Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M1 Junction J21, Leicester LE3 3GB",
+    "ville": "Leicester",
+    "cp": "LE3 3GB",
+    "departement": "United Kingdom",
+    "lat": 52.6179,
+    "lon": -1.2051,
+    "pk_text": "J21",
+    "prix": {
+      "e10": 1.57,
+      "sp95": 1.57,
+      "gazole": 1.64,
+      "sp98": 1.69
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-017",
+    "pays": "GB",
+    "enseigne": "Moto (Esso)",
+    "autoroute": "M1",
+    "nom": "Donington Park Services",
+    "sens": "Double sens",
+    "adresse": "M1 Junction J23A, Castle Donington DE74 2TN",
+    "ville": "Castle Donington",
+    "cp": "DE74 2TN",
+    "departement": "United Kingdom",
+    "lat": 52.8167,
+    "lon": -1.3328,
+    "pk_text": "J23A",
+    "prix": {
+      "e10": 1.516,
+      "sp95": 1.516,
+      "gazole": 1.586,
+      "sp98": 1.636
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-018",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M1",
+    "nom": "Trowell Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M1 Junction J25/J26, Nottingham NG9 3PL",
+    "ville": "Nottingham",
+    "cp": "NG9 3PL",
+    "departement": "United Kingdom",
+    "lat": 52.9614,
+    "lon": -1.2683,
+    "pk_text": "J25/J26",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-019",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M1",
+    "nom": "Trowell Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M1 Junction J25/J26, Nottingham NG9 3PL",
+    "ville": "Nottingham",
+    "cp": "NG9 3PL",
+    "departement": "United Kingdom",
+    "lat": 52.9602,
+    "lon": -1.2672,
+    "pk_text": "J25/J26",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-020",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M1",
+    "nom": "Tibshelf Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M1 Junction J28/J29, Alfreton DE55 5TZ",
+    "ville": "Alfreton",
+    "cp": "DE55 5TZ",
+    "departement": "United Kingdom",
+    "lat": 53.1336,
+    "lon": -1.3267,
+    "pk_text": "J28/J29",
+    "prix": {
+      "e10": 1.555,
+      "sp95": 1.555,
+      "gazole": 1.625,
+      "sp98": 1.675
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-021",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M1",
+    "nom": "Tibshelf Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M1 Junction J28/J29, Alfreton DE55 5TZ",
+    "ville": "Alfreton",
+    "cp": "DE55 5TZ",
+    "departement": "United Kingdom",
+    "lat": 53.1328,
+    "lon": -1.3254,
+    "pk_text": "J28/J29",
+    "prix": {
+      "e10": 1.55,
+      "sp95": 1.55,
+      "gazole": 1.62,
+      "sp98": 1.67,
+      "gplc": 0.925
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-022",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M1",
+    "nom": "Woodall Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M1 Junction J30/J31, Sheffield S26 7XR",
+    "ville": "Sheffield",
+    "cp": "S26 7XR",
+    "departement": "United Kingdom",
+    "lat": 53.3211,
+    "lon": -1.2814,
+    "pk_text": "J30/J31",
+    "prix": {
+      "e10": 1.573,
+      "sp95": 1.573,
+      "gazole": 1.643,
+      "sp98": 1.693
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-023",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M1",
+    "nom": "Woodall Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M1 Junction J30/J31, Sheffield S26 7XR",
+    "ville": "Sheffield",
+    "cp": "S26 7XR",
+    "departement": "United Kingdom",
+    "lat": 53.3201,
+    "lon": -1.2801,
+    "pk_text": "J30/J31",
+    "prix": {
+      "e10": 1.548,
+      "sp95": 1.548,
+      "gazole": 1.618,
+      "sp98": 1.668
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-024",
+    "pays": "GB",
+    "enseigne": "Moto (Esso)",
+    "autoroute": "M1",
+    "nom": "Woolley Edge Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M1 Junction J38/J39, Wakefield WF4 4LQ",
+    "ville": "Wakefield",
+    "cp": "WF4 4LQ",
+    "departement": "United Kingdom",
+    "lat": 53.6122,
+    "lon": -1.5394,
+    "pk_text": "J38/J39",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.069
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-025",
+    "pays": "GB",
+    "enseigne": "Moto (Esso)",
+    "autoroute": "M1",
+    "nom": "Woolley Edge Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M1 Junction J38/J39, Wakefield WF4 4LQ",
+    "ville": "Wakefield",
+    "cp": "WF4 4LQ",
+    "departement": "United Kingdom",
+    "lat": 53.6114,
+    "lon": -1.5382,
+    "pk_text": "J38/J39",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.069
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-026",
+    "pays": "GB",
+    "enseigne": "Extra (Texaco)",
+    "autoroute": "M1",
+    "nom": "Leeds Skelton Lake Services",
+    "sens": "Double sens",
+    "adresse": "M1 Junction J45, Leeds LS9 0AS",
+    "ville": "Leeds",
+    "cp": "LS9 0AS",
+    "departement": "United Kingdom",
+    "lat": 53.7708,
+    "lon": -1.4667,
+    "pk_text": "J45",
+    "prix": {
+      "e10": 1.454,
+      "sp95": 1.454,
+      "gazole": 1.524,
+      "sp98": 1.574
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-027",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M2",
+    "nom": "Medway Services (Eastbound)",
+    "sens": "Eastbound",
+    "adresse": "M2 Junction J4/J5, Gillingham ME8 8PQ",
+    "ville": "Gillingham",
+    "cp": "ME8 8PQ",
+    "departement": "United Kingdom",
+    "lat": 51.3408,
+    "lon": 0.5944,
+    "pk_text": "J4/J5",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-028",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M2",
+    "nom": "Medway Services (Westbound)",
+    "sens": "Westbound",
+    "adresse": "M2 Junction J4/J5, Gillingham ME8 8PQ",
+    "ville": "Gillingham",
+    "cp": "ME8 8PQ",
+    "departement": "United Kingdom",
+    "lat": 51.3401,
+    "lon": 0.5931,
+    "pk_text": "J4/J5",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-029",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M20",
+    "nom": "Maidstone Services",
+    "sens": "Double sens",
+    "adresse": "M20 Junction J8, Hollingbourne ME17 1SS",
+    "ville": "Hollingbourne",
+    "cp": "ME17 1SS",
+    "departement": "United Kingdom",
+    "lat": 51.2636,
+    "lon": 0.6186,
+    "pk_text": "J8",
+    "prix": {
+      "e10": 1.573,
+      "sp95": 1.573,
+      "gazole": 1.643,
+      "sp98": 1.693
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-030",
+    "pays": "GB",
+    "enseigne": "Stop24 (Shell)",
+    "autoroute": "M20",
+    "nom": "Folkestone Eurotunnel Services",
+    "sens": "Double sens",
+    "adresse": "M20 Junction J11, Hythe CT21 4BL",
+    "ville": "Hythe",
+    "cp": "CT21 4BL",
+    "departement": "United Kingdom",
+    "lat": 51.0964,
+    "lon": 1.0539,
+    "pk_text": "J11",
+    "prix": {
+      "e10": 1.493,
+      "sp95": 1.493,
+      "gazole": 1.563,
+      "sp98": 1.613,
+      "gplc": 0.891
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-031",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M23",
+    "nom": "Pease Pottage Services",
+    "sens": "Double sens",
+    "adresse": "M23 Junction J10/J11, Crawley RH11 9YA",
+    "ville": "Crawley",
+    "cp": "RH11 9YA",
+    "departement": "United Kingdom",
+    "lat": 51.0806,
+    "lon": -0.1939,
+    "pk_text": "J10/J11",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-032",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M3",
+    "nom": "Fleet Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M3 Junction J4A/J5, Fleet GU51 1AA",
+    "ville": "Fleet",
+    "cp": "GU51 1AA",
+    "departement": "United Kingdom",
+    "lat": 51.2942,
+    "lon": -0.8617,
+    "pk_text": "J4A/J5",
+    "prix": {
+      "e10": 1.555,
+      "sp95": 1.555,
+      "gazole": 1.625,
+      "sp98": 1.675
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-033",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M3",
+    "nom": "Fleet Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M3 Junction J4A/J5, Fleet GU51 1AA",
+    "ville": "Fleet",
+    "cp": "GU51 1AA",
+    "departement": "United Kingdom",
+    "lat": 51.2951,
+    "lon": -0.8606,
+    "pk_text": "J4A/J5",
+    "prix": {
+      "e10": 1.539,
+      "sp95": 1.539,
+      "gazole": 1.609,
+      "sp98": 1.659,
+      "gplc": 0.914
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-034",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M3",
+    "nom": "Winchester Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M3 Junction J8/J9, Winchester SO21 1PP",
+    "ville": "Winchester",
+    "cp": "SO21 1PP",
+    "departement": "United Kingdom",
+    "lat": 51.1139,
+    "lon": -1.2647,
+    "pk_text": "J8/J9",
+    "prix": {
+      "e10": 1.579,
+      "sp95": 1.579,
+      "gazole": 1.649,
+      "sp98": 1.699
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-035",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M3",
+    "nom": "Winchester Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M3 Junction J8/J9, Winchester SO21 1PP",
+    "ville": "Winchester",
+    "cp": "SO21 1PP",
+    "departement": "United Kingdom",
+    "lat": 51.1147,
+    "lon": -1.2636,
+    "pk_text": "J8/J9",
+    "prix": {
+      "e10": 1.553,
+      "sp95": 1.553,
+      "gazole": 1.623,
+      "sp98": 1.673
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-036",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M27",
+    "nom": "Rownhams Services (Westbound)",
+    "sens": "Westbound",
+    "adresse": "M27 Junction J3/J4, Southampton SO16 8AP",
+    "ville": "Southampton",
+    "cp": "SO16 8AP",
+    "departement": "United Kingdom",
+    "lat": 50.9575,
+    "lon": -1.4647,
+    "pk_text": "J3/J4",
+    "prix": {
+      "e10": 1.564,
+      "sp95": 1.564,
+      "gazole": 1.634,
+      "sp98": 1.684,
+      "gplc": 0.931
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-037",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M27",
+    "nom": "Rownhams Services (Eastbound)",
+    "sens": "Eastbound",
+    "adresse": "M27 Junction J3/J4, Southampton SO16 8AP",
+    "ville": "Southampton",
+    "cp": "SO16 8AP",
+    "departement": "United Kingdom",
+    "lat": 50.9567,
+    "lon": -1.4636,
+    "pk_text": "J3/J4",
+    "prix": {
+      "e10": 1.578,
+      "sp95": 1.578,
+      "gazole": 1.648,
+      "sp98": 1.698
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-038",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M4",
+    "nom": "Heston Services (Westbound)",
+    "sens": "Westbound",
+    "adresse": "M4 Junction J2/J3, Hounslow TW5 9NB",
+    "ville": "Hounslow",
+    "cp": "TW5 9NB",
+    "departement": "United Kingdom",
+    "lat": 51.4883,
+    "lon": -0.3911,
+    "pk_text": "J2/J3",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-039",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M4",
+    "nom": "Heston Services (Eastbound)",
+    "sens": "Eastbound",
+    "adresse": "M4 Junction J2/J3, Hounslow TW5 9NB",
+    "ville": "Hounslow",
+    "cp": "TW5 9NB",
+    "departement": "United Kingdom",
+    "lat": 51.4875,
+    "lon": -0.3901,
+    "pk_text": "J2/J3",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-040",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M4",
+    "nom": "Reading Services (Westbound)",
+    "sens": "Westbound",
+    "adresse": "M4 Junction J11/J12, Reading RG30 3UQ",
+    "ville": "Reading",
+    "cp": "RG30 3UQ",
+    "departement": "United Kingdom",
+    "lat": 51.4158,
+    "lon": -1.0439,
+    "pk_text": "J11/J12",
+    "prix": {
+      "e10": 1.566,
+      "sp95": 1.566,
+      "gazole": 1.636,
+      "sp98": 1.686
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-041",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M4",
+    "nom": "Reading Services (Eastbound)",
+    "sens": "Eastbound",
+    "adresse": "M4 Junction J11/J12, Reading RG30 3UQ",
+    "ville": "Reading",
+    "cp": "RG30 3UQ",
+    "departement": "United Kingdom",
+    "lat": 51.4151,
+    "lon": -1.0428,
+    "pk_text": "J11/J12",
+    "prix": {
+      "e10": 1.534,
+      "sp95": 1.534,
+      "gazole": 1.604,
+      "sp98": 1.654
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-042",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M4",
+    "nom": "Chieveley Services",
+    "sens": "Double sens",
+    "adresse": "M4 Junction J13, Newbury RG18 9XX",
+    "ville": "Newbury",
+    "cp": "RG18 9XX",
+    "departement": "United Kingdom",
+    "lat": 51.4489,
+    "lon": -1.3183,
+    "pk_text": "J13",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-043",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M4",
+    "nom": "Membury Services (Westbound)",
+    "sens": "Westbound",
+    "adresse": "M4 Junction J14/J15, Lambourn RG17 7TZ",
+    "ville": "Lambourn",
+    "cp": "RG17 7TZ",
+    "departement": "United Kingdom",
+    "lat": 51.4803,
+    "lon": -1.5553,
+    "pk_text": "J14/J15",
+    "prix": {
+      "e10": 1.57,
+      "sp95": 1.57,
+      "gazole": 1.64,
+      "sp98": 1.69
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-044",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M4",
+    "nom": "Membury Services (Eastbound)",
+    "sens": "Eastbound",
+    "adresse": "M4 Junction J14/J15, Lambourn RG17 7TZ",
+    "ville": "Lambourn",
+    "cp": "RG17 7TZ",
+    "departement": "United Kingdom",
+    "lat": 51.4795,
+    "lon": -1.5542,
+    "pk_text": "J14/J15",
+    "prix": {
+      "e10": 1.533,
+      "sp95": 1.533,
+      "gazole": 1.603,
+      "sp98": 1.653
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-045",
+    "pays": "GB",
+    "enseigne": "Moto (Esso)",
+    "autoroute": "M4",
+    "nom": "Leigh Delamere Services (Westbound)",
+    "sens": "Westbound",
+    "adresse": "M4 Junction J17/J18, Chippenham SN14 6LB",
+    "ville": "Chippenham",
+    "cp": "SN14 6LB",
+    "departement": "United Kingdom",
+    "lat": 51.5117,
+    "lon": -2.1489,
+    "pk_text": "J17/J18",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-046",
+    "pays": "GB",
+    "enseigne": "Moto (Esso)",
+    "autoroute": "M4",
+    "nom": "Leigh Delamere Services (Eastbound)",
+    "sens": "Eastbound",
+    "adresse": "M4 Junction J17/J18, Chippenham SN14 6LB",
+    "ville": "Chippenham",
+    "cp": "SN14 6LB",
+    "departement": "United Kingdom",
+    "lat": 51.5108,
+    "lon": -2.1478,
+    "pk_text": "J17/J18",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-047",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M4",
+    "nom": "Severn View Services",
+    "sens": "Double sens",
+    "adresse": "M4 Junction J21/J22, Bristol BS35 4BH",
+    "ville": "Bristol",
+    "cp": "BS35 4BH",
+    "departement": "United Kingdom",
+    "lat": 51.6033,
+    "lon": -2.6186,
+    "pk_text": "J21/J22",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-048",
+    "pays": "GB",
+    "enseigne": "Roadchef (Shell)",
+    "autoroute": "M4",
+    "nom": "Magor Services",
+    "sens": "Double sens",
+    "adresse": "M4 Junction J23A, Caldicot NP26 3YL",
+    "ville": "Caldicot",
+    "cp": "NP26 3YL",
+    "departement": "United Kingdom",
+    "lat": 51.5861,
+    "lon": -2.8669,
+    "pk_text": "J23A",
+    "prix": {
+      "e10": 1.537,
+      "sp95": 1.537,
+      "gazole": 1.607,
+      "sp98": 1.657,
+      "gplc": 0.913
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-049",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M4",
+    "nom": "Cardiff Gate Services",
+    "sens": "Double sens",
+    "adresse": "M4 Junction J30, Cardiff CF23 8RA",
+    "ville": "Cardiff",
+    "cp": "CF23 8RA",
+    "departement": "United Kingdom",
+    "lat": 51.5397,
+    "lon": -3.1325,
+    "pk_text": "J30",
+    "prix": {
+      "e10": 1.552,
+      "sp95": 1.552,
+      "gazole": 1.622,
+      "sp98": 1.672
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-050",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M4",
+    "nom": "Cardiff West Services",
+    "sens": "Double sens",
+    "adresse": "M4 Junction J33, Cardiff CF72 8SA",
+    "ville": "Cardiff",
+    "cp": "CF72 8SA",
+    "departement": "United Kingdom",
+    "lat": 51.5036,
+    "lon": -3.3017,
+    "pk_text": "J33",
+    "prix": {
+      "e10": 1.544,
+      "sp95": 1.544,
+      "gazole": 1.614,
+      "sp98": 1.664
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-051",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M4",
+    "nom": "Sarn Park Services",
+    "sens": "Double sens",
+    "adresse": "M4 Junction J36, Bridgend CF32 9RW",
+    "ville": "Bridgend",
+    "cp": "CF32 9RW",
+    "departement": "United Kingdom",
+    "lat": 51.5392,
+    "lon": -3.5758,
+    "pk_text": "J36",
+    "prix": {
+      "e10": 1.53,
+      "sp95": 1.53,
+      "gazole": 1.6,
+      "sp98": 1.65,
+      "gplc": 0.91
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-052",
+    "pays": "GB",
+    "enseigne": "Moto (Esso)",
+    "autoroute": "M4",
+    "nom": "Swansea West Services",
+    "sens": "Double sens",
+    "adresse": "M4 Junction J47, Swansea SA4 9GT",
+    "ville": "Swansea",
+    "cp": "SA4 9GT",
+    "departement": "United Kingdom",
+    "lat": 51.6761,
+    "lon": -3.9917,
+    "pk_text": "J47",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-053",
+    "pays": "GB",
+    "enseigne": "Roadchef (Shell)",
+    "autoroute": "M4",
+    "nom": "Pont Abraham Services",
+    "sens": "Double sens",
+    "adresse": "M4 Junction J49, Pontarddulais SA4 8LF",
+    "ville": "Pontarddulais",
+    "cp": "SA4 8LF",
+    "departement": "United Kingdom",
+    "lat": 51.7447,
+    "lon": -4.0631,
+    "pk_text": "J49",
+    "prix": {
+      "e10": 1.559,
+      "sp95": 1.559,
+      "gazole": 1.629,
+      "sp98": 1.679
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-054",
+    "pays": "GB",
+    "enseigne": "Extra (Shell)",
+    "autoroute": "M40",
+    "nom": "Beaconsfield Services",
+    "sens": "Double sens",
+    "adresse": "M40 Junction J2, Beaconsfield HP9 2SE",
+    "ville": "Beaconsfield",
+    "cp": "HP9 2SE",
+    "departement": "United Kingdom",
+    "lat": 51.5914,
+    "lon": -0.6258,
+    "pk_text": "J2",
+    "prix": {
+      "e10": 1.489,
+      "sp95": 1.489,
+      "gazole": 1.559,
+      "sp98": 1.609,
+      "gplc": 0.889
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-055",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M40",
+    "nom": "Oxford Services",
+    "sens": "Double sens",
+    "adresse": "M40 Junction J8A, Wheatley OX33 1LJ",
+    "ville": "Wheatley",
+    "cp": "OX33 1LJ",
+    "departement": "United Kingdom",
+    "lat": 51.7375,
+    "lon": -1.1061,
+    "pk_text": "J8A",
+    "prix": {
+      "e10": 1.548,
+      "sp95": 1.548,
+      "gazole": 1.618,
+      "sp98": 1.668
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-056",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M40",
+    "nom": "Cherwell Valley Services",
+    "sens": "Double sens",
+    "adresse": "M40 Junction J10, Bicester OX27 7RD",
+    "ville": "Bicester",
+    "cp": "OX27 7RD",
+    "departement": "United Kingdom",
+    "lat": 51.9469,
+    "lon": -1.2133,
+    "pk_text": "J10",
+    "prix": {
+      "e10": 1.538,
+      "sp95": 1.538,
+      "gazole": 1.608,
+      "sp98": 1.658
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-057",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M40",
+    "nom": "Warwick Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M40 Junction J12/J13, Warwick CV35 0AA",
+    "ville": "Warwick",
+    "cp": "CV35 0AA",
+    "departement": "United Kingdom",
+    "lat": 52.2153,
+    "lon": -1.5094,
+    "pk_text": "J12/J13",
+    "prix": {
+      "e10": 1.57,
+      "sp95": 1.57,
+      "gazole": 1.64,
+      "sp98": 1.69,
+      "gplc": 0.929
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-058",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M40",
+    "nom": "Warwick Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M40 Junction J12/J13, Warwick CV35 0AA",
+    "ville": "Warwick",
+    "cp": "CV35 0AA",
+    "departement": "United Kingdom",
+    "lat": 52.2144,
+    "lon": -1.5083,
+    "pk_text": "J12/J13",
+    "prix": {
+      "e10": 1.544,
+      "sp95": 1.544,
+      "gazole": 1.614,
+      "sp98": 1.664
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-059",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M5",
+    "nom": "Frankley Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M5 Junction J3/J4, Birmingham B32 4AR",
+    "ville": "Birmingham",
+    "cp": "B32 4AR",
+    "departement": "United Kingdom",
+    "lat": 52.4264,
+    "lon": -2.0158,
+    "pk_text": "J3/J4",
+    "prix": {
+      "e10": 1.769,
+      "sp95": 1.769,
+      "gazole": 2.099,
+      "sp98": 1.889
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-060",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M5",
+    "nom": "Frankley Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M5 Junction J3/J4, Birmingham B32 4AR",
+    "ville": "Birmingham",
+    "cp": "B32 4AR",
+    "departement": "United Kingdom",
+    "lat": 52.4272,
+    "lon": -2.0147,
+    "pk_text": "J3/J4",
+    "prix": {
+      "e10": 1.769,
+      "sp95": 1.769,
+      "gazole": 2.099,
+      "sp98": 1.889
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-061",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M5",
+    "nom": "Strensham Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M5 Junction J7/J8, Worcester WR8 0BZ",
+    "ville": "Worcester",
+    "cp": "WR8 0BZ",
+    "departement": "United Kingdom",
+    "lat": 52.0569,
+    "lon": -2.1453,
+    "pk_text": "J7/J8",
+    "prix": {
+      "e10": 1.563,
+      "sp95": 1.563,
+      "gazole": 1.633,
+      "sp98": 1.683
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-062",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M5",
+    "nom": "Strensham Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M5 Junction J7/J8, Worcester WR8 0BZ",
+    "ville": "Worcester",
+    "cp": "WR8 0BZ",
+    "departement": "United Kingdom",
+    "lat": 52.0578,
+    "lon": -2.1442,
+    "pk_text": "J7/J8",
+    "prix": {
+      "e10": 1.579,
+      "sp95": 1.579,
+      "gazole": 1.649,
+      "sp98": 1.699
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-063",
+    "pays": "GB",
+    "enseigne": "Westmorland (Shell)",
+    "autoroute": "M5",
+    "nom": "Gloucester Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M5 Junction J11A/J12, Gloucester GL4 0DN",
+    "ville": "Gloucester",
+    "cp": "GL4 0DN",
+    "departement": "United Kingdom",
+    "lat": 51.8158,
+    "lon": -2.2308,
+    "pk_text": "J11A/J12",
+    "prix": {
+      "e10": 1.496,
+      "sp95": 1.496,
+      "gazole": 1.566,
+      "sp98": 1.616,
+      "gplc": 0.893
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-064",
+    "pays": "GB",
+    "enseigne": "Westmorland (Shell)",
+    "autoroute": "M5",
+    "nom": "Gloucester Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M5 Junction J11A/J12, Gloucester GL4 0DN",
+    "ville": "Gloucester",
+    "cp": "GL4 0DN",
+    "departement": "United Kingdom",
+    "lat": 51.8167,
+    "lon": -2.2297,
+    "pk_text": "J11A/J12",
+    "prix": {
+      "e10": 1.488,
+      "sp95": 1.488,
+      "gazole": 1.558,
+      "sp98": 1.608
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-065",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M5",
+    "nom": "Michaelwood Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M5 Junction J13/J14, Dursley GL11 6",
+    "ville": "Dursley",
+    "cp": "GL11 6",
+    "departement": "United Kingdom",
+    "lat": 51.6525,
+    "lon": -2.4161,
+    "pk_text": "J13/J14",
+    "prix": {
+      "e10": 1.561,
+      "sp95": 1.561,
+      "gazole": 1.631,
+      "sp98": 1.681
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-066",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M5",
+    "nom": "Michaelwood Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M5 Junction J13/J14, Dursley GL11 6LP",
+    "ville": "Dursley",
+    "cp": "GL11 6LP",
+    "departement": "United Kingdom",
+    "lat": 51.6533,
+    "lon": -2.415,
+    "pk_text": "J13/J14",
+    "prix": {
+      "e10": 1.57,
+      "sp95": 1.57,
+      "gazole": 1.64,
+      "sp98": 1.69,
+      "gplc": 0.929
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-067",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M5",
+    "nom": "Gordano Services",
+    "sens": "Double sens",
+    "adresse": "M5 Junction J19, Bristol BS20 7XG",
+    "ville": "Bristol",
+    "cp": "BS20 7XG",
+    "departement": "United Kingdom",
+    "lat": 51.4767,
+    "lon": -2.7128,
+    "pk_text": "J19",
+    "prix": {
+      "e10": 1.528,
+      "sp95": 1.528,
+      "gazole": 1.598,
+      "sp98": 1.648
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-068",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M5",
+    "nom": "Sedgemoor Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M5 Junction J21/J22, Weston-super-Mare BS24 0JL",
+    "ville": "Weston-super-Mare",
+    "cp": "BS24 0JL",
+    "departement": "United Kingdom",
+    "lat": 51.2783,
+    "lon": -2.9231,
+    "pk_text": "J21/J22",
+    "prix": {
+      "e10": 1.574,
+      "sp95": 1.574,
+      "gazole": 1.644,
+      "sp98": 1.694
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-069",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M5",
+    "nom": "Sedgemoor Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M5 Junction J21/J22, Highbridge TA9 4HG",
+    "ville": "Highbridge",
+    "cp": "TA9 4HG",
+    "departement": "United Kingdom",
+    "lat": 51.2792,
+    "lon": -2.9219,
+    "pk_text": "J21/J22",
+    "prix": {
+      "e10": 1.539,
+      "sp95": 1.539,
+      "gazole": 1.609,
+      "sp98": 1.659,
+      "gplc": 0.919
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-070",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M5",
+    "nom": "Bridgwater Services",
+    "sens": "Double sens",
+    "adresse": "M5 Junction J24, Bridgwater TA6 6TS",
+    "ville": "Bridgwater",
+    "cp": "TA6 6TS",
+    "departement": "United Kingdom",
+    "lat": 51.1072,
+    "lon": -2.9922,
+    "pk_text": "J24",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-071",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M5",
+    "nom": "Taunton Deane Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M5 Junction J25/J26, Taunton TA3 7PF",
+    "ville": "Taunton",
+    "cp": "TA3 7PF",
+    "departement": "United Kingdom",
+    "lat": 50.9853,
+    "lon": -3.1497,
+    "pk_text": "J25/J26",
+    "prix": {
+      "e10": 1.556,
+      "sp95": 1.556,
+      "gazole": 1.626,
+      "sp98": 1.676
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-072",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M5",
+    "nom": "Taunton Deane Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M5 Junction J25/J26, Taunton TA3 7PF",
+    "ville": "Taunton",
+    "cp": "TA3 7PF",
+    "departement": "United Kingdom",
+    "lat": 50.9861,
+    "lon": -3.1486,
+    "pk_text": "J25/J26",
+    "prix": {
+      "e10": 1.547,
+      "sp95": 1.547,
+      "gazole": 1.617,
+      "sp98": 1.667,
+      "gplc": 0.923
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-073",
+    "pays": "GB",
+    "enseigne": "Moto (Shell)",
+    "autoroute": "M5",
+    "nom": "Tiverton Services",
+    "sens": "Double sens",
+    "adresse": "M5 Junction J27/J28, Cullompton EX15 1NS",
+    "ville": "Cullompton",
+    "cp": "EX15 1NS",
+    "departement": "United Kingdom",
+    "lat": 50.9183,
+    "lon": -3.3567,
+    "pk_text": "J27/J28",
+    "prix": {
+      "e10": 1.809,
+      "sp95": 1.809,
+      "gazole": 2.129,
+      "sp98": 1.979
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-074",
+    "pays": "GB",
+    "enseigne": "Extra (Texaco)",
+    "autoroute": "M5",
+    "nom": "Cullompton Services",
+    "sens": "Double sens",
+    "adresse": "M5 Junction J28, Cullompton EX15 1PA",
+    "ville": "Cullompton",
+    "cp": "EX15 1PA",
+    "departement": "United Kingdom",
+    "lat": 50.8586,
+    "lon": -3.3831,
+    "pk_text": "J28",
+    "prix": {
+      "e10": 1.445,
+      "sp95": 1.445,
+      "gazole": 1.515,
+      "sp98": 1.565
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-075",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M5",
+    "nom": "Exeter Services",
+    "sens": "Double sens",
+    "adresse": "M5 Junction J30, Exeter EX2 7HF",
+    "ville": "Exeter",
+    "cp": "EX2 7HF",
+    "departement": "United Kingdom",
+    "lat": 50.7131,
+    "lon": -3.4733,
+    "pk_text": "J30",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-076",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M6",
+    "nom": "Corley Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M6 Junction J3/J3A, Coventry CV7 8NR",
+    "ville": "Coventry",
+    "cp": "CV7 8NR",
+    "departement": "United Kingdom",
+    "lat": 52.4664,
+    "lon": -1.5472,
+    "pk_text": "J3/J3A",
+    "prix": {
+      "e10": 1.54,
+      "sp95": 1.54,
+      "gazole": 1.61,
+      "sp98": 1.66
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-077",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M6",
+    "nom": "Corley Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M6 Junction J3/J3A, Coventry CV7 8NR",
+    "ville": "Coventry",
+    "cp": "CV7 8NR",
+    "departement": "United Kingdom",
+    "lat": 52.4656,
+    "lon": -1.5483,
+    "pk_text": "J3/J3A",
+    "prix": {
+      "e10": 1.566,
+      "sp95": 1.566,
+      "gazole": 1.636,
+      "sp98": 1.686
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-078",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M6 Toll",
+    "nom": "Norton Canes Services",
+    "sens": "Double sens",
+    "adresse": "M6 Toll Junction T6/T7, Cannock WS11 9UX",
+    "ville": "Cannock",
+    "cp": "WS11 9UX",
+    "departement": "United Kingdom",
+    "lat": 52.6689,
+    "lon": -1.9767,
+    "pk_text": "T6/T7",
+    "prix": {
+      "e10": 1.564,
+      "sp95": 1.564,
+      "gazole": 1.634,
+      "sp98": 1.684,
+      "gplc": 0.931
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-079",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M6",
+    "nom": "Hilton Park Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M6 Junction J10A/J11, Wolverhampton WV11 2AT",
+    "ville": "Wolverhampton",
+    "cp": "WV11 2AT",
+    "departement": "United Kingdom",
+    "lat": 52.6414,
+    "lon": -2.0564,
+    "pk_text": "J10A/J11",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-080",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M6",
+    "nom": "Hilton Park Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M6 Junction J10A/J11, Wolverhampton WV11 2AT",
+    "ville": "Wolverhampton",
+    "cp": "WV11 2AT",
+    "departement": "United Kingdom",
+    "lat": 52.6406,
+    "lon": -2.0553,
+    "pk_text": "J10A/J11",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-081",
+    "pays": "GB",
+    "enseigne": "Moto (Esso)",
+    "autoroute": "M6",
+    "nom": "Stafford Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M6 Junction J14/J15, Stone ST15 0EU",
+    "ville": "Stone",
+    "cp": "ST15 0EU",
+    "departement": "United Kingdom",
+    "lat": 52.8711,
+    "lon": -2.1747,
+    "pk_text": "J14/J15",
+    "prix": {
+      "e10": 1.507,
+      "sp95": 1.507,
+      "gazole": 1.577,
+      "sp98": 1.627,
+      "gplc": 0.893
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-082",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M6",
+    "nom": "Stafford Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M6 Junction J14/J15, Stone ST15 0XE",
+    "ville": "Stone",
+    "cp": "ST15 0XE",
+    "departement": "United Kingdom",
+    "lat": 52.8639,
+    "lon": -2.1706,
+    "pk_text": "J14/J15",
+    "prix": {
+      "e10": 1.576,
+      "sp95": 1.576,
+      "gazole": 1.646,
+      "sp98": 1.696
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-083",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M6",
+    "nom": "Keele Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M6 Junction J15/J16, Newcastle-under-Lyme ST5 5HG",
+    "ville": "Newcastle-under-Lyme",
+    "cp": "ST5 5HG",
+    "departement": "United Kingdom",
+    "lat": 52.9922,
+    "lon": -2.2903,
+    "pk_text": "J15/J16",
+    "prix": {
+      "e10": 1.55,
+      "sp95": 1.55,
+      "gazole": 1.62,
+      "sp98": 1.67
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-084",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M6",
+    "nom": "Keele Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M6 Junction J15/J16, Newcastle-under-Lyme ST5 5HG",
+    "ville": "Newcastle-under-Lyme",
+    "cp": "ST5 5HG",
+    "departement": "United Kingdom",
+    "lat": 52.9914,
+    "lon": -2.2892,
+    "pk_text": "J15/J16",
+    "prix": {
+      "e10": 1.534,
+      "sp95": 1.534,
+      "gazole": 1.604,
+      "sp98": 1.654,
+      "gplc": 0.912
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-085",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M6",
+    "nom": "Sandbach Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M6 Junction J16/J17, Sandbach CW11 2FZ",
+    "ville": "Sandbach",
+    "cp": "CW11 2FZ",
+    "departement": "United Kingdom",
+    "lat": 53.1333,
+    "lon": -2.3392,
+    "pk_text": "J16/J17",
+    "prix": {
+      "e10": 1.561,
+      "sp95": 1.561,
+      "gazole": 1.631,
+      "sp98": 1.681
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-086",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M6",
+    "nom": "Sandbach Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M6 Junction J16/J17, Sandbach CW11 2FZ",
+    "ville": "Sandbach",
+    "cp": "CW11 2FZ",
+    "departement": "United Kingdom",
+    "lat": 53.1325,
+    "lon": -2.3381,
+    "pk_text": "J16/J17",
+    "prix": {
+      "e10": 1.547,
+      "sp95": 1.547,
+      "gazole": 1.617,
+      "sp98": 1.667
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-087",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M6",
+    "nom": "Knutsford Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M6 Junction J18/J19, Knutsford WA16 0TL",
+    "ville": "Knutsford",
+    "cp": "WA16 0TL",
+    "departement": "United Kingdom",
+    "lat": 53.2981,
+    "lon": -2.3983,
+    "pk_text": "J18/J19",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-088",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M6",
+    "nom": "Knutsford Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M6 Junction J18/J19, Knutsford WA16 0TL",
+    "ville": "Knutsford",
+    "cp": "WA16 0TL",
+    "departement": "United Kingdom",
+    "lat": 53.2972,
+    "lon": -2.3972,
+    "pk_text": "J18/J19",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-089",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M6",
+    "nom": "Lymm Services",
+    "sens": "Double sens",
+    "adresse": "M6 Junction J20/J21, Warrington WA13 0SP",
+    "ville": "Warrington",
+    "cp": "WA13 0SP",
+    "departement": "United Kingdom",
+    "lat": 53.3636,
+    "lon": -2.4958,
+    "pk_text": "J20/J21",
+    "prix": {
+      "e10": 1.581,
+      "sp95": 1.581,
+      "gazole": 1.651,
+      "sp98": 1.701
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-090",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M6",
+    "nom": "Charnock Richard Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M6 Junction J27/J28, Chorley PR7 5LR",
+    "ville": "Chorley",
+    "cp": "PR7 5LR",
+    "departement": "United Kingdom",
+    "lat": 53.6331,
+    "lon": -2.6908,
+    "pk_text": "J27/J28",
+    "prix": {
+      "e10": 1.565,
+      "sp95": 1.565,
+      "gazole": 1.635,
+      "sp98": 1.685,
+      "gplc": 0.927
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-091",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M6",
+    "nom": "Charnock Richard Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M6 Junction J27/J28, Chorley PR7 5LR",
+    "ville": "Chorley",
+    "cp": "PR7 5LR",
+    "departement": "United Kingdom",
+    "lat": 53.6322,
+    "lon": -2.6897,
+    "pk_text": "J27/J28",
+    "prix": {
+      "e10": 1.556,
+      "sp95": 1.556,
+      "gazole": 1.626,
+      "sp98": 1.676
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-092",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M6",
+    "nom": "Lancaster (Forton) Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M6 Junction J32/J33, Lancaster PR2 9XY",
+    "ville": "Lancaster",
+    "cp": "PR2 9XY",
+    "departement": "United Kingdom",
+    "lat": 53.9589,
+    "lon": -2.7617,
+    "pk_text": "J32/J33",
+    "prix": {
+      "e10": 1.819,
+      "sp95": 1.819,
+      "gazole": 2.179,
+      "sp98": 1.939
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-093",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M6",
+    "nom": "Lancaster (Forton) Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M6 Junction J32/J33, Lancaster PR2 9XY",
+    "ville": "Lancaster",
+    "cp": "PR2 9XY",
+    "departement": "United Kingdom",
+    "lat": 53.9581,
+    "lon": -2.7606,
+    "pk_text": "J32/J33",
+    "prix": {
+      "e10": 1.819,
+      "sp95": 1.819,
+      "gazole": 2.179,
+      "sp98": 1.939
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-094",
+    "pays": "GB",
+    "enseigne": "Moto (Esso)",
+    "autoroute": "M6",
+    "nom": "Burton-in-Kendal Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M6 Junction J35/J36, Carnforth LA6 1JF",
+    "ville": "Carnforth",
+    "cp": "LA6 1JF",
+    "departement": "United Kingdom",
+    "lat": 54.195,
+    "lon": -2.7258,
+    "pk_text": "J35/J36",
+    "prix": {
+      "e10": 1.498,
+      "sp95": 1.498,
+      "gazole": 1.568,
+      "sp98": 1.618
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-095",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M6",
+    "nom": "Killington Lake Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M6 Junction J36, Kendal LA8 0NW",
+    "ville": "Kendal",
+    "cp": "LA8 0NW",
+    "departement": "United Kingdom",
+    "lat": 54.3061,
+    "lon": -2.6406,
+    "pk_text": "J36",
+    "prix": {
+      "e10": 1.582,
+      "sp95": 1.582,
+      "gazole": 1.652,
+      "sp98": 1.702
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-096",
+    "pays": "GB",
+    "enseigne": "Westmorland (Shell)",
+    "autoroute": "M6",
+    "nom": "Tebay Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M6 Junction J38/J39, Penrith CA10 3SB",
+    "ville": "Penrith",
+    "cp": "CA10 3SB",
+    "departement": "United Kingdom",
+    "lat": 54.4447,
+    "lon": -2.5922,
+    "pk_text": "J38/J39",
+    "prix": {
+      "e10": 1.519,
+      "sp95": 1.519,
+      "gazole": 1.589,
+      "sp98": 1.639,
+      "gplc": 0.904
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-097",
+    "pays": "GB",
+    "enseigne": "Westmorland (Shell)",
+    "autoroute": "M6",
+    "nom": "Tebay Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M6 Junction J38/J39, Penrith CA10 3SB",
+    "ville": "Penrith",
+    "cp": "CA10 3SB",
+    "departement": "United Kingdom",
+    "lat": 54.4439,
+    "lon": -2.5911,
+    "pk_text": "J38/J39",
+    "prix": {
+      "e10": 1.526,
+      "sp95": 1.526,
+      "gazole": 1.596,
+      "sp98": 1.646
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-098",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M6",
+    "nom": "Southwaite Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M6 Junction J41/J42, Carlisle CA4 0NT",
+    "ville": "Carlisle",
+    "cp": "CA4 0NT",
+    "departement": "United Kingdom",
+    "lat": 54.8108,
+    "lon": -2.8464,
+    "pk_text": "J41/J42",
+    "prix": {
+      "e10": 1.558,
+      "sp95": 1.558,
+      "gazole": 1.628,
+      "sp98": 1.678
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-099",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M6",
+    "nom": "Southwaite Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M6 Junction J41/J42, Carlisle CA4 0NT",
+    "ville": "Carlisle",
+    "cp": "CA4 0NT",
+    "departement": "United Kingdom",
+    "lat": 54.81,
+    "lon": -2.8453,
+    "pk_text": "J41/J42",
+    "prix": {
+      "e10": 1.542,
+      "sp95": 1.542,
+      "gazole": 1.612,
+      "sp98": 1.662,
+      "gplc": 0.921
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-100",
+    "pays": "GB",
+    "enseigne": "Euro Garages (Esso)",
+    "autoroute": "M6",
+    "nom": "Carlisle Todhills Services",
+    "sens": "Double sens",
+    "adresse": "M6 Junction J44, Carlisle CA6 4HA",
+    "ville": "Carlisle",
+    "cp": "CA6 4HA",
+    "departement": "United Kingdom",
+    "lat": 54.9628,
+    "lon": -2.9772,
+    "pk_text": "J44",
+    "prix": {
+      "e10": 1.495,
+      "sp95": 1.495,
+      "gazole": 1.565,
+      "sp98": 1.615
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-101",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M42",
+    "nom": "Hopwood Park Services",
+    "sens": "Double sens",
+    "adresse": "M42 Junction J2, Bromsgrove B48 7AU",
+    "ville": "Bromsgrove",
+    "cp": "B48 7AU",
+    "departement": "United Kingdom",
+    "lat": 52.3683,
+    "lon": -1.9617,
+    "pk_text": "J2",
+    "prix": {
+      "e10": 1.526,
+      "sp95": 1.526,
+      "gazole": 1.596,
+      "sp98": 1.646
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-102",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M42",
+    "nom": "Tamworth Services",
+    "sens": "Double sens",
+    "adresse": "M42 Junction J10, Tamworth B77 5PS",
+    "ville": "Tamworth",
+    "cp": "B77 5PS",
+    "departement": "United Kingdom",
+    "lat": 52.6025,
+    "lon": -1.6408,
+    "pk_text": "J10",
+    "prix": {
+      "e10": 1.576,
+      "sp95": 1.576,
+      "gazole": 1.646,
+      "sp98": 1.696,
+      "gplc": 0.938
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-103",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M54",
+    "nom": "Telford Services",
+    "sens": "Double sens",
+    "adresse": "M54 Junction J4, Shifnal TF11 8TG",
+    "ville": "Shifnal",
+    "cp": "TF11 8TG",
+    "departement": "United Kingdom",
+    "lat": 52.6778,
+    "lon": -2.3931,
+    "pk_text": "J4",
+    "prix": {
+      "e10": 1.559,
+      "sp95": 1.559,
+      "gazole": 1.629,
+      "sp98": 1.679
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-104",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M56",
+    "nom": "Chester Services",
+    "sens": "Double sens",
+    "adresse": "M56 Junction J14, Chester CH2 4QZ",
+    "ville": "Chester",
+    "cp": "CH2 4QZ",
+    "departement": "United Kingdom",
+    "lat": 53.2667,
+    "lon": -2.8017,
+    "pk_text": "J14",
+    "prix": {
+      "e10": 1.552,
+      "sp95": 1.552,
+      "gazole": 1.622,
+      "sp98": 1.672
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-105",
+    "pays": "GB",
+    "enseigne": "Euro Garages (Texaco)",
+    "autoroute": "M61",
+    "nom": "Rivington Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M61 Junction J6/J8, Bolton BL6 5UZ",
+    "ville": "Bolton",
+    "cp": "BL6 5UZ",
+    "departement": "United Kingdom",
+    "lat": 53.6156,
+    "lon": -2.5789,
+    "pk_text": "J6/J8",
+    "prix": {
+      "e10": 1.474,
+      "sp95": 1.474,
+      "gazole": 1.544,
+      "sp98": 1.594,
+      "gplc": 0.877
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-106",
+    "pays": "GB",
+    "enseigne": "Euro Garages (Texaco)",
+    "autoroute": "M61",
+    "nom": "Rivington Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M61 Junction J6/J8, Bolton BL6 5UZ",
+    "ville": "Bolton",
+    "cp": "BL6 5UZ",
+    "departement": "United Kingdom",
+    "lat": 53.6147,
+    "lon": -2.5778,
+    "pk_text": "J6/J8",
+    "prix": {
+      "e10": 1.482,
+      "sp95": 1.482,
+      "gazole": 1.552,
+      "sp98": 1.602
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-107",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M62",
+    "nom": "Burtonwood Services (Eastbound)",
+    "sens": "Eastbound",
+    "adresse": "M62 Junction J8/J9, Warrington WA5 3AX",
+    "ville": "Warrington",
+    "cp": "WA5 3AX",
+    "departement": "United Kingdom",
+    "lat": 53.4186,
+    "lon": -2.6417,
+    "pk_text": "J8/J9",
+    "prix": {
+      "e10": 1.569,
+      "sp95": 1.569,
+      "gazole": 1.639,
+      "sp98": 1.689
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-108",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M62",
+    "nom": "Burtonwood Services (Westbound)",
+    "sens": "Westbound",
+    "adresse": "M62 Junction J8/J9, Warrington WA5 3AX",
+    "ville": "Warrington",
+    "cp": "WA5 3AX",
+    "departement": "United Kingdom",
+    "lat": 53.4178,
+    "lon": -2.6406,
+    "pk_text": "J8/J9",
+    "prix": {
+      "e10": 1.542,
+      "sp95": 1.542,
+      "gazole": 1.612,
+      "sp98": 1.662,
+      "gplc": 0.916
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-109",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M62",
+    "nom": "Birch Services (Eastbound)",
+    "sens": "Eastbound",
+    "adresse": "M62 Junction J18/J19, Heywood OL10 2HQ",
+    "ville": "Heywood",
+    "cp": "OL10 2HQ",
+    "departement": "United Kingdom",
+    "lat": 53.5706,
+    "lon": -2.2122,
+    "pk_text": "J18/J19",
+    "prix": {
+      "e10": 1.55,
+      "sp95": 1.55,
+      "gazole": 1.62,
+      "sp98": 1.67
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-110",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M62",
+    "nom": "Birch Services (Westbound)",
+    "sens": "Westbound",
+    "adresse": "M62 Junction J18/J19, Heywood OL10 2HQ",
+    "ville": "Heywood",
+    "cp": "OL10 2HQ",
+    "departement": "United Kingdom",
+    "lat": 53.5697,
+    "lon": -2.2111,
+    "pk_text": "J18/J19",
+    "prix": {
+      "e10": 1.569,
+      "sp95": 1.569,
+      "gazole": 1.639,
+      "sp98": 1.689
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-111",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M62",
+    "nom": "Hartshead Moor Services (Eastbound)",
+    "sens": "Eastbound",
+    "adresse": "M62 Junction J25/J26, Cleckheaton HD6 4JX",
+    "ville": "Cleckheaton",
+    "cp": "HD6 4JX",
+    "departement": "United Kingdom",
+    "lat": 53.7128,
+    "lon": -1.7458,
+    "pk_text": "J25/J26",
+    "prix": {
+      "e10": 1.543,
+      "sp95": 1.543,
+      "gazole": 1.613,
+      "sp98": 1.663,
+      "gplc": 0.916
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-112",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M62",
+    "nom": "Hartshead Moor Services (Westbound)",
+    "sens": "Westbound",
+    "adresse": "M62 Junction J25/J26, Cleckheaton HD6 4JX",
+    "ville": "Cleckheaton",
+    "cp": "HD6 4JX",
+    "departement": "United Kingdom",
+    "lat": 53.7119,
+    "lon": -1.7447,
+    "pk_text": "J25/J26",
+    "prix": {
+      "e10": 1.533,
+      "sp95": 1.533,
+      "gazole": 1.603,
+      "sp98": 1.653
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-113",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M62",
+    "nom": "Ferrybridge Services",
+    "sens": "Double sens",
+    "adresse": "M62 Junction J33, Knottingley WF11 0AF",
+    "ville": "Knottingley",
+    "cp": "WF11 0AF",
+    "departement": "United Kingdom",
+    "lat": 53.7042,
+    "lon": -1.2781,
+    "pk_text": "J33",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-114",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M11",
+    "nom": "Birchanger Green Services",
+    "sens": "Double sens",
+    "adresse": "M11 Junction J8, Bishop's Stortford CM23 5QZ",
+    "ville": "Bishop's Stortford",
+    "cp": "CM23 5QZ",
+    "departement": "United Kingdom",
+    "lat": 51.8725,
+    "lon": 0.2008,
+    "pk_text": "J8",
+    "prix": {
+      "e10": 1.527,
+      "sp95": 1.527,
+      "gazole": 1.597,
+      "sp98": 1.647,
+      "gplc": 0.908
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-115",
+    "pays": "GB",
+    "enseigne": "Extra (Shell)",
+    "autoroute": "A14",
+    "nom": "Cambridge Services",
+    "sens": "Double sens",
+    "adresse": "A14 Junction J24, Cambridge CB23 4WU",
+    "ville": "Cambridge",
+    "cp": "CB23 4WU",
+    "departement": "United Kingdom",
+    "lat": 52.2736,
+    "lon": -0.0258,
+    "pk_text": "J24",
+    "prix": {
+      "e10": 1.488,
+      "sp95": 1.488,
+      "gazole": 1.558,
+      "sp98": 1.608
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-116",
+    "pays": "GB",
+    "enseigne": "Extra (Shell)",
+    "autoroute": "A1(M)",
+    "nom": "Baldock Services",
+    "sens": "Double sens",
+    "adresse": "A1(M) Junction J10, Baldock SG7 5TR",
+    "ville": "Baldock",
+    "cp": "SG7 5TR",
+    "departement": "United Kingdom",
+    "lat": 52.0036,
+    "lon": -0.1989,
+    "pk_text": "J10",
+    "prix": {
+      "e10": 1.521,
+      "sp95": 1.521,
+      "gazole": 1.591,
+      "sp98": 1.641
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-117",
+    "pays": "GB",
+    "enseigne": "Extra (Shell)",
+    "autoroute": "A1(M)",
+    "nom": "Peterborough Services",
+    "sens": "Double sens",
+    "adresse": "A1(M) Junction J17, Peterborough PE7 3UQ",
+    "ville": "Peterborough",
+    "cp": "PE7 3UQ",
+    "departement": "United Kingdom",
+    "lat": 52.5367,
+    "lon": -0.3236,
+    "pk_text": "J17",
+    "prix": {
+      "e10": 1.505,
+      "sp95": 1.505,
+      "gazole": 1.575,
+      "sp98": 1.625,
+      "gplc": 0.897
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-118",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "A1(M)",
+    "nom": "Blyth Services",
+    "sens": "Double sens",
+    "adresse": "A1(M) Junction J35, Worksop S81 8HG",
+    "ville": "Worksop",
+    "cp": "S81 8HG",
+    "departement": "United Kingdom",
+    "lat": 53.3858,
+    "lon": -1.0597,
+    "pk_text": "J35",
+    "prix": {
+      "e10": 1.572,
+      "sp95": 1.572,
+      "gazole": 1.642,
+      "sp98": 1.692
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-119",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "A1(M)",
+    "nom": "Wetherby Services",
+    "sens": "Double sens",
+    "adresse": "A1(M) Junction J46, Wetherby LS22 5GT",
+    "ville": "Wetherby",
+    "cp": "LS22 5GT",
+    "departement": "United Kingdom",
+    "lat": 53.9478,
+    "lon": -1.3669,
+    "pk_text": "J46",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-120",
+    "pays": "GB",
+    "enseigne": "Moto (Esso)",
+    "autoroute": "A1(M)",
+    "nom": "Leeming Bar Services",
+    "sens": "Double sens",
+    "adresse": "A1(M) Junction J51/J52, Northallerton DL8 1DT",
+    "ville": "Northallerton",
+    "cp": "DL8 1DT",
+    "departement": "United Kingdom",
+    "lat": 54.3164,
+    "lon": -1.5642,
+    "pk_text": "J51/J52",
+    "prix": {
+      "e10": 1.539,
+      "sp95": 1.539,
+      "gazole": 1.609,
+      "sp98": 1.659,
+      "gplc": 0.909
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-121",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "A1(M)",
+    "nom": "Scotch Corner Services",
+    "sens": "Double sens",
+    "adresse": "A1(M) Junction J52/J53, Richmond DL10 6NR",
+    "ville": "Richmond",
+    "cp": "DL10 6NR",
+    "departement": "United Kingdom",
+    "lat": 54.4419,
+    "lon": -1.6606,
+    "pk_text": "J52/J53",
+    "prix": {
+      "e10": 1.552,
+      "sp95": 1.552,
+      "gazole": 1.622,
+      "sp98": 1.672
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-122",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "A1(M)",
+    "nom": "Durham Services",
+    "sens": "Double sens",
+    "adresse": "A1(M) Junction J61, Durham DH6 5NP",
+    "ville": "Durham",
+    "cp": "DH6 5NP",
+    "departement": "United Kingdom",
+    "lat": 54.7317,
+    "lon": -1.5228,
+    "pk_text": "J61",
+    "prix": {
+      "e10": 1.546,
+      "sp95": 1.546,
+      "gazole": 1.616,
+      "sp98": 1.666
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-123",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "A1(M)",
+    "nom": "Washington Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "A1(M) Junction J64, Washington NE36 0KS",
+    "ville": "Washington",
+    "cp": "NE36 0KS",
+    "departement": "United Kingdom",
+    "lat": 54.8825,
+    "lon": -1.5633,
+    "pk_text": "J64",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-124",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "A1(M)",
+    "nom": "Washington Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "A1(M) Junction J64, Washington NE36 0KS",
+    "ville": "Washington",
+    "cp": "NE36 0KS",
+    "departement": "United Kingdom",
+    "lat": 54.8817,
+    "lon": -1.5622,
+    "pk_text": "J64",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-125",
+    "pays": "GB",
+    "enseigne": "Roadchef (Shell)",
+    "autoroute": "M74",
+    "nom": "Annandale Water Services",
+    "sens": "Double sens",
+    "adresse": "M74 Junction J16, Johnstonebridge DG11 1HD",
+    "ville": "Johnstonebridge",
+    "cp": "DG11 1HD",
+    "departement": "United Kingdom",
+    "lat": 55.2072,
+    "lon": -3.4286,
+    "pk_text": "J16",
+    "prix": {
+      "e10": 1.549,
+      "sp95": 1.549,
+      "gazole": 1.619,
+      "sp98": 1.669
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-126",
+    "pays": "GB",
+    "enseigne": "Welcome Break (Shell)",
+    "autoroute": "M74",
+    "nom": "Abington Services",
+    "sens": "Double sens",
+    "adresse": "M74 Junction J13, Biggar ML12 6RG",
+    "ville": "Biggar",
+    "cp": "ML12 6RG",
+    "departement": "United Kingdom",
+    "lat": 55.5022,
+    "lon": -3.6947,
+    "pk_text": "J13",
+    "prix": {
+      "e10": 1.574,
+      "sp95": 1.574,
+      "gazole": 1.644,
+      "sp98": 1.694,
+      "gplc": 0.931
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-127",
+    "pays": "GB",
+    "enseigne": "Westmorland (Shell)",
+    "autoroute": "M74",
+    "nom": "Cairn Lodge Services",
+    "sens": "Double sens",
+    "adresse": "M74 Junction J11/J12, Lanark ML11 0RJ",
+    "ville": "Lanark",
+    "cp": "ML11 0RJ",
+    "departement": "United Kingdom",
+    "lat": 55.5769,
+    "lon": -3.8294,
+    "pk_text": "J11/J12",
+    "prix": {
+      "e10": 1.529,
+      "sp95": 1.529,
+      "gazole": 1.599,
+      "sp98": 1.649
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-128",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M74",
+    "nom": "Hamilton Services (Northbound)",
+    "sens": "Northbound",
+    "adresse": "M74 Junction J5/J6, Hamilton ML3 6JW",
+    "ville": "Hamilton",
+    "cp": "ML3 6JW",
+    "departement": "United Kingdom",
+    "lat": 55.7928,
+    "lon": -4.0369,
+    "pk_text": "J5/J6",
+    "prix": {
+      "e10": 1.573,
+      "sp95": 1.573,
+      "gazole": 1.643,
+      "sp98": 1.693
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-129",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M74",
+    "nom": "Bothwell Services (Southbound)",
+    "sens": "Southbound",
+    "adresse": "M74 Junction J4/J5, Glasgow G71 8BG",
+    "ville": "Glasgow",
+    "cp": "G71 8BG",
+    "departement": "United Kingdom",
+    "lat": 55.8092,
+    "lon": -4.0594,
+    "pk_text": "J4/J5",
+    "prix": {
+      "e10": 1.582,
+      "sp95": 1.582,
+      "gazole": 1.652,
+      "sp98": 1.702,
+      "gplc": 0.941
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-130",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M8",
+    "nom": "Harthill Services (Eastbound)",
+    "sens": "Eastbound",
+    "adresse": "M8 Junction J4/J5, Shotts ML7 5TG",
+    "ville": "Shotts",
+    "cp": "ML7 5TG",
+    "departement": "United Kingdom",
+    "lat": 55.8594,
+    "lon": -3.7483,
+    "pk_text": "J4/J5",
+    "prix": {
+      "e10": 1.547,
+      "sp95": 1.547,
+      "gazole": 1.617,
+      "sp98": 1.667
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-131",
+    "pays": "GB",
+    "enseigne": "Roadchef (BP)",
+    "autoroute": "M8",
+    "nom": "Harthill Services (Westbound)",
+    "sens": "Westbound",
+    "adresse": "M8 Junction J4/J5, Shotts ML7 5TG",
+    "ville": "Shotts",
+    "cp": "ML7 5TG",
+    "departement": "United Kingdom",
+    "lat": 55.8586,
+    "lon": -3.7472,
+    "pk_text": "J4/J5",
+    "prix": {
+      "e10": 1.543,
+      "sp95": 1.543,
+      "gazole": 1.613,
+      "sp98": 1.663
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-132",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M9",
+    "nom": "Stirling Services",
+    "sens": "Double sens",
+    "adresse": "M9 Junction J9, Stirling FK7 8EU",
+    "ville": "Stirling",
+    "cp": "FK7 8EU",
+    "departement": "United Kingdom",
+    "lat": 56.0825,
+    "lon": -3.9317,
+    "pk_text": "J9",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
+  },
+  {
+    "id": "GB-MSA-133",
+    "pays": "GB",
+    "enseigne": "Moto (BP)",
+    "autoroute": "M90",
+    "nom": "Kinross Services",
+    "sens": "Double sens",
+    "adresse": "M90 Junction J6, Kinross KY13 0NQ",
+    "ville": "Kinross",
+    "cp": "KY13 0NQ",
+    "departement": "United Kingdom",
+    "lat": 56.2089,
+    "lon": -3.4422,
+    "pk_text": "J6",
+    "prix": {
+      "e10": 1.969,
+      "sp95": 1.969,
+      "gazole": 2.219,
+      "sp98": 2.169
+    },
+    "ruptures": [],
+    "services": [
+      "Restauration",
+      "Boutique",
+      "Toilettes",
+      "Recharge EV",
+      "Parking Poids Lourds"
+    ]
   }
 ]
