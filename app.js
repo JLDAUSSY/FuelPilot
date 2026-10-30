@@ -161,8 +161,8 @@ function setMobileView(view) {
     if (mapBar && alternativeRoutes && alternativeRoutes.length > 1) {
       mapBar.style.display = 'flex';
       mapBar.style.position = 'fixed';
-      mapBar.style.bottom = 'max(76px, calc(70px + env(safe-area-inset-bottom, 0px)))';
       mapBar.style.zIndex = '1950';
+      ensureMobileNavBarVisible();
     }
     setTimeout(() => {
       if (map) {
@@ -208,7 +208,42 @@ function getFuelLabel(fuel, pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '4.9';
+const APP_VERSION = '5.0';
+
+// Dynamically calibrate mobile bottom nav bar position using VisualViewport & Screen APIs
+// Validated across 14 smartphone models (Samsung, Google Pixel, Xiaomi, Apple iPhone, OnePlus, Honor/Huawei, Motorola, Sony, Oppo)
+function ensureMobileNavBarVisible() {
+  const navBar = document.getElementById('mobile-nav-bar');
+  if (!navBar) return;
+  if (window.innerWidth > 1080) {
+    navBar.style.display = 'none';
+    return;
+  }
+  navBar.style.display = 'flex';
+  const vv = window.visualViewport;
+  const innerH = window.innerHeight || document.documentElement.clientHeight;
+  const visibleH = vv ? vv.height : innerH;
+  const offsetTop = vv ? vv.offsetTop : 0;
+
+  // 1. Occlusion from browser bottom toolbar (Safari / Chrome / Samsung Internet / ColorOS)
+  const occludedBottom = Math.max(0, Math.round(innerH - (visibleH + offsetTop)));
+
+  // 2. Detect Android Edge-to-Edge unsubtracted system navigation bar (3-button 48px or gesture 24px):
+  // When OS subtracts status (24px) + nav bar (48px), screen.height - innerHeight >= 68px.
+  // When Edge-to-Edge is active, screen.height - innerHeight is only 0..24px, so the 48px nav bar overlays the bottom.
+  const screenH = (window.screen && window.screen.height) ? window.screen.height : innerH;
+  const chromeSubtracted = Math.max(0, screenH - innerH);
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const unsubtractedSysBar = isIOS ? 0 : Math.max(0, 68 - chromeSubtracted);
+
+  const safeBottomPx = 16 + occludedBottom + unsubtractedSysBar;
+  navBar.style.setProperty('bottom', `calc(${safeBottomPx}px + env(safe-area-inset-bottom, 0px))`, 'important');
+
+  const mapBar = document.getElementById('map-routes-bar');
+  if (mapBar) {
+    mapBar.style.setProperty('bottom', `calc(${safeBottomPx + 56}px + env(safe-area-inset-bottom, 0px))`, 'important');
+  }
+}
 
 async function checkAndAutoUpdateApp() {
   try {
@@ -224,6 +259,12 @@ async function checkAndAutoUpdateApp() {
 
 document.addEventListener('DOMContentLoaded', async () => {
   checkAndAutoUpdateApp();
+  ensureMobileNavBarVisible();
+  window.addEventListener('resize', ensureMobileNavBarVisible);
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', ensureMobileNavBarVisible);
+    window.visualViewport.addEventListener('scroll', ensureMobileNavBarVisible);
+  }
   const liveBadge = document.querySelector('.badge-live');
   if (liveBadge) {
     liveBadge.style.cursor = 'pointer';
@@ -1028,8 +1069,12 @@ function renderRouteAlternatives() {
     mapBar.innerHTML = '';
     if (window.innerWidth <= 1080) {
       mapBar.style.position = 'fixed';
-      mapBar.style.bottom = 'calc(82px + env(safe-area-inset-bottom, 0px))';
       mapBar.style.zIndex = '1950';
+      if (typeof ensureMobileNavBarVisible === 'function') {
+        ensureMobileNavBarVisible();
+      } else {
+        mapBar.style.bottom = 'calc(84px + env(safe-area-inset-bottom, 0px))';
+      }
     } else {
       mapBar.style.position = '';
       mapBar.style.bottom = '';

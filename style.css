@@ -28,6 +28,7 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -1420,7 +1421,7 @@ header {
   /* Station Cards - Compact & High-density */
   .stations-scroll {
     gap: 8px !important;
-    padding-bottom: calc(82px + env(safe-area-inset-bottom, 16px)) !important;
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 20px)) !important;
   }
 
   .station-card {
@@ -1530,21 +1531,37 @@ header {
   /* Sleek Floating Bottom Navigation Bar - Guaranteed visible on all phone models with white border */
   .mobile-nav-bar {
     display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
     position: fixed !important;
-    bottom: max(18px, calc(14px + env(safe-area-inset-bottom, 0px))) !important;
+    bottom: 28px !important;
+    bottom: calc(28px + env(safe-area-inset-bottom, 0px)) !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
-    z-index: 99999 !important;
-    background: rgba(15, 23, 42, 0.96) !important;
+    z-index: 2147483647 !important;
+    background: rgba(15, 23, 42, 0.98) !important;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 2px solid #ffffff !important;
-    border-radius: 26px !important;
+    border: 2.5px solid #ffffff !important;
+    border-radius: 28px !important;
     padding: 3px !important;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8), 0 0 12px rgba(255, 255, 255, 0.28) !important;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.9), 0 0 14px rgba(255, 255, 255, 0.35) !important;
     gap: 4px;
     height: 46px;
-    max-width: calc(100vw - 20px);
+    width: max-content !important;
+    max-width: calc(100vw - 16px) !important;
+    pointer-events: auto !important;
+  }
+
+  @media (max-width: 360px) {
+    .mobile-nav-bar {
+      height: 42px !important;
+    }
+    .mobile-tab-btn {
+      padding: 5px 10px !important;
+      font-size: 0.8rem !important;
+      gap: 4px !important;
+    }
   }
 
   .mobile-tab-btn {
