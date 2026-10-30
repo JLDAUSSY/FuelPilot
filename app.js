@@ -254,7 +254,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '5.4';
+const APP_VERSION = '5.5';
 
 // Dynamically calibrate mobile bottom nav bar position using VisualViewport & Screen APIs
 // Validated across 14 smartphone models (Samsung, Google Pixel, Xiaomi, Apple iPhone, OnePlus, Honor/Huawei, Motorola, Sony, Oppo)
@@ -594,13 +594,20 @@ async function searchLocationsBilingual(q) {
     }
   });
 
-  // 2. Query European Photon (bounded to Western Europe), Nominatim OSM (fast street/postcode search), & French BAN in parallel
+  // 2. Query European Photon (bounded to Western Europe), Nominatim OSM (fast street/postcode/POI search), & French BAN in parallel
+  // Normalize common US/UK/FR POI synonyms (e.g., "Technical Center" -> "Technology Centre", "Center" -> "Centre")
+  const qNormalizedVariant = q
+    .replace(/\btechnical\s+cent(er|re)\b/gi, 'Technology Centre')
+    .replace(/\btech\s+cent(er|re)\b/gi, 'Technology Centre')
+    .replace(/\bcenter\b/gi, 'Centre');
+
   const euroBbox = '-11.0,35.0,19.5,61.0';
-  const [banRes, photonDefaultRes, nominatimRes] = await Promise.allSettled([
+  const queriesToRun = [
     fetchWithTimeout(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(q)}&limit=5`, {}, 1800),
-    fetchWithTimeout(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&bbox=${euroBbox}&limit=7`, {}, 2200),
-    fetchWithTimeout(`https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=6&viewbox=-11.0,61.0,19.5,35.0&bounded=1&q=${encodeURIComponent(q)}`, { headers: { 'Accept-Language': 'fr,en' } }, 2200)
-  ]);
+    fetchWithTimeout(`https://photon.komoot.io/api/?q=${encodeURIComponent(qNormalizedVariant)}&bbox=${euroBbox}&limit=7`, {}, 2200),
+    fetchWithTimeout(`https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=6&viewbox=-11.0,61.0,19.5,35.0&bounded=1&q=${encodeURIComponent(qNormalizedVariant)}`, { headers: { 'Accept-Language': 'fr,en' } }, 2200)
+  ];
+  const [banRes, photonDefaultRes, nominatimRes] = await Promise.allSettled(queriesToRun);
 
   const getCountryFlag = (cc, countryStr) => {
     const code = (cc || '').toUpperCase();
@@ -754,6 +761,32 @@ async function searchLocationsBilingual(q) {
         coords,
         priority
       });
+    });
+  }
+
+  // 3. Fallback: if a multi-word query (e.g. "McLaren Technical Center") returned no result matching the primary distinctive word ("mclaren"),
+  // query the primary distinctive word directly so approximate POI names still work like Google Maps / Waze
+  const primaryTokens = qNorm.split(/\s+/).filter(t => t.length >= 3 && !['rue', 'street', 'road', 'avenue', 'boulevard', 'place', 'saint', 'sainte', 'the', 'les', 'des'].includes(t));
+  const firstDistinctive = primaryTokens[0];
+  const hasPrimaryMatch = firstDistinctive && results.some(r =>
+    (r.label || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(firstDistinctive)
+  );
+  if (firstDistinctive && primaryTokens.length >= 2 && !hasPrimaryMatch) {
+    try {
+      const fallbackData = await fetchWithTimeout(`https://photon.komoot.io/api/?q=${encodeURIComponent(firstDistinctive)}&bbox=${euroBbox}&limit=5`, {}, 1800);
+      if (fallbackData && fallbackData.features) {
+        parsePhotonFeatures(fallbackData.features);
+      }
+    } catch (e) {}
+  }
+
+  // Boost results that contain the first distinctive word of the user's query
+  if (firstDistinctive) {
+    results.forEach(r => {
+      const rNorm = (r.label || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      if (rNorm.includes(firstDistinctive)) {
+        r.priority += 35;
+      }
     });
   }
 
