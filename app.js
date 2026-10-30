@@ -254,22 +254,31 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '5.6';
+const APP_VERSION = '5.7';
 let currentLang = localStorage.getItem('fuelpilot_lang') || 'fr';
 
 const I18N_DICT = {
   fr: {
+    pageTitle: "FuelPilot • Carburant Autoroute & Bornes PK",
     tagline: "Prix carburant & aires d'autoroute",
     privacy: "Confidentialité",
     live: "Prix en direct",
+    refreshTitle: "Actualiser FuelPilot",
     sec1: "1. Choix de l'itinéraire",
     startPlaceholder: "Ville ou lieu de départ...",
     endPlaceholder: "Ville ou lieu d'arrivée...",
+    stepPlaceholder: (n) => `Étape ${n} (ex: Beaune, Orléans...)`,
+    removeStepTitle: "Supprimer l'étape",
     addStep: "+ Étape",
     calcBtn: "<span>🚀</span> Calculer l'itinéraire",
+    calcInProgress: "Calcul en cours...",
     editBtn: "<span>✏️</span> Modifier",
     closeBtn: "<span>✖</span> Fermer",
+    editBtnTitle: "Modifier le trajet",
     allBrands: "🏢 Toutes les enseignes",
+    filterBrandTitle: "Filtrer par Enseigne",
+    filterFuelTitle: "Filtrer par Carburant",
+    sortTitle: "Ordre de tri",
     sec3: "3. Stations d'autoroute",
     sortRoute: "Tri : Ordre du trajet",
     sortPrice: "Tri : Moins cher d'abord",
@@ -282,22 +291,70 @@ const I18N_DICT = {
     fromStart: (km) => `⏱️ À ${km} km du départ`,
     stationsCount: (n) => `${n} station${n > 1 ? 's' : ''} sur le trajet`,
     unavail: "⚠️ Non disponible",
+    noPrice: "Non communiqués",
+    priceLbl: "Prix",
+    outOfStock: "⚠️ Rupture :",
     recommended: "🔵 Recommandé",
     optionN: (n) => `🟠 Option ${n}`,
+    directRoute: "Itinéraire direct",
+    countryCH: "Suisse",
+    countryFR: "France",
+    countryES: "Espagne",
+    countryIT: "Italie",
+    countryGB: "Royaume-Uni",
+    countryIE: "Irlande",
+    countryBE: "Belgique",
+    areasCount: (n) => `${n} aires`,
+    areasListed: (n) => `${n} aires répertoriées • Prix en direct`,
+    kmMarker: (hw, pk) => `${hw || 'Autoroute'} • Borne km ${pk}`,
+    popupDirDist: (dir, km) => `Sens : ${dir} • À ${km} km du départ`,
+    sensDirect: "Sens direct",
+    sensInverse: "Sens inverse",
+    sensDouble: "Double sens",
+    wazeTitle: "Y aller avec Waze",
+    gmapsTitle: "Y aller avec Google Maps",
+    mapRoad: "🗺️ Carte Routière",
+    mapOsm: "🌍 OpenStreetMap",
+    mapSat: "🛰️ Vue Satellite",
+    emptyInitial: "Sélectionnez un départ et une arrivée pour afficher les stations d'autoroute et leurs bornes kilométriques.",
+    emptyFilteredTitle: "Aucune station d'autoroute trouvée avec ces critères.",
+    emptyFilteredSub: "Essayez de sélectionner « Toutes les enseignes » ou un autre carburant.",
+    alertMissingPoints: "Veuillez renseigner un point de départ et un point d'arrivée.",
+    alertNoRoute: "Aucun itinéraire routier trouvé.",
+    alertServerError: "Impossible de joindre le serveur d'itinéraire. Veuillez réessayer.",
+    ulysBadge: "🔥 BON PLAN PÉAGE • 0€ FRAIS DE GESTION",
+    ulysTitle: "Badge Télépéage Ulys (Vinci)",
+    ulysDesc: "Zéro attente aux barrières de péage en France, Espagne & Italie. Offre sans engagement.",
+    ulysCta: "Profiter de l'offre ➔",
+    amazonBadge: "🛒 ÉQUIPEMENT TRAJET RECOMMANDÉ",
+    amazonView: "Voir ➔",
+    amazonItems: [
+      { icon: "📱", name: "Support Smartphone Grille / MagSafe", sub: "Maintien ultra-stable pour guidage GPS" },
+      { icon: "⚡", name: "Chargeur Allume-Cigare USB-C Rapide", sub: "Recharge rapide 65W pendant votre trajet" }
+    ],
     defaultCountry: "FR"
   },
   en: {
+    pageTitle: "FuelPilot • Motorway Fuel Prices & Service Areas",
     tagline: "Motorway fuel prices & service areas",
     privacy: "Privacy",
     live: "Live prices",
+    refreshTitle: "Refresh FuelPilot",
     sec1: "1. Route planner",
     startPlaceholder: "Departure city or place...",
     endPlaceholder: "Arrival city or place...",
+    stepPlaceholder: (n) => `Stop ${n} (e.g. Oxford, Reading...)`,
+    removeStepTitle: "Remove stop",
     addStep: "+ Stop",
     calcBtn: "<span>🚀</span> Calculate route",
+    calcInProgress: "Calculating route...",
     editBtn: "<span>✏️</span> Edit",
     closeBtn: "<span>✖</span> Close",
+    editBtnTitle: "Edit route",
     allBrands: "🏢 All brands",
+    filterBrandTitle: "Filter by Brand",
+    filterFuelTitle: "Filter by Fuel",
+    sortTitle: "Sort order",
     sec3: "3. Motorway stations",
     sortRoute: "Sort: Route order",
     sortPrice: "Sort: Cheapest first",
@@ -310,22 +367,70 @@ const I18N_DICT = {
     fromStart: (km) => `⏱️ ${km} km from start`,
     stationsCount: (n) => `${n} station${n !== 1 ? 's' : ''} on route`,
     unavail: "⚠️ Unavailable",
+    noPrice: "Not reported",
+    priceLbl: "Price",
+    outOfStock: "⚠️ Out of stock:",
     recommended: "🔵 Recommended",
     optionN: (n) => `🟠 Option ${n}`,
+    directRoute: "Direct route",
+    countryCH: "Switzerland",
+    countryFR: "France",
+    countryES: "Spain",
+    countryIT: "Italy",
+    countryGB: "United Kingdom",
+    countryIE: "Ireland",
+    countryBE: "Belgium",
+    areasCount: (n) => `${n} areas`,
+    areasListed: (n) => `${n} service areas • Live prices`,
+    kmMarker: (hw, pk) => `${hw || 'Motorway'} • Marker km ${pk}`,
+    popupDirDist: (dir, km) => `Direction: ${dir} • ${km} km from start`,
+    sensDirect: "Outbound",
+    sensInverse: "Inbound",
+    sensDouble: "Both directions",
+    wazeTitle: "Navigate with Waze",
+    gmapsTitle: "Navigate with Google Maps",
+    mapRoad: "🗺️ Road Map",
+    mapOsm: "🌍 OpenStreetMap",
+    mapSat: "🛰️ Satellite View",
+    emptyInitial: "Select a departure and arrival to display motorway service stations and their mileage markers.",
+    emptyFilteredTitle: "No motorway station found matching these criteria.",
+    emptyFilteredSub: "Try selecting \"All brands\" or another fuel type.",
+    alertMissingPoints: "Please enter a departure point and an arrival point.",
+    alertNoRoute: "No driving route found.",
+    alertServerError: "Unable to reach the routing server. Please try again.",
+    ulysBadge: "🔥 TOLL PASS DEAL • €0 MANAGEMENT FEE",
+    ulysTitle: "Ulys Electronic Toll Tag (Vinci)",
+    ulysDesc: "Zero wait at toll booths across France, Spain & Italy. No commitment.",
+    ulysCta: "Get offer ➔",
+    amazonBadge: "🛒 RECOMMENDED ROAD TRIP GEAR",
+    amazonView: "View ➔",
+    amazonItems: [
+      { icon: "📱", name: "MagSafe / Air Vent Car Phone Mount", sub: "Ultra-stable hold for GPS navigation" },
+      { icon: "⚡", name: "65W Fast USB-C Car Charger", sub: "Fast charging during your journey" }
+    ],
     defaultCountry: "GB"
   },
   it: {
+    pageTitle: "FuelPilot • Prezzi Carburante e Aree Autostradali",
     tagline: "Prezzi carburante e aree autostradali",
     privacy: "Privacy",
     live: "Prezzi live",
+    refreshTitle: "Aggiorna FuelPilot",
     sec1: "1. Scelta dell'itinerario",
     startPlaceholder: "Città o luogo di partenza...",
     endPlaceholder: "Città o luogo di arrivo...",
+    stepPlaceholder: (n) => `Tappa ${n} (es. Bologna, Firenze...)`,
+    removeStepTitle: "Rimuovi tappa",
     addStep: "+ Tappa",
     calcBtn: "<span>🚀</span> Calcola itinerario",
+    calcInProgress: "Calcolo in corso...",
     editBtn: "<span>✏️</span> Modifica",
     closeBtn: "<span>✖</span> Chiudi",
+    editBtnTitle: "Modifica percorso",
     allBrands: "🏢 Tutti i marchi",
+    filterBrandTitle: "Filtra per Marchio",
+    filterFuelTitle: "Filtra per Carburante",
+    sortTitle: "Ordine",
     sec3: "3. Stazioni autostradali",
     sortRoute: "Ordine: Percorso",
     sortPrice: "Ordine: Più economico",
@@ -338,22 +443,70 @@ const I18N_DICT = {
     fromStart: (km) => `⏱️ A ${km} km dalla partenza`,
     stationsCount: (n) => `${n} stazion${n === 1 ? 'e' : 'i'} sul percorso`,
     unavail: "⚠️ Non disponibile",
+    noPrice: "Non comunicati",
+    priceLbl: "Prezzo",
+    outOfStock: "⚠️ Esaurito:",
     recommended: "🔵 Consigliato",
     optionN: (n) => `🟠 Opzione ${n}`,
+    directRoute: "Itinerario diretto",
+    countryCH: "Svizzera",
+    countryFR: "Francia",
+    countryES: "Spagna",
+    countryIT: "Italia",
+    countryGB: "Regno Unito",
+    countryIE: "Irlanda",
+    countryBE: "Belgio",
+    areasCount: (n) => `${n} aree`,
+    areasListed: (n) => `${n} aree di servizio • Prezzi live`,
+    kmMarker: (hw, pk) => `${hw || 'Autostrada'} • Km ${pk}`,
+    popupDirDist: (dir, km) => `Direzione: ${dir} • A ${km} km dalla partenza`,
+    sensDirect: "Senso diretto",
+    sensInverse: "Senso opposto",
+    sensDouble: "Doppio senso",
+    wazeTitle: "Naviga con Waze",
+    gmapsTitle: "Naviga con Google Maps",
+    mapRoad: "🗺️ Mappa Stradale",
+    mapOsm: "🌍 OpenStreetMap",
+    mapSat: "🛰️ Vista Satellitare",
+    emptyInitial: "Seleziona una partenza e un arrivo per visualizzare le stazioni autostradali e le progressive chilometriche.",
+    emptyFilteredTitle: "Nessuna stazione autostradale trovata con questi criteri.",
+    emptyFilteredSub: "Prova a selezionare \"Tutti i marchi\" o un altro carburante.",
+    alertMissingPoints: "Inserisci un punto di partenza e un punto di arrivo.",
+    alertNoRoute: "Nessun itinerario stradale trovato.",
+    alertServerError: "Impossibile contattare il server di calcolo percorso. Riprova.",
+    ulysBadge: "🔥 OFFERTA TELEPEDAGGIO • 0€ COSTI DI GESTIONE",
+    ulysTitle: "Badge Telepedaggio Ulys (Vinci)",
+    ulysDesc: "Zero attese ai caselli in Francia, Spagna e Italia. Senza vincoli.",
+    ulysCta: "Scopri l'offerta ➔",
+    amazonBadge: "🛒 ACCESSORI VIAGGIO CONSIGLIATI",
+    amazonView: "Vedi ➔",
+    amazonItems: [
+      { icon: "📱", name: "Supporto Auto Smartphone / MagSafe", sub: "Tenuta ultra-stabile per navigazione GPS" },
+      { icon: "⚡", name: "Caricabatterie Auto Rapido USB-C 65W", sub: "Ricarica rapida durante il viaggio" }
+    ],
     defaultCountry: "IT"
   },
   es: {
+    pageTitle: "FuelPilot • Precios Carburante y Áreas de Autopista",
     tagline: "Precios de carburante y áreas de autopista",
     privacy: "Privacidad",
     live: "Precios en vivo",
+    refreshTitle: "Actualizar FuelPilot",
     sec1: "1. Elección de ruta",
     startPlaceholder: "Ciudad o lugar de salida...",
     endPlaceholder: "Ciudad o lugar de llegada...",
+    stepPlaceholder: (n) => `Etapa ${n} (ej. Zaragoza, Burgos...)`,
+    removeStepTitle: "Eliminar etapa",
     addStep: "+ Etapa",
     calcBtn: "<span>🚀</span> Calcular ruta",
+    calcInProgress: "Calculando ruta...",
     editBtn: "<span>✏️</span> Modificar",
     closeBtn: "<span>✖</span> Cerrar",
+    editBtnTitle: "Modificar ruta",
     allBrands: "🏢 Todas las marcas",
+    filterBrandTitle: "Filtrar por Marca",
+    filterFuelTitle: "Filtrar por Carburante",
+    sortTitle: "Orden",
     sec3: "3. Estaciones de autopista",
     sortRoute: "Orden: En ruta",
     sortPrice: "Orden: Más barato",
@@ -366,8 +519,47 @@ const I18N_DICT = {
     fromStart: (km) => `⏱️ A ${km} km de la salida`,
     stationsCount: (n) => `${n} estaci${n === 1 ? 'ón' : 'ones'} en ruta`,
     unavail: "⚠️ No disponible",
+    noPrice: "No comunicados",
+    priceLbl: "Precio",
+    outOfStock: "⚠️ Agotado:",
     recommended: "🔵 Recomendado",
     optionN: (n) => `🟠 Opción ${n}`,
+    directRoute: "Ruta directa",
+    countryCH: "Suiza",
+    countryFR: "Francia",
+    countryES: "España",
+    countryIT: "Italia",
+    countryGB: "Reino Unido",
+    countryIE: "Irlanda",
+    countryBE: "Bélgica",
+    areasCount: (n) => `${n} áreas`,
+    areasListed: (n) => `${n} áreas de servicio • Precios en vivo`,
+    kmMarker: (hw, pk) => `${hw || 'Autopista'} • PK km ${pk}`,
+    popupDirDist: (dir, km) => `Sentido: ${dir} • A ${km} km de la salida`,
+    sensDirect: "Sentido directo",
+    sensInverse: "Sentido inverso",
+    sensDouble: "Doble sentido",
+    wazeTitle: "Ir con Waze",
+    gmapsTitle: "Ir con Google Maps",
+    mapRoad: "🗺️ Mapa de Carreteras",
+    mapOsm: "🌍 OpenStreetMap",
+    mapSat: "🛰️ Vista Satélite",
+    emptyInitial: "Seleccione un punto de salida y de llegada para mostrar las estaciones de autopista y sus puntos kilométricos.",
+    emptyFilteredTitle: "No se encontraron estaciones de autopista con estos criterios.",
+    emptyFilteredSub: "Pruebe a seleccionar \"Todas las marcas\" u otro carburante.",
+    alertMissingPoints: "Por favor, introduzca un punto de salida y un punto de llegada.",
+    alertNoRoute: "No se encontró ninguna ruta por carretera.",
+    alertServerError: "No se pudo conectar con el servidor de rutas. Inténtelo de nuevo.",
+    ulysBadge: "🔥 OFERTA TELEPEAJE • 0€ GASTOS DE GESTIÓN",
+    ulysTitle: "Via-T Telepeaje Ulys (Vinci)",
+    ulysDesc: "Cero esperas en los peajes de Francia, España e Italia. Sin compromiso.",
+    ulysCta: "Ver oferta ➔",
+    amazonBadge: "🛒 EQUIPAMIENTO DE VIAJE RECOMENDADO",
+    amazonView: "Ver ➔",
+    amazonItems: [
+      { icon: "📱", name: "Soporte Móvil Coche Rejilla / MagSafe", sub: "Sujeción ultraestable para navegación GPS" },
+      { icon: "⚡", name: "Cargador Coche Rápido USB-C 65W", sub: "Carga rápida durante su viaje" }
+    ],
     defaultCountry: "ES"
   }
 };
@@ -376,24 +568,146 @@ function t() {
   return I18N_DICT[currentLang] || I18N_DICT.fr;
 }
 
+function translateCountryName(rawName) {
+  if (!rawName) return '';
+  const tr = t();
+  const n = rawName.trim().toLowerCase();
+  if (n === 'france' || n === 'francia') return tr.countryFR;
+  if (n === 'espagne' || n === 'spain' || n === 'spagna' || n === 'españa') return tr.countryES;
+  if (n === 'italie' || n === 'italy' || n === 'italia') return tr.countryIT;
+  if (n === 'royaume-uni' || n === 'united kingdom' || n === 'regno unito' || n === 'reino unido') return tr.countryGB;
+  if (n === 'suisse' || n === 'switzerland' || n === 'svizzera' || n === 'suiza') return tr.countryCH;
+  if (n === 'irlande' || n === 'ireland' || n === 'irlanda') return tr.countryIE;
+  if (n === 'belgique' || n === 'belgium' || n === 'belgio' || n === 'bélgica') return tr.countryBE;
+  return rawName;
+}
+
+function translateSens(sensStr, isUK) {
+  if (!sensStr) return t().sensDirect;
+  const sLow = sensStr.trim().toLowerCase();
+  if (sLow.includes('double')) return t().sensDouble;
+  if (sLow === 'sens direct') return t().sensDirect;
+  if (sLow === 'sens inverse') return t().sensInverse;
+  if (currentLang === 'fr') return isUK ? sensStr : formatProperName(sensStr);
+
+  if (sLow === 'sens gauche (i)') {
+    return currentLang === 'en' ? 'Left side (L)' : (currentLang === 'it' ? 'Lato sinistro (S)' : 'Margen izquierdo (I)');
+  }
+  if (sLow === 'sens droite (d)') {
+    return currentLang === 'en' ? 'Right side (R)' : (currentLang === 'it' ? 'Lato destro (D)' : 'Margen derecho (D)');
+  }
+
+  let out = isUK ? sensStr : formatProperName(sensStr);
+  if (currentLang === 'en') {
+    out = out
+      .replace(/^Côté\s+/i, 'Side ')
+      .replace(/^Sens\s+/i, 'Dir. ')
+      .replace(/\bOuest\b/gi, 'West')
+      .replace(/\bEst\b/gi, 'East')
+      .replace(/\bNord\b/gi, 'North')
+      .replace(/\bSud\b/gi, 'South')
+      .replace(/\bIntérieur\b/gi, 'Inner')
+      .replace(/\bExtérieur\b/gi, 'Outer')
+      .replace(/\bEspagne\b/gi, 'Spain')
+      .replace(/\bItalie\b/gi, 'Italy')
+      .replace(/\bSuisse\b/gi, 'Switzerland');
+  } else if (currentLang === 'it') {
+    out = out
+      .replace(/^Côté\s+/i, 'Lato ')
+      .replace(/^Sens\s+/i, 'Dir. ')
+      .replace(/\bOuest\b/gi, 'Ovest')
+      .replace(/\bEst\b/gi, 'Est')
+      .replace(/\bNord\b/gi, 'Nord')
+      .replace(/\bSud\b/gi, 'Sud')
+      .replace(/\bIntérieur\b/gi, 'Interno')
+      .replace(/\bExtérieur\b/gi, 'Esterno')
+      .replace(/\bEspagne\b/gi, 'Spagna')
+      .replace(/\bItalie\b/gi, 'Italia')
+      .replace(/\bFrance\b/gi, 'Francia');
+  } else if (currentLang === 'es') {
+    out = out
+      .replace(/^Côté\s+/i, 'Lado ')
+      .replace(/^Sens\s+/i, 'Sentido ')
+      .replace(/\bOuest\b/gi, 'Oeste')
+      .replace(/\bEst\b/gi, 'Este')
+      .replace(/\bNord\b/gi, 'Norte')
+      .replace(/\bSud\b/gi, 'Sur')
+      .replace(/\bIntérieur\b/gi, 'Interior')
+      .replace(/\bExtérieur\b/gi, 'Exterior')
+      .replace(/\bEspagne\b/gi, 'España')
+      .replace(/\bItalie\b/gi, 'Italia')
+      .replace(/\bFrance\b/gi, 'Francia');
+  }
+  return out;
+}
+
+let countryBadgeMarkers = [];
+let mapLayerControl = null;
+let mapBaseLayers = null;
+
+function renderCountryBadgesOnMap() {
+  if (!map) return;
+  countryBadgeMarkers.forEach(m => map.removeLayer(m));
+  countryBadgeMarkers = [];
+  const tr = t();
+  const countryLabels = [
+    { coords: [46.6, 2.5], flag: '🇫🇷', name: tr.countryFR, count: tr.areasCount(438) },
+    { coords: [40.2, -3.6], flag: '🇪🇸', name: tr.countryES, count: tr.areasCount(833) },
+    { coords: [42.6, 12.8], flag: '🇮🇹', name: tr.countryIT, count: tr.areasCount(615) },
+    { coords: [52.8, -1.8], flag: '🇬🇧', name: tr.countryGB, count: tr.areasCount(158) }
+  ];
+  countryLabels.forEach(c => {
+    const icon = L.divIcon({
+      className: 'country-badge-marker',
+      html: `<div class="country-badge-pill">${c.flag} ${c.name} <span class="country-count-tag">• ${c.count}</span></div>`,
+      iconSize: [140, 26],
+      iconAnchor: [70, 13]
+    });
+    countryBadgeMarkers.push(L.marker(c.coords, { icon, interactive: false }).addTo(map));
+  });
+}
+
+function updateMapLayerControlLabels() {
+  if (!map || !mapBaseLayers) return;
+  if (mapLayerControl) {
+    map.removeControl(mapLayerControl);
+  }
+  const tr = t();
+  const baseMaps = {
+    [tr.mapRoad]: mapBaseLayers.osmFr,
+    [tr.mapOsm]: mapBaseLayers.osmStandard,
+    [tr.mapSat]: mapBaseLayers.esriSat
+  };
+  mapLayerControl = L.control.layers(baseMaps, null, { position: 'topright' }).addTo(map);
+}
+
 function setAppLanguage(lang) {
   if (!I18N_DICT[lang]) lang = 'fr';
   currentLang = lang;
   try { localStorage.setItem('fuelpilot_lang', lang); } catch (e) {}
 
+  document.documentElement.lang = lang;
   document.querySelectorAll('#lang-bar .lang-flag-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.lang === lang);
   });
 
   const tr = t();
+  document.title = tr.pageTitle;
+
   const taglineEl = document.getElementById('i18n-tagline') || document.querySelector('.brand-tagline');
   if (taglineEl) taglineEl.textContent = tr.tagline;
 
   const privEl = document.getElementById('i18n-privacy');
-  if (privEl) privEl.textContent = tr.privacy;
+  if (privEl) {
+    privEl.textContent = tr.privacy;
+    privEl.title = tr.privacy;
+  }
 
   const liveEl = document.getElementById('i18n-live-text') || document.querySelector('.live-text');
   if (liveEl) liveEl.textContent = tr.live;
+
+  const liveBadge = document.querySelector('.badge-live');
+  if (liveBadge) liveBadge.title = tr.refreshTitle;
 
   const sec1El = document.querySelector('#itinerary-full-form .section-title span');
   if (sec1El) sec1El.textContent = tr.sec1;
@@ -403,6 +717,13 @@ function setAppLanguage(lang) {
 
   const endEl = document.getElementById('input-end');
   if (endEl) endEl.placeholder = tr.endPlaceholder;
+
+  document.querySelectorAll('#waypoints-container .waypoint-item').forEach((row, idx) => {
+    const inp = row.querySelector('input.address-input');
+    if (inp) inp.placeholder = tr.stepPlaceholder(idx + 1);
+    const delBtn = row.querySelector('.btn-remove-step');
+    if (delBtn) delBtn.title = tr.removeStepTitle;
+  });
 
   const addWpBtn = document.getElementById('btn-add-waypoint');
   if (addWpBtn) addWpBtn.textContent = tr.addStep;
@@ -414,26 +735,48 @@ function setAppLanguage(lang) {
   if (editBtn) {
     const isCollapsed = document.body.classList.contains('mobile-route-collapsed');
     editBtn.innerHTML = isCollapsed ? tr.editBtn : tr.closeBtn;
+    editBtn.title = tr.editBtnTitle;
   }
 
   const brandSelect = document.getElementById('select-brand');
-  if (brandSelect && brandSelect.options.length > 0 && brandSelect.options[0].value === 'all') {
-    brandSelect.options[0].textContent = tr.allBrands;
+  if (brandSelect) {
+    brandSelect.title = tr.filterBrandTitle;
+    if (brandSelect.options.length > 0 && brandSelect.options[0].value === 'all') {
+      const totalCount = allStations && allStations.length > 0 ? ` (${allStations.length})` : '';
+      brandSelect.options[0].textContent = `${tr.allBrands}${totalCount}`;
+    }
+  }
+
+  // Update Ulys Partner card texts
+  const ulysCard = document.getElementById('partner-ulys-card');
+  if (ulysCard) {
+    const ub = ulysCard.querySelector('.ulys-badge-alert');
+    const ut = ulysCard.querySelector('.partner-title');
+    const ud = ulysCard.querySelector('.partner-desc');
+    const uc = ulysCard.querySelector('#link-partner-ulys');
+    if (ub) ub.textContent = tr.ulysBadge;
+    if (ut) ut.textContent = tr.ulysTitle;
+    if (ud) ud.textContent = tr.ulysDesc;
+    if (uc) uc.textContent = tr.ulysCta;
   }
 
   // Update fuel dropdown default labels when no route is active
   const fuelSelectEl = document.getElementById('select-fuel');
-  if (fuelSelectEl && (!currentRouteStations || currentRouteStations.length === 0)) {
-    const dict = FUEL_LABELS_BY_COUNTRY[tr.defaultCountry] || FUEL_LABELS_BY_COUNTRY.FR;
-    const hasFr = tr.defaultCountry === 'FR';
-    Array.from(fuelSelectEl.options).forEach(opt => {
-      if (opt.value === 'sp95') opt.style.display = hasFr ? '' : 'none';
-      if (dict[opt.value]) opt.textContent = `⛽ ${dict[opt.value]}`;
-    });
+  if (fuelSelectEl) {
+    fuelSelectEl.title = tr.filterFuelTitle;
+    if (!currentRouteStations || currentRouteStations.length === 0) {
+      const dict = FUEL_LABELS_BY_COUNTRY[tr.defaultCountry] || FUEL_LABELS_BY_COUNTRY.FR;
+      const hasFr = tr.defaultCountry === 'FR';
+      Array.from(fuelSelectEl.options).forEach(opt => {
+        if (opt.value === 'sp95') opt.style.display = hasFr ? '' : 'none';
+        if (dict[opt.value]) opt.textContent = `⛽ ${dict[opt.value]}`;
+      });
+    }
   }
 
   const sortSelect = document.getElementById('select-sort');
   if (sortSelect) {
+    sortSelect.title = tr.sortTitle;
     Array.from(sortSelect.options).forEach(opt => {
       if (opt.value === 'route') opt.textContent = tr.sortRoute;
       if (opt.value === 'price') opt.textContent = tr.sortPrice;
@@ -453,14 +796,26 @@ function setAppLanguage(lang) {
   const covEl = document.querySelector('.coverage-text');
   if (covEl) covEl.textContent = tr.coverage;
 
+  renderCountryBadgesOnMap();
+  updateMapLayerControlLabels();
+
   if (alternativeRoutes && alternativeRoutes.length > 1) {
     renderRouteAlternatives();
   }
-  if (currentRouteStations && currentRouteStations.length > 0) {
+  if (activeRouteData || (currentRouteStations && currentRouteStations.length > 0)) {
     renderCurrentRouteStations();
   } else {
     const countLabel = document.getElementById('stations-count-label');
     if (countLabel) countLabel.textContent = tr.stationsCount(0);
+    const listContainer = document.getElementById('stations-list');
+    if (listContainer) {
+      listContainer.innerHTML = `
+        <div style="text-align:center; padding: 40px 20px; color: var(--text-muted);">
+          <p style="font-size: 2rem; margin-bottom: 8px;">🛣️</p>
+          <p>${tr.emptyInitial}</p>
+        </div>
+      `;
+    }
   }
 }
 
@@ -522,7 +877,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const liveBadge = document.querySelector('.badge-live');
   if (liveBadge) {
     liveBadge.style.cursor = 'pointer';
-    liveBadge.title = 'Actualiser FuelPilot';
+    liveBadge.title = t().refreshTitle;
     liveBadge.addEventListener('click', () => {
       window.location.replace(`index.html?_v=${Date.now()}`);
     });
@@ -598,14 +953,8 @@ function initMap() {
   // Add default layer
   osmFr.addTo(map);
 
-  // Layer selector in top right
-  const baseMaps = {
-    "🗺️ Carte Routière": osmFr,
-    "🌍 OpenStreetMap": osmStandard,
-    "🛰️ Vue Satellite": esriSat
-  };
-
-  L.control.layers(baseMaps, null, { position: 'topright' }).addTo(map);
+  mapBaseLayers = { osmFr, osmStandard, esriSat };
+  updateMapLayerControlLabels();
 }
 
 // Load stations from JSON
@@ -615,7 +964,7 @@ async function loadStationsData() {
     allStations = await res.json();
     populateBrandFilter();
     const badge = document.getElementById('total-stations-badge');
-    if (badge) badge.textContent = `${allStations.length} aires répertoriées`;
+    if (badge) badge.textContent = t().areasCount(allStations.length);
   } catch (err) {
     console.error('Erreur chargement stations:', err);
   }
@@ -642,7 +991,7 @@ async function loadCoveredCountries() {
       onEachFeature: (feature, layer) => {
         const p = feature.properties;
         layer.bindTooltip(
-          `<div style="font-weight:800; font-size:0.88rem; color:#fff;">${p.flag} ${p.name}</div><div style="font-size:0.75rem; color:#38bdf8;">${p.stationsCount} aires répertoriées • Prix en direct</div>`,
+          () => `<div style="font-weight:800; font-size:0.88rem; color:#fff;">${p.flag} ${translateCountryName(p.name)}</div><div style="font-size:0.75rem; color:#38bdf8;">${t().areasListed(p.stationsCount)}</div>`,
           { sticky: true, className: 'country-coverage-tooltip' }
         );
         layer.on({
@@ -661,24 +1010,7 @@ async function loadCoveredCountries() {
     }).addTo(map);
 
     coveredCountriesLayer.bringToBack();
-
-    // Central Country Badges (France, Spain, Italy & UK)
-    const countryLabels = [
-      { coords: [46.6, 2.5], flag: '🇫🇷', name: 'France', count: '438 aires' },
-      { coords: [40.2, -3.6], flag: '🇪🇸', name: 'Espagne', count: '833 aires' },
-      { coords: [42.6, 12.8], flag: '🇮🇹', name: 'Italie', count: '615 aires' },
-      { coords: [52.8, -1.8], flag: '🇬🇧', name: 'Royaume-Uni', count: '158 aires' }
-    ];
-
-    countryLabels.forEach(c => {
-      const icon = L.divIcon({
-        className: 'country-badge-marker',
-        html: `<div class="country-badge-pill">${c.flag} ${c.name} <span class="country-count-tag">• ${c.count}</span></div>`,
-        iconSize: [140, 26],
-        iconAnchor: [70, 13]
-      });
-      L.marker(c.coords, { icon, interactive: false }).addTo(map);
-    });
+    renderCountryBadgesOnMap();
   } catch (err) {
     console.warn('Erreur chargement pays couverts:', err);
   }
@@ -694,7 +1026,7 @@ function populateBrandFilter() {
   });
 
   const sortedBrands = Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
-  brandSelect.innerHTML = `<option value="all">Toutes les enseignes (${allStations.length})</option>`;
+  brandSelect.innerHTML = `<option value="all">${t().allBrands} (${allStations.length})</option>`;
   sortedBrands.forEach(b => {
     brandSelect.innerHTML += `<option value="${b}">${b} (${counts[b]})</option>`;
   });
@@ -800,7 +1132,7 @@ async function searchLocationsBilingual(q) {
     });
     if (matched) {
       results.push({
-        label: `${city.flag} ${city.display}, ${city.country}`,
+        label: `${city.flag} ${city.display}, ${translateCountryName(city.country)}`,
         cleanName: city.display,
         coords: city.coords,
         priority: 100
@@ -819,7 +1151,7 @@ async function searchLocationsBilingual(q) {
   const queriesToRun = [
     fetchWithTimeout(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(q)}&limit=5`, {}, 1800),
     fetchWithTimeout(`https://photon.komoot.io/api/?q=${encodeURIComponent(qNormalizedVariant)}&bbox=${euroBbox}&limit=7`, {}, 2200),
-    fetchWithTimeout(`https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=6&viewbox=-11.0,61.0,19.5,35.0&bounded=1&q=${encodeURIComponent(qNormalizedVariant)}`, { headers: { 'Accept-Language': 'fr,en' } }, 2200)
+    fetchWithTimeout(`https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=6&viewbox=-11.0,61.0,19.5,35.0&bounded=1&q=${encodeURIComponent(qNormalizedVariant)}`, { headers: { 'Accept-Language': `${currentLang},en` } }, 2200)
   ];
   const [banRes, photonDefaultRes, nominatimRes] = await Promise.allSettled(queriesToRun);
 
@@ -1174,10 +1506,10 @@ function setupEventListeners() {
       const isCollapsed = document.body.classList.contains('mobile-route-collapsed');
       if (isCollapsed) {
         document.body.classList.remove('mobile-route-collapsed');
-        btnToggleRoute.innerHTML = '<span>✖</span> Fermer';
+        btnToggleRoute.innerHTML = t().closeBtn;
       } else {
         document.body.classList.add('mobile-route-collapsed');
-        btnToggleRoute.innerHTML = '<span>✏️</span> Modifier';
+        btnToggleRoute.innerHTML = t().editBtn;
       }
     });
   }
@@ -1284,10 +1616,10 @@ function addWaypointInput() {
   row.innerHTML = `
     <div class="input-group" style="flex:1; margin-bottom:0;">
       <span class="input-icon">📍</span>
-      <input type="text" class="address-input" id="input-${wpId}" placeholder="Étape ${index + 1} (ex: Beaune, Orléans...)" />
+      <input type="text" class="address-input" id="input-${wpId}" placeholder="${t().stepPlaceholder(index + 1)}" />
       <div class="autocomplete-dropdown" id="dropdown-${wpId}"></div>
     </div>
-    <button class="btn-remove-step" title="Supprimer l'étape">✕</button>
+    <button class="btn-remove-step" title="${t().removeStepTitle}">✕</button>
   `;
 
   container.appendChild(row);
@@ -1334,16 +1666,16 @@ async function calculateItinerary() {
   }
 
   if (!startPoint || !endPoint) {
-    alert("Veuillez renseigner un point de départ et un point d'arrivée.");
+    alert(t().alertMissingPoints);
     return;
   }
 
-  // Save both departure and arrival in the 6 recent localities memory
+  // Save both departure and arrival in the 10 recent localities memory
   saveRecentLocation(startPoint.label, startPoint.coords, startPoint.label);
   saveRecentLocation(endPoint.label, endPoint.coords, endPoint.label);
 
   const btn = document.getElementById('btn-calculate');
-  btn.innerHTML = `<span class="pulse-dot" style="background:#fff"></span> Calcul en cours...`;
+  btn.innerHTML = `<span class="pulse-dot" style="background:#fff"></span> ${t().calcInProgress}`;
   btn.disabled = true;
 
   try {
@@ -1361,7 +1693,7 @@ async function calculateItinerary() {
     const data = await res.json();
 
     if (!data.routes || data.routes.length === 0) {
-      alert("Aucun itinéraire routier trouvé.");
+      alert(t().alertNoRoute);
       return;
     }
 
@@ -1396,15 +1728,15 @@ async function calculateItinerary() {
     if (window.innerWidth <= 1080) {
       document.body.classList.add('mobile-route-collapsed');
       const btnToggle = document.getElementById('btn-toggle-route-edit');
-      if (btnToggle) btnToggle.innerHTML = '<span>✏️</span> Modifier';
+      if (btnToggle) btnToggle.innerHTML = t().editBtn;
       // Switch to map view to display full route overview and stations
       setMobileView('map');
     }
   } catch (err) {
     console.error("Erreur calcul d'itinéraire:", err);
-    alert("Impossible de joindre le serveur d'itinéraire. Veuillez réessayer.");
+    alert(t().alertServerError);
   } finally {
-    btn.innerHTML = `<span>🚀</span> Calculer l'itinéraire`;
+    btn.innerHTML = t().calcBtn;
     btn.disabled = false;
   }
 }
@@ -1421,11 +1753,11 @@ function getSmartRouteSummary(route) {
       const name = (step.name || '').trim();
       if (ref) {
         const cleanRef = ref.split(';')[0].replace(/\s+/g, '').toUpperCase();
-        if (!seen.has(cleanRef) && /^(A\d+|T\d+|AP\d+|SS\d+)/i.test(cleanRef)) {
+        if (!seen.has(cleanRef) && /^(A\d+|M\d+|T\d+|AP\d+|SS\d+)/i.test(cleanRef)) {
           highways.push(cleanRef);
           seen.add(cleanRef);
         }
-      } else if (name && !ref && /autoroute|autostrada/i.test(name) && !seen.has(name)) {
+      } else if (name && !ref && /autoroute|autostrada|motorway|autopista/i.test(name) && !seen.has(name)) {
         const shortName = name.split('-')[0].trim();
         highways.push(shortName);
         seen.add(name);
@@ -1438,9 +1770,9 @@ function getSmartRouteSummary(route) {
   const isChamonix = coords.some(c => c[0] >= 6.0 && c[0] <= 7.2 && c[1] >= 45.8 && c[1] <= 46.2);
 
   const hwStr = highways.slice(0, 2).join(', ');
-  const viaCountry = isSwiss ? 'Suisse' : (isChamonix ? 'France' : '');
+  const viaCountry = isSwiss ? t().countryCH : (isChamonix ? t().countryFR : '');
   const parts = [hwStr, viaCountry].filter(Boolean);
-  return parts.length > 0 ? 'via ' + parts.join(' • ') : (route.legs?.[0]?.summary ? 'via ' + route.legs[0].summary : 'Itinéraire direct');
+  return parts.length > 0 ? 'via ' + parts.join(' • ') : (route.legs?.[0]?.summary ? 'via ' + route.legs[0].summary : t().directRoute);
 }
 
 // Render Alternative Route Selectors (both in sidebar/list & floating on the map)
@@ -1490,6 +1822,7 @@ function renderRouteAlternatives() {
 
     const diffMins = Math.round((route.duration - baseDuration) / 60);
     const diffStr = idx > 0 && diffMins > 0 ? `+${diffMins} min` : (idx > 0 && diffMins < 0 ? `${diffMins} min` : '');
+    const badgeLabel = idx === 0 ? t().recommended : t().optionN(idx + 1);
 
     // A. Card in Sidebar
     if (container) {
@@ -1500,7 +1833,7 @@ function renderRouteAlternatives() {
       card.innerHTML = `
         <div class="route-card-header">
           <div class="route-card-left">
-            <span class="route-badge ${idx === 0 ? 'badge-blue' : 'badge-orange'}">${idx === 0 ? '🔵 Recommandé' : '🟠 Option ' + (idx + 1)}</span>
+            <span class="route-badge ${idx === 0 ? 'badge-blue' : 'badge-orange'}">${badgeLabel}</span>
             <span class="route-desc">${summary}</span>
           </div>
           <span class="route-stats">${timeStr} ${diffStr ? `<span class="time-diff">(${diffStr})</span>` : ''} • ${distKm} km</span>
@@ -1518,7 +1851,7 @@ function renderRouteAlternatives() {
       btn.id = `map-route-btn-${idx}`;
       btn.innerHTML = `
         <div class="map-route-btn-header">
-          <span class="map-route-badge ${idx === 0 ? 'badge-blue' : 'badge-orange'}">${idx === 0 ? '🔵 Recommandé' : '🟠 Option ' + (idx + 1)}</span>
+          <span class="map-route-badge ${idx === 0 ? 'badge-blue' : 'badge-orange'}">${badgeLabel}</span>
           <span class="map-route-time">${timeStr} ${diffStr ? `<span class="map-route-time-diff">${diffStr}</span>` : ''}</span>
         </div>
         <div class="map-route-meta">${distKm} km • ${summary}</div>
@@ -1861,8 +2194,8 @@ function renderCurrentRouteStations() {
     listContainer.innerHTML = `
       <div style="text-align:center; padding: 40px 20px; color: var(--text-muted);">
         <p style="font-size: 2rem; margin-bottom: 8px;">⛽</p>
-        <p>Aucune station d'autoroute trouvée avec ces critères.</p>
-        <p style="font-size:0.8rem; margin-top:4px;">Essayez de sélectionner "Toutes les enseignes" ou un autre carburant.</p>
+        <p>${t().emptyFilteredTitle}</p>
+        <p style="font-size:0.8rem; margin-top:4px;">${t().emptyFilteredSub}</p>
       </div>
     `;
     return;
@@ -1872,19 +2205,24 @@ function renderCurrentRouteStations() {
     const amazonCard = document.createElement('div');
     amazonCard.className = 'partner-card partner-amazon';
     amazonCard.id = 'partner-amazon-card';
+    const tr = t();
+    const trItems = tr.amazonItems || AFFILIATE_CONFIG.amazon.items;
     amazonCard.innerHTML = `
-      <div class="partner-badge amazon-badge">🛒 ÉQUIPEMENT TRAJET RECOMMANDÉ</div>
+      <div class="partner-badge amazon-badge">${tr.amazonBadge}</div>
       <div class="amazon-items-list">
-        ${AFFILIATE_CONFIG.amazon.items.map(item => `
-          <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="amazon-item-row" title="Voir sur Amazon">
+        ${AFFILIATE_CONFIG.amazon.items.map((item, i) => {
+          const loc = trItems[i] || item;
+          return `
+          <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="amazon-item-row" title="Amazon">
             <span class="amazon-item-icon">${item.icon}</span>
             <div class="amazon-item-details">
-              <span class="amazon-item-name">${item.name}</span>
-              <span class="amazon-item-sub">${item.sub}</span>
+              <span class="amazon-item-name">${loc.name}</span>
+              <span class="amazon-item-sub">${loc.sub}</span>
             </div>
-            <span class="amazon-item-arrow">Voir ➔</span>
+            <span class="amazon-item-arrow">${tr.amazonView}</span>
           </a>
-        `).join('')}
+        `;
+        }).join('')}
       </div>
     `;
     return amazonCard;
@@ -1898,13 +2236,16 @@ function renderCurrentRouteStations() {
   if (fuelSelectEl && routeCountries.length > 0) {
     const singleCountry = routeCountries.length === 1 ? routeCountries[0] : null;
     const hasFrance = routeCountries.includes('FR');
+    const langCountryDict = FUEL_LABELS_BY_COUNTRY[t().defaultCountry] || FUEL_LABELS_BY_COUNTRY.FR;
     Array.from(fuelSelectEl.options).forEach(opt => {
       const fKey = opt.value;
       // Hide separate SP95 (E5) option when route does not include France (since ES, IT, GB have a single Unleaded 95 category)
       if (fKey === 'sp95') {
         opt.style.display = hasFrance ? '' : 'none';
       }
-      if (singleCountry) {
+      if (fKey === 'all') {
+        opt.textContent = `⛽ ${langCountryDict.all}`;
+      } else if (singleCountry) {
         const dict = FUEL_LABELS_BY_COUNTRY[singleCountry] || FUEL_LABELS_BY_COUNTRY.FR;
         if (dict[fKey]) {
           opt.textContent = `⛽ ${dict[fKey]}`;
@@ -1925,7 +2266,7 @@ function renderCurrentRouteStations() {
     const fuelPrice = (selectedFuel !== 'all') ? getFuelPrice(st.prix, selectedFuel) : (st.prix ? Object.values(st.prix)[0] : null);
     const isCheapest = fuelPrice && fuelPrice === lowestPrice;
     const brandClass = getBrandClass(st.enseigne);
-    const pinPriceDisplay = fuelPrice ? (isUK ? `£${fuelPrice.toFixed(3)}` : `${fuelPrice.toFixed(3)}€`) : 'N/D';
+    const pinPriceDisplay = fuelPrice ? (isUK ? `£${fuelPrice.toFixed(3)}` : `${fuelPrice.toFixed(3)}€`) : 'N/A';
 
     // Create Map Marker Pin
     const pinHtml = `
@@ -1948,11 +2289,11 @@ function renderCurrentRouteStations() {
     const flag = st.pays === 'GB' ? '🇬🇧' : (st.pays === 'ES' ? '🇪🇸' : (st.pays === 'IT' ? '🇮🇹' : '🇫🇷'));
     const nomFormatted = isUK ? st.nom : formatProperName(st.nom);
     const villeFormatted = isUK ? st.ville : formatProperName(st.ville);
-    const sensFormatted = st.sens ? (isUK ? st.sens : formatProperName(st.sens)) : '';
+    const sensFormatted = st.sens ? translateSens(st.sens, isUK) : '';
     const cleanPk = String(st.displayedPk || '').replace(/^km\s*/i, '').trim();
     const pkBadgeLabel = isUK
       ? `${st.autoroute || 'Motorway'} • ${st.pk_text || ('J' + cleanPk)}`
-      : `${st.autoroute || 'Autoroute'} • Borne km ${cleanPk}`;
+      : t().kmMarker(st.autoroute, cleanPk);
 
     const wazeUrl = `https://waze.com/ul?ll=${st.lat},${st.lon}&navigate=yes`;
     const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${st.lat},${st.lon}&travelmode=driving`;
@@ -1965,15 +2306,15 @@ function renderCurrentRouteStations() {
         <div class="popup-title"><span class="flag-icon">${flag}</span> ${st.enseigne} - ${nomFormatted}</div>
         <div class="popup-pk">📍 ${pkBadgeLabel}</div>
         <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:6px;">${isUK ? st.adresse : formatProperName(st.adresse)} (${villeFormatted})</div>
-        <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:8px;">Sens : ${sensFormatted || 'Sens direct'} • À ${st.distOnRoute.toFixed(0)} km du départ</div>
+        <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:8px;">${t().popupDirDist(sensFormatted || t().sensDirect, st.distOnRoute.toFixed(0))}</div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; font-size:0.8rem; margin-bottom:10px;">
           ${renderPopupPrices(st.prix, selectedFuel, st.pays)}
         </div>
         <div class="station-nav-actions popup-nav-actions">
-          <a href="${wazeUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-waze" title="Lancer le guidage Waze vers cette station">
+          <a href="${wazeUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-waze" title="${t().wazeTitle}">
             ${wazeSvg} <span>Waze</span>
           </a>
-          <a href="${gmapsUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-gmaps" title="Lancer Google Maps vers cette station">
+          <a href="${gmapsUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-gmaps" title="${t().gmapsTitle}">
             ${gmapsSvg} <span>Maps</span>
           </a>
         </div>
@@ -2008,10 +2349,10 @@ function renderCurrentRouteStations() {
       <div class="station-name-row">
         <div class="station-name">${nomFormatted}</div>
         <div class="station-nav-actions">
-          <a href="${wazeUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-waze" onclick="event.stopPropagation();" title="Y aller avec Waze">
+          <a href="${wazeUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-waze" onclick="event.stopPropagation();" title="${t().wazeTitle}">
             ${wazeSvg} <span>Waze</span>
           </a>
-          <a href="${gmapsUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-gmaps" onclick="event.stopPropagation();" title="Y aller avec Google Maps">
+          <a href="${gmapsUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-gmaps" onclick="event.stopPropagation();" title="${t().gmapsTitle}">
             ${gmapsSvg} <span>Maps</span>
           </a>
         </div>
@@ -2029,7 +2370,7 @@ function renderCurrentRouteStations() {
       ${(() => {
         if (selectedFuel !== 'all' || !st.ruptures || st.ruptures.length === 0) return '';
         const realRuptures = st.ruptures.filter(r => !(r.toUpperCase() === 'SP95' && st.prix && st.prix.e10 > 0));
-        return realRuptures.length > 0 ? `<div><span class="rupture-badge">⚠️ Rupture : ${realRuptures.join(', ')}</span></div>` : '';
+        return realRuptures.length > 0 ? `<div><span class="rupture-badge">${t().outOfStock} ${realRuptures.join(', ')}</span></div>` : '';
       })()}
     `;
 
@@ -2070,8 +2411,8 @@ function renderCardPrices(prices, featuredFuel, isCheapest, pays) {
   if (!prices || Object.keys(prices).length === 0) {
     return `
       <div class="prices-single-row">
-        <span class="single-fuel-label"><span class="fuel-icon">⛽</span><span class="fuel-name">Prix</span></span>
-        <span class="price-val-unavail">Non communiqués</span>
+        <span class="single-fuel-label"><span class="fuel-icon">⛽</span><span class="fuel-name">${t().priceLbl}</span></span>
+        <span class="price-val-unavail">${t().noPrice}</span>
       </div>
     `;
   }
@@ -2101,7 +2442,7 @@ function renderCardPrices(prices, featuredFuel, isCheapest, pays) {
             <span class="fuel-name">${fuelName}</span>
           </div>
           <div class="single-fuel-price">
-            <span class="price-val-unavail">⚠️ Non disponible</span>
+            <span class="price-val-unavail">${t().unavail}</span>
           </div>
         </div>
       `;
@@ -2130,7 +2471,7 @@ function renderPopupPrices(prices, featuredFuel, pays) {
   const isUK = pays === 'GB';
   const formatPrice = (val) => isUK ? `£${val.toFixed(3)}` : `${val.toFixed(3)} €`;
 
-  if (!prices) return '<span>Aucun prix disponible</span>';
+  if (!prices) return `<span>${t().noPrice}</span>`;
   if (featuredFuel && featuredFuel !== 'all') {
     const p = getFuelPrice(prices, featuredFuel);
     const fuelName = getServedFuelLabel(prices, featuredFuel, pays);
@@ -2144,7 +2485,7 @@ function renderPopupPrices(prices, featuredFuel, pays) {
     } else {
       return `
         <div style="grid-column: span 2; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; padding: 6px 10px; border-radius: 6px; text-align:center; color:#fca5a5; font-size:0.8rem;">
-          ⛽ ${fuelName} : Non disponible
+          ⛽ ${fuelName} : ${t().unavail}
         </div>
       `;
     }
