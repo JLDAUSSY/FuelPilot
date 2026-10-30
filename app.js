@@ -208,7 +208,7 @@ function getFuelLabel(fuel, pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '4.8';
+const APP_VERSION = '4.9';
 
 async function checkAndAutoUpdateApp() {
   try {
@@ -217,13 +217,21 @@ async function checkAndAutoUpdateApp() {
     const html = await res.text();
     const m = html.match(/app\.js\?v=([0-9.]+)/);
     if (m && m[1] && m[1] !== APP_VERSION) {
-      window.location.replace(`${window.location.pathname}?_v=${m[1]}`);
+      window.location.replace(`index.html?_v=${m[1]}_${Date.now()}`);
     }
   } catch (e) {}
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
   checkAndAutoUpdateApp();
+  const liveBadge = document.querySelector('.badge-live');
+  if (liveBadge) {
+    liveBadge.style.cursor = 'pointer';
+    liveBadge.title = 'Actualiser FuelPilot';
+    liveBadge.addEventListener('click', () => {
+      window.location.replace(`index.html?_v=${Date.now()}`);
+    });
+  }
   initMap();
 
   const startInput = document.getElementById('input-start');

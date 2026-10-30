@@ -153,7 +153,10 @@
     <p>Pour toute question concernant cette politique de confidentialité ou le fonctionnement de l'application FuelPilot, vous pouvez contacter le développeur à l'adresse suivante :</p>
     <p><strong>E-mail :</strong> <a href="mailto:contact.fuelpilot@gmail.com" style="color:#38bdf8; text-decoration:none;">contact.fuelpilot@gmail.com</a></p>
 
-    <a href="index.html" class="btn-back">← Retour à FuelPilot</a>
+    <a href="index.html" id="btn-back-app" class="btn-back">← Retour à FuelPilot</a>
   </div>
+  <script>
+    document.getElementById('btn-back-app').href = 'index.html?_v=' + Date.now();
+  </script>
 </body>
 </html>
