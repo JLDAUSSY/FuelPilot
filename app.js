@@ -264,7 +264,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '6.2';
+const APP_VERSION = '6.3';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -404,6 +404,16 @@ const I18N_DICT = {
       { icon: "📱", name: "Support Smartphone Grille / MagSafe", sub: "Maintien ultra-stable pour guidage GPS" },
       { icon: "⚡", name: "Chargeur Allume-Cigare USB-C Rapide", sub: "Recharge rapide 65W pendant votre trajet" }
     ],
+    fuelInfoBtnTitle: "Correspondance des noms de carburants par pays",
+    fuelInfoTitle: "⛽ Correspondance des carburants par pays",
+    fuelInfoSubtitle: "Dénominations officielles aux pompes (Norme européenne EN 16942)",
+    fuelColNorm: "Norme UE",
+    fuelCatE10: "Sans Plomb 95 (E10)",
+    fuelCatE5: "Sans Plomb 95 (E5)",
+    fuelCatSp98: "Sans Plomb 98 (E5)",
+    fuelCatDiesel: "Gazole / Diesel",
+    fuelCatLpg: "GPL / Autogas",
+    fuelCatE85: "Bioéthanol / Gaz",
     defaultCountry: "FR"
   },
   de: {
@@ -481,6 +491,16 @@ const I18N_DICT = {
       { icon: "📱", name: "Kfz-Handyhalterung Lüftung / MagSafe", sub: "Ultrastabiler Halt für die GPS-Navigation" },
       { icon: "⚡", name: "65W USB-C Schnellladegerät fürs Auto", sub: "Schnelles Aufladen während der Fahrt" }
     ],
+    fuelInfoBtnTitle: "Kraftstoffbezeichnungen nach Ländern",
+    fuelInfoTitle: "⛽ Kraftstoff-Übersicht nach Ländern",
+    fuelInfoSubtitle: "Offizielle Bezeichnungen an der Zapfsäule (EU-Norm EN 16942)",
+    fuelColNorm: "EU-Norm",
+    fuelCatE10: "Super 95 (E10)",
+    fuelCatE5: "Super 95 (E5)",
+    fuelCatSp98: "Super Plus 98 (E5)",
+    fuelCatDiesel: "Diesel",
+    fuelCatLpg: "Autogas (LPG)",
+    fuelCatE85: "Bioethanol / Erdgas",
     defaultCountry: "DE"
   },
   en: {
@@ -558,6 +578,16 @@ const I18N_DICT = {
       { icon: "📱", name: "MagSafe / Air Vent Car Phone Mount", sub: "Ultra-stable hold for GPS navigation" },
       { icon: "⚡", name: "65W Fast USB-C Car Charger", sub: "Fast charging during your journey" }
     ],
+    fuelInfoBtnTitle: "Fuel name correspondence across countries",
+    fuelInfoTitle: "⛽ Fuel Names by Country",
+    fuelInfoSubtitle: "Official pump labels across Europe (EN 16942 standard)",
+    fuelColNorm: "EU Label",
+    fuelCatE10: "Unleaded 95 (E10)",
+    fuelCatE5: "Unleaded 95 (E5)",
+    fuelCatSp98: "Super Unleaded 98",
+    fuelCatDiesel: "Diesel",
+    fuelCatLpg: "LPG Autogas",
+    fuelCatE85: "Bioethanol / CNG",
     defaultCountry: "GB"
   },
   it: {
@@ -635,6 +665,16 @@ const I18N_DICT = {
       { icon: "📱", name: "Supporto Auto Smartphone / MagSafe", sub: "Tenuta ultra-stabile per navigazione GPS" },
       { icon: "⚡", name: "Caricabatterie Auto Rapido USB-C 65W", sub: "Ricarica rapida durante il viaggio" }
     ],
+    fuelInfoBtnTitle: "Tabella di corrispondenza dei carburanti per paese",
+    fuelInfoTitle: "⛽ Corrispondenza Carburanti per Paese",
+    fuelInfoSubtitle: "Denominazioni ufficiali alla pompa (Norma europea EN 16942)",
+    fuelColNorm: "Norma UE",
+    fuelCatE10: "Benzina 95 (E10)",
+    fuelCatE5: "Benzina 95 (E5)",
+    fuelCatSp98: "Benzina 98/100 (E5)",
+    fuelCatDiesel: "Gasolio / Diesel",
+    fuelCatLpg: "GPL",
+    fuelCatE85: "Bioetanolo / Metano",
     defaultCountry: "IT"
   },
   es: {
@@ -712,6 +752,16 @@ const I18N_DICT = {
       { icon: "📱", name: "Soporte Móvil Coche Rejilla / MagSafe", sub: "Sujeción ultraestable para navegación GPS" },
       { icon: "⚡", name: "Cargador Coche Rápido USB-C 65W", sub: "Carga rápida durante su viaje" }
     ],
+    fuelInfoBtnTitle: "Tabla de correspondencia de carburantes por país",
+    fuelInfoTitle: "⛽ Correspondencia de Carburantes por País",
+    fuelInfoSubtitle: "Denominaciones oficiales en surtidor (Norma europea EN 16942)",
+    fuelColNorm: "Norma UE",
+    fuelCatE10: "Gasolina 95 (E10)",
+    fuelCatE5: "Gasolina 95 (E5)",
+    fuelCatSp98: "Gasolina 98 (E5)",
+    fuelCatDiesel: "Gasóleo / Diésel",
+    fuelCatLpg: "GLP (Autogás)",
+    fuelCatE85: "Bioetanol / GNC",
     defaultCountry: "ES"
   }
 };
@@ -998,6 +1048,7 @@ function setAppLanguage(lang, isManual = false) {
 
   renderCountryBadgesOnMap();
   updateMapLayerControlLabels();
+  renderFuelInfoModal();
 
   if (alternativeRoutes && alternativeRoutes.length > 1) {
     renderRouteAlternatives();
@@ -1120,6 +1171,89 @@ async function detectCountryAndSetLanguage() {
   }
 }
 
+function renderFuelInfoModal() {
+  const tr = t();
+  const infoBtn = document.getElementById('btn-fuel-info');
+  if (infoBtn) {
+    infoBtn.title = tr.fuelInfoBtnTitle;
+    infoBtn.setAttribute('aria-label', tr.fuelInfoBtnTitle);
+  }
+  const titleEl = document.getElementById('fuel-info-title');
+  if (titleEl) titleEl.textContent = tr.fuelInfoTitle;
+  const subEl = document.getElementById('fuel-info-subtitle');
+  if (subEl) subEl.textContent = tr.fuelInfoSubtitle;
+  const closeBtn = document.getElementById('btn-close-fuel-info');
+  if (closeBtn) closeBtn.setAttribute('aria-label', tr.closeBtn.replace(/<[^>]*>/g, '').trim());
+
+  const bodyEl = document.getElementById('fuel-info-body');
+  if (!bodyEl) return;
+
+  bodyEl.innerHTML = `
+    <table class="fuel-equiv-table">
+      <thead>
+        <tr>
+          <th>${tr.fuelColNorm}</th>
+          <th>🇫🇷 ${tr.countryFR}</th>
+          <th>🇩🇪 ${tr.countryDE}</th>
+          <th>🇮🇹 ${tr.countryIT}</th>
+          <th>🇪🇸 ${tr.countryES}</th>
+          <th>🇬🇧 ${tr.countryGB}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="eu-pump-tag eu-tag-gasoline">E10</span> <b>${tr.fuelCatE10}</b></td>
+          <td><b>SP95-E10</b></td>
+          <td><b>Super E10</b></td>
+          <td>Benzina (E5/E10)</td>
+          <td>Gasolina 95 E5/E10</td>
+          <td><b>Unleaded (E10)</b></td>
+        </tr>
+        <tr>
+          <td><span class="eu-pump-tag eu-tag-gasoline">E5</span> <b>${tr.fuelCatE5}</b></td>
+          <td><b>SP95 (E5)</b></td>
+          <td><b>Super E5 (95)</b></td>
+          <td><b>Benzina (E5)</b></td>
+          <td><b>Gasolina 95 E5</b></td>
+          <td>Unleaded 95</td>
+        </tr>
+        <tr>
+          <td><span class="eu-pump-tag eu-tag-diesel">B7</span> <b>${tr.fuelCatDiesel}</b></td>
+          <td><b>Gazole (B7)</b></td>
+          <td><b>Diesel (B7)</b></td>
+          <td><b>Gasolio (B7)</b></td>
+          <td><b>Gasóleo A (B7)</b></td>
+          <td><b>Diesel (B7)</b></td>
+        </tr>
+        <tr>
+          <td><span class="eu-pump-tag eu-tag-gasoline">E5</span> <b>${tr.fuelCatSp98}</b></td>
+          <td><b>SP98 (E5)</b></td>
+          <td><b>Super Plus (98)</b></td>
+          <td><b>Benzina Speciale 98/100</b></td>
+          <td><b>Gasolina 98 E5</b></td>
+          <td><b>Super Unleaded (E5)</b></td>
+        </tr>
+        <tr>
+          <td><span class="eu-pump-tag eu-tag-lpg">LPG</span> <b>${tr.fuelCatLpg}</b></td>
+          <td><b>GPLc</b></td>
+          <td><b>Autogas (LPG)</b></td>
+          <td><b>GPL</b></td>
+          <td><b>GLP (Autogás)</b></td>
+          <td><b>LPG Autogas</b></td>
+        </tr>
+        <tr>
+          <td><span class="eu-pump-tag eu-tag-gasoline">E85</span> <b>${tr.fuelCatE85}</b></td>
+          <td><b>Superéthanol E85</b></td>
+          <td>Bioethanol E85</td>
+          <td><b>Metano (CNG)</b> / E85</td>
+          <td><b>Bioetanol E85</b></td>
+          <td>Bioethanol E85</td>
+        </tr>
+      </tbody>
+    </table>
+  `;
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   checkAndAutoUpdateApp();
   ensureMobileNavBarVisible();
@@ -1137,6 +1271,32 @@ document.addEventListener('DOMContentLoaded', async () => {
       window.location.replace(`index.html?_v=${Date.now()}`);
     });
   }
+  const fuelInfoBtn = document.getElementById('btn-fuel-info');
+  const fuelInfoModal = document.getElementById('fuel-info-modal');
+  const closeFuelInfoBtn = document.getElementById('btn-close-fuel-info');
+  if (fuelInfoBtn && fuelInfoModal) {
+    fuelInfoBtn.addEventListener('click', () => {
+      renderFuelInfoModal();
+      fuelInfoModal.style.display = 'flex';
+    });
+  }
+  if (closeFuelInfoBtn && fuelInfoModal) {
+    closeFuelInfoBtn.addEventListener('click', () => {
+      fuelInfoModal.style.display = 'none';
+    });
+  }
+  if (fuelInfoModal) {
+    fuelInfoModal.addEventListener('click', (e) => {
+      if (e.target === fuelInfoModal) {
+        fuelInfoModal.style.display = 'none';
+      }
+    });
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && fuelInfoModal && fuelInfoModal.style.display !== 'none') {
+      fuelInfoModal.style.display = 'none';
+    }
+  });
   ensureLangBarOrder();
   document.querySelectorAll('#lang-bar .lang-flag-btn').forEach(btn => {
     btn.addEventListener('click', () => {

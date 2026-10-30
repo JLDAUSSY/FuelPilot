@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=6.2">
+  <link rel="stylesheet" href="style.css?v=6.3">
 </head>
 <body class="mobile-view-list">
 
@@ -39,6 +39,7 @@
     </div>
 
     <div class="header-status">
+      <button type="button" class="btn-fuel-info" id="btn-fuel-info" title="Correspondance des carburants par pays" aria-label="Correspondance des carburants par pays">i</button>
       <div class="header-badges-group">
         <div class="badge-jld">JLDApps 2026</div>
         <a href="privacy.html" class="badge-privacy" id="i18n-privacy" title="Politique de Confidentialité">Confidentialité</a>
@@ -246,8 +247,22 @@
     </button>
   </div>
 
+  <!-- Fuel Nomenclature Correspondence Modal -->
+  <div class="fuel-info-overlay" id="fuel-info-modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="fuel-info-title">
+    <div class="fuel-info-dialog">
+      <div class="fuel-info-header">
+        <div>
+          <h3 id="fuel-info-title">⛽ Guide des carburants par pays</h3>
+          <p id="fuel-info-subtitle" class="fuel-info-sub">Correspondance officielle aux pompes (Norme européenne EN 16942)</p>
+        </div>
+        <button type="button" class="btn-close-fuel-info" id="btn-close-fuel-info" aria-label="Fermer">✖</button>
+      </div>
+      <div class="fuel-info-body" id="fuel-info-body"></div>
+    </div>
+  </div>
+
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="app.js?v=6.2"></script>
+  <script src="app.js?v=6.3"></script>
 </body>
 </html>
