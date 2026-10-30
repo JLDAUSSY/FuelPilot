@@ -208,7 +208,22 @@ function getFuelLabel(fuel, pays) {
 }
 
 // Initialize Application
+const APP_VERSION = '4.8';
+
+async function checkAndAutoUpdateApp() {
+  try {
+    const res = await fetch(`index.html?_t=${Date.now()}`, { cache: 'no-store' });
+    if (!res.ok) return;
+    const html = await res.text();
+    const m = html.match(/app\.js\?v=([0-9.]+)/);
+    if (m && m[1] && m[1] !== APP_VERSION) {
+      window.location.replace(`${window.location.pathname}?_v=${m[1]}`);
+    }
+  } catch (e) {}
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
+  checkAndAutoUpdateApp();
   initMap();
 
   const startInput = document.getElementById('input-start');
@@ -609,7 +624,7 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
       hdr.textContent = '🕒 10 dernières localités';
       dropdown.appendChild(hdr);
     }
-    const maxItems = isRecentHeader ? 10 : 8;
+    const maxItems = 10;
     items.slice(0, maxItems).forEach(itemData => {
       const item = document.createElement('div');
       item.className = 'autocomplete-item';
