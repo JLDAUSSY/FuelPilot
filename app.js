@@ -264,8 +264,54 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '5.9';
-let currentLang = localStorage.getItem('fuelpilot_lang') || 'fr';
+const APP_VERSION = '6.0';
+let userManuallySelectedLang = false;
+
+function mapCountryToLang(countryCode, lat, lon) {
+  if (!countryCode) return null;
+  const cc = String(countryCode).trim().toUpperCase();
+  if (['FR', 'MC', 'BE', 'LU'].includes(cc)) return 'fr';
+  if (['DE', 'AT', 'LI'].includes(cc)) return 'de';
+  if (['IT', 'SM', 'VA'].includes(cc)) return 'it';
+  if (['ES', 'AD'].includes(cc)) return 'es';
+  if (['GB', 'UK', 'IE', 'GI', 'US', 'CA', 'AU', 'NZ'].includes(cc)) return 'en';
+  if (cc === 'CH') {
+    if (typeof lon === 'number' && lon < 7.15) return 'fr';
+    if (typeof lat === 'number' && typeof lon === 'number' && lat < 46.25 && lon > 8.3) return 'it';
+    return 'de';
+  }
+  return null;
+}
+
+function getInitialDefaultLang() {
+  try {
+    const manualSession = typeof sessionStorage !== 'undefined' && sessionStorage.getItem('fuelpilot_manual_lang');
+    if (manualSession && ['fr', 'de', 'it', 'es', 'en'].includes(manualSession)) {
+      userManuallySelectedLang = true;
+      return manualSession;
+    }
+    const cachedGeo = typeof localStorage !== 'undefined' && localStorage.getItem('fuelpilot_geo_lang');
+    if (cachedGeo && ['fr', 'de', 'it', 'es', 'en'].includes(cachedGeo)) {
+      return cachedGeo;
+    }
+    // Instant timezone heuristic before network geolocation resolves
+    if (typeof Intl !== 'undefined' && Intl.DateTimeFormat) {
+      const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
+      if (tz.includes('paris') || tz.includes('brussels') || tz.includes('luxembourg') || tz.includes('monaco')) return 'fr';
+      if (tz.includes('berlin') || tz.includes('busingen') || tz.includes('vienna') || tz.includes('vaduz') || tz.includes('zurich')) return 'de';
+      if (tz.includes('rome') || tz.includes('san_marino') || tz.includes('vatican')) return 'it';
+      if (tz.includes('madrid') || tz.includes('canary') || tz.includes('ceuta') || tz.includes('andorra')) return 'es';
+      if (tz.includes('london') || tz.includes('belfast') || tz.includes('dublin') || tz.includes('jersey') || tz.includes('guernsey') || tz.includes('isle_of_man')) return 'en';
+    }
+    if (typeof navigator !== 'undefined' && navigator.language) {
+      const navLang = navigator.language.slice(0, 2).toLowerCase();
+      if (['fr', 'de', 'it', 'es', 'en'].includes(navLang)) return navLang;
+    }
+  } catch (e) {}
+  return 'fr';
+}
+
+let currentLang = getInitialDefaultLang();
 
 const I18N_DICT = {
   fr: {
@@ -815,10 +861,16 @@ function updateMapLayerControlLabels() {
   mapLayerControl = L.control.layers(baseMaps, null, { position: 'topright' }).addTo(map);
 }
 
-function setAppLanguage(lang) {
+function setAppLanguage(lang, isManual = false) {
   if (!I18N_DICT[lang]) lang = 'fr';
   currentLang = lang;
-  try { localStorage.setItem('fuelpilot_lang', lang); } catch (e) {}
+  if (isManual) {
+    userManuallySelectedLang = true;
+    try {
+      if (typeof sessionStorage !== 'undefined') sessionStorage.setItem('fuelpilot_manual_lang', lang);
+      localStorage.setItem('fuelpilot_lang', lang);
+    } catch (e) {}
+  }
 
   document.documentElement.lang = lang;
   document.querySelectorAll('#lang-bar .lang-flag-btn').forEach(btn => {
@@ -1000,6 +1052,73 @@ async function checkAndAutoUpdateApp() {
   } catch (e) {}
 }
 
+async function detectCountryAndSetLanguage() {
+  if (userManuallySelectedLang) return;
+
+  const applyDetectedCountry = (countryCode, lat, lon) => {
+    if (userManuallySelectedLang) return;
+    const lang = mapCountryToLang(countryCode, lat, lon);
+    if (lang && I18N_DICT[lang]) {
+      try { localStorage.setItem('fuelpilot_geo_lang', lang); } catch (e) {}
+      if (currentLang !== lang) {
+        setAppLanguage(lang, false);
+      }
+    }
+  };
+
+  // 1. Fast IP-based Geolocation (no permission popup required, resolves in ~100ms)
+  (async () => {
+    try {
+      const ctrl = new AbortController();
+      const tId = setTimeout(() => ctrl.abort(), 3000);
+      const res = await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client', { signal: ctrl.signal });
+      clearTimeout(tId);
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.countryCode) {
+          applyDetectedCountry(data.countryCode, data.latitude, data.longitude);
+          return;
+        }
+      }
+    } catch (e) {}
+    try {
+      const ctrl2 = new AbortController();
+      const tId2 = setTimeout(() => ctrl2.abort(), 3000);
+      const res2 = await fetch('https://get.geojs.io/v1/ip/country.json', { signal: ctrl2.signal });
+      clearTimeout(tId2);
+      if (res2.ok) {
+        const data2 = await res2.json();
+        if (data2 && data2.country) {
+          applyDetectedCountry(data2.country);
+        }
+      }
+    } catch (e) {}
+  })();
+
+  // 2. HTML5 GPS Geolocation (precise country detection near borders)
+  if (typeof navigator !== 'undefined' && navigator.geolocation) {
+    try {
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          if (userManuallySelectedLang || !pos || !pos.coords) return;
+          const { latitude, longitude } = pos.coords;
+          try {
+            const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}`);
+            if (res.ok) {
+              const data = await res.json();
+              if (data && data.countryCode) {
+                applyDetectedCountry(data.countryCode, latitude, longitude);
+              }
+            }
+          } catch (e) {}
+        },
+        () => {},
+        { enableHighAccuracy: false, timeout: 6000, maximumAge: 600000 }
+      );
+    } catch (e) {}
+  }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   checkAndAutoUpdateApp();
   ensureMobileNavBarVisible();
@@ -1019,10 +1138,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   ensureLangBarOrder();
   document.querySelectorAll('#lang-bar .lang-flag-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      setAppLanguage(btn.dataset.lang);
+      setAppLanguage(btn.dataset.lang, true);
     });
   });
-  setAppLanguage(currentLang);
+  setAppLanguage(currentLang, false);
+  detectCountryAndSetLanguage();
   initMap();
 
   const startInput = document.getElementById('input-start');
