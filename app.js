@@ -283,7 +283,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '7.1';
+const APP_VERSION = '7.2';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -2280,16 +2280,18 @@ async function calculateItinerary() {
       const dist = (data.routes[0].distance / 1000).toFixed(0);
       metaLbl.textContent = `• ${dist} km`;
     }
+    // Switch to map view to display full route overview and stations on mobile
     if (window.innerWidth <= 1080) {
       document.body.classList.add('mobile-route-collapsed');
       const btnToggle = document.getElementById('btn-toggle-route-edit');
       if (btnToggle) btnToggle.innerHTML = t().editBtn;
-      // Switch to map view to display full route overview and stations
       setMobileView('map');
-      // Si c'est le tout premier itinéraire calculé, faire clignoter l'onglet Liste & Filtres
-      if (!hasSeenListTabAfterRoute) {
-        const btnList = document.getElementById('btn-tab-list');
-        if (btnList) btnList.classList.add('tab-attention-pulse');
+    }
+    // Si l'utilisateur n'a pas encore cliqué sur Liste & Filtres après le calcul, faire clignoter l'onglet
+    if (!hasSeenListTabAfterRoute) {
+      const btnList = document.getElementById('btn-tab-list');
+      if (btnList) {
+        btnList.classList.add('tab-attention-pulse');
       }
     }
   } catch (err) {
