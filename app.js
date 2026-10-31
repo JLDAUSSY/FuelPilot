@@ -279,7 +279,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '6.9';
+const APP_VERSION = '7.0';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -358,9 +358,9 @@ const I18N_DICT = {
     addStep: "+ Étape",
     calcBtn: "<span>🚀</span> Calculer l'itinéraire",
     calcInProgress: "Calcul en cours...",
-    startNav: "Démarrer l'itinéraire (Suivi GPS)",
-    stopNav: "Arrêter le suivi GPS",
-    navFollowing: "Suivi GPS",
+    startNav: "Démarrer",
+    stopNav: "Arrêter",
+    navFollowing: "Démarrer",
     upcomingStationsCount: (n) => `${n} station${n > 1 ? 's' : ''} à venir`,
     editBtn: "<span>✏️</span> Modifier",
     closeBtn: "<span>✖</span> Fermer",
