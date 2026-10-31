@@ -185,7 +185,9 @@ function setMobileView(view) {
     if (btnList) {
       btnList.classList.add('active');
       btnList.classList.remove('tab-attention-pulse');
-      hasSeenListTabAfterRoute = true;
+      if (activeRouteData) {
+        hasSeenListTabAfterRoute = true;
+      }
     }
     if (btnMap) btnMap.classList.remove('active');
     if (mapBar) {
@@ -283,7 +285,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '7.2';
+const APP_VERSION = '7.3';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -2190,6 +2192,7 @@ function addWaypointInput() {
 
 // Calculate Itinerary with OSRM (supports alternatives)
 async function calculateItinerary() {
+  hasSeenListTabAfterRoute = false;
   const startInput = document.getElementById('input-start');
   const endInput = document.getElementById('input-end');
 
@@ -2287,13 +2290,15 @@ async function calculateItinerary() {
       if (btnToggle) btnToggle.innerHTML = t().editBtn;
       setMobileView('map');
     }
-    // Si l'utilisateur n'a pas encore cliqué sur Liste & Filtres après le calcul, faire clignoter l'onglet
-    if (!hasSeenListTabAfterRoute) {
-      const btnList = document.getElementById('btn-tab-list');
-      if (btnList) {
-        btnList.classList.add('tab-attention-pulse');
+    // Faire clignoter l'onglet Liste & Filtres pour inviter l'utilisateur à voir les prix et stations
+    setTimeout(() => {
+      if (!hasSeenListTabAfterRoute) {
+        const btnList = document.getElementById('btn-tab-list');
+        if (btnList) {
+          btnList.classList.add('tab-attention-pulse');
+        }
       }
-    }
+    }, 200);
   } catch (err) {
     console.error("Erreur calcul d'itinéraire:", err);
     alert(t().alertServerError);
