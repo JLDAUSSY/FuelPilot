@@ -279,7 +279,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '6.6';
+const APP_VERSION = '6.8';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -1013,13 +1013,7 @@ function setAppLanguage(lang, isManual = false) {
   const brandSelect = document.getElementById('select-brand');
   if (brandSelect) {
     brandSelect.title = tr.filterBrandTitle;
-    if (brandSelect.options.length > 0 && brandSelect.options[0].value === 'all') {
-      const distinctBrandsCount = allStations && allStations.length > 0
-        ? new Set(allStations.map(s => s.enseigne || 'Indépendant')).size
-        : 0;
-      const countSuffix = distinctBrandsCount > 0 ? ` (${distinctBrandsCount})` : '';
-      brandSelect.options[0].textContent = `${tr.allBrands}${countSuffix}`;
-    }
+    populateBrandFilter();
   }
 
   // Update Ulys Partner card texts

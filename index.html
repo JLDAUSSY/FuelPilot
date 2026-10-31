@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=6.7">
+  <link rel="stylesheet" href="style.css?v=6.8">
 </head>
 <body class="mobile-view-list">
 
@@ -123,13 +123,13 @@
           <div class="row-2col">
             <div class="input-group" style="margin-bottom:0;">
               <span class="input-icon">🟢</span>
-              <input type="text" class="address-input input-attention-pulse" id="input-start" placeholder="Ville de départ..." autocomplete="off">
+              <input type="text" class="address-input" id="input-start" placeholder="Ville de départ..." autocomplete="off">
               <div class="autocomplete-dropdown" id="dropdown-start"></div>
             </div>
 
             <div class="input-group" style="margin-bottom:0;">
               <span class="input-icon">🏁</span>
-              <input type="text" class="address-input input-attention-pulse" id="input-end" placeholder="Ville d'arrivée..." autocomplete="off">
+              <input type="text" class="address-input" id="input-end" placeholder="Ville d'arrivée..." autocomplete="off">
               <div class="autocomplete-dropdown" id="dropdown-end"></div>
             </div>
           </div>
@@ -176,7 +176,7 @@
           </div>
 
           <div>
-            <select id="select-fuel" class="select-filter input-attention-pulse" style="width: 100%;" title="Filtrer par Carburant">
+            <select id="select-fuel" class="select-filter" style="width: 100%;" title="Filtrer par Carburant">
               <option value="e10" selected>⛽ SP95-E10</option>
               <option value="gazole">⛽ Gazole (B7)</option>
               <option value="sp98">⛽ SP98 (E5)</option>
@@ -269,6 +269,6 @@
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="app.js?v=6.7"></script>
+  <script src="app.js?v=6.8"></script>
 </body>
 </html>

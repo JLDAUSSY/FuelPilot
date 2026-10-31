@@ -221,6 +221,8 @@ header {
   transform: translateY(-50%);
   font-size: 14px;
   color: var(--text-muted);
+  pointer-events: none !important;
+  user-select: none !important;
 }
 
 .address-input {
@@ -233,6 +235,9 @@ header {
   font-size: 0.86rem;
   text-transform: capitalize;
   transition: all 0.2s ease;
+  pointer-events: auto !important;
+  touch-action: manipulation;
+  cursor: text;
 }
 
 .address-input:focus {
@@ -785,6 +790,8 @@ header {
   border-radius: 8px;
   font-size: 0.85rem;
   cursor: pointer;
+  pointer-events: auto !important;
+  touch-action: manipulation;
 }
 
 .select-filter:focus {
@@ -1809,6 +1816,9 @@ header {
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch !important;
     padding-bottom: 0 !important;
+    position: relative !important;
+    z-index: 500 !important;
+    pointer-events: auto !important;
   }
 
   body.mobile-view-list .map-container,
@@ -2215,13 +2225,13 @@ header {
    Fuel Nomenclature Correspondence Modal (FR / DE / IT / ES / GB)
    ========================================================================== */
 .fuel-info-overlay {
+  display: none;
   position: fixed;
   inset: 0;
   z-index: 2147483646;
   background: rgba(2, 6, 23, 0.78);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  display: flex;
   align-items: center;
   justify-content: center;
   padding: 14px;
