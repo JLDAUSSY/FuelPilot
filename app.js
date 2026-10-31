@@ -1,4 +1,4 @@
-// Essence sur Autoroute - Application Waze-like
+﻿// Essence sur Autoroute - Application Waze-like
 // Trajet point A à point B, étapes, alternatives, stations en ordre chronologique avec PK, enseignes et prix
 
 // ============================================================================
@@ -273,7 +273,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '6.5';
+const APP_VERSION = '6.6';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -374,6 +374,7 @@ const I18N_DICT = {
     noPrice: "Non communiqués",
     priceLbl: "Prix",
     outOfStock: "⚠️ Rupture :",
+    estimatedPrice: "ℹ️ Prix indicatif (non relevé en direct)",
     recommended: "🔵 Recommandé",
     optionN: (n) => `🟠 Option ${n}`,
     directRoute: "Itinéraire direct",
@@ -461,6 +462,7 @@ const I18N_DICT = {
     noPrice: "Keine Preisangabe",
     priceLbl: "Preis",
     outOfStock: "⚠️ Ausverkauft:",
+    estimatedPrice: "ℹ️ Richtpreis (kein Live-Preis)",
     recommended: "🔵 Empfohlen",
     optionN: (n) => `🟠 Option ${n}`,
     directRoute: "Direkte Route",
@@ -548,6 +550,7 @@ const I18N_DICT = {
     noPrice: "Not reported",
     priceLbl: "Price",
     outOfStock: "⚠️ Out of stock:",
+    estimatedPrice: "ℹ️ Indicative price (not live)",
     recommended: "🔵 Recommended",
     optionN: (n) => `🟠 Option ${n}`,
     directRoute: "Direct route",
@@ -635,6 +638,7 @@ const I18N_DICT = {
     noPrice: "Non comunicati",
     priceLbl: "Prezzo",
     outOfStock: "⚠️ Esaurito:",
+    estimatedPrice: "ℹ️ Prezzo indicativo (non in tempo reale)",
     recommended: "🔵 Consigliato",
     optionN: (n) => `🟠 Opzione ${n}`,
     directRoute: "Itinerario diretto",
@@ -722,6 +726,7 @@ const I18N_DICT = {
     noPrice: "No comunicados",
     priceLbl: "Precio",
     outOfStock: "⚠️ Agotado:",
+    estimatedPrice: "ℹ️ Precio orientativo (no en tiempo real)",
     recommended: "🔵 Recomendado",
     optionN: (n) => `🟠 Opción ${n}`,
     directRoute: "Ruta directa",
@@ -2211,7 +2216,11 @@ async function calculateItinerary() {
 
     // Afficher le bon plan Télépéage Ulys
     const ulysCard = document.getElementById('partner-ulys-card');
-    if (ulysCard && AFFILIATE_CONFIG.ulys.enabled) {
+    // Ulys n'est utile que sur les péages de France, Espagne et Italie
+    const ulysCountries = [...new Set((currentRouteStations || []).map(s => s.pays || 'FR'))];
+    const ulysRelevant = ulysCountries.some(c => ['FR', 'ES', 'IT'].includes(c));
+    if (ulysCard) ulysCard.style.display = 'none';
+    if (ulysCard && AFFILIATE_CONFIG.ulys.enabled && ulysRelevant) {
       ulysCard.style.display = 'block';
       const ulysLink = document.getElementById('link-partner-ulys');
       if (ulysLink) ulysLink.href = AFFILIATE_CONFIG.ulys.url;
@@ -2875,6 +2884,7 @@ function renderCurrentRouteStations() {
       <div class="prices-container">
         ${renderCardPrices(st.prix, selectedFuel, isCheapest, st.pays)}
       </div>
+      ${(st.pays === 'BE' || st.pays === 'DE') ? `<div style="font-size:0.68rem; color:#94a3b8; margin-top:3px;">${t().estimatedPrice}</div>` : ''}
 
       ${(() => {
         if (selectedFuel !== 'all' || !st.ruptures || st.ruptures.length === 0) return '';

@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>FuelPilot • Carburant Autoroute & Bornes PK</title>
+  <title>FuelPilot â€¢ Carburant Autoroute & Bornes PK</title>
 
   <!-- PWA & Mobile App Icons -->
   <link rel="icon" type="image/png" href="favicon.png">
@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=6.5">
+  <link rel="stylesheet" href="style.css?v=6.6">
 </head>
 <body class="mobile-view-list">
 
@@ -42,7 +42,7 @@
       <button type="button" class="btn-fuel-info" id="btn-fuel-info" title="Correspondance des carburants par pays" aria-label="Correspondance des carburants par pays">i</button>
       <div class="header-badges-group">
         <div class="badge-jld">JLDApps 2026</div>
-        <a href="privacy.html" class="badge-privacy" id="i18n-privacy" title="Politique de Confidentialité">Confidentialité</a>
+        <a href="privacy.html" class="badge-privacy" id="i18n-privacy" title="Politique de ConfidentialitÃ©">ConfidentialitÃ©</a>
       </div>
       <div class="badge-live">
         <span class="pulse-dot"></span>
@@ -53,7 +53,7 @@
 
   <!-- Language Selection Bar (5 Country Flags: FR / DE / IT / ES / EN) -->
   <div class="lang-bar" id="lang-bar" role="navigation" aria-label="Choix de la langue">
-    <button type="button" class="lang-flag-btn active" data-lang="fr" title="Français">
+    <button type="button" class="lang-flag-btn active" data-lang="fr" title="FranÃ§ais">
       <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
         <rect width="20" height="36" fill="#002395"/>
         <rect x="20" width="20" height="36" fill="#ffffff"/>
@@ -74,7 +74,7 @@
         <rect x="40" width="20" height="36" fill="#CE2B37"/>
       </svg>
     </button>
-    <button type="button" class="lang-flag-btn" data-lang="es" title="Español">
+    <button type="button" class="lang-flag-btn" data-lang="es" title="EspaÃ±ol">
       <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
         <rect width="60" height="9" fill="#AA151B"/>
         <rect y="9" width="60" height="18" fill="#F1BF00"/>
@@ -104,32 +104,32 @@
         <div class="itinerary-summary-bar" id="itinerary-summary-bar" style="display: none;">
           <div class="summary-route-info">
             <span class="summary-point start" id="sum-start-label">Paris</span>
-            <span class="summary-arrow">➔</span>
+            <span class="summary-arrow">âž”</span>
             <span class="summary-point end" id="sum-end-label">Lyon</span>
             <span class="summary-meta" id="sum-route-meta"></span>
           </div>
           <button type="button" class="btn-edit-route" id="btn-toggle-route-edit" title="Modifier le trajet">
-            <span>✏️</span> Modifier
+            <span>âœï¸</span> Modifier
           </button>
         </div>
 
         <!-- Full Input Form -->
         <div class="itinerary-full-form" id="itinerary-full-form">
           <div class="section-title">
-            <span>1. Choix de l'itinéraire</span>
+            <span>1. Choix de l'itinÃ©raire</span>
           </div>
 
           <!-- Start & Destination Side-by-Side -->
           <div class="row-2col">
             <div class="input-group" style="margin-bottom:0;">
-              <span class="input-icon">🟢</span>
-              <input type="text" class="address-input input-attention-pulse" id="input-start" placeholder="Ville de départ..." autocomplete="off">
+              <span class="input-icon">ðŸŸ¢</span>
+              <input type="text" class="address-input input-attention-pulse" id="input-start" placeholder="Ville de dÃ©part..." autocomplete="off">
               <div class="autocomplete-dropdown" id="dropdown-start"></div>
             </div>
 
             <div class="input-group" style="margin-bottom:0;">
-              <span class="input-icon">🏁</span>
-              <input type="text" class="address-input input-attention-pulse" id="input-end" placeholder="Ville d'arrivée..." autocomplete="off">
+              <span class="input-icon">ðŸ</span>
+              <input type="text" class="address-input input-attention-pulse" id="input-end" placeholder="Ville d'arrivÃ©e..." autocomplete="off">
               <div class="autocomplete-dropdown" id="dropdown-end"></div>
             </div>
           </div>
@@ -140,10 +140,10 @@
           <!-- Actions Row: Add Step & Calculate -->
           <div class="row-actions">
             <button type="button" class="btn-add-step" id="btn-add-waypoint">
-              + Étape
+              + Ã‰tape
             </button>
             <button type="button" class="btn-calculate" id="btn-calculate">
-              <span>🚀</span> Calculer l'itinéraire
+              <span>ðŸš€</span> Calculer l'itinÃ©raire
             </button>
           </div>
         </div>
@@ -151,16 +151,16 @@
         <!-- Alternative Routes Selector (like Waze) -->
         <div id="routes-container" class="routes-container" style="display: none;"></div>
 
-        <!-- Ulys Télépéage Partner Banner -->
+        <!-- Ulys TÃ©lÃ©pÃ©age Partner Banner -->
         <div id="partner-ulys-card" class="partner-card partner-ulys" style="display: none;">
-          <div class="partner-badge ulys-badge-alert">🔥 BON PLAN PÉAGE • 0€ FRAIS DE GESTION</div>
+          <div class="partner-badge ulys-badge-alert">ðŸ”¥ BON PLAN PÃ‰AGE â€¢ 0â‚¬ FRAIS DE GESTION</div>
           <div class="partner-content">
             <div class="partner-text">
-              <div class="partner-title">Badge Télépéage Ulys (Vinci)</div>
-              <div class="partner-desc">Zéro attente aux barrières de péage en France, Espagne & Italie. Offre sans engagement.</div>
+              <div class="partner-title">Badge TÃ©lÃ©pÃ©age Ulys (Vinci)</div>
+              <div class="partner-desc">ZÃ©ro attente aux barriÃ¨res de pÃ©age en France, Espagne & Italie. Offre sans engagement.</div>
             </div>
             <a href="https://ulys.vinci-autoroutes.com/" target="_blank" rel="noopener noreferrer" class="btn-partner-cta btn-ulys-cta" id="link-partner-ulys">
-              Profiter de l'offre ➔
+              Profiter de l'offre âž”
             </a>
           </div>
         </div>
@@ -171,19 +171,19 @@
         <div class="row-2col filters-row-2col" style="margin-bottom:0;">
           <div>
             <select id="select-brand" class="select-filter" style="width: 100%;" title="Filtrer par Enseigne">
-              <option value="all">🏢 Toutes les enseignes</option>
+              <option value="all">ðŸ¢ Toutes les enseignes</option>
             </select>
           </div>
 
           <div>
             <select id="select-fuel" class="select-filter input-attention-pulse" style="width: 100%;" title="Filtrer par Carburant">
-              <option value="e10" selected>⛽ SP95-E10</option>
-              <option value="gazole">⛽ Gazole (B7)</option>
-              <option value="sp98">⛽ SP98 (E5)</option>
-              <option value="sp95">⛽ SP95 (E5)</option>
-              <option value="e85">⛽ Superéthanol E85</option>
-              <option value="gplc">⛽ GPLc</option>
-              <option value="all">⛽ Tous carburants</option>
+              <option value="e10" selected>â›½ SP95-E10</option>
+              <option value="gazole">â›½ Gazole (B7)</option>
+              <option value="sp98">â›½ SP98 (E5)</option>
+              <option value="sp95">â›½ SP95 (E5)</option>
+              <option value="e85">â›½ SuperÃ©thanol E85</option>
+              <option value="gplc">â›½ GPLc</option>
+              <option value="all">â›½ Tous carburants</option>
             </select>
           </div>
         </div>
@@ -212,8 +212,8 @@
         <!-- Scrollable stations cards -->
         <div class="stations-scroll" id="stations-list">
           <div style="text-align:center; padding: 40px 20px; color: var(--text-muted);">
-            <p style="font-size: 2rem; margin-bottom: 8px;">🛣️</p>
-            <p>Sélectionnez un départ et une arrivée pour afficher les stations d'autoroute et leurs bornes kilométriques.</p>
+            <p style="font-size: 2rem; margin-bottom: 8px;">ðŸ›£ï¸</p>
+            <p>SÃ©lectionnez un dÃ©part et une arrivÃ©e pour afficher les stations d'autoroute et leurs bornes kilomÃ©triques.</p>
           </div>
         </div>
       </div>
@@ -226,7 +226,7 @@
       <!-- Floating Map Coverage Indicator Badge -->
       <div class="map-coverage-badge" id="map-coverage-badge">
         <span class="coverage-dot"></span>
-        <span class="coverage-text">Réseau couvert : 🇫🇷 France • 🇩🇪 Allemagne • 🇧🇪 Belgique • 🇮🇹 Italie • 🇪🇸 Espagne • 🇬🇧 Royaume-Uni</span>
+        <span class="coverage-text">RÃ©seau couvert : ðŸ‡«ðŸ‡· France â€¢ ðŸ‡©ðŸ‡ª Allemagne â€¢ ðŸ‡§ðŸ‡ª Belgique â€¢ ðŸ‡®ðŸ‡¹ Italie â€¢ ðŸ‡ªðŸ‡¸ Espagne â€¢ ðŸ‡¬ðŸ‡§ Royaume-Uni</span>
       </div>
       <!-- Floating Map Route Alternatives Bar (Waze / Google Maps style) -->
       <div id="map-routes-bar" class="map-routes-bar" style="display: none;"></div>
@@ -237,11 +237,11 @@
   <!-- Mobile Floating Tab Switcher (Mode Carte / Mode Liste) -->
   <div class="mobile-nav-bar" id="mobile-nav-bar">
     <button type="button" class="mobile-tab-btn" id="btn-tab-map">
-      <span class="tab-icon">🗺️</span>
+      <span class="tab-icon">ðŸ—ºï¸</span>
       <span class="tab-label">Carte</span>
     </button>
     <button type="button" class="mobile-tab-btn active" id="btn-tab-list">
-      <span class="tab-icon">📋</span>
+      <span class="tab-icon">ðŸ“‹</span>
       <span class="tab-label">Liste & Filtres</span>
       <span class="tab-badge" id="mobile-badge-count">0</span>
     </button>
@@ -252,15 +252,15 @@
     <div class="fuel-info-dialog">
       <div class="fuel-info-header">
         <div>
-          <h3 id="fuel-info-title">⛽ Guide des carburants par pays</h3>
-          <p id="fuel-info-subtitle" class="fuel-info-sub">Correspondance officielle aux pompes (Norme européenne EN 16942)</p>
+          <h3 id="fuel-info-title">â›½ Guide des carburants par pays</h3>
+          <p id="fuel-info-subtitle" class="fuel-info-sub">Correspondance officielle aux pompes (Norme europÃ©enne EN 16942)</p>
         </div>
-        <button type="button" class="btn-close-fuel-info" id="btn-close-fuel-info" aria-label="Fermer">✖</button>
+        <button type="button" class="btn-close-fuel-info" id="btn-close-fuel-info" aria-label="Fermer">âœ–</button>
       </div>
       <div class="fuel-table-scroll-wrapper">
         <div class="fuel-scroll-top-bar" id="fuel-scroll-top-bar">
-          <button type="button" class="fuel-scroll-arrow fuel-scroll-left" id="fuel-scroll-left" aria-label="Défiler à gauche" style="visibility: hidden;">◀</button>
-          <button type="button" class="fuel-scroll-arrow fuel-scroll-right" id="fuel-scroll-right" aria-label="Défiler à droite" style="visibility: hidden;">▶</button>
+          <button type="button" class="fuel-scroll-arrow fuel-scroll-left" id="fuel-scroll-left" aria-label="DÃ©filer Ã  gauche" style="visibility: hidden;">â—€</button>
+          <button type="button" class="fuel-scroll-arrow fuel-scroll-right" id="fuel-scroll-right" aria-label="DÃ©filer Ã  droite" style="visibility: hidden;">â–¶</button>
         </div>
         <div class="fuel-info-body" id="fuel-info-body"></div>
       </div>
@@ -269,6 +269,6 @@
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="app.js?v=6.5"></script>
+  <script src="app.js?v=6.6"></script>
 </body>
 </html>
