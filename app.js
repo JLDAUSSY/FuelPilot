@@ -279,7 +279,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '6.8';
+const APP_VERSION = '6.9';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -358,6 +358,10 @@ const I18N_DICT = {
     addStep: "+ Étape",
     calcBtn: "<span>🚀</span> Calculer l'itinéraire",
     calcInProgress: "Calcul en cours...",
+    startNav: "Démarrer l'itinéraire (Suivi GPS)",
+    stopNav: "Arrêter le suivi GPS",
+    navFollowing: "Suivi GPS",
+    upcomingStationsCount: (n) => `${n} station${n > 1 ? 's' : ''} à venir`,
     editBtn: "<span>✏️</span> Modifier",
     closeBtn: "<span>✖</span> Fermer",
     editBtnTitle: "Modifier le trajet",
@@ -1067,6 +1071,7 @@ function setAppLanguage(lang, isManual = false) {
 
   renderCountryBadgesOnMap();
   updateMapLayerControlLabels();
+  updateNavButtonUI();
   renderFuelInfoModal();
 
   if (alternativeRoutes && alternativeRoutes.length > 1) {
@@ -2086,6 +2091,12 @@ function setupEventListeners() {
     renderCurrentRouteStations();
   });
 
+  // GPS Drive Mode (Démarrer l'itinéraire)
+  const btnStartNav = document.getElementById('btn-start-nav');
+  if (btnStartNav) btnStartNav.addEventListener('click', toggleGpsNavigation);
+  const btnSumNav = document.getElementById('btn-sum-nav');
+  if (btnSumNav) btnSumNav.addEventListener('click', toggleGpsNavigation);
+
   // Calculate button
   document.getElementById('btn-calculate').addEventListener('click', () => {
     const fuelSel = document.getElementById('select-fuel');
@@ -2235,6 +2246,7 @@ async function calculateItinerary() {
     alternativeRoutes = data.routes;
     selectRoute(0);
     renderRouteAlternatives();
+    updateNavButtonUI();
 
     // Afficher le bon plan Télépéage Ulys
     const ulysCard = document.getElementById('partner-ulys-card');
@@ -2751,8 +2763,15 @@ function renderCurrentRouteStations() {
   stationMarkers.forEach(m => map.removeLayer(m));
   stationMarkers = [];
 
+  // Filter upcoming stations if Live GPS Drive mode is active
+  let candidateStations = currentRouteStations;
+  if (isGpsNavActive && userProgressionKmOnRoute > 0) {
+    // Only show stations that are ahead of user (station.distOnRoute >= userProgression - 0.5km)
+    candidateStations = candidateStations.filter(s => s.distOnRoute >= (userProgressionKmOnRoute - 0.5));
+  }
+
   // Filter by brand
-  let filtered = currentRouteStations;
+  let filtered = candidateStations;
   if (selectedBrand !== 'all') {
     filtered = filtered.filter(s => s.enseigne === selectedBrand);
   }
@@ -2966,7 +2985,7 @@ function renderCurrentRouteStations() {
         </div>
       </div>
       <div class="station-details">
-        <span class="distance-countdown">${t().fromStart(st.distOnRoute.toFixed(1))}</span>
+        <span class="distance-countdown">${(isGpsNavActive && userProgressionKmOnRoute > 0) ? `🎯 Dans ${Math.max(0, (st.distOnRoute - userProgressionKmOnRoute)).toFixed(1)} km` : t().fromStart(st.distOnRoute.toFixed(1))}</span>
         ${sensFormatted ? `<span class="sens-tag">${sensFormatted}</span>` : ''}
         <span>• ${villeFormatted}</span>
       </div>
@@ -3355,3 +3374,148 @@ window.calculateItinerary = calculateItinerary;
 window.setMobileView = setMobileView;
 window.fitMapToRouteAndStations = fitMapToRouteAndStations;
 window.getCurrentRouteStations = () => currentRouteStations;
+
+
+// ==========================================================================
+// Live GPS Drive Mode / Suivi d'itinéraire en direct
+// ==========================================================================
+let isGpsNavActive = false;
+let gpsWatchId = null;
+let userGpsPosition = null; // { lat, lon, heading, speed }
+let userGpsMarker = null;
+let userProgressionKmOnRoute = 0;
+
+function toggleGpsNavigation() {
+  if (isGpsNavActive) {
+    stopGpsNavigation();
+  } else {
+    startGpsNavigation();
+  }
+}
+
+function updateNavButtonUI() {
+  const btnStart = document.getElementById('btn-start-nav');
+  const btnSum = document.getElementById('btn-sum-nav');
+  const tr = t();
+
+  if (btnStart) {
+    if (activeRouteData) {
+      btnStart.style.display = 'flex';
+    } else {
+      btnStart.style.display = 'none';
+    }
+
+    if (isGpsNavActive) {
+      btnStart.classList.add('nav-active');
+      btnStart.innerHTML = `<span class="nav-pulse-dot"></span> <span>${tr.stopNav}</span>`;
+    } else {
+      btnStart.classList.remove('nav-active');
+      btnStart.innerHTML = `<span class="nav-pulse-dot"></span> <span>${tr.startNav}</span>`;
+    }
+  }
+
+  if (btnSum) {
+    if (isGpsNavActive) {
+      btnSum.classList.add('nav-active');
+      btnSum.innerHTML = `<span>⏹</span> ${tr.stopNav ? tr.stopNav.split(' ')[0] : 'Arrêter'}`;
+      btnSum.title = tr.stopNav;
+    } else {
+      btnSum.classList.remove('nav-active');
+      btnSum.innerHTML = `<span>🟢</span> ${tr.navFollowing || 'Suivi'}`;
+      btnSum.title = tr.startNav;
+    }
+  }
+}
+
+function startGpsNavigation() {
+  if (!activeRouteData || !currentRouteStations || currentRouteStations.length === 0) {
+    alert(t().alertNoRoute || "Veuillez d'abord calculer un itinéraire.");
+    return;
+  }
+
+  if (!navigator.geolocation) {
+    alert("La géolocalisation n'est pas supportée par votre navigateur.");
+    return;
+  }
+
+  isGpsNavActive = true;
+  updateNavButtonUI();
+
+  // Switch to high accuracy position watching
+  gpsWatchId = navigator.geolocation.watchPosition(
+    (pos) => {
+      onGpsLocationUpdate(pos.coords);
+    },
+    (err) => {
+      console.warn("Erreur GPS Navigation:", err);
+    },
+    {
+      enableHighAccuracy: true,
+      maximumAge: 3000,
+      timeout: 10000
+    }
+  );
+}
+
+function stopGpsNavigation() {
+  isGpsNavActive = false;
+  if (gpsWatchId !== null) {
+    navigator.geolocation.clearWatch(gpsWatchId);
+    gpsWatchId = null;
+  }
+  if (userGpsMarker && map) {
+    map.removeLayer(userGpsMarker);
+    userGpsMarker = null;
+  }
+  userGpsPosition = null;
+  userProgressionKmOnRoute = 0;
+  updateNavButtonUI();
+  renderCurrentRouteStations();
+}
+
+function onGpsLocationUpdate(coords) {
+  if (!isGpsNavActive || !activeRouteData) return;
+  const { latitude, longitude, heading, speed } = coords;
+  userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
+
+  // 1. Draw or update user location pin on map
+  if (map) {
+    if (!userGpsMarker) {
+      const userIcon = L.divIcon({
+        className: 'gps-user-marker',
+        html: '<div class="gps-user-pulse"></div>',
+        iconSize: [22, 22],
+        iconAnchor: [11, 11]
+      });
+      userGpsMarker = L.marker([latitude, longitude], { icon: userIcon, zIndexOffset: 2000 }).addTo(map);
+    } else {
+      userGpsMarker.setLatLng([latitude, longitude]);
+    }
+  }
+
+  // 2. Project user onto route polyline to find current km progression
+  const routeCoords = activeRouteData.geometry.coordinates; // [[lon, lat], ...]
+  let minDist = 99999;
+  let currentKm = 0;
+  let cumKm = 0;
+
+  for (let i = 0; i < routeCoords.length - 1; i++) {
+    const p1 = routeCoords[i];
+    const p2 = routeCoords[i+1];
+    const segLen = getDistanceKm(p1[1], p1[0], p2[1], p2[0]);
+    const res = distPointToSegment(longitude, latitude, p1[0], p1[1], p2[0], p2[1]);
+    if (res.dist < minDist) {
+      minDist = res.dist;
+      currentKm = cumKm + (res.t * segLen);
+    }
+    cumKm += segLen;
+  }
+
+  // Monotonic progression check (only progress forward, with 1 km tolerance for GPS jitter)
+  if (currentKm > userProgressionKmOnRoute - 0.5) {
+    userProgressionKmOnRoute = Math.max(userProgressionKmOnRoute, currentKm);
+  }
+
+  // 3. Re-render stations list showing only upcoming stations
+  renderCurrentRouteStations();
+}

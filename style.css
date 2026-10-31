@@ -2442,3 +2442,92 @@ header {
     padding: 6px 5px;
   }
 }
+
+
+/* ==========================================================================
+   Live GPS Drive Mode / Suivi GPS
+   ========================================================================== */
+.btn-start-nav {
+  width: 100%;
+  margin-top: 6px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  border: 1.5px solid #34d399;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.86rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto !important;
+  touch-action: manipulation;
+}
+
+.btn-start-nav:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.55);
+}
+
+.btn-start-nav.nav-active {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+  border-color: #f87171 !important;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.45) !important;
+}
+
+.btn-sum-nav.nav-active {
+  background: rgba(239, 68, 68, 0.25) !important;
+  border-color: #ef4444 !important;
+  color: #fca5a5 !important;
+}
+
+.nav-pulse-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 10px #34d399;
+  animation: pulseDotNav 1.5s infinite ease-in-out;
+}
+
+.btn-start-nav.nav-active .nav-pulse-dot {
+  background: #f87171;
+  box-shadow: 0 0 10px #f87171;
+}
+
+@keyframes pulseDotNav {
+  0%, 100% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.3); opacity: 1; }
+}
+
+.gps-user-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+.gps-user-pulse {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #0284c7;
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 14px rgba(2, 132, 199, 0.9), 0 0 0 4px rgba(56, 189, 248, 0.5);
+  animation: pulseGpsUser 2s infinite ease-out;
+}
+
+@keyframes pulseGpsUser {
+  0% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.7), 0 0 10px #0284c7; }
+  70% { box-shadow: 0 0 0 14px rgba(14, 165, 233, 0), 0 0 14px #0284c7; }
+  100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0), 0 0 10px #0284c7; }
+}
+
+.station-passed-tag {
+  background: rgba(148, 163, 184, 0.15) !important;
+  color: #94a3b8 !important;
+  border: 1px dashed rgba(148, 163, 184, 0.3) !important;
+}
