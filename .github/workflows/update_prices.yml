@@ -1,4 +1,4 @@
-name: Actualisation Quotidienne Prix Carburants (France)
+name: Actualisation Quotidienne Prix Carburants (France, Espagne, Italie)
 
 on:
   schedule:
@@ -22,9 +22,9 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Mettre à jour les prix officiels français
+      - name: Mettre à jour les prix officiels (France, Espagne, Italie)
         run: |
-          python update_fr_prices.py
+          python update_all_prices.py
 
       - name: Valider les modifications et publier
         run: |
@@ -34,6 +34,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "Aucun changement de prix détecté."
           else
-            git commit -m "chore(data): actualisation automatique des prix carburants France [skip ci]"
+            git commit -m "chore(data): actualisation automatique des prix carburants (France, Espagne, Italie) [skip ci]"
             git push
           fi
