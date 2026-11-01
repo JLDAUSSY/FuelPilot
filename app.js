@@ -285,7 +285,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '7.5';
+const APP_VERSION = '7.6';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -388,7 +388,7 @@ const I18N_DICT = {
     coverage: "Réseau couvert : 🇫🇷 France • 🇩🇪 Allemagne • 🇧🇪 Belgique • 🇮🇹 Italie • 🇪🇸 Espagne • 🇬🇧 Royaume-Uni",
     recentHdr: "🕒 10 dernières localités",
     bestPrice: "⭐ PRIX LE PLUS BAS",
-    fromStart: (km) => `⏱️ À ${km} km du départ`,
+    fromStart: (km) => `🎯 Dans ${km} km`,
     stationsCount: (n) => `${n} station${n > 1 ? 's' : ''} sur le trajet`,
     unavail: "⚠️ Non disponible",
     noPrice: "Non communiqués",
@@ -409,7 +409,7 @@ const I18N_DICT = {
     areasCount: (n) => `${n} aires`,
     areasListed: (n) => `${n} aires répertoriées • Prix en direct`,
     kmMarker: (hw, pk) => `${hw || 'Autoroute'} • Borne km ${pk}`,
-    popupDirDist: (dir, km) => `Sens : ${dir} • À ${km} km du départ`,
+    popupDirDist: (dir, km) => `Sens : ${dir} • Dans ${km} km`,
     sensDirect: "Sens direct",
     sensInverse: "Sens inverse",
     sensDouble: "Double sens",
@@ -483,7 +483,7 @@ const I18N_DICT = {
     coverage: "Abgedecktes Netz: 🇫🇷 Frankreich • 🇩🇪 Deutschland • 🇧🇪 Belgien • 🇮🇹 Italien • 🇪🇸 Spanien • 🇬🇧 Vereinigtes Königreich",
     recentHdr: "🕒 Letzte 10 Orte",
     bestPrice: "⭐ NIEDRIGSTER PREIS",
-    fromStart: (km) => `⏱️ ${km} km ab Start`,
+    fromStart: (km) => `🎯 In ${km} km`,
     stationsCount: (n) => `${n} Tankstelle${n !== 1 ? 'n' : ''} auf der Route`,
     unavail: "⚠️ Nicht verfügbar",
     noPrice: "Keine Preisangabe",
@@ -504,7 +504,7 @@ const I18N_DICT = {
     areasCount: (n) => `${n} Raststätten`,
     areasListed: (n) => `${n} Autobahnraststätten • Live-Preise`,
     kmMarker: (hw, pk) => `${hw || 'Autobahn'} • km ${pk}`,
-    popupDirDist: (dir, km) => `Richtung: ${dir} • ${km} km ab Start`,
+    popupDirDist: (dir, km) => `Richtung: ${dir} • In ${km} km`,
     sensDirect: "Fahrtrichtung",
     sensInverse: "Gegenrichtung",
     sensDouble: "Beide Richtungen",
@@ -578,7 +578,7 @@ const I18N_DICT = {
     coverage: "Covered network: 🇫🇷 France • 🇩🇪 Germany • 🇧🇪 Belgium • 🇮🇹 Italy • 🇪🇸 Spain • 🇬🇧 UK",
     recentHdr: "🕒 10 recent locations",
     bestPrice: "⭐ LOWEST PRICE",
-    fromStart: (km) => `⏱️ ${km} km from start`,
+    fromStart: (km) => `🎯 In ${km} km`,
     stationsCount: (n) => `${n} station${n !== 1 ? 's' : ''} on route`,
     unavail: "⚠️ Unavailable",
     noPrice: "Not reported",
@@ -599,7 +599,7 @@ const I18N_DICT = {
     areasCount: (n) => `${n} areas`,
     areasListed: (n) => `${n} service areas • Live prices`,
     kmMarker: (hw, pk) => `${hw || 'Motorway'} • Marker km ${pk}`,
-    popupDirDist: (dir, km) => `Direction: ${dir} • ${km} km from start`,
+    popupDirDist: (dir, km) => `Direction: ${dir} • In ${km} km`,
     sensDirect: "Outbound",
     sensInverse: "Inbound",
     sensDouble: "Both directions",
@@ -673,7 +673,7 @@ const I18N_DICT = {
     coverage: "Rete coperta: 🇫🇷 Francia • 🇩🇪 Germania • 🇧🇪 Belgio • 🇮🇹 Italia • 🇪🇸 Spagna • 🇬🇧 Regno Unito",
     recentHdr: "🕒 Ultime 10 località",
     bestPrice: "⭐ PREZZO PIÙ BASSO",
-    fromStart: (km) => `⏱️ A ${km} km dalla partenza`,
+    fromStart: (km) => `🎯 Tra ${km} km`,
     stationsCount: (n) => `${n} stazion${n === 1 ? 'e' : 'i'} sul percorso`,
     unavail: "⚠️ Non disponibile",
     noPrice: "Non comunicati",
@@ -694,7 +694,7 @@ const I18N_DICT = {
     areasCount: (n) => `${n} aree`,
     areasListed: (n) => `${n} aree di servizio • Prezzi live`,
     kmMarker: (hw, pk) => `${hw || 'Autostrada'} • Km ${pk}`,
-    popupDirDist: (dir, km) => `Direzione: ${dir} • A ${km} km dalla partenza`,
+    popupDirDist: (dir, km) => `Direzione: ${dir} • Tra ${km} km`,
     sensDirect: "Senso diretto",
     sensInverse: "Senso opposto",
     sensDouble: "Doppio senso",
@@ -768,7 +768,7 @@ const I18N_DICT = {
     coverage: "Red cubierta: 🇫🇷 Francia • 🇩🇪 Alemania • 🇧🇪 Bélgica • 🇮🇹 Italia • 🇪🇸 España • 🇬🇧 Reino Unido",
     recentHdr: "🕒 10 últimas localidades",
     bestPrice: "⭐ PRECIO MÁS BAJO",
-    fromStart: (km) => `⏱️ A ${km} km de la salida`,
+    fromStart: (km) => `🎯 En ${km} km`,
     stationsCount: (n) => `${n} estaci${n === 1 ? 'ón' : 'ones'} en ruta`,
     unavail: "⚠️ No disponible",
     noPrice: "No comunicados",
@@ -789,7 +789,7 @@ const I18N_DICT = {
     areasCount: (n) => `${n} áreas`,
     areasListed: (n) => `${n} áreas de servicio • Precios en vivo`,
     kmMarker: (hw, pk) => `${hw || 'Autopista'} • PK km ${pk}`,
-    popupDirDist: (dir, km) => `Sentido: ${dir} • A ${km} km de la salida`,
+    popupDirDist: (dir, km) => `Sentido: ${dir} • En ${km} km`,
     sensDirect: "Sentido directo",
     sensInverse: "Sentido inverso",
     sensDouble: "Doble sentido",
@@ -1231,7 +1231,7 @@ async function detectCountryAndSetLanguage() {
           } catch (e) {}
         },
         () => {},
-        { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
+        { enableHighAccuracy: false, timeout: 6000, maximumAge: 300000 }
       );
     } catch (e) {}
   }
@@ -1415,9 +1415,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   });
   setAppLanguage(currentLang, false);
-  detectCountryAndSetLanguage();
   initMap();
   initPermanentGpsTracking();
+  detectCountryAndSetLanguage();
 
   const startInput = document.getElementById('input-start');
   const endInput = document.getElementById('input-end');
@@ -1488,6 +1488,10 @@ function initMap() {
 
   mapBaseLayers = { osmFr, osmStandard, esriSat };
   updateMapLayerControlLabels();
+
+  if (userGpsPosition && userGpsPosition.lat && userGpsPosition.lon) {
+    updateUserGpsMarker(userGpsPosition.lat, userGpsPosition.lon);
+  }
 }
 
 // Load stations from JSON
@@ -2119,12 +2123,23 @@ function useCurrentGpsLocationAsStart() {
       updateUserGpsMarker(latitude, longitude);
       applyGpsAsStartPoint(latitude, longitude);
     },
-    (err) => {
-      console.warn('Erreur acquisition GPS départ:', err);
-      alert(t().locationError || "Impossible d'obtenir votre position GPS.");
-      if (startInput) startInput.value = '';
+    (errFast) => {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const { latitude, longitude } = pos.coords;
+          userGpsPosition = { lat: latitude, lon: longitude };
+          updateUserGpsMarker(latitude, longitude);
+          applyGpsAsStartPoint(latitude, longitude);
+        },
+        (errPrecise) => {
+          console.warn('Erreur acquisition GPS départ:', errPrecise);
+          alert(t().locationError || "Impossible d'obtenir votre position GPS.");
+          if (startInput) startInput.value = '';
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 10000 }
+      );
     },
-    { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 }
+    { enableHighAccuracy: false, timeout: 5000, maximumAge: 60000 }
   );
 }
 
@@ -2220,6 +2235,10 @@ function setupEventListeners() {
     currentSort = e.target.value;
     renderCurrentRouteStations();
   });
+
+  // Locate Me on Map button
+  const btnLocateMe = document.getElementById('btn-locate-me');
+  if (btnLocateMe) btnLocateMe.addEventListener('click', centerMapOnUser);
 
   // GPS Drive Mode (Démarrer l'itinéraire)
   const btnStartNav = document.getElementById('btn-start-nav');
@@ -2813,12 +2832,8 @@ function processStationsOnRoute(route) {
       }
 
       // Station is along this highway route in the driver's direction of travel!
-      // Compute highway Point Kilométrique (PK)
-      let displayedPk = s.pk_text;
-      if (!displayedPk) {
-        // If station doesn't have an explicit text PK, use highway progression
-        displayedPk = Math.round(bestKmOnRoute);
-      }
+      // Official highway Point Kilométrique (PK)
+      let displayedPk = s.pk_text || null;
 
       matched.push({
         ...s,
@@ -3063,9 +3078,11 @@ function renderCurrentRouteStations() {
     const villeFormatted = isNativeCase ? st.ville : formatProperName(st.ville);
     const sensFormatted = st.sens ? translateSens(st.sens, isNativeCase) : '';
     const cleanPk = String(st.displayedPk || '').replace(/^km\s*/i, '').trim();
-    const pkBadgeLabel = isUK
-      ? `${st.autoroute || 'Motorway'} • ${st.pk_text || ('J' + cleanPk)}`
-      : t().kmMarker(st.autoroute, cleanPk);
+    const pkBadgeLabel = cleanPk
+      ? (isUK ? `${st.autoroute || 'Motorway'} • J${cleanPk}` : t().kmMarker(st.autoroute, cleanPk))
+      : (st.autoroute ? `${st.autoroute}` : 'Autoroute');
+    const remainingKm = Math.max(0, (st.distOnRoute - userProgressionKmOnRoute)).toFixed(1);
+    const distCountdownText = t().fromCurrentPos(remainingKm);
 
     const wazeUrl = `https://waze.com/ul?ll=${st.lat},${st.lon}&navigate=yes`;
     const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${st.lat},${st.lon}&travelmode=driving`;
@@ -3076,9 +3093,9 @@ function renderCurrentRouteStations() {
     const popupContent = `
       <div class="station-popup">
         <div class="popup-title"><span class="flag-icon">${flag}</span> ${st.enseigne} - ${nomFormatted}</div>
-        <div class="popup-pk">📍 ${pkBadgeLabel}</div>
+        <div class="popup-pk">📍 🛣️ ${pkBadgeLabel}</div>
         <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:6px;">${isNativeCase ? st.adresse : formatProperName(st.adresse)} (${villeFormatted})</div>
-        <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:8px;">${t().popupDirDist(sensFormatted || t().sensDirect, st.distOnRoute.toFixed(0))}</div>
+        <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:8px;">${t().popupDirDist(sensFormatted || t().sensDirect, remainingKm)}</div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; font-size:0.8rem; margin-bottom:10px;">
           ${renderPopupPrices(st.prix, selectedFuel, st.pays)}
         </div>
@@ -3130,7 +3147,7 @@ function renderCurrentRouteStations() {
         </div>
       </div>
       <div class="station-details">
-        <span class="distance-countdown">${isGpsNavActive ? t().fromCurrentPos(Math.max(0, (st.distOnRoute - userProgressionKmOnRoute)).toFixed(1)) : t().fromStart(st.distOnRoute.toFixed(1))}</span>
+        <span class="distance-countdown">${distCountdownText}</span>
         ${sensFormatted ? `<span class="sens-tag">${sensFormatted}</span>` : ''}
         <span>• ${villeFormatted}</span>
       </div>
@@ -3581,20 +3598,81 @@ function updateUserGpsMarker(latitude, longitude) {
     const userIcon = L.divIcon({
       className: 'gps-user-marker',
       html: '<div class="gps-user-pulse"></div>',
-      iconSize: [22, 22],
-      iconAnchor: [11, 11]
+      iconSize: [26, 26],
+      iconAnchor: [13, 13]
     });
     userGpsMarker = L.marker([latitude, longitude], {
       pane: 'gpsUserPane',
       icon: userIcon,
-      zIndexOffset: 3000
+      zIndexOffset: 50000
     }).addTo(map);
+
+    const tooltipText = t().currentPos ? t().currentPos.replace(/^📍\s*/, '') : 'Votre position';
+    userGpsMarker.bindTooltip(`📍 ${tooltipText}`, {
+      direction: 'top',
+      offset: [0, -14],
+      className: 'gps-user-tooltip'
+    });
   } else {
     userGpsMarker.setLatLng([latitude, longitude]);
     if (!map.hasLayer(userGpsMarker)) {
       userGpsMarker.addTo(map);
     }
   }
+}
+
+// Center map on user position smoothly
+function centerMapOnUser() {
+  const btnLocate = document.getElementById('btn-locate-me');
+  if (userGpsPosition && userGpsPosition.lat && userGpsPosition.lon) {
+    if (map) {
+      map.setView([userGpsPosition.lat, userGpsPosition.lon], 14, { animate: true });
+      updateUserGpsMarker(userGpsPosition.lat, userGpsPosition.lon);
+      if (userGpsMarker) userGpsMarker.openTooltip();
+    }
+    return;
+  }
+
+  if (btnLocate) btnLocate.classList.add('locating');
+  if (!navigator.geolocation) {
+    if (btnLocate) btnLocate.classList.remove('locating');
+    alert(t().locationError || "Géolocalisation indisponible.");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      if (btnLocate) btnLocate.classList.remove('locating');
+      const { latitude, longitude, heading, speed } = pos.coords;
+      userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
+      updateUserGpsMarker(latitude, longitude);
+      if (map) {
+        map.setView([latitude, longitude], 14, { animate: true });
+        if (userGpsMarker) userGpsMarker.openTooltip();
+      }
+    },
+    (errFast) => {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          if (btnLocate) btnLocate.classList.remove('locating');
+          const { latitude, longitude, heading, speed } = pos.coords;
+          userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
+          updateUserGpsMarker(latitude, longitude);
+          if (map) {
+            map.setView([latitude, longitude], 14, { animate: true });
+            if (userGpsMarker) userGpsMarker.openTooltip();
+          }
+        },
+        (errPrecise) => {
+          if (btnLocate) btnLocate.classList.remove('locating');
+          console.warn('Center on user error:', errPrecise);
+          alert(t().locationError || "Impossible d'obtenir votre position GPS.");
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 5000 }
+      );
+    },
+    { enableHighAccuracy: false, timeout: 5000, maximumAge: 60000 }
+  );
 }
 
 // Start continuous passive geolocation as soon as user opens app or grants permission
@@ -3612,25 +3690,48 @@ function initPermanentGpsTracking() {
     }
   };
 
-  // Immediate acquisition without waiting for device movement
+  // Stage 1: Fast network fix (WiFi/IP/Cell - immediate, reliable on PC & mobile)
   navigator.geolocation.getCurrentPosition(
     handlePos,
-    () => {},
-    { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
+    (errFast) => {
+      console.warn("Fast GPS fix:", errFast);
+    },
+    { enableHighAccuracy: false, timeout: 6000, maximumAge: 300000 }
   );
 
-  // Continuous tracking
-  permanentGpsWatchId = navigator.geolocation.watchPosition(
+  // Stage 2: High-accuracy acquisition in parallel (refines coords if GNSS chip is available)
+  navigator.geolocation.getCurrentPosition(
     handlePos,
-    (err) => {
-      // Passive error, silent
+    (errPrecise) => {
+      console.warn("High-accuracy GPS fix:", errPrecise);
     },
-    {
-      enableHighAccuracy: true,
-      maximumAge: 3000,
-      timeout: 10000
-    }
+    { enableHighAccuracy: true, timeout: 12000, maximumAge: 10000 }
   );
+
+  // Stage 3: Continuous watching with automatic fallback
+  try {
+    permanentGpsWatchId = navigator.geolocation.watchPosition(
+      handlePos,
+      (errWatch) => {
+        console.warn("Permanent GPS watch error, switching to standard accuracy fallback:", errWatch);
+        if (permanentGpsWatchId !== null) {
+          navigator.geolocation.clearWatch(permanentGpsWatchId);
+          permanentGpsWatchId = navigator.geolocation.watchPosition(
+            handlePos,
+            () => {},
+            { enableHighAccuracy: false, maximumAge: 10000, timeout: 15000 }
+          );
+        }
+      },
+      {
+        enableHighAccuracy: true,
+        maximumAge: 3000,
+        timeout: 10000
+      }
+    );
+  } catch (e) {
+    console.warn("Watch position error:", e);
+  }
 }
 
 function startGpsNavigation() {
@@ -3651,16 +3752,24 @@ function startGpsNavigation() {
   if (userGpsPosition) {
     onGpsLocationUpdate(userGpsPosition);
   } else {
-    // Request instant fix and update navigation state right away
+    // Request instant fix (try fast first, then high accuracy)
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         onGpsLocationUpdate(pos.coords);
       },
-      (err) => {
-        console.warn("Erreur GPS Navigation démarrage:", err);
-        alert(t().locationError || "Position GPS non disponible.");
+      (errFast) => {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            onGpsLocationUpdate(pos.coords);
+          },
+          (errPrecise) => {
+            console.warn("Erreur GPS Navigation démarrage:", errPrecise);
+            alert(t().locationError || "Position GPS non disponible.");
+          },
+          { enableHighAccuracy: true, timeout: 10000, maximumAge: 5000 }
+        );
       },
-      { enableHighAccuracy: true, timeout: 8000, maximumAge: 5000 }
+      { enableHighAccuracy: false, timeout: 5000, maximumAge: 60000 }
     );
   }
 
