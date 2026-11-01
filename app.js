@@ -285,7 +285,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '7.3';
+const APP_VERSION = '7.4';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -364,9 +364,13 @@ const I18N_DICT = {
     addStep: "+ Étape",
     calcBtn: "<span>🚀</span> Calculer l'itinéraire",
     calcInProgress: "Calcul en cours...",
-    startNav: "Démarrer",
+        startNav: "Démarrer",
     stopNav: "Arrêter",
     navFollowing: "Démarrer",
+    currentPos: "📍 Ma position actuelle",
+    locating: "Recherche de votre position...",
+    locationError: "Impossible d'obtenir votre position GPS.",
+    fromCurrentPos: (km) => `🎯 Dans ${km} km`,
     upcomingStationsCount: (n) => `${n} station${n > 1 ? 's' : ''} à venir`,
     editBtn: "<span>✏️</span> Modifier",
     closeBtn: "<span>✖</span> Fermer",
@@ -456,6 +460,13 @@ const I18N_DICT = {
     addStep: "+ Stopp",
     calcBtn: "<span>🚀</span> Route berechnen",
     calcInProgress: "Route wird berechnet...",
+    startNav: "Starten",
+    stopNav: "Stoppen",
+    navFollowing: "Starten",
+    currentPos: "📍 Mein aktueller Standort",
+    locating: "Standort wird ermittelt...",
+    locationError: "GPS-Standort konnte nicht ermittelt werden.",
+    fromCurrentPos: (km) => `🎯 In ${km} km`,
     editBtn: "<span>✏️</span> Ändern",
     closeBtn: "<span>✖</span> Schließen",
     editBtnTitle: "Route ändern",
@@ -544,6 +555,13 @@ const I18N_DICT = {
     addStep: "+ Stop",
     calcBtn: "<span>🚀</span> Calculate route",
     calcInProgress: "Calculating route...",
+    startNav: "Start",
+    stopNav: "Stop",
+    navFollowing: "Start",
+    currentPos: "📍 My current location",
+    locating: "Locating your position...",
+    locationError: "Unable to get GPS location.",
+    fromCurrentPos: (km) => `🎯 In ${km} km`,
     editBtn: "<span>✏️</span> Edit",
     closeBtn: "<span>✖</span> Close",
     editBtnTitle: "Edit route",
@@ -632,6 +650,13 @@ const I18N_DICT = {
     addStep: "+ Tappa",
     calcBtn: "<span>🚀</span> Calcola itinerario",
     calcInProgress: "Calcolo in corso...",
+    startNav: "Avvia",
+    stopNav: "Arresta",
+    navFollowing: "Avvia",
+    currentPos: "📍 La mia posizione attuale",
+    locating: "Ricerca della posizione...",
+    locationError: "Impossibile determinare la posizione GPS.",
+    fromCurrentPos: (km) => `🎯 Tra ${km} km`,
     editBtn: "<span>✏️</span> Modifica",
     closeBtn: "<span>✖</span> Chiudi",
     editBtnTitle: "Modifica percorso",
@@ -720,6 +745,13 @@ const I18N_DICT = {
     addStep: "+ Etapa",
     calcBtn: "<span>🚀</span> Calcular ruta",
     calcInProgress: "Calculando ruta...",
+    startNav: "Iniciar",
+    stopNav: "Detener",
+    navFollowing: "Iniciar",
+    currentPos: "📍 Mi ubicación actual",
+    locating: "Buscando tu ubicación...",
+    locationError: "No se pudo obtener la ubicación GPS.",
+    fromCurrentPos: (km) => `🎯 En ${km} km`,
     editBtn: "<span>✏️</span> Modificar",
     closeBtn: "<span>✖</span> Cerrar",
     editBtnTitle: "Modificar ruta",
@@ -1381,6 +1413,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   setAppLanguage(currentLang, false);
   detectCountryAndSetLanguage();
   initMap();
+  initPermanentGpsTracking();
 
   const startInput = document.getElementById('input-start');
   const endInput = document.getElementById('input-end');
@@ -1935,6 +1968,24 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
       return;
     }
     dropdown.innerHTML = '';
+
+    // If input is start input, prepend "📍 Ma position actuelle"
+    if (inputId === 'input-start') {
+      const curPosItem = document.createElement('div');
+      curPosItem.className = 'autocomplete-item autocomplete-curpos-item';
+      curPosItem.style.background = 'rgba(56, 189, 248, 0.12)';
+      curPosItem.style.color = '#38bdf8';
+      curPosItem.style.fontWeight = '700';
+      curPosItem.style.borderBottom = '1px solid rgba(56, 189, 248, 0.25)';
+      curPosItem.innerHTML = t().currentPos || '📍 Ma position actuelle';
+      curPosItem.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdown.style.display = 'none';
+        useCurrentGpsLocationAsStart();
+      });
+      dropdown.appendChild(curPosItem);
+    }
+
     if (isRecentHeader) {
       const hdr = document.createElement('div');
       hdr.className = 'autocomplete-recent-header';
@@ -1960,8 +2011,8 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
 
   function showRecentIfAvailable() {
     const recents = getRecentLocations();
-    if (recents.length > 0) {
-      renderDropdownItems(recents, true);
+    if (recents.length > 0 || inputId === 'input-start') {
+      renderDropdownItems(recents, recents.length > 0);
     }
   }
 
@@ -2032,6 +2083,71 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
       dropdown.style.display = 'none';
     }
   });
+}
+
+// Handler for "Ma position actuelle" as departure
+function useCurrentGpsLocationAsStart() {
+  const startInput = document.getElementById('input-start');
+  if (startInput) {
+    startInput.value = t().locating || 'Recherche de votre position...';
+    startInput.classList.remove('input-attention-pulse');
+  }
+
+  if (userGpsPosition) {
+    applyGpsAsStartPoint(userGpsPosition.lat, userGpsPosition.lon);
+    return;
+  }
+
+  if (!navigator.geolocation) {
+    alert(t().locationError || "Géolocalisation indisponible.");
+    if (startInput) startInput.value = '';
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const { latitude, longitude } = pos.coords;
+      userGpsPosition = { lat: latitude, lon: longitude };
+      updateUserGpsMarker(latitude, longitude);
+      applyGpsAsStartPoint(latitude, longitude);
+    },
+    (err) => {
+      console.warn('Erreur acquisition GPS départ:', err);
+      alert(t().locationError || "Impossible d'obtenir votre position GPS.");
+      if (startInput) startInput.value = '';
+    },
+    { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 }
+  );
+}
+
+async function applyGpsAsStartPoint(lat, lon) {
+  const startInput = document.getElementById('input-start');
+  let displayName = t().currentPos ? t().currentPos.replace('📍 ', '') : 'Ma position actuelle';
+  
+  startPoint = { coords: [lon, lat], label: displayName };
+  if (startInput) {
+    startInput.value = displayName;
+    startInput.classList.remove('input-attention-pulse');
+  }
+
+  // Reverse geocode in background to refine city name
+  try {
+    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}&zoom=14`, {
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      const addr = data.address || {};
+      const locality = addr.city || addr.town || addr.village || addr.municipality || addr.road;
+      if (locality) {
+        displayName = `${displayName} (${locality})`;
+        startPoint.label = displayName;
+        if (startInput) startInput.value = displayName;
+      }
+    }
+  } catch (e) {
+    // Keep fallback label
+  }
 }
 
 // Event Listeners for Filters and Controls
@@ -3401,6 +3517,7 @@ let gpsWatchId = null;
 let userGpsPosition = null; // { lat, lon, heading, speed }
 let userGpsMarker = null;
 let userProgressionKmOnRoute = 0;
+let permanentGpsWatchId = null;
 
 function toggleGpsNavigation() {
   if (isGpsNavActive) {
@@ -3424,10 +3541,10 @@ function updateNavButtonUI() {
 
     if (isGpsNavActive) {
       btnStart.classList.add('nav-active');
-      btnStart.innerHTML = `<span class="nav-pulse-dot"></span> <span>${tr.stopNav}</span>`;
+      btnStart.innerHTML = `<span class="nav-pulse-dot"></span> <span>${tr.stopNav || 'Arrêter'}</span>`;
     } else {
       btnStart.classList.remove('nav-active');
-      btnStart.innerHTML = `<span class="nav-pulse-dot"></span> <span>${tr.startNav}</span>`;
+      btnStart.innerHTML = `<span class="nav-pulse-dot"></span> <span>${tr.startNav || 'Démarrer'}</span>`;
     }
   }
 
@@ -3435,13 +3552,57 @@ function updateNavButtonUI() {
     if (isGpsNavActive) {
       btnSum.classList.add('nav-active');
       btnSum.innerHTML = `<span>⏹</span> ${tr.stopNav ? tr.stopNav.split(' ')[0] : 'Arrêter'}`;
-      btnSum.title = tr.stopNav;
+      btnSum.title = tr.stopNav || 'Arrêter';
     } else {
       btnSum.classList.remove('nav-active');
-      btnSum.innerHTML = `<span>🟢</span> ${tr.navFollowing || 'Suivi'}`;
-      btnSum.title = tr.startNav;
+      btnSum.innerHTML = `<span>🟢</span> ${tr.startNav || 'Démarrer'}`;
+      btnSum.title = tr.startNav || 'Démarrer';
     }
   }
+}
+
+// Function to update the permanent GPS marker on map
+function updateUserGpsMarker(latitude, longitude) {
+  if (!map) return;
+  if (!userGpsMarker) {
+    const userIcon = L.divIcon({
+      className: 'gps-user-marker',
+      html: '<div class="gps-user-pulse"></div>',
+      iconSize: [22, 22],
+      iconAnchor: [11, 11]
+    });
+    userGpsMarker = L.marker([latitude, longitude], { icon: userIcon, zIndexOffset: 2000 }).addTo(map);
+  } else {
+    userGpsMarker.setLatLng([latitude, longitude]);
+    if (!map.hasLayer(userGpsMarker)) {
+      userGpsMarker.addTo(map);
+    }
+  }
+}
+
+// Start continuous passive geolocation as soon as user opens app or grants permission
+function initPermanentGpsTracking() {
+  if (!navigator.geolocation) return;
+  if (permanentGpsWatchId !== null) return;
+
+  permanentGpsWatchId = navigator.geolocation.watchPosition(
+    (pos) => {
+      const { latitude, longitude, heading, speed } = pos.coords;
+      userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
+      updateUserGpsMarker(latitude, longitude);
+      if (isGpsNavActive) {
+        onGpsLocationUpdate(pos.coords);
+      }
+    },
+    (err) => {
+      // Passive error, silent
+    },
+    {
+      enableHighAccuracy: true,
+      maximumAge: 5000,
+      timeout: 12000
+    }
+  );
 }
 
 function startGpsNavigation() {
@@ -3458,20 +3619,27 @@ function startGpsNavigation() {
   isGpsNavActive = true;
   updateNavButtonUI();
 
-  // Switch to high accuracy position watching
-  gpsWatchId = navigator.geolocation.watchPosition(
-    (pos) => {
-      onGpsLocationUpdate(pos.coords);
-    },
-    (err) => {
-      console.warn("Erreur GPS Navigation:", err);
-    },
-    {
-      enableHighAccuracy: true,
-      maximumAge: 3000,
-      timeout: 10000
-    }
-  );
+  // If we already have a recent GPS position, process it immediately!
+  if (userGpsPosition) {
+    onGpsLocationUpdate(userGpsPosition);
+  }
+
+  // Ensure high-accuracy watch is running
+  if (gpsWatchId === null) {
+    gpsWatchId = navigator.geolocation.watchPosition(
+      (pos) => {
+        onGpsLocationUpdate(pos.coords);
+      },
+      (err) => {
+        console.warn("Erreur GPS Navigation:", err);
+      },
+      {
+        enableHighAccuracy: true,
+        maximumAge: 2000,
+        timeout: 10000
+      }
+    );
+  }
 }
 
 function stopGpsNavigation() {
@@ -3480,11 +3648,6 @@ function stopGpsNavigation() {
     navigator.geolocation.clearWatch(gpsWatchId);
     gpsWatchId = null;
   }
-  if (userGpsMarker && map) {
-    map.removeLayer(userGpsMarker);
-    userGpsMarker = null;
-  }
-  userGpsPosition = null;
   userProgressionKmOnRoute = 0;
   updateNavButtonUI();
   renderCurrentRouteStations();
@@ -3495,20 +3658,8 @@ function onGpsLocationUpdate(coords) {
   const { latitude, longitude, heading, speed } = coords;
   userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
 
-  // 1. Draw or update user location pin on map
-  if (map) {
-    if (!userGpsMarker) {
-      const userIcon = L.divIcon({
-        className: 'gps-user-marker',
-        html: '<div class="gps-user-pulse"></div>',
-        iconSize: [22, 22],
-        iconAnchor: [11, 11]
-      });
-      userGpsMarker = L.marker([latitude, longitude], { icon: userIcon, zIndexOffset: 2000 }).addTo(map);
-    } else {
-      userGpsMarker.setLatLng([latitude, longitude]);
-    }
-  }
+  // 1. Update user location pin on map
+  updateUserGpsMarker(latitude, longitude);
 
   // 2. Project user onto route polyline to find current km progression
   const routeCoords = activeRouteData.geometry.coordinates; // [[lon, lat], ...]
@@ -3533,6 +3684,6 @@ function onGpsLocationUpdate(coords) {
     userProgressionKmOnRoute = Math.max(userProgressionKmOnRoute, currentKm);
   }
 
-  // 3. Re-render stations list showing only upcoming stations
+  // 3. Re-render stations list and update pins
   renderCurrentRouteStations();
 }
