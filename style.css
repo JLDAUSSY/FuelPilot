@@ -1287,7 +1287,14 @@ header {
   align-items: center;
 }
 
-.badge-privacy {
+.header-links-subgroup {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-privacy,
+.badge-guide {
   background: rgba(56, 189, 248, 0.12);
   border: 1px solid rgba(56, 189, 248, 0.4);
   color: #7dd3fc !important;
@@ -1302,7 +1309,8 @@ header {
   transition: all 0.15s ease;
 }
 
-.badge-privacy:hover, .badge-privacy:active {
+.badge-privacy:hover, .badge-privacy:active,
+.badge-guide:hover, .badge-guide:active {
   background: rgba(56, 189, 248, 0.25);
   border-color: #38bdf8;
   color: #ffffff !important;
@@ -1435,7 +1443,8 @@ header {
     line-height: 1.15 !important;
   }
 
-  .badge-privacy {
+  .badge-privacy,
+  .badge-guide {
     display: flex !important;
     font-size: 0.65rem !important;
     font-weight: 700 !important;

@@ -156,7 +156,10 @@
 
     <div id="content-body"></div>
 
-    <a href="index.html" id="btn-back-app" class="btn-back">← Retour à FuelPilot</a>
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-top:24px; padding-top:18px; border-top:1px solid var(--border);">
+      <a href="index.html" id="btn-back-app" class="btn-back" style="margin-top:0;">← Retour à FuelPilot</a>
+      <a href="guide.html" id="link-guide" style="color:#7dd3fc; text-decoration:none; font-weight:700; font-size:0.9rem;">📖 Mode d'emploi & Guide</a>
+    </div>
   </div>
 
   <script>
@@ -424,6 +427,9 @@
       const backBtn = document.getElementById('btn-back-app');
       backBtn.textContent = data.backBtn;
       backBtn.href = `index.html?lang=${lang}&_v=${Date.now()}`;
+
+      const guideLink = document.getElementById('link-guide');
+      if (guideLink) guideLink.href = `guide.html?lang=${lang}`;
 
       document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.lang === lang);

@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="doc-title">Mode d'emploi & Guide • FuelPilot</title>
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0f1d;
+      --bg-card: #131b2e;
+      --bg-subcard: rgba(255, 255, 255, 0.03);
+      --accent: #0284c7;
+      --accent-glow: #38bdf8;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: rgba(56, 189, 248, 0.2);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 24px 16px 60px;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 34px 30px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.55);
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 26px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      box-shadow: 0 0 16px rgba(14, 165, 233, 0.4);
+    }
+    h1 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #fff;
+    }
+    h1 span { color: var(--accent-glow); }
+    .badge-tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      background: rgba(14, 165, 233, 0.15);
+      color: var(--accent-glow);
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+    .lang-switcher {
+      display: flex;
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.7);
+      padding: 4px;
+      border-radius: 20px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+    .lang-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.15rem;
+      padding: 4px 8px;
+      border-radius: 14px;
+      cursor: pointer;
+      opacity: 0.55;
+      transition: all 0.2s;
+    }
+    .lang-btn:hover { opacity: 0.9; transform: scale(1.08); }
+    .lang-btn.active {
+      opacity: 1;
+      background: rgba(56, 189, 248, 0.25);
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+      transform: scale(1.05);
+    }
+    h2 {
+      font-size: 1.22rem;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-top: 30px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      margin-top: 18px;
+      margin-bottom: 8px;
+    }
+    p, li {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    ul, ol {
+      margin-left: 22px;
+      margin-bottom: 16px;
+    }
+    li { margin-bottom: 8px; }
+    strong { color: var(--text); }
+
+    /* Feature Grid Cards */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin: 18px 0 24px;
+    }
+    .feature-card {
+      background: var(--bg-subcard);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 16px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .feature-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+    .feature-icon {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+    .feature-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .feature-desc {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+
+    /* Country & Update Table */
+    .table-container {
+      overflow-x: auto;
+      margin: 16px 0 24px;
+      border-radius: 12px;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      text-align: left;
+    }
+    th {
+      background: rgba(14, 165, 233, 0.15);
+      color: #38bdf8;
+      padding: 12px 14px;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 12px;
+    }
+    .status-live { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); }
+    .status-ref { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.35); }
+
+    .callout {
+      background: rgba(14, 165, 233, 0.08);
+      border-left: 4px solid var(--accent-glow);
+      padding: 14px 18px;
+      border-radius: 0 12px 12px 0;
+      margin: 18px 0;
+    }
+    .callout p { margin: 0; color: #cbd5e1; font-size: 0.92rem; }
+
+    /* Footer Buttons */
+    .footer-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 36px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 11px 20px;
+      border-radius: 12px;
+      transition: all 0.2s;
+    }
+    .btn-back:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(2, 132, 199, 0.5);
+    }
+    .btn-secondary {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .btn-secondary:hover { color: #38bdf8; }
+
+    @media (max-width: 600px) {
+      .container { padding: 22px 16px; border-radius: 16px; }
+      h1 { font-size: 1.25rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .footer-actions { flex-direction: column; align-items: stretch; text-align: center; }
+      .btn-back { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-left">
+        <img src="icon.png" alt="FuelPilot Logo" class="logo">
+        <div>
+          <h1 id="title-main">Fuel<span>Pilot</span> • Mode d'emploi</h1>
+          <div class="badge-tag" id="badge-version">Guide officiel d'utilisation • v7.8</div>
+        </div>
+      </div>
+      <div class="lang-switcher" id="lang-switcher">
+        <button type="button" class="lang-btn active" data-lang="fr" title="Français">🇫🇷</button>
+        <button type="button" class="lang-btn" data-lang="de" title="Deutsch">🇩🇪</button>
+        <button type="button" class="lang-btn" data-lang="it" title="Italiano">🇮🇹</button>
+        <button type="button" class="lang-btn" data-lang="es" title="Español">🇪🇸</button>
+        <button type="button" class="lang-btn" data-lang="en" title="English">🇬🇧</button>
+      </div>
+    </header>
+
+    <div id="content-body">
+      <!-- Rempli dynamiquement selon la langue choisie -->
+    </div>
+
+    <div class="footer-actions">
+      <a href="index.html" class="btn-back" id="btn-back-app">
+        <span>←</span> <span id="lbl-back-btn">Retourner à l'application</span>
+      </a>
+      <a href="privacy.html" class="btn-secondary" id="link-privacy">Politique de Confidentialité</a>
+    </div>
+  </div>
+
+  <script>
+    const GUIDE_TEXTS = {
+      fr: {
+        docTitle: "Mode d'emploi & Guide • FuelPilot",
+        headerTitle: "Fuel<span>Pilot</span> • Mode d'emploi",
+        badgeVersion: "Guide officiel d'utilisation • v7.8",
+        backBtn: "Retourner à l'application",
+        privacyLink: "Politique de Confidentialité",
+        html: `
+          <h2>🎯 1. Qu'est-ce que FuelPilot ?</h2>
+          <p><strong>FuelPilot</strong> est votre copilote autoroutier intelligent, conçu pour vous faire réaliser de vraies économies sur vos longs trajets en Europe. Alors que les prix sur autoroute peuvent varier de plus de <strong>0,20 € à 0,35 € par litre</strong> d'une aire à la suivante, FuelPilot vous permet d'anticiper vos ravitaillements en toute sérénité.</p>
+          <div class="callout">
+            <p>💡 <strong>Le saviez-vous ?</strong> Sur un plein de 50 litres, faire le choix de la bonne station sur autoroute permet d'économiser entre <strong>10 € et 18 €</strong> sur un seul trajet !</p>
+          </div>
+
+          <h2>🚀 2. Fonctionnalités et Utilisation pas-à-pas</h2>
+          
+          <div class="features-grid">
+            <div class="feature-card">
+              <span class="feature-icon">🛣️</span>
+              <div class="feature-title">1. Calcul d'itinéraire A → B</div>
+              <p class="feature-desc">Saisissez votre ville ou adresse de départ et d'arrivée avec saisie prédictive. Ajoutez des <strong>étapes intermédiaires illimitées</strong> et comparez les itinéraires alternatifs proposés.</p>
+            </div>
+
+            <div class="feature-card">
+              <span class="feature-icon">⏱️</span>
+              <div class="feature-title">2. Ordre chronologique strict</div>
+              <p class="feature-desc">Les aires apparaissent exactement dans l'ordre où vous allez les rencontrer sur votre sens de circulation. Fini le doute de savoir si la prochaine aire est dans 10 km ou 80 km !</p>
+            </div>
+
+            <div class="feature-card">
+              <span class="feature-icon">📍</span>
+              <div class="feature-title">3. Vraies Bornes PK d'autoroute</div>
+              <p class="feature-desc">Affichage du <strong>Point Kilométrique officiel (PK)</strong> (ex: <em>A6 • Borne km 311</em>). Vous vous repérez instantanément grâce aux bornes physiques visibles sur le bord de la chaussée.</p>
+            </div>
+
+            <div class="feature-card">
+              <span class="feature-icon">🎯</span>
+              <div class="feature-title">4. Compte à rebours « Dans X km »</div>
+              <p class="feature-desc">Chaque station indique la distance restante précise (ex: <em>Dans 42 km</em>). Cette distance se réduit automatiquement et en direct au fur et à mesure que vous roulez.</p>
+            </div>
+
+            <div class="feature-card">
+              <span class="feature-icon">🟢</span>
+              <div class="feature-title">5. Suivi GPS en direct (Démarrer)</div>
+              <p class="feature-desc">Appuyez sur <strong>Démarrer</strong> : une pastille pulsante matérialise votre voiture sur la carte. Les stations que vous venez de dépasser disparaissent automatiquement de la liste pour ne garder que les aires à venir.</p>
+            </div>
+
+            <div class="feature-card">
+              <span class="feature-icon">🧭</span>
+              <div class="feature-title">6. Guidage 1-clic Waze & Maps</div>
+              <p class="feature-desc">Chaque station propose des boutons directs vers <strong>Waze</strong> et <strong>Google Maps</strong> pour lancer le guidage jusqu'aux pompes d'un simple geste.</p>
+            </div>
+
+            <div class="feature-card">
+              <span class="feature-icon">⛽</span>
+              <div class="feature-title">7. Filtres Carburant & Enseigne</div>
+              <p class="feature-desc">Sélectionnez votre carburant (Gazole, SP95-E10, SP98, SP95, E85, GPLc) ou filtrez selon vos cartes pétrolières préférées (TotalEnergies, Shell, Avia, Repsol, Eni, BP, Esso, Aral...).</p>
+            </div>
+
+            <div class="feature-card">
+              <span class="feature-icon">⭐</span>
+              <div class="feature-title">8. Prix le plus bas & Ruptures</div>
+              <p class="feature-desc">La station la plus économique de tout votre parcours est mise en avant par un badge doré <strong>⭐ PRIX LE PLUS BAS</strong>. Les carburants en rupture de stock sont signalés en rouge.</p>
+            </div>
+          </div>
+
+          <h2>🌍 3. Pays et Réseau autoroutier couverts (2 337 aires)</h2>
+          <p>FuelPilot répertorie l'intégralité des réseaux autoroutiers à péage et voies rapides de <strong>6 pays européens majeurs</strong> :</p>
+          
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Pays</th>
+                  <th>Aires répertoriées</th>
+                  <th>Réseaux autoroutiers</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>🇫🇷 <strong>France</strong></td>
+                  <td><strong>437 aires</strong></td>
+                  <td>A1 à A89 (APRR, AREA, Vinci Autoroutes, Sanef, SAPN, ATMB, SFTRF...)</td>
+                </tr>
+                <tr>
+                  <td>🇪🇸 <strong>Espagne</strong></td>
+                  <td><strong>833 aires</strong></td>
+                  <td>Autovías et Autopistas (A-1 à A-8, AP-7 Méditerranée, A-31, AP-68...)</td>
+                </tr>
+                <tr>
+                  <td>🇮🇹 <strong>Italie</strong></td>
+                  <td><strong>615 aires</strong></td>
+                  <td>Autostrade (A1 Milan-Rome-Naples, A4 Turin-Trieste, A14 Adriatique, A22...)</td>
+                </tr>
+                <tr>
+                  <td>🇩🇪 <strong>Allemagne</strong></td>
+                  <td><strong>218 aires</strong></td>
+                  <td>Autobahn-Raststätten officielles (A1, A3, A7, A8, A9, A10 Berliner Ring...)</td>
+                </tr>
+                <tr>
+                  <td>🇬🇧 <strong>Royaume-Uni</strong></td>
+                  <td><strong>158 aires</strong></td>
+                  <td>Motorway Service Areas MSAs (M1, M4, M5, M6, M20, M25, M40, M90...)</td>
+                </tr>
+                <tr>
+                  <td>🇧🇪 <strong>Belgique</strong></td>
+                  <td><strong>76 aires</strong></td>
+                  <td>E19, E40, E411, E42, E25...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>🔄 4. Fréquence et Sources officielles d'actualisation des prix</h2>
+          <p>Pour vous garantir des informations fiables, FuelPilot utilise un robot automatisé relié aux flux ministériels et sources officielles de chaque pays :</p>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Pays</th>
+                  <th>Fréquence de rafraîchissement</th>
+                  <th>Source officielle de données</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>🇫🇷 <strong>France</strong></td>
+                  <td><span class="status-badge status-live">2x par jour (06h00 et 14h00)</span></td>
+                  <td>Flux instantané officiel du Ministère de l'Économie / DGCCRF (<em>donnees.roulez-eco.fr</em>)</td>
+                </tr>
+                <tr>
+                  <td>🇪🇸 <strong>Espagne</strong></td>
+                  <td><span class="status-badge status-live">2x par jour (06h00 et 14h00)</span></td>
+                  <td>Ministère espagnol pour la Transition Écologique MITECO (<em>sedeaplicaciones.minetur.gob.es</em>)</td>
+                </tr>
+                <tr>
+                  <td>🇮🇹 <strong>Italie</strong></td>
+                  <td><span class="status-badge status-live">2x par jour (06h00 et 14h00)</span></td>
+                  <td>Ministère des Entreprises MIMIT / Osservaprezzi (<em>mappacarburanti.it</em>)</td>
+                </tr>
+                <tr>
+                  <td>🇩🇪 <strong>Allemagne</strong></td>
+                  <td><span class="status-badge status-ref">Prix de référence autoroutiers</span></td>
+                  <td>Barèmes autoroutiers indicatifs (MTS-K / Bundeskartellamt)</td>
+                </tr>
+                <tr>
+                  <td>🇧🇪 <strong>Belgique</strong></td>
+                  <td><span class="status-badge status-ref">Prix plafonds officiels</span></td>
+                  <td>Prix maximaux légaux réglementés par le SPF Économie belge</td>
+                </tr>
+                <tr>
+                  <td>🇬🇧 <strong>Royaume-Uni</strong></td>
+                  <td><span class="status-badge status-ref">Prix calibrés en £</span></td>
+                  <td>Opérateurs autoroutiers britanniques et données ouvertes de la CMA</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="font-size:0.86rem; color:#94a3b8;"><em>Note : Sur autoroute, les compagnies pétrolières révisent leurs tarifs une fois par jour au petit matin. L'actualisation de 06h00 capture immédiatement ces nouveaux barèmes quotidiens avant vos départs.</em></p>
+
+          <h2>🌐 5. Langues disponibles et Détection automatique</h2>
+          <p>FuelPilot est intégralement traduit et utilisable en <strong>5 langues</strong> :</p>
+          <ul>
+            <li>🇫🇷 <strong>Français</strong> (Langue par défaut)</li>
+            <li>🇩🇪 <strong>Deutsch</strong> (Allemand)</li>
+            <li>🇮🇹 <strong>Italiano</strong> (Italien)</li>
+            <li>🇪🇸 <strong>Español</strong> (Espagnol)</li>
+            <li>🇬🇧 <strong>English</strong> (Anglais)</li>
+          </ul>
+          <p>L'application détecte automatiquement votre langue dès l'ouverture selon votre position géographique. Vous pouvez également changer instantanément de langue d'un simple clic sur les drapeaux situés sous le logo en haut de l'écran.</p>
+
+          <h2>📱 6. Astuce pour smartphone : Ajouter à l'écran d'accueil</h2>
+          <p>FuelPilot est une application Web progressive (PWA). Vous pouvez l'installer comme une vraie application sur votre téléphone :</p>
+          <ul>
+            <li><strong>Sur Android (Chrome) :</strong> Appuyez sur le menu (les 3 points verticaux en haut à droite) puis sur <em>« Ajouter à l'écran d'accueil »</em> ou <em>« Installer l'application »</em>.</li>
+            <li><strong>Sur iPhone (Safari) :</strong> Appuyez sur le bouton Partager (icône avec une flèche vers le haut) puis sur <em>« Sur l'écran d'accueil »</em>.</li>
+          </ul>
+        `
+      },
+      de: {
+        docTitle: "Bedienungsanleitung & Leitfaden • FuelPilot",
+        headerTitle: "Fuel<span>Pilot</span> • Bedienungsanleitung",
+        badgeVersion: "Offizieller Benutzerleitfaden • v7.8",
+        backBtn: "Zurück zur Anwendung",
+        privacyLink: "Datenschutzerklärung",
+        html: `
+          <h2>🎯 1. Was ist FuelPilot?</h2>
+          <p><strong>FuelPilot</strong> ist Ihr intelligenter Autobahn-Copilot, der Ihnen hilft, auf langen Reisen durch Europa bares Geld zu sparen. Da die Kraftstoffpreise an Autobahnen von Raststätte zu Raststätte um mehr als <strong>0,20 € bis 0,35 € pro Liter</strong> variieren können, hilft Ihnen FuelPilot, Tankstopps vorausschauend und transparent zu planen.</p>
+
+          <h2>🚀 2. Wichtigste Funktionen</h2>
+          <div class="features-grid">
+            <div class="feature-card">
+              <span class="feature-icon">🛣️</span>
+              <div class="feature-title">1. Routenberechnung A → B</div>
+              <p class="feature-desc">Geben Sie Start- und Zielort mit automatischer Vervollständigung ein. Fügen Sie unbegrenzte Zwischenstopps hinzu und vergleichen Sie Alternativrouten.</p>
+            </div>
+            <div class="feature-card">
+              <span class="feature-icon">⏱️</span>
+              <div class="feature-title">2. Chronologische Reihenfolge</div>
+              <p class="feature-desc">Raststätten erscheinen genau in der Reihenfolge, wie Sie sie in Fahrtrichtung passieren.</p>
+            </div>
+            <div class="feature-card">
+              <span class="feature-icon">📍</span>
+              <div class="feature-title">3. Offizielle Autobahn-Kilometer (PK)</div>
+              <p class="feature-desc">Anzeige des offiziellen Kilometers (z. B. <em>A6 • km 311</em>) zur perfekten Orientierung an den Beschilderungen.</p>
+            </div>
+            <div class="feature-card">
+              <span class="feature-icon">🟢</span>
+              <div class="feature-title">4. Live-GPS-Modus (Starten)</div>
+              <p class="feature-desc">Standortanzeige auf der Karte. Passierte Tankstellen werden automatisch ausgeblendet, damit Sie nur bevorstehende Raststätten sehen.</p>
+            </div>
+          </div>
+
+          <h2>🌍 3. Abgedeckte Länder (2.337 Raststätten)</h2>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Land</th><th>Raststätten</th><th>Netz</th></tr></thead>
+              <tbody>
+                <tr><td>🇫🇷 <strong>Frankreich</strong></td><td>437 Raststätten</td><td>A1 bis A89 (APRR, Vinci, Sanef...)</td></tr>
+                <tr><td>🇪🇸 <strong>Spanien</strong></td><td>833 Raststätten</td><td>Autovías & Autopistas (A-1 bis AP-7...)</td></tr>
+                <tr><td>🇮🇹 <strong>Italien</strong></td><td>615 Raststätten</td><td>Autostrade (A1, A4, A14, A22...)</td></tr>
+                <tr><td>🇩🇪 <strong>Deutschland</strong></td><td>218 Raststätten</td><td>Offizielle Autobahn-Raststätten (A1, A3, A7, A8...)</td></tr>
+                <tr><td>🇬🇧 <strong>Großbritannien</strong></td><td>158 Raststätten</td><td>Motorway Service Areas (M1, M4, M6...)</td></tr>
+                <tr><td>🇧🇪 <strong>Belgien</strong></td><td>76 Raststätten</td><td>E19, E40, E411...</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>🔄 4. Preisaktualisierungs-Frequenz</h2>
+          <ul>
+            <li>🇫🇷 <strong>Frankreich :</strong> <strong>2x täglich (06:00 und 14:00 Uhr)</strong> über das offizielle Wirtschaftsministerium (<em>donnees.roulez-eco.fr</em>).</li>
+            <li>🇪🇸 <strong>Spanien :</strong> <strong>2x täglich (06:00 und 14:00 Uhr)</strong> über das spanische Ministerium MITECO.</li>
+            <li>🇮🇹 <strong>Italien :</strong> <strong>2x täglich (06:00 und 14:00 Uhr)</strong> über das Ministerium MIMIT / MappaCarburanti.</li>
+            <li>🇩🇪 <strong>Deutschland :</strong> Autobahn-Referenzpreise (MTS-K).</li>
+            <li>🇧🇪 <strong>Belgien :</strong> Gesetzliche Maximalpreise (FÖD Wirtschaft).</li>
+            <li>🇬🇧 <strong>UK :</strong> Kalibrierte Preise in £ (CMA Open Data).</li>
+          </ul>
+
+          <h2>🌐 5. Verfügbare Sprachen</h2>
+          <p>Verfügbar in <strong>5 Sprachen</strong>: Deutsch, Französisch, Italienisch, Spanisch und Englisch. Automatische Spracherkennung oder manueller Wechsel über die Flaggenleiste.</p>
+        `
+      },
+      it: {
+        docTitle: "Guida all'uso • FuelPilot",
+        headerTitle: "Fuel<span>Pilot</span> • Guida all'uso",
+        badgeVersion: "Guida ufficiale • v7.8",
+        backBtn: "Torna all'applicazione",
+        privacyLink: "Informativa sulla Privacy",
+        html: `
+          <h2>🎯 1. Cos'è FuelPilot?</h2>
+          <p><strong>FuelPilot</strong> è il tuo copilota autostradale intelligente, progettato per farti risparmiare sui lunghi viaggi in Europa. Poiché i prezzi del carburante in autostrada possono variare di oltre <strong>0,20 € - 0,35 € al litro</strong> da un'area di servizio all'altra, FuelPilot ti permette di pianificare i tuoi rifornimenti in totale serenità.</p>
+
+          <h2>🚀 2. Funzionalità principali</h2>
+          <div class="features-grid">
+            <div class="feature-card">
+              <span class="feature-icon">🛣️</span>
+              <div class="feature-title">1. Calcolo itinerario A → B</div>
+              <p class="feature-desc">Inserisci partenza e arrivo con completamento automatico. Tappe intermedie illimitate e itinerari alternativi.</p>
+            </div>
+            <div class="feature-card">
+              <span class="feature-icon">⏱️</span>
+              <div class="feature-title">2. Ordine cronologico esatto</div>
+              <p class="feature-desc">Le aree di servizio appaiono nell'ordine esatto in cui le incontrerai nella tua direzione di marcia.</p>
+            </div>
+            <div class="feature-card">
+              <span class="feature-icon">📍</span>
+              <div class="feature-title">3. Punti Chilometrici ufficiali (PK)</div>
+              <p class="feature-desc">Visualizzazione del chilometro ufficiale autostradale per orientarsi con i cartelli stradali reali.</p>
+            </div>
+            <div class="feature-card">
+              <span class="feature-icon">🟢</span>
+              <div class="feature-title">4. Tracciamento GPS in tempo reale</div>
+              <p class="feature-desc">Posizione in diretta sulla mappa. Le stazioni già superate scompaiono automaticamente dall'elenco.</p>
+            </div>
+          </div>
+
+          <h2>🌍 3. Paesi coperti (2.337 aree di servizio)</h2>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Paese</th><th>Aree</th><th>Rete</th></tr></thead>
+              <tbody>
+                <tr><td>🇫🇷 <strong>Francia</strong></td><td>437 aree</td><td>A1 - A89 (APRR, Vinci, Sanef...)</td></tr>
+                <tr><td>🇪🇸 <strong>Spagna</strong></td><td>833 aree</td><td>Autovías & Autopistas (A-1 - AP-7...)</td></tr>
+                <tr><td>🇮🇹 <strong>Italia</strong></td><td>615 aree</td><td>Autostrade (A1 Milano-Napoli, A4, A14, A22...)</td></tr>
+                <tr><td>🇩🇪 <strong>Germania</strong></td><td>218 aree</td><td>Autobahn-Raststätten ufficiali (A1, A3, A7, A8...)</td></tr>
+                <tr><td>🇬🇧 <strong>Regno Unito</strong></td><td>158 aree</td><td>Motorway Service Areas (M1, M4, M6...)</td></tr>
+                <tr><td>🇧🇪 <strong>Belgio</strong></td><td>76 aree</td><td>E19, E40, E411...</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>🔄 4. Frequenza di aggiornamento prezzi</h2>
+          <ul>
+            <li>🇫🇷 <strong>Francia:</strong> <strong>2 volte al giorno (06:00 e 14:00)</strong> tramite il Ministero dell'Economia (<em>donnees.roulez-eco.fr</em>).</li>
+            <li>🇪🇸 <strong>Spagna:</strong> <strong>2 volte al giorno (06:00 e 14:00)</strong> tramite il Ministero MITECO.</li>
+            <li>🇮🇹 <strong>Italia:</strong> <strong>2 volte al giorno (06:00 e 14:00)</strong> tramite il Ministero MIMIT / Osservaprezzi (<em>mappacarburanti.it</em>).</li>
+            <li>🇩🇪 <strong>Germania:</strong> Prezzi indicativi autostradali (MTS-K).</li>
+            <li>🇧🇪 <strong>Belgio:</strong> Prezzi massimi legali (SPF Economie).</li>
+            <li>🇬🇧 <strong>UK:</strong> Prezzi calibrati in £ (CMA Open Data).</li>
+          </ul>
+
+          <h2>🌐 5. Lingue disponibili</h2>
+          <p>Disponibile in <strong>5 lingue</strong>: Italiano, Francese, Tedesco, Spagnolo e Inglese.</p>
+        `
+      },
+      es: {
+        docTitle: "Guía de uso • FuelPilot",
+        headerTitle: "Fuel<span>Pilot</span> • Guía de uso",
+        badgeVersion: "Guía oficial de usuario • v7.8",
+        backBtn: "Volver a la aplicación",
+        privacyLink: "Política de Privacidad",
+        html: `
+          <h2>🎯 1. ¿Qué es FuelPilot?</h2>
+          <p><strong>FuelPilot</strong> es tu copiloto inteligente de autopista, diseñado para ayudarte a ahorrar en tus viajes largos por Europa. Dado que los precios del combustible en autopista pueden variar en más de <strong>0,20 € a 0,35 € por litro</strong> de un área de servicio a otra, FuelPilot te permite anticipar tus paradas con total tranquilidad.</p>
+
+          <h2>🚀 2. Características principales</h2>
+          <div class="features-grid">
+            <div class="feature-card">
+              <span class="feature-icon">🛣️</span>
+              <div class="feature-title">1. Cálculo de ruta A → B</div>
+              <p class="feature-desc">Introduce origen y destino con autocompletado. Añade paradas intermedias ilimitadas y compara rutas alternativas.</p>
+            </div>
+            <div class="feature-card">
+              <span class="feature-icon">⏱️</span>
+              <div class="feature-title">2. Orden cronológico estricto</div>
+              <p class="feature-desc">Las áreas aparecen en el orden exacto en el que te las encontrarás en tu sentido de circulación.</p>
+            </div>
+            <div class="feature-card">
+              <span class="feature-icon">📍</span>
+              <div class="feature-title">3. Puntos Kilométricos (PK)</div>
+              <p class="feature-desc">Visualización del hito kilométrico oficial para ubicarte con la señalización real de la carretera.</p>
+            </div>
+            <div class="feature-card">
+              <span class="feature-icon">🟢</span>
+              <div class="feature-title">4. Modo GPS en directo</div>
+              <p class="feature-desc">Ubicación en el mapa en tiempo real. Las estaciones que vas dejando atrás se ocultan automáticamente de la lista.</p>
+            </div>
+          </div>
+
+          <h2>🌍 3. Países cubiertos (2.337 áreas de servicio)</h2>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>País</th><th>Áreas</th><th>Red de autopistas</th></tr></thead>
+              <tbody>
+                <tr><td>🇫🇷 <strong>Francia</strong></td><td>437 áreas</td><td>A1 a A89 (APRR, Vinci, Sanef...)</td></tr>
+                <tr><td>🇪🇸 <strong>España</strong></td><td>833 áreas</td><td>Autovías y Autopistas (A-1 a A-8, AP-7, A-31...)</td></tr>
+                <tr><td>🇮🇹 <strong>Italia</strong></td><td>615 áreas</td><td>Autostrade (A1, A4, A14, A22...)</td></tr>
+                <tr><td>🇩🇪 <strong>Alemania</strong></td><td>218 áreas</td><td>Autobahn-Raststätten oficiales (A1, A3, A7, A8...)</td></tr>
+                <tr><td>🇬🇧 <strong>Reino Unido</strong></td><td>158 áreas</td><td>Motorway Service Areas (M1, M4, M6...)</td></tr>
+                <tr><td>🇧🇪 <strong>Bélgica</strong></td><td>76 áreas</td><td>E19, E40, E411...</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>🔄 4. Frecuencia de actualización de precios</h2>
+          <ul>
+            <li>🇫🇷 <strong>Francia:</strong> <strong>2 veces al día (06:00 y 14:00 h)</strong> mediante el Ministerio de Economía (<em>donnees.roulez-eco.fr</em>).</li>
+            <li>🇪🇸 <strong>España:</strong> <strong>2 veces al día (06:00 y 14:00 h)</strong> mediante el Ministerio MITECO (<em>sedeaplicaciones.minetur.gob.es</em>).</li>
+            <li>🇮🇹 <strong>Italia:</strong> <strong>2 veces al día (06:00 y 14:00 h)</strong> mediante el Ministerio MIMIT / MappaCarburanti.</li>
+            <li>🇩🇪 <strong>Alemania:</strong> Precios indicativos de autopista (MTS-K).</li>
+            <li>🇧🇪 <strong>Bélgica:</strong> Precios máximos legales regulados por el SPF Economie.</li>
+            <li>🇬🇧 <strong>Reino Unido:</strong> Precios calibrados en £ (CMA Open Data).</li>
+          </ul>
+
+          <h2>🌐 5. Idiomas disponibles</h2>
+          <p>Disponible en <strong>5 idiomas</strong>: Español, Francés, Alemán, Italiano e Inglés.</p>
+        `
+      },
+      en: {
+        docTitle: "User Guide • FuelPilot",
+        headerTitle: "Fuel<span>Pilot</span> • User Guide",
+        badgeVersion: "Official User Guide • v7.8",
+        backBtn: "Back to Application",
+        privacyLink: "Privacy Policy",
+        html: `
+          <h2>🎯 1. What is FuelPilot?</h2>
+          <p><strong>FuelPilot</strong> is your smart motorway driving companion, designed to save you money on long European road trips. Because motorway fuel prices can vary by more than <strong>€0.20 to €0.35 per litre</strong> from one service station to the next, FuelPilot allows you to anticipate your refuelling stops with total peace of mind.</p>
+
+          <h2>🚀 2. Key Features & How to Use</h2>
+          <div class="features-grid">
+            <div class="feature-card">
+              <span class="feature-icon">🛣️</span>
+              <div class="feature-title">1. Itinerary Calculation A → B</div>
+              <p class="feature-desc">Enter origin and destination with predictive autocomplete. Add unlimited intermediate stops and compare alternative routes.</p>
+            </div>
+            <div class="feature-card">
+              <span class="feature-icon">⏱️</span>
+              <div class="feature-title">2. Strict Chronological Order</div>
+              <p class="feature-desc">Service areas appear in the exact order you will encounter them along your direction of travel.</p>
+            </div>
+            <div class="feature-card">
+              <span class="feature-icon">📍</span>
+              <div class="feature-title">3. Official Milestone Posts (PK)</div>
+              <p class="feature-desc">Displays the official highway milestone (e.g. <em>A6 • Post km 311</em>) so you can easily match road signs.</p>
+            </div>
+            <div class="feature-card">
+              <span class="feature-icon">🟢</span>
+              <div class="feature-title">4. Live GPS Drive Mode</div>
+              <p class="feature-desc">Real-time vehicle position pin on the map. Stations you have already passed automatically disappear from the list.</p>
+            </div>
+            <div class="feature-card">
+              <span class="feature-icon">🧭</span>
+              <div class="feature-title">5. 1-Click Waze & Maps Navigation</div>
+              <p class="feature-desc">Direct buttons to launch Waze or Google Maps navigation right to the pumps with a single tap.</p>
+            </div>
+            <div class="feature-card">
+              <span class="feature-icon">⭐</span>
+              <div class="feature-title">6. Lowest Price Badge & Outages</div>
+              <p class="feature-desc">The cheapest station along your entire route is highlighted with a gold <strong>⭐ LOWEST PRICE</strong> badge. Fuel outages are shown in red.</p>
+            </div>
+          </div>
+
+          <h2>🌍 3. Covered Countries & Motorway Networks (2,337 MSAs)</h2>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Country</th><th>Service Areas</th><th>Motorway Networks</th></tr></thead>
+              <tbody>
+                <tr><td>🇫🇷 <strong>France</strong></td><td>437 MSAs</td><td>A1 to A89 (APRR, AREA, Vinci Autoroutes, Sanef...)</td></tr>
+                <tr><td>🇪🇸 <strong>Spain</strong></td><td>833 MSAs</td><td>Autovías & Autopistas (A-1 to A-8, AP-7 Mediterranean...)</td></tr>
+                <tr><td>🇮🇹 <strong>Italy</strong></td><td>615 MSAs</td><td>Autostrade (A1 Milan-Naples, A4, A14, A22...)</td></tr>
+                <tr><td>🇩🇪 <strong>Germany</strong></td><td>218 MSAs</td><td>Official Autobahn-Raststätten (A1, A3, A7, A8, A9...)</td></tr>
+                <tr><td>🇬🇧 <strong>United Kingdom</strong></td><td>158 MSAs</td><td>Motorway Service Areas (M1, M4, M5, M6, M20, M25...)</td></tr>
+                <tr><td>🇧🇪 <strong>Belgium</strong></td><td>76 MSAs</td><td>E19, E40, E411, E42...</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>🔄 4. Price Refresh Frequency & Official Sources</h2>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Country</th><th>Update Frequency</th><th>Official Source</th></tr></thead>
+              <tbody>
+                <tr><td>🇫🇷 <strong>France</strong></td><td><span class="status-badge status-live">2x daily (06:00 & 14:00 CET)</span></td><td>Ministry of Economy / DGCCRF live feed (<em>donnees.roulez-eco.fr</em>)</td></tr>
+                <tr><td>🇪🇸 <strong>Spain</strong></td><td><span class="status-badge status-live">2x daily (06:00 & 14:00 CET)</span></td><td>Spanish Ministry for Ecological Transition MITECO</td></tr>
+                <tr><td>🇮🇹 <strong>Italy</strong></td><td><span class="status-badge status-live">2x daily (06:00 & 14:00 CET)</span></td><td>Ministry of Enterprises MIMIT / MappaCarburanti</td></tr>
+                <tr><td>🇩🇪 <strong>Germany</strong></td><td><span class="status-badge status-ref">Motorway reference prices</span></td><td>Indicative motorway tariffs (MTS-K / Bundeskartellamt)</td></tr>
+                <tr><td>🇧🇪 <strong>Belgium</strong></td><td><span class="status-badge status-ref">Official price caps</span></td><td>Maximum legal fuel prices set by Belgian SPF Economie</td></tr>
+                <tr><td>🇬🇧 <strong>United Kingdom</strong></td><td><span class="status-badge status-ref">Calibrated in £</span></td><td>UK Motorway operators & CMA Open Data</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>🌐 5. Available Languages</h2>
+          <p>FuelPilot is fully available in <strong>5 languages</strong>: English, French, German, Italian, and Spanish. It automatically detects your language or lets you switch anytime using the flag bar at the top.</p>
+        `
+      }
+    };
+
+    function getSelectedLanguage() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlLang = urlParams.get('lang');
+      if (urlLang && GUIDE_TEXTS[urlLang.toLowerCase()]) {
+        return urlLang.toLowerCase();
+      }
+      try {
+        const stored = localStorage.getItem('fuelpilot_lang');
+        if (stored && GUIDE_TEXTS[stored.toLowerCase()]) {
+          return stored.toLowerCase();
+        }
+      } catch (e) {}
+      const navLang = (navigator.language || 'fr').slice(0, 2).toLowerCase();
+      return GUIDE_TEXTS[navLang] ? navLang : 'fr';
+    }
+
+    function applyLanguage(lang) {
+      const data = GUIDE_TEXTS[lang] || GUIDE_TEXTS.fr;
+      document.documentElement.lang = lang;
+      document.getElementById('doc-title').textContent = data.docTitle;
+      document.getElementById('title-main').innerHTML = data.headerTitle;
+      document.getElementById('badge-version').textContent = data.badgeVersion;
+      document.getElementById('content-body').innerHTML = data.html;
+      
+      const backBtn = document.getElementById('btn-back-app');
+      backBtn.href = `index.html?lang=${lang}&_v=${Date.now()}`;
+      document.getElementById('lbl-back-btn').textContent = data.backBtn;
+
+      const privLink = document.getElementById('link-privacy');
+      privLink.textContent = data.privacyLink;
+      privLink.href = `privacy.html?lang=${lang}`;
+
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+
+      try {
+        localStorage.setItem('fuelpilot_lang', lang);
+      } catch (e) {}
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        applyLanguage(btn.dataset.lang);
+      });
+    });
+
+    applyLanguage(getSelectedLanguage());
+  </script>
+</body>
+</html>

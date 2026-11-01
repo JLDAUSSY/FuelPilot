@@ -354,6 +354,8 @@ const I18N_DICT = {
     pageTitle: "FuelPilot • Carburant Autoroute & Bornes PK",
     tagline: "Prix carburant & aires d'autoroute",
     privacy: "Confidentialité",
+    guide: "Guide",
+    guideTitle: "Mode d'emploi & Guide d'utilisation",
     live: "Prix en direct",
     refreshTitle: "Actualiser FuelPilot",
     sec1: "1. Choix de l'itinéraire",
@@ -450,6 +452,8 @@ const I18N_DICT = {
     pageTitle: "FuelPilot • Autobahn-Tankstellen & Kraftstoffpreise",
     tagline: "Kraftstoffpreise & Autobahnraststätten",
     privacy: "Datenschutz",
+    guide: "Hilfe",
+    guideTitle: "Bedienungsanleitung & Leitfaden",
     live: "Live-Preise",
     refreshTitle: "FuelPilot aktualisieren",
     sec1: "1. Routenwahl",
@@ -545,6 +549,8 @@ const I18N_DICT = {
     pageTitle: "FuelPilot • Motorway Fuel Prices & Service Areas",
     tagline: "Motorway fuel prices & service areas",
     privacy: "Privacy",
+    guide: "Guide",
+    guideTitle: "User Guide & Manual",
     live: "Live prices",
     refreshTitle: "Refresh FuelPilot",
     sec1: "1. Route planner",
@@ -640,6 +646,8 @@ const I18N_DICT = {
     pageTitle: "FuelPilot • Prezzi Carburante e Aree Autostradali",
     tagline: "Prezzi carburante e aree autostradali",
     privacy: "Privacy",
+    guide: "Guida",
+    guideTitle: "Guida all'uso",
     live: "Prezzi live",
     refreshTitle: "Aggiorna FuelPilot",
     sec1: "1. Scelta dell'itinerario",
@@ -735,6 +743,8 @@ const I18N_DICT = {
     pageTitle: "FuelPilot • Precios Carburante y Áreas de Autopista",
     tagline: "Precios de carburante y áreas de autopista",
     privacy: "Privacidad",
+    guide: "Guía",
+    guideTitle: "Guía de uso",
     live: "Precios en vivo",
     refreshTitle: "Actualizar FuelPilot",
     sec1: "1. Elección de ruta",
@@ -1015,6 +1025,13 @@ function setAppLanguage(lang, isManual = false) {
     privEl.textContent = tr.privacy;
     privEl.title = tr.privacy;
     privEl.href = `privacy.html?lang=${currentLang}`;
+  }
+
+  const guideEl = document.getElementById('i18n-guide');
+  if (guideEl) {
+    guideEl.textContent = tr.guide || 'Guide';
+    guideEl.title = tr.guideTitle || "Mode d'emploi & Guide";
+    guideEl.href = `guide.html?lang=${currentLang}`;
   }
 
   const liveEl = document.getElementById('i18n-live-text') || document.querySelector('.live-text');
