@@ -1,0 +1,39 @@
+name: Actualisation Quotidienne Prix Carburants (France)
+
+on:
+  schedule:
+    # Tous les jours à 05:00 UTC et 13:00 UTC (soit 06h00 et 14h00 heure de Paris en hiver)
+    - cron: '0 5,13 * * *'
+  workflow_dispatch: # Permet de déclencher la mise à jour manuellement d'un clic depuis GitHub
+
+permissions:
+  contents: write
+
+jobs:
+  update-fuel-prices:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le code source
+        uses: actions/checkout@v4
+
+      - name: Configurer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Mettre à jour les prix officiels français
+        run: |
+          python update_fr_prices.py
+
+      - name: Valider les modifications et publier
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add stations_autoroute.json
+          if git diff --staged --quiet; then
+            echo "Aucun changement de prix détecté."
+          else
+            git commit -m "chore(data): actualisation automatique des prix carburants France [skip ci]"
+            git push
+          fi

@@ -1497,7 +1497,9 @@ function initMap() {
 // Load stations from JSON
 async function loadStationsData() {
   try {
-    const res = await fetch(`stations_autoroute.json?v=${APP_VERSION}`);
+    // Cache journalier automatique pour charger les prix actualises chaque matin sans forcer un vidage manuel du cache
+    const todayStr = new Date().toISOString().slice(0, 10);
+    const res = await fetch(`stations_autoroute.json?v=${APP_VERSION}&d=${todayStr}`);
     allStations = await res.json();
     if (DE_LIVE_PRICES.proxyUrl) {
       // Les aires allemandes réelles sont chargées à la demande depuis Tankerkönig

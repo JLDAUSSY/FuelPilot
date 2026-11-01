@@ -13,11 +13,11 @@
     "lon": 4.766,
     "pk_text": null,
     "prix": {
-      "gazole": 2.381,
-      "e10": 2.099,
-      "sp98": 2.2,
+      "gazole": 2.388,
       "e85": 0.843,
-      "gplc": 1.004
+      "gplc": 1.004,
+      "e10": 2.099,
+      "sp98": 2.2
     },
     "ruptures": [
       "SP95"
@@ -56,11 +56,11 @@
     "lon": 3.197,
     "pk_text": null,
     "prix": {
-      "gazole": 2.38,
-      "sp95": 2.24,
-      "e10": 2.1,
+      "gazole": 2.4,
+      "sp95": 2.23,
       "e85": 0.879,
-      "gplc": 0.98
+      "gplc": 0.98,
+      "e10": 2.1
     },
     "ruptures": [
       "SP98"
@@ -100,13 +100,13 @@
     "lon": 2.97598,
     "pk_text": null,
     "prix": {
-      "gazole": 2.25,
+      "gazole": 2.15,
       "e10": 1.99
     },
     "ruptures": [
-      "SP95",
       "E85",
       "GPLc",
+      "SP95",
       "SP98"
     ],
     "services": [
@@ -137,14 +137,13 @@
     "lon": 5.396,
     "pk_text": null,
     "prix": {
-      "gazole": 2.472,
-      "e10": 2.206,
-      "sp98": 2.306,
-      "gplc": 1.129
+      "gazole": 2.336,
+      "gplc": 1.129,
+      "e10": 2.184,
+      "sp98": 2.284
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -176,15 +175,12 @@
     "lon": 6.048,
     "pk_text": null,
     "prix": {
-      "gazole": 2.549,
-      "e10": 2.359,
-      "sp98": 2.509,
-      "gplc": 1.279
+      "gazole": 2.429,
+      "gplc": 1.279,
+      "e10": 2.329,
+      "sp98": 2.479
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -214,11 +210,11 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "e85": 0.929,
+      "e85": 0.924,
       "gplc": 1.076
     },
     "ruptures": [
+      "E10",
       "SP95",
       "SP98"
     ],
@@ -239,15 +235,12 @@
     "lon": 2.348,
     "pk_text": null,
     "prix": {
-      "gazole": 2.549,
+      "gazole": 2.399,
+      "gplc": 1.239,
       "e10": 2.369,
-      "sp98": 2.539,
-      "gplc": 1.239
+      "sp98": 2.539
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -282,10 +275,10 @@
       "e85": 0.875
     },
     "ruptures": [
+      "E10",
+      "GPLc",
       "Gazole",
       "SP95",
-      "GPLc",
-      "E10",
       "SP98"
     ],
     "services": [
@@ -310,14 +303,14 @@
     "lon": -0.85169803376746,
     "pk_text": null,
     "prix": {
-      "gazole": 2.54,
-      "e10": 2.35,
-      "sp98": 2.45,
-      "gplc": 1.06
+      "gazole": 2.42,
+      "gplc": 1.06,
+      "e10": 2.34,
+      "sp98": 2.44
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -348,14 +341,14 @@
     "lon": 5.9775342421699005,
     "pk_text": null,
     "prix": {
-      "gazole": 2.589,
-      "e10": 2.439,
-      "sp98": 2.539,
-      "gplc": 1.165
+      "gazole": 2.439,
+      "gplc": 1.165,
+      "e10": 2.339,
+      "sp98": 2.439
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Douches",
@@ -378,14 +371,14 @@
     "lon": 3.3910774626099,
     "pk_text": null,
     "prix": {
-      "gazole": 2.766,
-      "e10": 2.498,
-      "sp98": 2.648,
-      "gplc": 1.168
+      "gazole": 2.656,
+      "gplc": 1.168,
+      "e10": 2.494,
+      "sp98": 2.644
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -419,11 +412,11 @@
     "lon": 0.86,
     "pk_text": null,
     "prix": {
-      "gazole": 2.431,
+      "gazole": 2.221,
+      "e85": 1.0,
+      "gplc": 1.12,
       "e10": 2.196,
-      "sp98": 2.269,
-      "e85": 1,
-      "gplc": 1.12
+      "sp98": 2.269
     },
     "ruptures": [
       "SP95"
@@ -459,14 +452,14 @@
     "lon": -2.3642220430000003,
     "pk_text": null,
     "prix": {
-      "gazole": 2.494,
-      "e10": 2.298,
-      "sp98": 2.364
+      "gazole": 2.359,
+      "e10": 2.259,
+      "sp98": 2.329
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -502,15 +495,13 @@
     "lon": -0.598996,
     "pk_text": null,
     "prix": {
-      "gazole": 2.669,
-      "e10": 2.359,
-      "sp98": 2.459,
+      "gazole": 2.529,
       "e85": 1.069,
-      "gplc": 1.149
+      "gplc": 1.149,
+      "e10": 2.359,
+      "sp98": 2.459
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Boutique alimentaire",
@@ -536,15 +527,11 @@
     "lon": -0.584483,
     "pk_text": null,
     "prix": {
-      "gazole": 2.669,
+      "gazole": 2.529,
       "e10": 2.359,
       "sp98": 2.459
     },
-    "ruptures": [
-      "SP95",
-      "E85",
-      "GPLc"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Boutique alimentaire",
@@ -570,14 +557,14 @@
     "lon": 2.98637,
     "pk_text": null,
     "prix": {
-      "gazole": 2.549,
-      "e10": 2.309,
-      "sp98": 2.509,
-      "gplc": 1.16
+      "gazole": 2.399,
+      "gplc": 1.165,
+      "e10": 2.279,
+      "sp98": 2.379
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -608,14 +595,14 @@
     "lon": 4.8936217878982,
     "pk_text": null,
     "prix": {
-      "e10": 2.531,
-      "sp98": 2.681
+      "e10": 2.527,
+      "sp98": 2.677
     },
     "ruptures": [
-      "Gazole",
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "Gazole",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -649,15 +636,11 @@
     "lon": 4.1564309999999995,
     "pk_text": null,
     "prix": {
-      "gazole": 2.787,
-      "e10": 2.531,
-      "sp98": 2.681
+      "gazole": 2.678,
+      "e10": 2.527,
+      "sp98": 2.677
     },
-    "ruptures": [
-      "SP95",
-      "E85",
-      "GPLc"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -690,15 +673,13 @@
     "lon": 2.97,
     "pk_text": null,
     "prix": {
-      "gazole": 2.492,
-      "e10": 2.256,
-      "sp98": 2.354,
+      "gazole": 2.312,
       "e85": 1.059,
-      "gplc": 1.17
+      "gplc": 1.17,
+      "e10": 2.256,
+      "sp98": 2.354
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -728,15 +709,12 @@
     "lon": 4.6990798723954,
     "pk_text": null,
     "prix": {
-      "gazole": 2.664,
+      "gazole": 2.524,
+      "gplc": 1.144,
       "e10": 2.324,
-      "sp98": 2.424,
-      "gplc": 1.144
+      "sp98": 2.424
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -761,14 +739,14 @@
     "lon": 5.2431698394589,
     "pk_text": null,
     "prix": {
-      "gazole": 2.669,
+      "gazole": 2.529,
       "e10": 2.329,
       "sp98": 2.429
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -795,14 +773,14 @@
     "lon": 5.491106279529101,
     "pk_text": null,
     "prix": {
-      "gazole": 2.669,
+      "gazole": 2.529,
+      "gplc": 1.149,
       "e10": 2.349,
-      "sp98": 2.449,
-      "gplc": 1.149
+      "sp98": 2.449
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -828,14 +806,14 @@
     "lon": 6.133140600000001,
     "pk_text": null,
     "prix": {
-      "gazole": 2.586,
+      "gazole": 2.535,
       "e10": 2.263,
       "sp98": 2.358
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -868,14 +846,13 @@
     "lon": 0.524,
     "pk_text": null,
     "prix": {
-      "gazole": 2.542,
-      "e10": 2.323,
-      "sp98": 2.423,
-      "gplc": 1.144
+      "gazole": 2.411,
+      "gplc": 1.144,
+      "e10": 2.315,
+      "sp98": 2.415
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "SP95"
     ],
     "services": [
       "Douches",
@@ -902,11 +879,11 @@
     "lon": -1.284,
     "pk_text": null,
     "prix": {
-      "gazole": 2.492,
+      "gazole": 2.342,
+      "e85": 0.929,
+      "gplc": 1.177,
       "e10": 2.256,
-      "sp98": 2.329,
-      "e85": 0.919,
-      "gplc": 1.177
+      "sp98": 2.329
     },
     "ruptures": [
       "SP95"
@@ -942,14 +919,14 @@
     "lon": 5.579313000000001,
     "pk_text": null,
     "prix": {
-      "gazole": 2.43,
+      "gazole": 2.385,
+      "gplc": 1.19,
       "e10": 2.195,
-      "sp98": 2.268,
-      "gplc": 1.19
+      "sp98": 2.268
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -982,14 +959,14 @@
     "lon": 5.583634,
     "pk_text": null,
     "prix": {
-      "gazole": 2.43,
+      "gazole": 2.385,
+      "gplc": 1.19,
       "e10": 2.195,
-      "sp98": 2.268,
-      "gplc": 1.19
+      "sp98": 2.268
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -1022,14 +999,14 @@
     "lon": 6.168,
     "pk_text": null,
     "prix": {
-      "gazole": 2.589,
-      "e10": 2.439,
-      "sp98": 2.539
+      "gazole": 2.439,
+      "e10": 2.339,
+      "sp98": 2.439
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -1058,15 +1035,12 @@
     "lon": 6.157508723526,
     "pk_text": null,
     "prix": {
-      "gazole": 2.669,
+      "gazole": 2.529,
+      "gplc": 1.149,
       "e10": 2.369,
-      "sp98": 2.469,
-      "gplc": 1.149
+      "sp98": 2.469
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -1091,11 +1065,11 @@
     "lon": 4.0352394865034,
     "pk_text": null,
     "prix": {
-      "gazole": 2.43,
-      "e10": 2.195,
-      "sp98": 2.268,
+      "gazole": 2.385,
       "e85": 1.047,
-      "gplc": 1.19
+      "gplc": 1.19,
+      "e10": 2.195,
+      "sp98": 2.268
     },
     "ruptures": [
       "SP95"
@@ -1132,11 +1106,11 @@
     "lon": 7.5804767,
     "pk_text": null,
     "prix": {
-      "gazole": 2.59,
-      "e10": 2.31,
-      "sp98": 2.46,
+      "gazole": 2.41,
       "e85": 0.975,
-      "gplc": 1.18
+      "gplc": 1.18,
+      "e10": 2.31,
+      "sp98": 2.46
     },
     "ruptures": [
       "SP95"
@@ -1172,14 +1146,14 @@
     "lon": 4.2252831453678,
     "pk_text": null,
     "prix": {
-      "gazole": 2.549,
-      "e10": 2.379,
-      "sp98": 2.479,
-      "gplc": 1.165
+      "gazole": 2.399,
+      "gplc": 1.165,
+      "e10": 2.279,
+      "sp98": 2.379
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -1212,14 +1186,14 @@
     "lon": -0.34336203889620004,
     "pk_text": null,
     "prix": {
-      "gazole": 2.487,
+      "gazole": 2.337,
       "e10": 2.251,
       "sp98": 2.324
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -1251,14 +1225,14 @@
     "lon": 6.091693528860801,
     "pk_text": null,
     "prix": {
-      "gazole": 2.443,
+      "gazole": 2.293,
+      "gplc": 1.132,
       "e10": 2.207,
-      "sp98": 2.28,
-      "gplc": 1.132
+      "sp98": 2.28
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Restauration à emporter",
@@ -1290,14 +1264,14 @@
     "lon": 5.494,
     "pk_text": null,
     "prix": {
-      "gazole": 2.589,
-      "e10": 2.439,
-      "sp98": 2.539,
-      "gplc": 1.165
+      "gazole": 2.439,
+      "gplc": 1.165,
+      "e10": 2.339,
+      "sp98": 2.439
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -1329,15 +1303,12 @@
     "lon": 5.929938000000001,
     "pk_text": null,
     "prix": {
-      "gazole": 2.669,
+      "gazole": 2.529,
+      "gplc": 1.149,
       "e10": 2.369,
-      "sp98": 2.469,
-      "gplc": 1.149
+      "sp98": 2.469
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -1365,14 +1336,12 @@
     "lon": 1.339,
     "pk_text": null,
     "prix": {
-      "gazole": 2.6,
-      "e10": 2.32,
-      "sp98": 2.42
+      "gazole": 2.437,
+      "e10": 2.297,
+      "sp98": 2.397
     },
     "ruptures": [
-      "SP95",
-      "E85",
-      "GPLc"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -1404,14 +1373,14 @@
     "lon": 1.5248918369564999,
     "pk_text": null,
     "prix": {
-      "gazole": 2.664,
+      "gazole": 2.524,
+      "gplc": 1.149,
       "e10": 2.364,
-      "sp98": 2.464,
-      "gplc": 1.149
+      "sp98": 2.464
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -1442,11 +1411,11 @@
     "lon": 2.58,
     "pk_text": null,
     "prix": {
-      "gazole": 2.518,
+      "gazole": 2.368,
       "sp95": 2.314,
-      "sp98": 2.355,
       "e85": 1.369,
-      "gplc": 1.207
+      "gplc": 1.207,
+      "sp98": 2.355
     },
     "ruptures": [
       "E10"
@@ -1482,14 +1451,14 @@
     "lon": 5.8607648908294,
     "pk_text": null,
     "prix": {
-      "gazole": 2.589,
-      "e10": 2.379,
-      "sp98": 2.479,
-      "gplc": 1.165
+      "gazole": 2.439,
+      "gplc": 1.165,
+      "e10": 2.279,
+      "sp98": 2.379
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -1521,14 +1490,14 @@
     "lon": 4.825,
     "pk_text": null,
     "prix": {
-      "gazole": 2.539,
-      "e10": 2.369,
-      "sp98": 2.469,
-      "gplc": 1.11
+      "gazole": 2.329,
+      "gplc": 1.14,
+      "e10": 2.269,
+      "sp98": 2.369
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -1562,15 +1531,11 @@
     "lon": 2.24,
     "pk_text": null,
     "prix": {
-      "gazole": 2.549,
-      "e10": 2.316,
-      "sp98": 2.416
+      "gazole": 2.408,
+      "e10": 2.303,
+      "sp98": 2.403
     },
-    "ruptures": [
-      "SP95",
-      "E85",
-      "GPLc"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -1600,11 +1565,11 @@
     "lon": 1.548,
     "pk_text": null,
     "prix": {
-      "gazole": 2.492,
-      "e10": 2.256,
-      "sp98": 2.329,
+      "gazole": 2.342,
       "e85": 1.038,
-      "gplc": 1.177
+      "gplc": 1.177,
+      "e10": 2.256,
+      "sp98": 2.329
     },
     "ruptures": [
       "SP95"
@@ -1640,15 +1605,13 @@
     "lon": 1.5490598027254001,
     "pk_text": null,
     "prix": {
-      "gazole": 2.462,
-      "e10": 2.226,
-      "sp98": 2.299,
+      "gazole": 2.312,
       "e85": 1.038,
-      "gplc": 1.181
+      "gplc": 1.181,
+      "e10": 2.226,
+      "sp98": 2.299
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -1680,14 +1643,14 @@
     "lon": -1.29,
     "pk_text": null,
     "prix": {
-      "gazole": 2.492,
+      "gazole": 2.342,
+      "e85": 0.929,
       "e10": 2.256,
-      "sp98": 2.329,
-      "e85": 0.919
+      "sp98": 2.329
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -1720,14 +1683,14 @@
     "lon": 1.084,
     "pk_text": null,
     "prix": {
-      "gazole": 2.789,
-      "e10": 2.599,
-      "sp98": 2.779,
-      "gplc": 1.259
+      "gazole": 2.629,
+      "gplc": 1.259,
+      "e10": 2.519,
+      "sp98": 2.699
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -1761,14 +1724,14 @@
     "lon": 5.108,
     "pk_text": null,
     "prix": {
-      "gazole": 2.44,
+      "gazole": 2.395,
       "e10": 2.205,
       "sp98": 2.278
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -1794,14 +1757,14 @@
     "lon": 5.523,
     "pk_text": null,
     "prix": {
-      "gazole": 2.669,
+      "gazole": 2.529,
+      "gplc": 1.149,
       "e10": 2.369,
-      "sp98": 2.469,
-      "gplc": 1.149
+      "sp98": 2.469
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -1831,14 +1794,14 @@
     "lon": 3.5374234517177996,
     "pk_text": null,
     "prix": {
-      "gazole": 2.589,
-      "e10": 2.439,
-      "sp98": 2.539,
-      "gplc": 1.165
+      "gazole": 2.439,
+      "gplc": 1.165,
+      "e10": 2.339,
+      "sp98": 2.439
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -1866,13 +1829,13 @@
     "lon": 2.641,
     "pk_text": null,
     "prix": {
-      "gazole": 2.25,
+      "gazole": 2.15,
       "e10": 1.99
     },
     "ruptures": [
-      "SP95",
       "E85",
       "GPLc",
+      "SP95",
       "SP98"
     ],
     "services": [
@@ -1906,14 +1869,14 @@
     "lon": 6.916,
     "pk_text": null,
     "prix": {
-      "gazole": 2.549,
-      "e10": 2.267,
-      "sp98": 2.348,
-      "gplc": 0.999
+      "gazole": 2.596,
+      "gplc": 0.999,
+      "e10": 2.268
     },
     "ruptures": [
+      "E85",
       "SP95",
-      "E85"
+      "SP98"
     ],
     "services": [
       "Toilettes publiques",
@@ -1948,14 +1911,14 @@
     "lon": 5.574,
     "pk_text": null,
     "prix": {
-      "gazole": 2.589,
-      "e10": 2.439,
-      "sp98": 2.539,
-      "gplc": 1.165
+      "gazole": 2.439,
+      "gplc": 1.165,
+      "e10": 2.339,
+      "sp98": 2.439
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -1983,14 +1946,14 @@
     "lon": 3.362,
     "pk_text": null,
     "prix": {
-      "gazole": 2.44,
-      "e10": 2.207,
-      "sp98": 2.313,
-      "e85": 1.334
+      "gazole": 2.417,
+      "e85": 1.334,
+      "e10": 2.187,
+      "sp98": 2.294
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -2026,15 +1989,12 @@
     "lon": 2.202,
     "pk_text": null,
     "prix": {
-      "gazole": 2.539,
-      "e10": 2.249,
-      "sp98": 2.429,
-      "gplc": 1.259
+      "gazole": 2.379,
+      "gplc": 1.259,
+      "e10": 2.229,
+      "sp98": 2.409
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -2069,9 +2029,9 @@
       "sp98": 2.298
     },
     "ruptures": [
+      "E10",
       "E85",
-      "GPLc",
-      "E10"
+      "GPLc"
     ],
     "services": [
       "Laverie",
@@ -2101,12 +2061,12 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.419,
-      "e10": 2.169,
-      "e85": 1.019
+      "e85": 1.019,
+      "e10": 2.169
     },
     "ruptures": [
-      "SP95",
       "GPLc",
+      "SP95",
       "SP98"
     ],
     "services": [
@@ -2141,11 +2101,11 @@
     "lon": -0.056921417848999,
     "pk_text": null,
     "prix": {
-      "gazole": 2.45,
-      "e10": 2.26,
-      "sp98": 2.33,
+      "gazole": 2.34,
       "e85": 0.99,
-      "gplc": 1.06
+      "gplc": 1.06,
+      "e10": 2.26,
+      "sp98": 2.33
     },
     "ruptures": [
       "SP95"
@@ -2179,15 +2139,11 @@
     "lon": 2.486,
     "pk_text": null,
     "prix": {
-      "gazole": 2.489,
+      "gazole": 2.339,
       "e10": 2.309,
       "sp98": 2.489
     },
-    "ruptures": [
-      "SP95",
-      "E85",
-      "GPLc"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -2219,15 +2175,12 @@
     "lon": 2.487,
     "pk_text": null,
     "prix": {
-      "gazole": 2.479,
-      "e10": 2.269,
-      "sp98": 2.449,
-      "e85": 0.909
+      "gazole": 2.299,
+      "e85": 0.909,
+      "e10": 2.249,
+      "sp98": 2.429
     },
-    "ruptures": [
-      "SP95",
-      "GPLc"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -2259,13 +2212,13 @@
     "lon": -0.6676995681272,
     "pk_text": null,
     "prix": {
-      "gazole": 2.25,
-      "e10": 1.99,
+      "gazole": 2.15,
       "gplc": 1.019
     },
     "ruptures": [
-      "SP95",
+      "E10",
       "E85",
+      "SP95",
       "SP98"
     ],
     "services": [
@@ -2296,12 +2249,12 @@
     "lon": -0.667,
     "pk_text": null,
     "prix": {
-      "gazole": 2.25,
-      "e10": 1.99,
+      "gazole": 2.15,
       "e85": 0.885,
       "gplc": 1.019
     },
     "ruptures": [
+      "E10",
       "SP95",
       "SP98"
     ],
@@ -2332,13 +2285,11 @@
     "lon": 2.197,
     "pk_text": null,
     "prix": {
-      "gazole": 2.499,
-      "e10": 2.269,
-      "sp98": 2.439
+      "gazole": 2.349,
+      "e10": 2.249,
+      "sp98": 2.419
     },
     "ruptures": [
-      "SP95",
-      "E85",
       "GPLc"
     ],
     "services": [
@@ -2372,14 +2323,14 @@
     "lon": -1.143,
     "pk_text": null,
     "prix": {
-      "gazole": 2.379,
+      "gazole": 2.398,
       "e10": 2.149,
-      "sp98": 2.218
+      "sp98": 2.209
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -2415,14 +2366,14 @@
     "lon": -1.117,
     "pk_text": null,
     "prix": {
-      "gazole": 2.52,
-      "e10": 2.29,
-      "sp98": 2.39,
-      "gplc": 1.06
+      "gazole": 2.4,
+      "gplc": 1.06,
+      "e10": 2.28,
+      "sp98": 2.38
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -2451,14 +2402,13 @@
     "lon": 0.371,
     "pk_text": null,
     "prix": {
-      "gazole": 2.664,
+      "gazole": 2.524,
       "e10": 2.364,
       "sp98": 2.464
     },
     "ruptures": [
-      "SP95",
-      "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -2491,15 +2441,12 @@
     "lon": 2.481,
     "pk_text": null,
     "prix": {
-      "gazole": 2.529,
-      "e10": 2.349,
-      "sp98": 2.449,
-      "gplc": 1.064
+      "gazole": 2.409,
+      "gplc": 1.064,
+      "e10": 2.339,
+      "sp98": 2.439
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -2535,9 +2482,9 @@
       "sp98": 2.299
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -2570,15 +2517,13 @@
     "lon": 4.999,
     "pk_text": null,
     "prix": {
-      "gazole": 2.383,
-      "sp95": 2.135,
-      "e10": 2.071,
-      "sp98": 2.188,
-      "e85": 0.915
+      "gazole": 2.129,
+      "sp95": 2.099,
+      "e85": 0.915,
+      "e10": 2.045,
+      "sp98": 2.149
     },
-    "ruptures": [
-      "GPLc"
-    ],
+    "ruptures": [],
     "services": [
       "Laverie",
       "Vente de fioul domestique",
@@ -2608,14 +2553,14 @@
     "lon": 5.324,
     "pk_text": null,
     "prix": {
-      "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 0.955
+      "e85": 0.945,
+      "e10": 1.99
     },
     "ruptures": [
+      "GPLc",
+      "Gazole",
       "SP95",
-      "GPLc"
+      "SP98"
     ],
     "services": [
       "Carburant additivé",
@@ -2639,15 +2584,13 @@
     "lon": 2.841,
     "pk_text": "122",
     "prix": {
-      "gazole": 2.429,
-      "e10": 2.192,
-      "sp98": 2.249,
+      "gazole": 2.267,
       "e85": 1.059,
-      "gplc": 1.173
+      "gplc": 1.175,
+      "e10": 2.182,
+      "sp98": 2.239
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -2675,11 +2618,11 @@
     "lon": 3.046,
     "pk_text": "190",
     "prix": {
-      "gazole": 2.362,
-      "e10": 2.037,
-      "sp98": 2.137,
-      "e85": 0.975,
-      "gplc": 1.022
+      "gazole": 2.254,
+      "e85": 0.973,
+      "gplc": 1.022,
+      "e10": 2.017,
+      "sp98": 2.117
     },
     "ruptures": [
       "SP95"
@@ -2714,13 +2657,13 @@
     "pk_text": "80",
     "prix": {
       "gazole": 2.25,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.153
+      "gplc": 1.155,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
-      "E10"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -2749,11 +2692,11 @@
     "lon": 2.874,
     "pk_text": "145",
     "prix": {
-      "gazole": 2.42,
-      "e10": 2.185,
-      "sp98": 2.258,
+      "gazole": 2.375,
       "e85": 1.149,
-      "gplc": 1.109
+      "gplc": 1.109,
+      "e10": 2.185,
+      "sp98": 2.258
     },
     "ruptures": [
       "SP95"
@@ -2791,9 +2734,9 @@
       "sp98": 2.338
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -2824,11 +2767,11 @@
     "lon": 2.553,
     "pk_text": "28",
     "prix": {
-      "gazole": 2.457,
-      "e10": 2.221,
-      "sp98": 2.294,
+      "gazole": 2.358,
       "e85": 1.059,
-      "gplc": 1.087
+      "gplc": 1.087,
+      "e10": 2.221,
+      "sp98": 2.294
     },
     "ruptures": [
       "SP95"
@@ -2864,11 +2807,11 @@
     "pk_text": "7",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
       "e85": 1.019,
       "gplc": 1.094
     },
     "ruptures": [
+      "E10",
       "SP95",
       "SP98"
     ],
@@ -2899,14 +2842,14 @@
     "lon": 2.394,
     "pk_text": "7",
     "prix": {
-      "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
+      "gazole": 2.15,
       "e85": 1.019,
-      "gplc": 1.084
+      "gplc": 1.086,
+      "e10": 1.99
     },
     "ruptures": [
-      "SP95"
+      "SP95",
+      "SP98"
     ],
     "services": [
       "Toilettes publiques",
@@ -2939,15 +2882,12 @@
     "lon": 2.864,
     "pk_text": "145",
     "prix": {
-      "gazole": 2.424,
-      "e10": 2.181,
-      "sp98": 2.223,
-      "gplc": 1.155
+      "gazole": 2.259,
+      "gplc": 1.16,
+      "e10": 2.164,
+      "sp98": 2.206
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -2978,15 +2918,13 @@
     "lon": 3.0457023999999997,
     "pk_text": "198",
     "prix": {
-      "gazole": 2.49,
-      "e10": 2.29,
-      "sp98": 2.36,
+      "gazole": 2.36,
       "e85": 0.99,
-      "gplc": 1.09
+      "gplc": 1.09,
+      "e10": 2.16,
+      "sp98": 2.23
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -3019,10 +2957,10 @@
     "pk_text": "80",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.155
+      "gplc": 1.147,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -3044,14 +2982,13 @@
     "lon": 2.837,
     "pk_text": "122",
     "prix": {
-      "gazole": 2.561,
-      "e10": 2.272,
-      "sp98": 2.372,
-      "gplc": 1.109
+      "gazole": 2.428,
+      "gplc": 1.109,
+      "e10": 2.228,
+      "sp98": 2.328
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "SP95"
     ],
     "services": null,
     "pays": "FR"
@@ -3070,15 +3007,11 @@
     "lon": -0.597,
     "pk_text": "420",
     "prix": {
-      "gazole": 2.659,
-      "e10": 2.409,
-      "sp98": 2.599
+      "gazole": 2.499,
+      "e10": 2.399,
+      "sp98": 2.589
     },
-    "ruptures": [
-      "SP95",
-      "E85",
-      "GPLc"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -3113,10 +3046,10 @@
     "pk_text": "100",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.144
+      "gplc": 1.144,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -3138,14 +3071,14 @@
     "lon": -0.6041038262695699,
     "pk_text": "440",
     "prix": {
-      "gazole": 2.808,
-      "e10": 2.477,
-      "sp98": 2.627
+      "gazole": 2.69,
+      "e10": 2.485,
+      "sp98": 2.635
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -3173,11 +3106,11 @@
     "lon": -0.60338845634462,
     "pk_text": "440",
     "prix": {
-      "gazole": 2.664,
-      "e10": 2.344,
-      "sp98": 2.444,
+      "gazole": 2.524,
       "e85": 1.094,
-      "gplc": 1.149
+      "gplc": 1.149,
+      "e10": 2.344,
+      "sp98": 2.444
     },
     "ruptures": [
       "SP95"
@@ -3210,14 +3143,14 @@
     "lon": -0.015977181017418,
     "pk_text": "340",
     "prix": {
-      "gazole": 2.512,
+      "gazole": 2.362,
+      "gplc": 1.177,
       "e10": 2.276,
-      "sp98": 2.349,
-      "gplc": 1.177
+      "sp98": 2.349
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -3252,10 +3185,10 @@
     "pk_text": "340",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.039,
-      "gplc": 1.155
+      "gplc": 1.155,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -3290,14 +3223,14 @@
     "lon": -0.492614,
     "pk_text": "495",
     "prix": {
-      "gazole": 2.54,
+      "gazole": 2.42,
+      "gplc": 1.06,
       "e10": 2.35,
-      "sp98": 2.45,
-      "gplc": 1.06
+      "sp98": 2.45
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -3326,13 +3259,12 @@
     "lon": 1.6414407471436,
     "pk_text": "125",
     "prix": {
-      "gazole": 2.505,
-      "e10": 2.28,
-      "sp98": 2.37,
-      "gplc": 1.16
+      "gazole": 2.28,
+      "gplc": 1.16,
+      "e10": 2.263,
+      "sp98": 2.3
     },
     "ruptures": [
-      "SP95",
       "E85"
     ],
     "services": [
@@ -3366,11 +3298,11 @@
     "lon": 1.387,
     "pk_text": "160",
     "prix": {
-      "gazole": 2.521,
-      "e10": 2.337,
-      "sp98": 2.437,
+      "gazole": 2.38,
       "e85": 1.059,
-      "gplc": 1.154
+      "gplc": 1.144,
+      "e10": 2.321,
+      "sp98": 2.421
     },
     "ruptures": [
       "SP95"
@@ -3407,14 +3339,14 @@
     "lon": 1.388,
     "pk_text": "160",
     "prix": {
-      "gazole": 2.81,
-      "e10": 2.488,
-      "sp98": 2.638
+      "gazole": 2.693,
+      "e10": 2.496,
+      "sp98": 2.646
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -3447,15 +3379,12 @@
     "lon": 0.632,
     "pk_text": "240",
     "prix": {
-      "gazole": 2.669,
-      "e10": 2.479,
-      "sp98": 2.659,
-      "gplc": 1.249
+      "gazole": 2.499,
+      "gplc": 1.199,
+      "e10": 2.469,
+      "sp98": 2.649
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -3488,10 +3417,10 @@
     "pk_text": "525",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.099
+      "gplc": 1.099,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -3526,15 +3455,12 @@
     "lon": 0.779,
     "pk_text": "210",
     "prix": {
-      "gazole": 2.719,
-      "e10": 2.559,
-      "sp98": 2.739,
-      "gplc": 1.259
+      "gazole": 2.549,
+      "gplc": 1.259,
+      "e10": 2.469,
+      "sp98": 2.649
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -3567,15 +3493,13 @@
     "lon": 2.148,
     "pk_text": "25",
     "prix": {
-      "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
+      "gazole": 2.15,
       "e85": 1.039,
-      "gplc": 1.089
+      "gplc": 1.075,
+      "e10": 1.99,
+      "sp98": 1.99
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -3604,13 +3528,13 @@
     "pk_text": "25",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.149
+      "gplc": 1.151,
+      "e10": 1.99
     },
     "ruptures": [
-      "SP95"
+      "SP95",
+      "SP98"
     ],
     "services": null,
     "pays": "FR"
@@ -3629,14 +3553,14 @@
     "lon": 1.6413549164550998,
     "pk_text": "125",
     "prix": {
-      "gazole": 2.49,
+      "gazole": 2.296,
+      "gplc": 1.16,
       "e10": 2.263,
-      "sp98": 2.342,
-      "gplc": 1.16
+      "sp98": 2.342
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -3670,12 +3594,12 @@
     "pk_text": "370",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "gplc": 1.154
+      "gplc": 1.154,
+      "e10": 1.99
     },
     "ruptures": [
-      "SP95",
       "E85",
+      "SP95",
       "SP98"
     ],
     "services": [
@@ -3706,14 +3630,14 @@
     "lon": -0.446,
     "pk_text": "370",
     "prix": {
-      "gazole": 2.808,
-      "e10": 2.477,
-      "sp98": 2.627
+      "gazole": 2.69,
+      "e10": 2.485,
+      "sp98": 2.635
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -3746,15 +3670,12 @@
     "lon": -0.604,
     "pk_text": "420",
     "prix": {
-      "gazole": 2.769,
-      "e10": 2.579,
-      "sp98": 2.759,
-      "gplc": 1.259
+      "gazole": 2.599,
+      "gplc": 1.259,
+      "e10": 2.539,
+      "sp98": 2.719
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -3788,10 +3709,10 @@
     "pk_text": "250",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.144
+      "gplc": 1.144,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -3813,14 +3734,14 @@
     "lon": 1.856,
     "pk_text": "65",
     "prix": {
-      "gazole": 2.81,
-      "e10": 2.488,
-      "sp98": 2.638
+      "gazole": 2.693,
+      "e10": 2.496,
+      "sp98": 2.646
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -3857,9 +3778,9 @@
     "pk_text": "100",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
       "e85": 1.059,
-      "gplc": 1.134
+      "gplc": 1.134,
+      "e10": 1.99
     },
     "ruptures": [
       "SP95",
@@ -3883,10 +3804,10 @@
     "pk_text": "210",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.154
+      "gplc": 1.144,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -3917,14 +3838,14 @@
     "lon": 1.858,
     "pk_text": "75",
     "prix": {
-      "gazole": 2.81,
-      "e10": 2.488,
-      "sp98": 2.638
+      "gazole": 2.693,
+      "e10": 2.496,
+      "sp98": 2.646
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -3959,15 +3880,13 @@
     "lon": -0.433,
     "pk_text": "530",
     "prix": {
-      "gazole": 2.497,
+      "gazole": 2.347,
+      "e85": 0.899,
+      "gplc": 1.156,
       "e10": 2.261,
-      "sp98": 2.314,
-      "e85": 0.999,
-      "gplc": 1.156
+      "sp98": 2.314
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -3998,11 +3917,11 @@
     "lon": 0.523,
     "pk_text": "270",
     "prix": {
-      "gazole": 2.579,
-      "e10": 2.449,
-      "sp98": 2.549,
+      "gazole": 2.439,
       "e85": 0.999,
-      "gplc": 1.064
+      "gplc": 1.064,
+      "e10": 2.419,
+      "sp98": 2.519
     },
     "ruptures": [
       "SP95"
@@ -4039,14 +3958,14 @@
     "lon": 0.355,
     "pk_text": "295",
     "prix": {
-      "gazole": 2.55,
+      "gazole": 2.43,
+      "gplc": 1.06,
       "e10": 2.35,
-      "sp98": 2.45,
-      "gplc": 1.06
+      "sp98": 2.45
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -4083,11 +4002,11 @@
     "lon": -0.4908950744995,
     "pk_text": "495",
     "prix": {
-      "gazole": 2.489,
-      "e10": 2.318,
-      "sp98": 2.395,
+      "gazole": 2.369,
       "e85": 0.929,
-      "gplc": 1.064
+      "gplc": 1.064,
+      "e10": 2.276,
+      "sp98": 2.359
     },
     "ruptures": [
       "SP95"
@@ -4121,15 +4040,12 @@
     "lon": 2.644,
     "pk_text": null,
     "prix": {
-      "gazole": 2.489,
-      "e10": 2.269,
-      "sp98": 2.439,
-      "gplc": 1.159
+      "gazole": 2.329,
+      "gplc": 1.159,
+      "e10": 2.239,
+      "sp98": 2.409
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -4163,12 +4079,12 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "e85": 0.979
+      "e85": 0.969
     },
     "ruptures": [
-      "SP95",
+      "E10",
       "GPLc",
+      "SP95",
       "SP98"
     ],
     "services": [
@@ -4198,13 +4114,13 @@
     "pk_text": "160",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.154
+      "e10": 1.99
     },
     "ruptures": [
-      "SP95"
+      "GPLc",
+      "SP95",
+      "SP98"
     ],
     "services": [
       "Toilettes publiques",
@@ -4239,13 +4155,12 @@
     "pk_text": "160",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
       "e85": 1.059,
-      "gplc": 1.154
+      "gplc": 1.154,
+      "e10": 1.99
     },
     "ruptures": [
-      "SP95",
-      "SP98"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -4275,14 +4190,14 @@
     "lon": 1.579,
     "pk_text": "55",
     "prix": {
-      "gazole": 2.808,
-      "e10": 2.483,
-      "sp98": 2.633
+      "gazole": 2.69,
+      "e10": 2.491,
+      "sp98": 2.641
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -4316,14 +4231,14 @@
     "lon": 1.579,
     "pk_text": "55",
     "prix": {
-      "gazole": 2.808,
-      "e10": 2.483,
-      "sp98": 2.633
+      "gazole": 2.69,
+      "e10": 2.491,
+      "sp98": 2.641
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -4358,14 +4273,14 @@
     "lon": -0.16714885670557,
     "pk_text": "215",
     "prix": {
-      "gazole": 2.808,
-      "e10": 2.49,
-      "sp98": 2.64,
-      "gplc": 1.159
+      "gazole": 2.69,
+      "gplc": 1.159,
+      "e10": 2.497,
+      "sp98": 2.647
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -4401,14 +4316,14 @@
     "lon": -0.168,
     "pk_text": "215",
     "prix": {
-      "gazole": 2.808,
-      "e10": 2.49,
-      "sp98": 2.64,
-      "gplc": 1.184
+      "gazole": 2.69,
+      "gplc": 1.184,
+      "e10": 2.497,
+      "sp98": 2.647
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -4441,11 +4356,11 @@
     "prix": {
       "gazole": 2.25,
       "e85": 1.059,
-      "gplc": 1.143
+      "gplc": 1.142,
+      "e10": 1.99
     },
     "ruptures": [
       "SP95",
-      "E10",
       "SP98"
     ],
     "services": null,
@@ -4465,14 +4380,14 @@
     "lon": 0.6221519999999999,
     "pk_text": "135",
     "prix": {
-      "gazole": 2.664,
+      "gazole": 2.524,
+      "gplc": 1.149,
       "e10": 2.364,
-      "sp98": 2.464,
-      "gplc": 1.149
+      "sp98": 2.464
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -4500,11 +4415,11 @@
     "lon": -0.491,
     "pk_text": "255",
     "prix": {
-      "gazole": 2.529,
-      "e10": 2.379,
-      "sp98": 2.479,
+      "gazole": 2.409,
       "e85": 0.984,
-      "gplc": 1.064
+      "gplc": 1.064,
+      "e10": 2.379,
+      "sp98": 2.479
     },
     "ruptures": [
       "SP95"
@@ -4537,15 +4452,13 @@
     "lon": -0.491,
     "pk_text": "255",
     "prix": {
-      "gazole": 2.799,
-      "e10": 2.639,
-      "sp98": 2.819,
-      "e85": 1.049,
-      "gplc": 1.249
+      "gazole": 2.629,
+      "e85": 0.989,
+      "gplc": 1.249,
+      "e10": 2.629,
+      "sp98": 2.809
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -4585,9 +4498,9 @@
       "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -4620,15 +4533,12 @@
     "lon": 0.62210350597264,
     "pk_text": "135",
     "prix": {
-      "gazole": 2.694,
+      "gazole": 2.554,
+      "gplc": 1.149,
       "e10": 2.364,
-      "sp98": 2.464,
-      "gplc": 1.149
+      "sp98": 2.464
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -4658,14 +4568,14 @@
     "lon": 1.083,
     "pk_text": "95",
     "prix": {
-      "gazole": 2.581,
-      "e10": 2.323,
-      "sp98": 2.423
+      "gazole": 2.427,
+      "e10": 2.293,
+      "sp98": 2.393
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": null,
     "pays": "FR"
@@ -4684,14 +4594,14 @@
     "lon": 0.3210725634038,
     "pk_text": "165",
     "prix": {
-      "gazole": 2.569,
-      "e10": 2.379,
-      "sp98": 2.479,
-      "e85": 1.109
+      "gazole": 2.439,
+      "e10": 2.339,
+      "sp98": 2.439
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "E85",
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -4725,13 +4635,13 @@
     "pk_text": "115",
     "prix": {
       "gazole": 2.25,
+      "e85": 1.059,
       "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 1.059
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": null,
     "pays": "FR"
@@ -4750,14 +4660,14 @@
     "lon": -0.2818181,
     "pk_text": "215",
     "prix": {
-      "gazole": 2.448,
+      "gazole": 2.298,
+      "gplc": 1.137,
       "e10": 2.212,
-      "sp98": 2.285,
-      "gplc": 1.137
+      "sp98": 2.285
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -4789,11 +4699,11 @@
     "lon": -0.276,
     "pk_text": "215",
     "prix": {
-      "gazole": 2.497,
+      "gazole": 2.347,
+      "e85": 0.889,
+      "gplc": 1.156,
       "e10": 2.261,
-      "sp98": 2.314,
-      "e85": 0.999,
-      "gplc": 1.156
+      "sp98": 2.314
     },
     "ruptures": [
       "SP95"
@@ -4830,10 +4740,10 @@
     "pk_text": "25",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.141
+      "gplc": 1.145,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -4866,12 +4776,11 @@
     "pk_text": "25",
     "prix": {
       "gazole": 2.25,
+      "e85": 1.059,
       "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 1.059
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
       "GPLc"
     ],
     "services": [
@@ -4901,14 +4810,14 @@
     "lon": 1.632,
     "pk_text": "55",
     "prix": {
-      "gazole": 2.377,
+      "gazole": 2.252,
+      "e85": 1.059,
       "e10": 2.141,
-      "sp98": 2.234,
-      "e85": 1.059
+      "sp98": 2.234
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -4938,15 +4847,13 @@
     "lon": 1.634,
     "pk_text": "55",
     "prix": {
-      "gazole": 2.497,
+      "gazole": 2.347,
+      "e85": 0.905,
+      "gplc": 1.156,
       "e10": 2.261,
-      "sp98": 2.314,
-      "e85": 0.999,
-      "gplc": 1.156
+      "sp98": 2.314
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Boutique alimentaire",
@@ -4976,14 +4883,14 @@
     "lon": 1.218,
     "pk_text": "85",
     "prix": {
-      "gazole": 2.437,
-      "e10": 2.196,
-      "sp98": 2.263,
-      "gplc": 1.14
+      "gazole": 2.274,
+      "gplc": 1.14,
+      "e10": 2.186,
+      "sp98": 2.253
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -5015,11 +4922,11 @@
     "lon": 1.220037,
     "pk_text": "85",
     "prix": {
-      "gazole": 2.462,
-      "e10": 2.226,
-      "sp98": 2.299,
+      "gazole": 2.312,
       "e85": 0.959,
-      "gplc": 1.151
+      "gplc": 1.151,
+      "e10": 2.226,
+      "sp98": 2.299
     },
     "ruptures": [
       "SP95"
@@ -5056,14 +4963,14 @@
     "lon": 0.32840996171082,
     "pk_text": "165",
     "prix": {
-      "gazole": 2.459,
-      "e10": 2.23,
-      "sp98": 2.303,
-      "e85": 1.049
+      "gazole": 2.339,
+      "e85": 1.049,
+      "e10": 2.22,
+      "sp98": 2.293
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -5098,13 +5005,13 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
+      "gplc": 1.044,
       "e10": 1.99,
-      "sp98": 1.99,
-      "gplc": 1.049
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -5134,14 +5041,13 @@
     "lon": 2.146,
     "pk_text": null,
     "prix": {
-      "gazole": 2.496,
-      "e10": 2.223,
-      "sp98": 2.323
+      "gazole": 2.38,
+      "e10": 2.208,
+      "sp98": 2.308
     },
     "ruptures": [
-      "SP95",
-      "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": null,
     "pays": "FR"
@@ -5160,14 +5066,14 @@
     "lon": 0.998,
     "pk_text": null,
     "prix": {
-      "gazole": 2.497,
+      "gazole": 2.337,
+      "e85": 0.974,
       "e10": 2.261,
-      "sp98": 2.354,
-      "e85": 0.975
+      "sp98": 2.354
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": null,
     "pays": "FR"
@@ -5186,14 +5092,14 @@
     "lon": 1.694,
     "pk_text": null,
     "prix": {
-      "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 0.893
+      "gazole": 2.15,
+      "e85": 0.882,
+      "e10": 1.99
     },
     "ruptures": [
+      "GPLc",
       "SP95",
-      "GPLc"
+      "SP98"
     ],
     "services": null,
     "pays": "FR"
@@ -5212,14 +5118,14 @@
     "lon": 1.755,
     "pk_text": null,
     "prix": {
-      "gazole": 2.794,
-      "e10": 2.478,
-      "sp98": 2.628,
-      "gplc": 1.132
+      "gazole": 2.676,
+      "gplc": 1.177,
+      "e10": 2.486,
+      "sp98": 2.636
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -5255,14 +5161,14 @@
     "lon": 1.73284823,
     "pk_text": null,
     "prix": {
-      "gazole": 2.25,
+      "gazole": 2.15,
       "e10": 1.99,
       "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -5295,12 +5201,11 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
+      "e85": 1.059,
       "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 1.059
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
       "GPLc"
     ],
     "services": [
@@ -5331,14 +5236,14 @@
     "lon": 1.68,
     "pk_text": null,
     "prix": {
-      "gazole": 2.792,
-      "sp98": 2.628
+      "gazole": 2.675,
+      "sp98": 2.636
     },
     "ruptures": [
-      "SP95",
+      "E10",
       "E85",
       "GPLc",
-      "E10"
+      "SP95"
     ],
     "services": [
       "Automate CB 24/24"
@@ -5359,13 +5264,13 @@
     "lon": 2.151187,
     "pk_text": null,
     "prix": {
+      "gazole": 2.25,
       "e10": 1.99
     },
     "ruptures": [
-      "Gazole",
-      "SP95",
       "E85",
       "GPLc",
+      "SP95",
       "SP98"
     ],
     "services": null,
@@ -5385,15 +5290,13 @@
     "lon": 2.304,
     "pk_text": null,
     "prix": {
-      "gazole": 2.629,
+      "gazole": 2.449,
       "sp95": 1.969,
-      "e10": 2.389,
-      "sp98": 2.549,
-      "gplc": 1.209
+      "gplc": 1.209,
+      "e10": 2.349,
+      "sp98": 2.509
     },
-    "ruptures": [
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -5423,11 +5326,11 @@
     "lon": 2.472,
     "pk_text": null,
     "prix": {
-      "gazole": 2.495,
-      "e10": 2.298,
-      "sp98": 2.365,
+      "gazole": 2.375,
       "e85": 1.009,
-      "gplc": 1.064
+      "gplc": 1.064,
+      "e10": 2.256,
+      "sp98": 2.329
     },
     "ruptures": [
       "SP95"
@@ -5451,14 +5354,14 @@
     "lon": 2.19,
     "pk_text": null,
     "prix": {
-      "gazole": 2.495,
-      "sp98": 2.339
+      "gazole": 2.375,
+      "sp98": 2.329
     },
     "ruptures": [
-      "SP95",
+      "E10",
       "E85",
       "GPLc",
-      "E10"
+      "SP95"
     ],
     "services": [
       "Automate CB 24/24"
@@ -5479,14 +5382,14 @@
     "lon": 3.172,
     "pk_text": null,
     "prix": {
-      "gazole": 2.558,
-      "e10": 2.312,
-      "sp98": 2.412,
-      "gplc": 1.109
+      "gazole": 2.452,
+      "gplc": 1.139,
+      "e10": 2.292,
+      "sp98": 2.392
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": null,
     "pays": "FR"
@@ -5505,14 +5408,14 @@
     "lon": 3.0892816536201,
     "pk_text": null,
     "prix": {
-      "gazole": 2.589,
-      "e10": 2.439,
-      "sp98": 2.539,
-      "gplc": 1.165
+      "gazole": 2.439,
+      "gplc": 1.165,
+      "e10": 2.339,
+      "sp98": 2.439
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -5539,14 +5442,14 @@
     "lon": 3.0899769262674,
     "pk_text": null,
     "prix": {
-      "gazole": 2.443,
+      "gazole": 2.293,
       "e10": 2.207,
       "sp98": 2.28
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -5578,13 +5481,12 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 1.059
+      "e85": 1.059,
+      "e10": 1.99
     },
     "ruptures": [
       "SP95",
-      "GPLc"
+      "SP98"
     ],
     "services": [
       "Automate CB 24/24"
@@ -5606,13 +5508,13 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.465,
-      "e10": 2.28,
-      "sp98": 2.347
+      "e10": 2.248,
+      "sp98": 2.321
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -5643,11 +5545,11 @@
     "lon": 1.292865,
     "pk_text": null,
     "prix": {
-      "gazole": 2.522,
-      "e10": 2.286,
-      "sp98": 2.359,
+      "gazole": 2.372,
       "e85": 0.949,
-      "gplc": 1.211
+      "gplc": 1.211,
+      "e10": 2.286,
+      "sp98": 2.359
     },
     "ruptures": [
       "SP95"
@@ -5683,11 +5585,11 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
       "e85": 1.059,
-      "gplc": 1.124
+      "gplc": 1.134
     },
     "ruptures": [
+      "E10",
       "SP95",
       "SP98"
     ],
@@ -5709,10 +5611,10 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.149
+      "gplc": 1.154,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -5748,14 +5650,12 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.019,
-      "gplc": 1.155
+      "gplc": 1.155,
+      "e10": 1.99,
+      "sp98": 1.99
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": null,
     "pays": "FR"
   },
@@ -5773,14 +5673,14 @@
     "lon": 1.420283,
     "pk_text": null,
     "prix": {
-      "gazole": 2.808,
-      "e10": 2.49,
-      "sp98": 2.64,
-      "gplc": 1.169
+      "gazole": 2.69,
+      "gplc": 1.17,
+      "e10": 2.497,
+      "sp98": 2.647
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -5814,11 +5714,11 @@
     "lon": 1.569,
     "pk_text": null,
     "prix": {
-      "gazole": 2.506,
-      "e10": 2.251,
-      "sp98": 2.302,
+      "gazole": 2.386,
       "e85": 1.159,
-      "gplc": 1.064
+      "gplc": 1.064,
+      "e10": 2.251,
+      "sp98": 2.302
     },
     "ruptures": [
       "SP95"
@@ -5857,11 +5757,11 @@
     "lon": 1.293,
     "pk_text": null,
     "prix": {
-      "gazole": 2.457,
-      "e10": 2.221,
-      "sp98": 2.294,
+      "gazole": 2.31,
       "e85": 1.059,
-      "gplc": 1.146
+      "gplc": 1.146,
+      "e10": 2.221,
+      "sp98": 2.294
     },
     "ruptures": [
       "SP95"
@@ -5894,10 +5794,10 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.53,
-      "e10": 2.283,
-      "sp98": 2.387,
       "e85": 1.292,
-      "gplc": 1.258
+      "gplc": 1.258,
+      "e10": 2.257,
+      "sp98": 2.361
     },
     "ruptures": [
       "SP95"
@@ -5931,14 +5831,14 @@
     "lon": 1.419,
     "pk_text": null,
     "prix": {
-      "gazole": 2.484,
-      "e10": 2.25,
-      "sp98": 2.35,
-      "gplc": 1.155
+      "gazole": 2.362,
+      "gplc": 1.155,
+      "e10": 2.216,
+      "sp98": 2.316
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -6000,13 +5900,11 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 0.911
+      "e85": 0.909,
+      "e10": 1.99
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "SP98"
     ],
     "services": [
       "Toilettes publiques",
@@ -6034,15 +5932,12 @@
     "lon": 2.586,
     "pk_text": null,
     "prix": {
-      "gazole": 2.507,
+      "gazole": 2.357,
+      "gplc": 1.186,
       "e10": 2.271,
-      "sp98": 2.374,
-      "gplc": 1.186
+      "sp98": 2.374
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -6073,13 +5968,13 @@
     "lon": 2.745,
     "pk_text": null,
     "prix": {
-      "gazole": 2.42,
+      "gazole": 2.269,
       "e10": 2.187
     },
     "ruptures": [
-      "SP95",
       "E85",
       "GPLc",
+      "SP95",
       "SP98"
     ],
     "services": [
@@ -6114,13 +6009,12 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.024,
-      "gplc": 1.149
+      "gplc": 1.155,
+      "e10": 1.99
     },
     "ruptures": [
-      "SP95"
+      "SP98"
     ],
     "services": [
       "Toilettes publiques",
@@ -6151,15 +6045,11 @@
     "lon": 3.069,
     "pk_text": null,
     "prix": {
-      "gazole": 2.422,
+      "gazole": 2.272,
       "e10": 2.186,
       "sp98": 2.259
     },
-    "ruptures": [
-      "SP95",
-      "E85",
-      "GPLc"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -6192,14 +6082,14 @@
     "lon": 2.377,
     "pk_text": null,
     "prix": {
-      "gazole": 2.559,
-      "e10": 2.249,
-      "sp98": 2.349,
-      "gplc": 1.089
+      "gazole": 2.419,
+      "gplc": 1.089,
+      "e10": 2.231,
+      "sp98": 2.331
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -6234,9 +6124,9 @@
       "e10": 2.235
     },
     "ruptures": [
-      "SP95",
       "E85",
       "GPLc",
+      "SP95",
       "SP98"
     ],
     "services": [
@@ -6262,13 +6152,13 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.431,
+      "gplc": 1.16,
       "e10": 2.235,
-      "sp98": 2.338,
-      "gplc": 1.16
+      "sp98": 2.338
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -6307,9 +6197,9 @@
       "sp98": 2.358
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Douches",
@@ -6336,15 +6226,11 @@
     "lon": 2.7427477754803,
     "pk_text": null,
     "prix": {
-      "gazole": 2.434,
-      "e10": 2.238,
-      "sp98": 2.304
+      "gazole": 2.299,
+      "e10": 2.199,
+      "sp98": 2.269
     },
-    "ruptures": [
-      "SP95",
-      "E85",
-      "GPLc"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -6378,11 +6264,11 @@
     "lon": 3.92652,
     "pk_text": null,
     "prix": {
-      "gazole": 2.469,
-      "e10": 2.234,
-      "sp98": 2.307,
+      "gazole": 2.425,
       "e85": 1.149,
-      "gplc": 1.158
+      "gplc": 1.158,
+      "e10": 2.234,
+      "sp98": 2.307
     },
     "ruptures": [
       "SP95"
@@ -6413,11 +6299,11 @@
     "lon": 3.9276187076699,
     "pk_text": null,
     "prix": {
-      "gazole": 2.469,
-      "e10": 2.234,
-      "sp98": 2.307,
+      "gazole": 2.425,
       "e85": 1.149,
-      "gplc": 1.158
+      "gplc": 1.158,
+      "e10": 2.234,
+      "sp98": 2.307
     },
     "ruptures": [
       "SP95"
@@ -6439,14 +6325,14 @@
     "lon": 2.3802908317047,
     "pk_text": 55,
     "prix": {
-      "gazole": 2.477,
-      "e10": 2.241,
+      "gazole": 2.297,
+      "e10": 2.227,
       "sp98": 2.314
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -6478,14 +6364,14 @@
     "lon": 0.468,
     "pk_text": null,
     "prix": {
-      "gazole": 2.476,
-      "e10": 2.287,
-      "sp98": 2.352
+      "gazole": 2.356,
+      "e10": 2.256,
+      "sp98": 2.329
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -6522,13 +6408,13 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.155
+      "gplc": 1.155,
+      "e10": 1.99
     },
     "ruptures": [
-      "SP95"
+      "SP95",
+      "SP98"
     ],
     "services": [
       "Toilettes publiques",
@@ -6560,12 +6446,12 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.149
+      "gplc": 1.149,
+      "sp98": 1.99
     },
     "ruptures": [
+      "E10",
       "SP95"
     ],
     "services": [
@@ -6599,12 +6485,11 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
+      "e85": 1.059,
       "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 1.059
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
       "GPLc"
     ],
     "services": null,
@@ -6623,8 +6508,16 @@
     "lat": 48.197533,
     "lon": 0.16889,
     "pk_text": null,
-    "prix": {},
-    "ruptures": null,
+    "prix": {
+      "gazole": 2.25
+    },
+    "ruptures": [
+      "E10",
+      "E85",
+      "GPLc",
+      "SP95",
+      "SP98"
+    ],
     "services": null,
     "pays": "FR"
   },
@@ -6642,14 +6535,13 @@
     "lon": 1.665,
     "pk_text": null,
     "prix": {
-      "gazole": 2.669,
-      "e10": 2.379,
-      "sp98": 2.519,
-      "gplc": 1.269
+      "gazole": 2.449,
+      "gplc": 1.269,
+      "e10": 2.349,
+      "sp98": 2.489
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -6681,13 +6573,13 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.507,
+      "gplc": 1.196,
       "e10": 2.271,
-      "sp98": 2.344,
-      "gplc": 1.196
+      "sp98": 2.344
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -6720,15 +6612,12 @@
     "lon": 1.657,
     "pk_text": null,
     "prix": {
-      "gazole": 2.669,
-      "e10": 2.379,
-      "sp98": 2.519,
-      "gplc": 1.259
+      "gazole": 2.449,
+      "gplc": 1.259,
+      "e10": 2.349,
+      "sp98": 2.519
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -6759,14 +6648,13 @@
     "lon": 0.546,
     "pk_text": null,
     "prix": {
-      "gazole": 2.567,
-      "e10": 2.33,
-      "sp98": 2.43,
-      "gplc": 1.155
+      "gazole": 2.423,
+      "gplc": 1.155,
+      "e10": 2.32,
+      "sp98": 2.42
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -6796,14 +6684,14 @@
     "lon": 1.968,
     "pk_text": null,
     "prix": {
-      "gazole": 2.377,
+      "gazole": 2.263,
+      "e85": 0.971,
       "e10": 2.141,
-      "sp98": 2.214,
-      "e85": 0.975
+      "sp98": 2.214
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -6834,14 +6722,14 @@
     "lon": 2.52134,
     "pk_text": null,
     "prix": {
-      "gazole": 2.459,
-      "e10": 2.262,
-      "sp98": 2.329,
-      "gplc": 1.064
+      "gazole": 2.339,
+      "gplc": 1.064,
+      "e10": 2.22,
+      "sp98": 2.293
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -6870,14 +6758,14 @@
     "lon": 5.222816771347,
     "pk_text": "103",
     "prix": {
-      "gazole": 2.43,
+      "gazole": 2.385,
+      "gplc": 1.19,
       "e10": 2.195,
-      "sp98": 2.268,
-      "gplc": 1.19
+      "sp98": 2.268
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -6906,14 +6794,14 @@
     "lon": 5.497400864934001,
     "pk_text": "138",
     "prix": {
-      "gazole": 2.44,
+      "gazole": 2.395,
+      "gplc": 1.19,
       "e10": 2.205,
-      "sp98": 2.278,
-      "gplc": 1.19
+      "sp98": 2.278
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -6946,10 +6834,10 @@
     "pk_text": "57",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.038,
-      "gplc": 1.149
+      "gplc": 1.152,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -6975,9 +6863,9 @@
       "e10": 1.99
     },
     "ruptures": [
-      "SP95",
       "E85",
       "GPLc",
+      "SP95",
       "SP98"
     ],
     "services": null,
@@ -6997,11 +6885,11 @@
     "lon": 5.223,
     "pk_text": "103",
     "prix": {
-      "gazole": 2.513,
-      "e10": 2.239,
-      "sp98": 2.299,
+      "gazole": 2.363,
       "e85": 1.149,
-      "gplc": 1.165
+      "gplc": 1.165,
+      "e10": 2.239,
+      "sp98": 2.299
     },
     "ruptures": [
       "SP95"
@@ -7041,13 +6929,13 @@
     "pk_text": "182",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
       "E85",
       "GPLc",
-      "SP98"
+      "SP95"
     ],
     "services": null,
     "pays": "FR"
@@ -7067,13 +6955,13 @@
     "pk_text": "245",
     "prix": {
       "gazole": 2.526,
+      "e85": 1.313,
       "e10": 2.228,
-      "sp98": 2.321,
-      "e85": 1.313
+      "sp98": 2.321
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Restauration à emporter",
@@ -7097,10 +6985,10 @@
     "pk_text": "275",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.132
+      "gplc": 1.139,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -7136,10 +7024,10 @@
     "pk_text": "182",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.151
+      "gplc": 1.155,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -7161,11 +7049,11 @@
     "lon": 5.01,
     "pk_text": "18",
     "prix": {
-      "gazole": 2.426,
-      "e10": 2.196,
-      "sp98": 2.269,
+      "gazole": 2.381,
       "e85": 1.047,
-      "gplc": 1.19
+      "gplc": 1.19,
+      "e10": 2.196,
+      "sp98": 2.269
     },
     "ruptures": [
       "SP95"
@@ -7203,14 +7091,14 @@
     "lon": 5.0027249351628,
     "pk_text": "18",
     "prix": {
-      "gazole": 2.428,
-      "e10": 2.278,
-      "sp98": 2.366
+      "gazole": 2.533,
+      "e10": 2.227,
+      "sp98": 2.331
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -7246,14 +7134,14 @@
     "lon": 6.185,
     "pk_text": "318",
     "prix": {
-      "gazole": 2.579,
-      "e10": 2.308,
-      "sp98": 2.374
+      "gazole": 2.459,
+      "e10": 2.169,
+      "sp98": 2.244
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -7285,14 +7173,13 @@
     "lon": 6.178,
     "pk_text": "318",
     "prix": {
-      "gazole": 2.477,
+      "gazole": 2.361,
+      "gplc": 1.033,
       "e10": 2.241,
-      "sp98": 2.334,
-      "gplc": 1.009
+      "sp98": 2.334
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -7320,14 +7207,14 @@
     "lon": 6.4183868421211,
     "pk_text": null,
     "prix": {
-      "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
-      "gplc": 0.999
+      "gplc": 1.036
     },
     "ruptures": [
+      "E10",
+      "E85",
+      "Gazole",
       "SP95",
-      "E85"
+      "SP98"
     ],
     "services": [
       "Toilettes publiques",
@@ -7357,14 +7244,13 @@
     "lon": 6.174,
     "pk_text": null,
     "prix": {
-      "gazole": 2.494,
+      "gazole": 2.398,
+      "gplc": 1.075,
       "e10": 2.286,
-      "sp98": 2.386,
-      "gplc": 1.021
+      "sp98": 2.386
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -7397,12 +7283,11 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
       "e85": 1.059,
-      "gplc": 1.149
+      "gplc": 1.151,
+      "e10": 1.99
     },
     "ruptures": [
-      "SP95",
       "SP98"
     ],
     "services": [
@@ -7436,12 +7321,11 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
+      "e85": 1.048,
       "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 1.048
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
       "GPLc"
     ],
     "services": null,
@@ -7461,11 +7345,11 @@
     "lon": 7.405,
     "pk_text": null,
     "prix": {
-      "gazole": 2.62,
+      "gazole": 2.41,
+      "e85": 1.13,
+      "gplc": 1.2,
       "e10": 2.31,
-      "sp98": 2.46,
-      "e85": 0.975,
-      "gplc": 1.2
+      "sp98": 2.46
     },
     "ruptures": [
       "SP95"
@@ -7504,9 +7388,9 @@
       "sp98": 2.582
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -7540,14 +7424,14 @@
     "lon": 7.717,
     "pk_text": null,
     "prix": {
-      "gazole": 2.892,
-      "e10": 2.391,
-      "sp98": 2.48
+      "gazole": 2.757,
+      "e10": 2.385,
+      "sp98": 2.445
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -7578,14 +7462,14 @@
     "lon": 5.106,
     "pk_text": null,
     "prix": {
-      "gazole": 2.44,
+      "gazole": 2.395,
       "e10": 2.205,
       "sp98": 2.278
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -7620,11 +7504,11 @@
     "lon": 7.138,
     "pk_text": null,
     "prix": {
-      "gazole": 2.579,
-      "e10": 2.298,
-      "sp98": 2.364,
-      "e85": 0.989,
-      "gplc": 1.099
+      "gazole": 2.439,
+      "e85": 0.994,
+      "gplc": 1.099,
+      "e10": 2.159,
+      "sp98": 2.234
     },
     "ruptures": [
       "SP95"
@@ -7658,14 +7542,14 @@
     "lon": 6.117,
     "pk_text": null,
     "prix": {
-      "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.039
     },
     "ruptures": [
+      "E10",
+      "GPLc",
+      "Gazole",
       "SP95",
-      "GPLc"
+      "SP98"
     ],
     "services": [
       "Toilettes publiques",
@@ -7701,13 +7585,13 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
+      "e85": 1.019,
       "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 1.019
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": null,
     "pays": "FR"
@@ -7726,14 +7610,14 @@
     "lon": 6.729,
     "pk_text": null,
     "prix": {
-      "gazole": 2.504,
-      "e10": 2.217,
-      "sp98": 2.257,
-      "e85": 1.219
+      "gazole": 2.526,
+      "e85": 1.219,
+      "e10": 2.241,
+      "sp98": 2.281
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -7768,11 +7652,11 @@
     "lon": 5.334,
     "pk_text": null,
     "prix": {
-      "gazole": 2.411,
-      "e10": 2.235,
-      "sp98": 2.435,
+      "gazole": 2.201,
       "e85": 0.989,
-      "gplc": 1.094
+      "gplc": 1.094,
+      "e10": 2.255,
+      "sp98": 2.435
     },
     "ruptures": [
       "SP95"
@@ -7809,11 +7693,11 @@
     "lon": 5.334,
     "pk_text": null,
     "prix": {
-      "gazole": 2.411,
-      "e10": 2.235,
-      "sp98": 2.435,
+      "gazole": 2.201,
       "e85": 0.989,
-      "gplc": 1.094
+      "gplc": 1.094,
+      "e10": 2.235,
+      "sp98": 2.435
     },
     "ruptures": [
       "SP95"
@@ -7850,11 +7734,11 @@
     "lon": 5.3118121885054,
     "pk_text": null,
     "prix": {
-      "gazole": 2.549,
-      "e10": 2.379,
-      "sp98": 2.479,
+      "gazole": 2.399,
       "e85": 1.149,
-      "gplc": 1.165
+      "gplc": 1.165,
+      "e10": 2.279,
+      "sp98": 2.379
     },
     "ruptures": [
       "SP95"
@@ -7892,15 +7776,13 @@
     "lon": 4.788,
     "pk_text": "195",
     "prix": {
-      "gazole": 2.599,
-      "e10": 2.298,
-      "sp98": 2.364,
+      "gazole": 2.459,
       "e85": 0.999,
-      "gplc": 1.099
+      "gplc": 1.099,
+      "e10": 2.159,
+      "sp98": 2.234
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -7932,15 +7814,13 @@
     "lon": 7.691,
     "pk_text": "460",
     "prix": {
-      "gazole": 2.435,
+      "gazole": 2.277,
+      "e85": 0.925,
+      "gplc": 1.156,
       "e10": 2.191,
-      "sp98": 2.264,
-      "e85": 0.999,
-      "gplc": 1.156
+      "sp98": 2.264
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -7974,14 +7854,14 @@
     "lon": 7.6960945999999995,
     "pk_text": "460",
     "prix": {
-      "gazole": 2.584,
-      "e10": 2.368,
-      "sp98": 2.452,
-      "gplc": 1.165
+      "gazole": 2.444,
+      "gplc": 1.165,
+      "e10": 2.349,
+      "sp98": 2.436
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -8011,15 +7891,12 @@
     "lon": 3.9234151280944003,
     "pk_text": "120",
     "prix": {
-      "gazole": 2.669,
+      "gazole": 2.529,
+      "gplc": 1.149,
       "e10": 2.369,
-      "sp98": 2.469,
-      "gplc": 1.149
+      "sp98": 2.469
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -8050,14 +7927,11 @@
     "pk_text": "400",
     "prix": {
       "gazole": 2.25,
+      "gplc": 1.109,
       "e10": 1.99,
-      "sp98": 1.99,
-      "gplc": 1.109
+      "sp98": 1.99
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -8085,14 +7959,14 @@
     "lon": 7.068667926000001,
     "pk_text": "400",
     "prix": {
-      "gazole": 2.457,
+      "gazole": 2.327,
+      "gplc": 1.076,
       "e10": 2.221,
-      "sp98": 2.294,
-      "gplc": 1.076
+      "sp98": 2.294
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Automate CB 24/24"
@@ -8113,15 +7987,11 @@
     "lon": 7.0642799047828,
     "pk_text": "400",
     "prix": {
-      "gazole": 2.529,
-      "e10": 2.238,
-      "sp98": 2.304
+      "gazole": 2.359,
+      "e10": 2.199,
+      "sp98": 2.269
     },
-    "ruptures": [
-      "SP95",
-      "E85",
-      "GPLc"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -8156,15 +8026,12 @@
     "lon": 6.661,
     "pk_text": "345",
     "prix": {
-      "gazole": 2.446,
-      "e10": 2.154,
-      "sp98": 2.211,
-      "gplc": 1.157
+      "gazole": 2.258,
+      "gplc": 1.157,
+      "e10": 2.141,
+      "sp98": 2.199
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -8196,14 +8063,14 @@
     "lon": 3.536447669516,
     "pk_text": "95",
     "prix": {
-      "gazole": 2.589,
-      "e10": 2.439,
-      "sp98": 2.539,
-      "gplc": 1.165
+      "gazole": 2.439,
+      "gplc": 1.165,
+      "e10": 2.339,
+      "sp98": 2.439
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -8233,15 +8100,12 @@
     "lon": 5.5083983,
     "pk_text": "240",
     "prix": {
-      "gazole": 2.51,
+      "gazole": 2.334,
+      "gplc": 1.165,
       "e10": 2.233,
-      "sp98": 2.321,
-      "gplc": 1.165
+      "sp98": 2.321
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -8270,15 +8134,12 @@
     "lon": 5.508,
     "pk_text": "240",
     "prix": {
-      "gazole": 2.578,
-      "e10": 2.266,
-      "sp98": 2.351,
-      "gplc": 1.165
+      "gazole": 2.388,
+      "gplc": 1.165,
+      "e10": 2.247,
+      "sp98": 2.336
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -8307,14 +8168,14 @@
     "lon": 2.74003485613,
     "pk_text": "25",
     "prix": {
-      "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
+      "gazole": 2.15,
       "e85": 1.039
     },
     "ruptures": [
+      "E10",
+      "GPLc",
       "SP95",
-      "GPLc"
+      "SP98"
     ],
     "services": null,
     "pays": "FR"
@@ -8333,14 +8194,14 @@
     "lon": 2.742,
     "pk_text": "25",
     "prix": {
-      "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
-      "gplc": 1.085
+      "gazole": 2.15,
+      "gplc": 1.084,
+      "e10": 1.99
     },
     "ruptures": [
+      "E85",
       "SP95",
-      "E85"
+      "SP98"
     ],
     "services": [
       "Toilettes publiques",
@@ -8375,14 +8236,14 @@
     "lon": 6.053616014722301,
     "pk_text": "300",
     "prix": {
-      "gazole": 2.558,
+      "gazole": 2.365,
       "e10": 2.235,
       "sp98": 2.338
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Automate CB 24/24"
@@ -8403,14 +8264,14 @@
     "lon": 7.365,
     "pk_text": "425",
     "prix": {
-      "gazole": 2.589,
-      "e10": 2.439,
-      "sp98": 2.539,
-      "gplc": 1.165
+      "gazole": 2.439,
+      "gplc": 1.165,
+      "e10": 2.339,
+      "sp98": 2.439
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -8444,13 +8305,12 @@
     "pk_text": "425",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.154
+      "gplc": 1.154,
+      "e10": 1.99
     },
     "ruptures": [
-      "SP95"
+      "SP98"
     ],
     "services": null,
     "pays": "FR"
@@ -8469,14 +8329,14 @@
     "lon": 3.921,
     "pk_text": "120",
     "prix": {
-      "gazole": 2.804,
-      "e10": 2.481,
-      "sp98": 2.631,
-      "gplc": 1.133
+      "gazole": 2.687,
+      "gplc": 1.134,
+      "e10": 2.488,
+      "sp98": 2.638
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -8510,14 +8370,14 @@
     "lon": 6.65722,
     "pk_text": "358",
     "prix": {
-      "gazole": 2.579,
-      "e10": 2.298,
-      "sp98": 2.364,
-      "e85": 0.999
+      "gazole": 2.459,
+      "e85": 0.999,
+      "e10": 2.159,
+      "sp98": 2.234
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -8553,11 +8413,11 @@
     "lon": 3.0641059999999998,
     "pk_text": "56",
     "prix": {
-      "gazole": 2.514,
-      "e10": 2.318,
-      "sp98": 2.384,
-      "e85": 0.989,
-      "gplc": 1.119
+      "gazole": 2.379,
+      "e85": 0.999,
+      "gplc": 1.119,
+      "e10": 2.179,
+      "sp98": 2.254
     },
     "ruptures": [
       "SP95"
@@ -8595,14 +8455,14 @@
     "lon": 3.05281,
     "pk_text": "56",
     "prix": {
-      "gazole": 2.474,
-      "e10": 2.278,
-      "sp98": 2.344,
-      "e85": 0.999
+      "gazole": 2.339,
+      "e85": 0.999,
+      "e10": 2.139,
+      "sp98": 2.214
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -8637,10 +8497,10 @@
     "pk_text": "150",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.039,
-      "gplc": 1.151
+      "gplc": 1.154,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -8662,11 +8522,11 @@
     "lon": 4.791,
     "pk_text": "195",
     "prix": {
-      "gazole": 2.461,
-      "e10": 2.231,
-      "sp98": 2.304,
+      "gazole": 2.416,
       "e85": 0.977,
-      "gplc": 1.155
+      "gplc": 1.155,
+      "e10": 2.231,
+      "sp98": 2.304
     },
     "ruptures": [
       "SP95"
@@ -8702,13 +8562,13 @@
     "pk_text": "150",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
       "e85": 1.039,
-      "gplc": 1.149
+      "gplc": 1.152,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
-      "SP98"
+      "SP95"
     ],
     "services": null,
     "pays": "FR"
@@ -8727,14 +8587,14 @@
     "lon": 6.409,
     "pk_text": null,
     "prix": {
-      "gazole": 2.792,
-      "e10": 2.511,
-      "sp98": 2.661
+      "gazole": 2.683,
+      "e10": 2.506,
+      "sp98": 2.656
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -8768,14 +8628,14 @@
     "lon": 5.9641798471,
     "pk_text": null,
     "prix": {
-      "gazole": 2.589,
-      "e10": 2.439,
-      "sp98": 2.539,
-      "gplc": 1.165
+      "gazole": 2.439,
+      "gplc": 1.165,
+      "e10": 2.339,
+      "sp98": 2.439
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -8807,14 +8667,12 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.159
+      "gplc": 1.159,
+      "e10": 1.99,
+      "sp98": 1.99
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": null,
     "pays": "FR"
   },
@@ -8833,13 +8691,13 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.504,
+      "e85": 1.452,
       "e10": 2.215,
-      "sp98": 2.477,
-      "e85": 1.452
+      "sp98": 2.477
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Douches",
@@ -8866,9 +8724,9 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
       "e85": 1.059,
-      "gplc": 1.159
+      "gplc": 1.159,
+      "e10": 1.99
     },
     "ruptures": [
       "SP95",
@@ -8892,10 +8750,10 @@
     "pk_text": 79,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.039,
-      "gplc": 1.109
+      "gplc": 1.155,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -8917,14 +8775,14 @@
     "lon": 6.0701051992966,
     "pk_text": null,
     "prix": {
-      "gazole": 2.589,
-      "e10": 2.439,
-      "sp98": 2.539,
-      "gplc": 1.165
+      "gazole": 2.439,
+      "gplc": 1.165,
+      "e10": 2.339,
+      "sp98": 2.439
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -8955,13 +8813,13 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
       "gplc": 1.159
     },
     "ruptures": [
-      "SP95"
+      "E10",
+      "SP95",
+      "SP98"
     ],
     "services": [
       "Toilettes publiques",
@@ -8991,15 +8849,12 @@
     "lon": 5.975,
     "pk_text": null,
     "prix": {
-      "gazole": 2.699,
-      "e10": 2.519,
-      "sp98": 2.689,
-      "gplc": 1.259
+      "gazole": 2.519,
+      "gplc": 1.259,
+      "e10": 2.469,
+      "sp98": 2.639
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -9029,14 +8884,14 @@
     "lon": 5.868,
     "pk_text": null,
     "prix": {
-      "gazole": 2.669,
+      "gazole": 2.381,
       "e10": 2.369,
       "sp98": 2.469
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -9063,14 +8918,14 @@
     "lon": 6.1661544958,
     "pk_text": null,
     "prix": {
-      "gazole": 2.589,
+      "gazole": 2.439,
       "e10": 2.439,
       "sp98": 2.539
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Douches",
@@ -9096,13 +8951,13 @@
     "lon": 5.92696,
     "pk_text": null,
     "prix": {
+      "gazole": 2.25,
       "e85": 1.059,
       "gplc": 1.159
     },
     "ruptures": [
-      "Gazole",
-      "SP95",
       "E10",
+      "SP95",
       "SP98"
     ],
     "services": null,
@@ -9122,14 +8977,14 @@
     "lon": 5.069609,
     "pk_text": null,
     "prix": {
-      "gazole": 2.45,
+      "gazole": 2.405,
       "e10": 2.215,
       "sp98": 2.288
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -9168,13 +9023,13 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
+      "e85": 1.058,
       "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 1.058
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -9205,15 +9060,12 @@
     "lon": 4.974,
     "pk_text": null,
     "prix": {
-      "gazole": 2.579,
+      "gazole": 2.429,
+      "gplc": 1.179,
       "e10": 2.349,
-      "sp98": 2.499,
-      "gplc": 1.179
+      "sp98": 2.499
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -9243,14 +9095,14 @@
     "lon": 4.974,
     "pk_text": null,
     "prix": {
-      "gazole": 2.659,
+      "gazole": 2.479,
+      "gplc": 1.179,
       "e10": 2.399,
-      "sp98": 2.549,
-      "gplc": 1.179
+      "sp98": 2.549
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -9281,14 +9133,14 @@
     "lon": 6.4243876383603,
     "pk_text": null,
     "prix": {
-      "gazole": 2.649,
+      "gazole": 2.499,
+      "gplc": 1.177,
       "e10": 2.349,
-      "sp98": 2.469,
-      "gplc": 1.177
+      "sp98": 2.469
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -9322,11 +9174,11 @@
     "prix": {
       "gazole": 2.25,
       "e85": 1.059,
-      "gplc": 1.159
+      "gplc": 1.159,
+      "e10": 1.99
     },
     "ruptures": [
       "SP95",
-      "E10",
       "SP98"
     ],
     "services": [
@@ -9362,15 +9214,12 @@
     "lon": 6.461941830136801,
     "pk_text": null,
     "prix": {
-      "gazole": 2.729,
+      "gazole": 2.589,
+      "gplc": 1.199,
       "e10": 2.399,
-      "sp98": 2.499,
-      "gplc": 1.199
+      "sp98": 2.499
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -9398,15 +9247,12 @@
     "lon": 5.977,
     "pk_text": null,
     "prix": {
-      "gazole": 2.709,
-      "e10": 2.519,
-      "sp98": 2.669,
-      "gplc": 1.199
+      "gazole": 2.549,
+      "gplc": 1.189,
+      "e10": 2.499,
+      "sp98": 2.649
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -9436,11 +9282,11 @@
     "lon": 5.21,
     "pk_text": null,
     "prix": {
-      "gazole": 2.589,
-      "e10": 2.379,
-      "sp98": 2.479,
+      "gazole": 2.439,
       "e85": 1.149,
-      "gplc": 1.165
+      "gplc": 1.165,
+      "e10": 2.279,
+      "sp98": 2.379
     },
     "ruptures": [
       "SP95"
@@ -9476,14 +9322,14 @@
     "lon": 6.156,
     "pk_text": null,
     "prix": {
-      "gazole": 2.669,
+      "gazole": 2.529,
       "e10": 2.369,
       "sp98": 2.469
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -9517,14 +9363,14 @@
     "lon": 5.634,
     "pk_text": null,
     "prix": {
-      "gazole": 2.604,
+      "gazole": 2.448,
+      "gplc": 1.159,
       "e10": 2.306,
-      "sp98": 2.406,
-      "gplc": 1.159
+      "sp98": 2.406
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -9554,11 +9400,11 @@
     "lon": 5.6305877865600005,
     "pk_text": null,
     "prix": {
-      "gazole": 2.589,
-      "e10": 2.379,
-      "sp98": 2.479,
+      "gazole": 2.439,
       "e85": 1.149,
-      "gplc": 1.165
+      "gplc": 1.165,
+      "e10": 2.279,
+      "sp98": 2.379
     },
     "ruptures": [
       "SP95"
@@ -9593,14 +9439,14 @@
     "lon": 4.826,
     "pk_text": null,
     "prix": {
-      "e10": 1.99,
-      "sp98": 1.99,
+      "gazole": 2.15,
       "e85": 1.019,
-      "gplc": 1.029
+      "gplc": 1.029,
+      "e10": 1.99
     },
     "ruptures": [
-      "Gazole",
-      "SP95"
+      "SP95",
+      "SP98"
     ],
     "services": [
       "Toilettes publiques",
@@ -9633,15 +9479,13 @@
     "lon": 4.826,
     "pk_text": null,
     "prix": {
-      "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
+      "gazole": 2.15,
       "e85": 1.019,
-      "gplc": 1.029
+      "gplc": 1.029,
+      "e10": 1.99,
+      "sp98": 1.99
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -9671,13 +9515,11 @@
     "lon": 4.894,
     "pk_text": null,
     "prix": {
-      "gazole": 2.669,
+      "gazole": 2.529,
       "e10": 2.349,
       "sp98": 2.449
     },
     "ruptures": [
-      "SP95",
-      "E85",
       "GPLc"
     ],
     "services": [
@@ -9713,15 +9555,12 @@
     "lon": 4.711,
     "pk_text": null,
     "prix": {
-      "gazole": 2.539,
-      "e10": 2.259,
-      "sp98": 2.409,
-      "gplc": 1.179
+      "gazole": 2.389,
+      "gplc": 1.179,
+      "e10": 2.249,
+      "sp98": 2.399
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Boutique alimentaire",
@@ -9748,14 +9587,14 @@
     "lon": 4.527,
     "pk_text": null,
     "prix": {
-      "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 1.059
+      "e85": 1.059,
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "E10",
+      "GPLc",
+      "Gazole",
+      "SP95"
     ],
     "services": null,
     "pays": "FR"
@@ -9774,13 +9613,13 @@
     "lon": 5.624,
     "pk_text": null,
     "prix": {
-      "e10": 1.99,
-      "sp98": 1.99,
+      "gazole": 2.25,
       "e85": 1.059,
-      "gplc": 1.159
+      "gplc": 1.159,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
-      "Gazole",
       "SP95"
     ],
     "services": [
@@ -9813,15 +9652,12 @@
     "lon": 5.623,
     "pk_text": null,
     "prix": {
-      "gazole": 2.669,
+      "gazole": 2.529,
+      "gplc": 1.149,
       "e10": 2.349,
-      "sp98": 2.449,
-      "gplc": 1.149
+      "sp98": 2.449
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -9856,13 +9692,7 @@
     "prix": {
       "sp98": 2.52
     },
-    "ruptures": [
-      "Gazole",
-      "SP95",
-      "E85",
-      "GPLc",
-      "E10"
-    ],
+    "ruptures": [],
     "services": null,
     "pays": "FR"
   },
@@ -9880,14 +9710,13 @@
     "lon": 5.211,
     "pk_text": null,
     "prix": {
-      "gazole": 2.557,
-      "e10": 2.326,
-      "sp98": 2.426,
-      "e85": 1.059
+      "gazole": 2.423,
+      "e85": 1.059,
+      "e10": 2.317,
+      "sp98": 2.417
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -9917,14 +9746,13 @@
     "lon": 5.211,
     "pk_text": null,
     "prix": {
-      "gazole": 2.572,
-      "e10": 2.32,
-      "sp98": 2.42,
-      "gplc": 1.159
+      "gazole": 2.416,
+      "gplc": 1.159,
+      "e10": 2.303,
+      "sp98": 2.403
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -9953,11 +9781,11 @@
     "lon": 4.9607114750936,
     "pk_text": null,
     "prix": {
-      "gazole": 2.437,
-      "e10": 2.211,
-      "sp98": 2.304,
+      "gazole": 2.32,
       "e85": 1.043,
-      "gplc": 1.136
+      "gplc": 1.136,
+      "e10": 2.211,
+      "sp98": 2.304
     },
     "ruptures": [
       "SP95"
@@ -9993,13 +9821,13 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.431,
+      "gplc": 1.108,
       "e10": 2.297,
-      "sp98": 2.388,
-      "gplc": 1.108
+      "sp98": 2.388
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -10035,13 +9863,13 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.431,
+      "gplc": 1.108,
       "e10": 2.297,
-      "sp98": 2.388,
-      "gplc": 1.108
+      "sp98": 2.388
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -10077,14 +9905,12 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.149
+      "gplc": 1.159,
+      "e10": 1.99,
+      "sp98": 1.99
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -10113,14 +9939,14 @@
     "lon": 2.929,
     "pk_text": null,
     "prix": {
-      "gazole": 2.476,
-      "e10": 2.241,
-      "sp98": 2.34
+      "gazole": 2.528,
+      "e10": 2.203,
+      "sp98": 2.302
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -10200,13 +10026,13 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
+      "e85": 1.059,
       "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 1.059
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -10240,15 +10066,12 @@
     "lon": 5.671,
     "pk_text": "23",
     "prix": {
-      "gazole": 2.497,
+      "gazole": 2.347,
+      "gplc": 1.166,
       "e10": 2.241,
-      "sp98": 2.334,
-      "gplc": 1.166
+      "sp98": 2.334
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -10281,14 +10104,14 @@
     "lon": 5.456,
     "pk_text": "4",
     "prix": {
-      "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 0.953,
-      "gplc": 1.039
+      "gazole": 2.25,
+      "e85": 0.949,
+      "gplc": 1.052
     },
     "ruptures": [
-      "Gazole",
-      "SP95"
+      "E10",
+      "SP95",
+      "SP98"
     ],
     "services": [
       "Toilettes publiques",
@@ -10320,15 +10143,12 @@
     "lon": 5.666,
     "pk_text": "25",
     "prix": {
-      "gazole": 2.497,
+      "gazole": 2.347,
+      "gplc": 1.166,
       "e10": 2.241,
-      "sp98": 2.334,
-      "gplc": 1.166
+      "sp98": 2.334
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -10364,14 +10184,14 @@
     "lon": 5.981151,
     "pk_text": "98",
     "prix": {
-      "gazole": 2.589,
-      "e10": 2.439,
-      "sp98": 2.539
+      "gazole": 2.439,
+      "gplc": 1.165,
+      "e10": 2.339,
+      "sp98": 2.439
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -10400,14 +10220,14 @@
     "lon": 5.89247,
     "pk_text": "74",
     "prix": {
-      "e10": 1.99,
-      "sp98": 1.99
+      "gazole": 2.25,
+      "e10": 1.99
     },
     "ruptures": [
-      "Gazole",
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95",
+      "SP98"
     ],
     "services": [
       "Station de gonflage",
@@ -10431,14 +10251,14 @@
     "lon": 5.395413490732,
     "pk_text": "28",
     "prix": {
-      "gazole": 2.449,
+      "gazole": 2.339,
+      "e85": 0.999,
       "e10": 2.169,
-      "sp98": 2.229,
-      "e85": 0.999
+      "sp98": 2.229
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -10463,13 +10283,13 @@
     "lon": 5.851421022464799,
     "pk_text": "65",
     "prix": {
-      "e10": 1.99,
+      "gazole": 2.25,
       "e85": 1.059
     },
     "ruptures": [
-      "Gazole",
-      "SP95",
+      "E10",
       "GPLc",
+      "SP95",
       "SP98"
     ],
     "services": [
@@ -10501,14 +10321,14 @@
     "lon": 5.576,
     "pk_text": "15",
     "prix": {
-      "gazole": 2.441,
+      "gazole": 2.261,
+      "e85": 0.987,
       "e10": 2.206,
-      "sp98": 2.279,
-      "e85": 0.987
+      "sp98": 2.279
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -10539,11 +10359,11 @@
     "lon": 5.576,
     "pk_text": "15",
     "prix": {
-      "gazole": 2.441,
-      "e10": 2.206,
-      "sp98": 2.279,
+      "gazole": 2.261,
       "e85": 0.987,
-      "gplc": 1.154
+      "gplc": 1.166,
+      "e10": 2.206,
+      "sp98": 2.279
     },
     "ruptures": [
       "SP95"
@@ -10578,10 +10398,10 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.155
+      "gplc": 1.155,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -10618,11 +10438,11 @@
     "lon": 5.2569421627957,
     "pk_text": null,
     "prix": {
-      "gazole": 2.669,
-      "e10": 2.449,
-      "sp98": 2.349,
+      "gazole": 2.529,
       "e85": 0.999,
-      "gplc": 1.149
+      "gplc": 1.149,
+      "e10": 2.449,
+      "sp98": 2.349
     },
     "ruptures": [
       "SP95"
@@ -10652,15 +10472,13 @@
     "lon": 6.0339952216349,
     "pk_text": null,
     "prix": {
-      "gazole": 2.569,
-      "e10": 2.349,
-      "sp98": 2.429,
+      "gazole": 2.429,
       "e85": 0.999,
-      "gplc": 1.149
+      "gplc": 1.149,
+      "e10": 2.349,
+      "sp98": 2.429
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -10686,14 +10504,13 @@
     "lon": 6.011,
     "pk_text": null,
     "prix": {
-      "gazole": 2.477,
-      "e10": 2.218,
-      "sp98": 2.318,
-      "gplc": 1.033
+      "gazole": 2.342,
+      "gplc": 1.034,
+      "e10": 2.205,
+      "sp98": 2.305
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -10726,12 +10543,12 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.039,
-      "gplc": 1.142
+      "gplc": 1.154,
+      "sp98": 1.99
     },
     "ruptures": [
+      "E10",
       "SP95"
     ],
     "services": null,
@@ -10752,13 +10569,13 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.039
     },
     "ruptures": [
+      "E10",
+      "GPLc",
       "SP95",
-      "GPLc"
+      "SP98"
     ],
     "services": [
       "Toilettes publiques",
@@ -10786,14 +10603,14 @@
     "lon": 4.7675357889549,
     "pk_text": "408",
     "prix": {
-      "gazole": 2.479,
-      "e10": 2.174,
-      "sp98": 2.284,
-      "e85": 1.289
+      "gazole": 2.498,
+      "e85": 1.308,
+      "e10": 2.192,
+      "sp98": 2.303
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -10829,13 +10646,13 @@
     "lon": 2.5744144437015,
     "pk_text": "65",
     "prix": {
-      "gazole": 2.458,
-      "e10": 2.27,
-      "sp98": 2.38,
+      "gazole": 2.28,
       "e85": 0.996,
-      "gplc": 1.094
+      "e10": 2.27,
+      "sp98": 2.38
     },
     "ruptures": [
+      "GPLc",
       "SP95"
     ],
     "services": [
@@ -10858,11 +10675,11 @@
     "lon": 2.5730022,
     "pk_text": "65",
     "prix": {
-      "gazole": 2.458,
+      "gazole": 2.28,
+      "e85": 1.059,
+      "gplc": 1.1,
       "e10": 2.25,
-      "sp98": 2.4,
-      "e85": 0.996,
-      "gplc": 1.094
+      "sp98": 2.4
     },
     "ruptures": [
       "SP95"
@@ -10887,14 +10704,14 @@
     "lon": 4.7120809999999995,
     "pk_text": "282",
     "prix": {
-      "gazole": 2.521,
-      "e10": 2.225,
-      "sp98": 2.329
+      "gazole": 2.53,
+      "e10": 2.242,
+      "sp98": 2.346
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Automate CB 24/24"
@@ -10915,14 +10732,14 @@
     "lon": 2.722,
     "pk_text": "78",
     "prix": {
-      "gazole": 2.567,
-      "e10": 2.328,
-      "sp98": 2.478
+      "gazole": 2.513,
+      "e10": 2.308,
+      "sp98": 2.458
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -10952,11 +10769,11 @@
     "lon": 4.0382550768547,
     "pk_text": "215",
     "prix": {
-      "gazole": 2.549,
-      "e10": 2.439,
-      "sp98": 2.539,
+      "gazole": 2.399,
       "e85": 1.149,
-      "gplc": 1.165
+      "gplc": 1.165,
+      "e10": 2.339,
+      "sp98": 2.439
     },
     "ruptures": [
       "SP95"
@@ -10990,14 +10807,14 @@
     "lon": 2.7220366668700997,
     "pk_text": "78",
     "prix": {
-      "gazole": 2.498,
-      "e10": 2.3,
-      "sp98": 2.45
+      "gazole": 2.449,
+      "e10": 2.285,
+      "sp98": 2.435
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -11029,14 +10846,14 @@
     "lon": 4.768,
     "pk_text": "408",
     "prix": {
-      "gazole": 2.567,
-      "e10": 2.328,
-      "sp98": 2.478
+      "gazole": 2.513,
+      "e10": 2.308,
+      "sp98": 2.458
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -11070,11 +10887,11 @@
     "lon": 3.673,
     "pk_text": "145",
     "prix": {
-      "gazole": 2.437,
-      "e10": 2.211,
-      "sp98": 2.304,
+      "gazole": 2.33,
       "e85": 0.993,
-      "gplc": 1.109
+      "gplc": 1.116,
+      "e10": 2.211,
+      "sp98": 2.304
     },
     "ruptures": [
       "SP95"
@@ -11110,10 +10927,10 @@
     "pk_text": "311",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.058,
-      "gplc": 1.149
+      "gplc": 1.151,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -11147,13 +10964,13 @@
     "pk_text": "311",
     "prix": {
       "gazole": 2.25,
+      "e85": 1.019,
       "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 1.019
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -11184,14 +11001,13 @@
     "lon": 4.7695929893495,
     "pk_text": "450",
     "prix": {
-      "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
-      "gplc": 1.085
+      "gazole": 2.15,
+      "gplc": 1.091
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E10",
+      "E85",
+      "SP98"
     ],
     "services": null,
     "pays": "FR"
@@ -11212,12 +11028,13 @@
     "prix": {
       "gazole": 2.25,
       "sp95": 1.99,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.109
+      "gplc": 1.139,
+      "e10": 1.99
     },
-    "ruptures": null,
+    "ruptures": [
+      "SP98"
+    ],
     "services": null,
     "pays": "FR"
   },
@@ -11236,13 +11053,13 @@
     "pk_text": "365",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.019,
-      "gplc": 1.155
+      "gplc": 1.155,
+      "e10": 1.99
     },
     "ruptures": [
-      "SP95"
+      "SP95",
+      "SP98"
     ],
     "services": [
       "Toilettes publiques",
@@ -11271,14 +11088,14 @@
     "lon": 4.863,
     "pk_text": "365",
     "prix": {
-      "gazole": 2.498,
-      "e10": 2.3,
-      "sp98": 2.45
+      "gazole": 2.449,
+      "e10": 2.285,
+      "sp98": 2.435
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -11312,13 +11129,13 @@
     "pk_text": "145",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.119
+      "gplc": 1.139,
+      "e10": 1.99
     },
     "ruptures": [
-      "SP95"
+      "SP95",
+      "SP98"
     ],
     "services": [
       "Toilettes publiques",
@@ -11348,11 +11165,11 @@
     "pk_text": "29",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
       "e85": 1.059,
-      "gplc": 1.129
+      "gplc": 1.139
     },
     "ruptures": [
+      "E10",
       "SP95",
       "SP98"
     ],
@@ -11382,11 +11199,11 @@
     "lon": 4.73,
     "pk_text": "435",
     "prix": {
-      "gazole": 2.55,
-      "e10": 2.343,
-      "sp98": 2.443,
+      "gazole": 2.394,
       "e85": 1.05,
-      "gplc": 1.085
+      "gplc": 1.091,
+      "e10": 2.322,
+      "sp98": 2.422
     },
     "ruptures": [
       "SP95"
@@ -11422,14 +11239,14 @@
     "lon": 4.732,
     "pk_text": "435",
     "prix": {
-      "gazole": 2.567,
-      "e10": 2.354,
-      "sp98": 2.454
+      "gazole": 2.43,
+      "e10": 2.34,
+      "sp98": 2.44
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -11456,11 +11273,11 @@
     "pk_text": "32",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
       "e85": 1.059,
-      "gplc": 1.129
+      "gplc": 1.139
     },
     "ruptures": [
+      "E10",
       "SP95",
       "SP98"
     ],
@@ -11481,14 +11298,14 @@
     "lon": 4.501,
     "pk_text": "282",
     "prix": {
-      "gazole": 2.669,
+      "gazole": 2.529,
+      "gplc": 1.149,
       "e10": 2.369,
-      "sp98": 2.469,
-      "gplc": 1.149
+      "sp98": 2.469
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -11526,9 +11343,9 @@
       "sp98": 2.361
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Douches",
@@ -11555,11 +11372,11 @@
     "lon": 3.198,
     "pk_text": "115",
     "prix": {
-      "gazole": 2.549,
-      "e10": 2.379,
-      "sp98": 2.479,
+      "gazole": 2.399,
       "e85": 1.149,
-      "gplc": 1.165
+      "gplc": 1.165,
+      "e10": 2.279,
+      "sp98": 2.379
     },
     "ruptures": [
       "SP95"
@@ -11595,14 +11412,14 @@
     "lon": 4.857844,
     "pk_text": "336",
     "prix": {
-      "gazole": 2.54,
-      "e10": 2.246,
-      "sp98": 2.352,
-      "e85": 1.444
+      "gazole": 2.524,
+      "e85": 1.444,
+      "e10": 2.227,
+      "sp98": 2.333
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Restauration sur place",
@@ -11624,14 +11441,14 @@
     "lon": 4.713,
     "pk_text": "282",
     "prix": {
-      "gazole": 2.437,
+      "gazole": 2.318,
       "e10": 2.211,
       "sp98": 2.284
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -11661,14 +11478,14 @@
     "lon": 4.845,
     "pk_text": "336",
     "prix": {
-      "gazole": 2.462,
-      "e10": 2.181,
-      "sp98": 2.292,
-      "e85": 1.31
+      "gazole": 2.502,
+      "e85": 1.31,
+      "e10": 2.205,
+      "sp98": 2.311
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -11704,11 +11521,11 @@
     "lon": 2.206,
     "pk_text": null,
     "prix": {
-      "gazole": 2.462,
-      "e10": 2.226,
-      "sp98": 2.299,
+      "gazole": 2.312,
       "e85": 1.038,
-      "gplc": 1.181
+      "gplc": 1.181,
+      "e10": 2.226,
+      "sp98": 2.299
     },
     "ruptures": [
       "SP95"
@@ -11744,11 +11561,11 @@
     "lon": 2.202,
     "pk_text": null,
     "prix": {
-      "gazole": 2.462,
-      "e10": 2.226,
-      "sp98": 2.299,
+      "gazole": 2.312,
       "e85": 1.038,
-      "gplc": 1.181
+      "gplc": 1.181,
+      "e10": 2.226,
+      "sp98": 2.299
     },
     "ruptures": [
       "SP95"
@@ -11783,11 +11600,11 @@
     "lon": 1.8098553706031,
     "pk_text": null,
     "prix": {
-      "gazole": 2.461,
-      "e10": 2.226,
-      "sp98": 2.299,
+      "gazole": 2.251,
       "e85": 1.007,
-      "gplc": 1.15
+      "gplc": 1.15,
+      "e10": 2.226,
+      "sp98": 2.299
     },
     "ruptures": [
       "SP95"
@@ -11822,14 +11639,14 @@
     "lon": 2.543,
     "pk_text": null,
     "prix": {
-      "gazole": 2.476,
-      "e10": 2.307,
-      "sp98": 2.382,
-      "e85": 1.009
+      "gazole": 2.356,
+      "e85": 1.009,
+      "e10": 2.276,
+      "sp98": 2.359
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -11863,13 +11680,13 @@
     "lon": 1.8063240480399998,
     "pk_text": null,
     "prix": {
-      "e10": 1.99,
-      "sp98": 1.99,
+      "gazole": 2.25,
       "e85": 1.039,
-      "gplc": 1.155
+      "gplc": 1.155,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
-      "Gazole",
       "SP95"
     ],
     "services": [
@@ -11898,14 +11715,14 @@
     "lon": 2.561,
     "pk_text": null,
     "prix": {
-      "gazole": 2.369,
-      "e10": 2.159,
-      "sp98": 2.189,
-      "e85": 1.009
+      "gazole": 2.259,
+      "e85": 1.009,
+      "e10": 2.15,
+      "sp98": 2.187
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -11938,11 +11755,11 @@
     "prix": {
       "gazole": 2.25,
       "e85": 1.039,
-      "gplc": 1.114
+      "gplc": 1.115,
+      "e10": 1.99
     },
     "ruptures": [
       "SP95",
-      "E10",
       "SP98"
     ],
     "services": null,
@@ -11962,11 +11779,11 @@
     "lon": 1.3619115182773,
     "pk_text": null,
     "prix": {
-      "gazole": 2.459,
-      "e10": 2.226,
-      "sp98": 2.299,
+      "gazole": 2.249,
       "e85": 1.007,
-      "gplc": 1.15
+      "gplc": 1.15,
+      "e10": 2.226,
+      "sp98": 2.299
     },
     "ruptures": [
       "SP95"
@@ -12005,11 +11822,11 @@
     "lon": 1.3594079695285002,
     "pk_text": null,
     "prix": {
-      "gazole": 2.459,
-      "e10": 2.226,
-      "sp98": 2.299,
+      "gazole": 2.249,
       "e85": 1.007,
-      "gplc": 1.15
+      "gplc": 1.15,
+      "e10": 2.226,
+      "sp98": 2.299
     },
     "ruptures": [
       "SP95"
@@ -12043,11 +11860,11 @@
     "lon": 0.18765,
     "pk_text": null,
     "prix": {
-      "gazole": 2.461,
-      "e10": 2.226,
-      "sp98": 2.299,
+      "gazole": 2.249,
       "e85": 1.01,
-      "gplc": 1.123
+      "gplc": 1.123,
+      "e10": 2.226,
+      "sp98": 2.299
     },
     "ruptures": [
       "SP95"
@@ -12082,15 +11899,12 @@
     "lon": -0.43686300000000006,
     "pk_text": null,
     "prix": {
-      "gazole": 2.808,
-      "e10": 2.477,
-      "sp98": 2.627,
-      "gplc": 1.108
+      "gazole": 2.69,
+      "gplc": 1.108,
+      "e10": 2.485,
+      "sp98": 2.635
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -12125,14 +11939,12 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.058,
-      "gplc": 1.103
+      "gplc": 1.113,
+      "e10": 1.99,
+      "sp98": 1.99
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": null,
     "pays": "FR"
   },
@@ -12150,11 +11962,11 @@
     "lon": 1.004,
     "pk_text": null,
     "prix": {
-      "gazole": 2.459,
-      "e10": 2.258,
-      "sp98": 2.321,
+      "gazole": 2.339,
       "e85": 0.959,
-      "gplc": 1.064
+      "gplc": 1.064,
+      "e10": 2.226,
+      "sp98": 2.299
     },
     "ruptures": [
       "SP95"
@@ -12192,10 +12004,10 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.104
+      "gplc": 1.104,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -12218,14 +12030,12 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.104
+      "gplc": 1.104,
+      "e10": 1.99,
+      "sp98": 1.99
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": null,
     "pays": "FR"
   },
@@ -12243,14 +12053,14 @@
     "lon": -1.093,
     "pk_text": null,
     "prix": {
-      "gazole": 2.53,
-      "e10": 2.36,
-      "sp98": 2.46,
-      "gplc": 1.06
+      "gazole": 2.41,
+      "gplc": 1.06,
+      "e10": 2.35,
+      "sp98": 2.45
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -12285,15 +12095,12 @@
     "lon": -1.089508,
     "pk_text": null,
     "prix": {
-      "gazole": 2.504,
-      "e10": 2.306,
-      "sp98": 2.369,
-      "gplc": 1.064
+      "gazole": 2.384,
+      "gplc": 1.064,
+      "e10": 2.285,
+      "sp98": 2.369
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -12324,14 +12131,14 @@
     "lon": -1.42,
     "pk_text": null,
     "prix": {
-      "gazole": 2.458,
+      "gazole": 2.302,
+      "gplc": 1.104,
       "e10": 2.33,
-      "sp98": 2.43,
-      "gplc": 1.104
+      "sp98": 2.43
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": null,
     "pays": "FR"
@@ -12350,14 +12157,14 @@
     "lon": -1.42,
     "pk_text": null,
     "prix": {
-      "gazole": 2.536,
-      "e10": 2.326,
-      "sp98": 2.426,
-      "gplc": 1.104
+      "gazole": 2.399,
+      "gplc": 1.104,
+      "e10": 2.296,
+      "sp98": 2.396
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": null,
     "pays": "FR"
@@ -12376,14 +12183,14 @@
     "lon": -0.706,
     "pk_text": null,
     "prix": {
-      "gazole": 2.737,
+      "gazole": 2.607,
       "e10": 2.43,
       "sp98": 2.58
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -12417,14 +12224,14 @@
     "lon": -0.703,
     "pk_text": null,
     "prix": {
-      "gazole": 2.737,
-      "e10": 2.406,
-      "sp98": 2.556
+      "gazole": 2.607,
+      "e10": 2.402,
+      "sp98": 2.552
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -12456,14 +12263,14 @@
     "lon": -0.851,
     "pk_text": null,
     "prix": {
-      "gazole": 2.53,
+      "gazole": 2.41,
+      "gplc": 1.06,
       "e10": 2.35,
-      "sp98": 2.45,
-      "gplc": 1.06
+      "sp98": 2.45
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -12501,15 +12308,13 @@
     "lon": -0.595,
     "pk_text": null,
     "prix": {
-      "gazole": 2.499,
-      "e10": 2.199,
-      "sp98": 2.299,
+      "gazole": 2.359,
       "e85": 0.999,
-      "gplc": 1.099
+      "gplc": 1.099,
+      "e10": 2.199,
+      "sp98": 2.299
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -12539,11 +12344,11 @@
     "lon": -0.596,
     "pk_text": null,
     "prix": {
-      "gazole": 2.429,
-      "e10": 2.199,
-      "sp98": 2.339,
-      "e85": 0.905,
-      "gplc": 1.059
+      "gazole": 2.319,
+      "e85": 0.895,
+      "gplc": 1.059,
+      "e10": 2.179,
+      "sp98": 2.299
     },
     "ruptures": [
       "SP95"
@@ -12577,14 +12382,13 @@
     "lon": -0.581,
     "pk_text": null,
     "prix": {
-      "gazole": 2.485,
-      "e10": 2.214,
-      "sp98": 2.314,
-      "gplc": 1.028
+      "gazole": 2.364,
+      "gplc": 1.033,
+      "e10": 2.203,
+      "sp98": 2.303
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -12612,14 +12416,13 @@
     "lon": -0.579,
     "pk_text": null,
     "prix": {
-      "gazole": 2.496,
-      "e10": 2.208,
-      "sp98": 2.308,
-      "gplc": 1.029
+      "gazole": 2.359,
+      "gplc": 1.032,
+      "e10": 2.184,
+      "sp98": 2.284
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -12647,14 +12450,13 @@
     "lon": -1.152,
     "pk_text": null,
     "prix": {
-      "gazole": 2.539,
+      "gazole": 2.419,
       "e10": 2.349,
       "sp98": 2.449
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -12690,13 +12492,13 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.104
+      "gplc": 1.114,
+      "e10": 1.99
     },
     "ruptures": [
-      "SP95"
+      "SP95",
+      "SP98"
     ],
     "services": null,
     "pays": "FR"
@@ -12715,14 +12517,14 @@
     "lon": 1.2457064998659,
     "pk_text": null,
     "prix": {
-      "gazole": 2.727,
-      "e10": 2.441,
-      "sp98": 2.591,
-      "gplc": 1.109
+      "gazole": 2.606,
+      "gplc": 1.113,
+      "e10": 2.425,
+      "sp98": 2.575
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -12752,14 +12554,14 @@
     "lon": 1.24486306131,
     "pk_text": null,
     "prix": {
-      "gazole": 2.727,
-      "e10": 2.441,
-      "sp98": 2.591,
-      "gplc": 1.108
+      "gazole": 2.606,
+      "gplc": 1.108,
+      "e10": 2.425,
+      "sp98": 2.575
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -12787,14 +12589,14 @@
     "lon": 1.115,
     "pk_text": null,
     "prix": {
-      "gazole": 2.374,
-      "sp95": 2.189,
-      "sp98": 2.224
+      "gazole": 2.379,
+      "sp95": 2.149,
+      "sp98": 2.194
     },
     "ruptures": [
+      "E10",
       "E85",
-      "GPLc",
-      "E10"
+      "GPLc"
     ],
     "services": [
       "Piste poids lourds",
@@ -12816,11 +12618,11 @@
     "lon": 0.614,
     "pk_text": null,
     "prix": {
-      "gazole": 2.494,
-      "e10": 2.287,
-      "sp98": 2.349,
+      "gazole": 2.374,
       "e85": 1.009,
-      "gplc": 1.064
+      "gplc": 1.064,
+      "e10": 2.256,
+      "sp98": 2.329
     },
     "ruptures": [
       "SP95"
@@ -12854,14 +12656,14 @@
     "lon": -0.22900636350622,
     "pk_text": null,
     "prix": {
-      "gazole": 2.669,
+      "gazole": 2.529,
+      "gplc": 1.149,
       "e10": 2.369,
-      "sp98": 2.469,
-      "gplc": 1.149
+      "sp98": 2.469
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -12895,12 +12697,11 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
+      "e85": 1.059,
       "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 1.059
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
       "GPLc"
     ],
     "services": [
@@ -12935,15 +12736,12 @@
     "lon": 4.913,
     "pk_text": "205",
     "prix": {
-      "gazole": 2.543,
-      "e10": 2.263,
-      "sp98": 2.363,
-      "gplc": 1.155
+      "gazole": 2.407,
+      "gplc": 1.155,
+      "e10": 2.262,
+      "sp98": 2.362
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Boutique alimentaire",
@@ -12970,11 +12768,11 @@
     "lon": 4.7870171386338,
     "pk_text": "108",
     "prix": {
-      "gazole": 2.461,
-      "e10": 2.226,
-      "sp98": 2.299,
+      "gazole": 2.311,
       "e85": 1.007,
-      "gplc": 1.17
+      "gplc": 1.17,
+      "e10": 2.226,
+      "sp98": 2.299
     },
     "ruptures": [
       "SP95"
@@ -13009,10 +12807,10 @@
     "pk_text": "84",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.019,
-      "gplc": 1.154
+      "gplc": 1.154,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -13049,14 +12847,14 @@
     "lon": 5.159,
     "pk_text": "245",
     "prix": {
-      "e10": 1.99,
+      "gazole": 2.25,
       "e85": 1.059,
-      "gplc": 1.155
+      "gplc": 1.155,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
-      "Gazole",
-      "SP95",
-      "SP98"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -13090,13 +12888,13 @@
     "pk_text": "245",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
       "e85": 1.059,
-      "gplc": 1.155
+      "gplc": 1.155,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
-      "SP98"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -13125,14 +12923,14 @@
     "lon": 4.78,
     "pk_text": "134",
     "prix": {
-      "gazole": 2.779,
-      "e10": 2.502,
-      "sp98": 2.652,
-      "gplc": 1.152
+      "gazole": 2.67,
+      "gplc": 1.157,
+      "e10": 2.498,
+      "sp98": 2.648
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -13165,15 +12963,13 @@
     "lon": 4.731,
     "pk_text": "167",
     "prix": {
-      "gazole": 2.647,
-      "e10": 2.392,
-      "sp98": 2.518,
+      "gazole": 2.517,
       "e85": 1.019,
-      "gplc": 1.154
+      "gplc": 1.154,
+      "e10": 2.383,
+      "sp98": 2.508
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -13208,14 +13004,14 @@
     "lon": 4.783,
     "pk_text": "134",
     "prix": {
-      "gazole": 2.779,
-      "e10": 2.502,
-      "sp98": 2.652,
-      "gplc": 1.162
+      "gazole": 2.67,
+      "gplc": 1.164,
+      "e10": 2.498,
+      "sp98": 2.648
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Douches",
@@ -13242,11 +13038,11 @@
     "lon": 4.723,
     "pk_text": "167",
     "prix": {
-      "gazole": 2.481,
+      "gazole": 2.271,
+      "e85": 1.007,
+      "gplc": 1.155,
       "e10": 2.246,
-      "sp98": 2.319,
-      "e85": 1.01,
-      "gplc": 1.155
+      "sp98": 2.319
     },
     "ruptures": [
       "SP95"
@@ -13284,11 +13080,11 @@
     "lon": 4.86473757,
     "pk_text": "84",
     "prix": {
-      "gazole": 2.549,
-      "e10": 2.379,
-      "sp98": 2.479,
+      "gazole": 2.399,
       "e85": 1.149,
-      "gplc": 1.165
+      "gplc": 1.165,
+      "e10": 2.279,
+      "sp98": 2.379
     },
     "ruptures": [
       "SP95"
@@ -13321,15 +13117,12 @@
     "lon": 4.829,
     "pk_text": "46",
     "prix": {
-      "gazole": 2.689,
+      "gazole": 2.459,
+      "gplc": 1.179,
       "e10": 2.399,
-      "sp98": 2.559,
-      "gplc": 1.179
+      "sp98": 2.559
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -13364,10 +13157,10 @@
     "pk_text": "14",
     "prix": {
       "gazole": 2.589,
-      "e10": 2.439,
-      "sp98": 2.539,
       "e85": 1.149,
-      "gplc": 1.165
+      "gplc": 1.165,
+      "e10": 2.439,
+      "sp98": 2.539
     },
     "ruptures": [
       "SP95"
@@ -13408,10 +13201,10 @@
     "pk_text": "14",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.155
+      "gplc": 1.155,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -13449,10 +13242,10 @@
     "pk_text": "68",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.154
+      "gplc": 1.154,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -13487,15 +13280,12 @@
     "lon": 4.876368447721,
     "pk_text": "68",
     "prix": {
-      "gazole": 2.549,
-      "e10": 2.379,
-      "sp98": 2.479,
-      "gplc": 1.165
+      "gazole": 2.399,
+      "gplc": 1.165,
+      "e10": 2.279,
+      "sp98": 2.379
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -13528,14 +13318,14 @@
     "lon": 4.815803,
     "pk_text": "38",
     "prix": {
-      "gazole": 2.787,
-      "e10": 2.531,
-      "sp98": 2.681
+      "gazole": 2.678,
+      "e10": 2.527,
+      "sp98": 2.677
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -13567,11 +13357,11 @@
     "lon": 4.89,
     "pk_text": "198",
     "prix": {
-      "gazole": 2.549,
-      "e10": 2.339,
-      "sp98": 2.439,
+      "gazole": 2.399,
       "e85": 1.149,
-      "gplc": 1.165
+      "gplc": 1.165,
+      "e10": 2.399,
+      "sp98": 2.439
     },
     "ruptures": [
       "SP95"
@@ -13609,11 +13399,11 @@
     "lon": 2.042,
     "pk_text": null,
     "prix": {
-      "gazole": 2.529,
-      "e10": 2.339,
-      "sp98": 2.439,
+      "gazole": 2.409,
       "e85": 1.149,
-      "gplc": 1.064
+      "gplc": 1.064,
+      "e10": 2.329,
+      "sp98": 2.429
     },
     "ruptures": [
       "SP95"
@@ -13648,14 +13438,14 @@
     "lon": 2.8003,
     "pk_text": null,
     "prix": {
-      "gazole": 2.44,
+      "gazole": 2.395,
+      "gplc": 1.19,
       "e10": 2.205,
-      "sp98": 2.278,
-      "gplc": 1.19
+      "sp98": 2.278
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -13683,11 +13473,11 @@
     "lon": 2.05,
     "pk_text": null,
     "prix": {
-      "gazole": 2.529,
-      "e10": 2.339,
-      "sp98": 2.439,
+      "gazole": 2.409,
       "e85": 1.149,
-      "gplc": 1.064
+      "gplc": 1.064,
+      "e10": 2.339,
+      "sp98": 2.439
     },
     "ruptures": [
       "SP95"
@@ -13726,14 +13516,13 @@
     "lon": 2.243,
     "pk_text": null,
     "prix": {
-      "gazole": 2.669,
+      "gazole": 2.529,
+      "gplc": 1.149,
       "e10": 2.369,
-      "sp98": 2.469,
-      "gplc": 1.149
+      "sp98": 2.469
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -13767,11 +13556,11 @@
     "lon": 1.925,
     "pk_text": null,
     "prix": {
-      "gazole": 2.504,
-      "e10": 2.308,
-      "sp98": 2.374,
-      "e85": 0.989,
-      "gplc": 1.099
+      "gazole": 2.369,
+      "e85": 0.999,
+      "gplc": 1.099,
+      "e10": 2.169,
+      "sp98": 2.244
     },
     "ruptures": [
       "SP95"
@@ -13809,14 +13598,14 @@
     "lon": 2.79688,
     "pk_text": null,
     "prix": {
-      "gazole": 2.44,
+      "gazole": 2.395,
+      "gplc": 1.19,
       "e10": 2.205,
-      "sp98": 2.278,
-      "gplc": 1.19
+      "sp98": 2.278
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -13845,10 +13634,10 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.159
+      "gplc": 1.159,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -13877,14 +13666,14 @@
     "lon": 2.416,
     "pk_text": null,
     "prix": {
-      "gazole": 2.58,
-      "e10": 2.326,
-      "sp98": 2.426,
-      "gplc": 1.159
+      "gazole": 2.444,
+      "gplc": 1.159,
+      "e10": 2.298,
+      "sp98": 2.398
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -13915,14 +13704,14 @@
     "lon": 1.93,
     "pk_text": null,
     "prix": {
-      "gazole": 2.544,
-      "e10": 2.334,
-      "sp98": 2.434,
-      "gplc": 1.064
+      "gazole": 2.422,
+      "gplc": 1.064,
+      "e10": 2.308,
+      "sp98": 2.408
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -13954,10 +13743,10 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.434,
-      "e10": 2.264,
-      "sp98": 2.334,
       "e85": 0.977,
-      "gplc": 1.07
+      "gplc": 1.07,
+      "e10": 2.224,
+      "sp98": 2.284
     },
     "ruptures": [
       "SP95"
@@ -13992,11 +13781,11 @@
     "lon": 3.184,
     "pk_text": null,
     "prix": {
-      "gazole": 2.47,
-      "e10": 2.235,
-      "sp98": 2.308,
+      "gazole": 2.425,
       "e85": 1.016,
-      "gplc": 1.159
+      "gplc": 1.159,
+      "e10": 2.235,
+      "sp98": 2.308
     },
     "ruptures": [
       "SP95"
@@ -14033,13 +13822,13 @@
     "lon": 3.082,
     "pk_text": null,
     "prix": {
+      "gazole": 2.25,
       "sp95": 1.99,
-      "e10": 1.99,
       "e85": 1.059,
-      "gplc": 1.155
+      "gplc": 1.155,
+      "e10": 1.99
     },
     "ruptures": [
-      "Gazole",
       "SP98"
     ],
     "services": [
@@ -14074,14 +13863,14 @@
     "lon": 3.248061,
     "pk_text": null,
     "prix": {
-      "gazole": 2.42,
+      "gazole": 2.375,
       "e10": 2.185,
       "sp98": 2.258
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Douches",
@@ -14109,11 +13898,11 @@
     "lon": 3.274313,
     "pk_text": null,
     "prix": {
-      "gazole": 2.42,
-      "e10": 2.185,
-      "sp98": 2.258,
+      "gazole": 2.375,
       "e85": 0.966,
-      "gplc": 1.109
+      "gplc": 1.109,
+      "e10": 2.185,
+      "sp98": 2.258
     },
     "ruptures": [
       "SP95"
@@ -14143,13 +13932,12 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.155
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95"
+      "GPLc"
     ],
     "services": null,
     "pays": "FR"
@@ -14168,11 +13956,11 @@
     "lon": 3.153,
     "pk_text": null,
     "prix": {
-      "gazole": 2.52,
-      "e10": 2.249,
-      "sp98": 2.349,
+      "gazole": 2.37,
       "e85": 1.149,
-      "gplc": 1.165
+      "gplc": 1.165,
+      "e10": 2.249,
+      "sp98": 2.349
     },
     "ruptures": [
       "SP95"
@@ -14207,13 +13995,13 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99
+      "e10": 1.99
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95",
+      "SP98"
     ],
     "services": [
       "Toilettes publiques",
@@ -14244,14 +14032,14 @@
     "lon": 2.684,
     "pk_text": null,
     "prix": {
-      "gazole": 2.619,
-      "e10": 2.359,
-      "sp98": 2.539,
-      "gplc": 1.359
+      "gazole": 2.419,
+      "gplc": 1.359,
+      "e10": 2.299,
+      "sp98": 2.479
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -14287,14 +14075,14 @@
     "lon": 7.398,
     "pk_text": "195",
     "prix": {
-      "gazole": 2.502,
+      "gazole": 2.292,
+      "gplc": 1.024,
       "e10": 2.261,
-      "sp98": 2.354,
-      "gplc": 1.009
+      "sp98": 2.354
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": null,
     "pays": "FR"
@@ -14314,13 +14102,13 @@
     "pk_text": "65",
     "prix": {
       "gazole": 2.25,
+      "e85": 1.059,
       "e10": 1.99,
-      "e85": 1.059
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
       "GPLc",
-      "SP98"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -14353,15 +14141,12 @@
     "lon": 6.453,
     "pk_text": "90",
     "prix": {
-      "gazole": 2.477,
+      "gazole": 2.327,
+      "gplc": 1.156,
       "e10": 2.241,
-      "sp98": 2.304,
-      "gplc": 1.156
+      "sp98": 2.304
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -14396,14 +14181,14 @@
     "lon": 6.453159103249999,
     "pk_text": "90",
     "prix": {
-      "gazole": 2.549,
+      "gazole": 2.399,
+      "e85": 1.149,
       "e10": 2.339,
-      "sp98": 2.439,
-      "e85": 1.149
+      "sp98": 2.439
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -14437,10 +14222,10 @@
     "pk_text": "78",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.155
+      "gplc": 1.155,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -14475,11 +14260,11 @@
     "lon": 6.786,
     "pk_text": "127",
     "prix": {
-      "gazole": 2.482,
-      "e10": 2.246,
-      "sp98": 2.319,
+      "gazole": 2.271,
       "e85": 0.998,
-      "gplc": 1.15
+      "gplc": 1.15,
+      "e10": 2.246,
+      "sp98": 2.319
     },
     "ruptures": [
       "SP95"
@@ -14515,14 +14300,14 @@
     "lon": 1.9372625,
     "pk_text": null,
     "prix": {
-      "gazole": 2.461,
+      "gazole": 2.251,
+      "gplc": 1.15,
       "e10": 2.225,
-      "sp98": 2.299,
-      "gplc": 1.15
+      "sp98": 2.299
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -14557,10 +14342,10 @@
     "pk_text": "178",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.024,
-      "gplc": 1.149
+      "gplc": 1.151,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -14599,14 +14384,14 @@
     "lon": 7.423,
     "pk_text": "200",
     "prix": {
-      "gazole": 2.481,
+      "gazole": 2.271,
+      "gplc": 1.15,
       "e10": 2.246,
-      "sp98": 2.319,
-      "gplc": 1.15
+      "sp98": 2.319
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -14641,14 +14426,11 @@
     "pk_text": "18",
     "prix": {
       "gazole": 2.471,
+      "gplc": 1.108,
       "e10": 2.265,
-      "sp98": 2.378,
-      "gplc": 1.108
+      "sp98": 2.378
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -14677,15 +14459,11 @@
     "lon": 7.0361577914048,
     "pk_text": "165",
     "prix": {
-      "gazole": 2.781,
-      "e10": 2.503,
-      "sp98": 2.653
+      "gazole": 2.672,
+      "e10": 2.498,
+      "sp98": 2.648
     },
-    "ruptures": [
-      "SP95",
-      "E85",
-      "GPLc"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -14715,14 +14493,14 @@
     "lon": 5.9929507895994,
     "pk_text": "55",
     "prix": {
-      "gazole": 2.669,
+      "gazole": 2.529,
+      "gplc": 1.149,
       "e10": 2.369,
-      "sp98": 2.469,
-      "gplc": 1.149
+      "sp98": 2.469
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -14753,14 +14531,14 @@
     "lon": -0.695,
     "pk_text": null,
     "prix": {
-      "gazole": 2.519,
-      "e10": 2.309,
-      "sp98": 2.409,
-      "gplc": 1.064
+      "gazole": 2.399,
+      "gplc": 1.064,
+      "e10": 2.299,
+      "sp98": 2.399
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -14796,14 +14574,13 @@
     "lon": -0.324,
     "pk_text": null,
     "prix": {
-      "gazole": 2.536,
-      "e10": 2.321,
-      "sp98": 2.421,
-      "gplc": 1.114
+      "gazole": 2.399,
+      "gplc": 1.154,
+      "e10": 2.293,
+      "sp98": 2.393
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "SP95"
     ],
     "services": null,
     "pays": "FR"
@@ -14822,14 +14599,14 @@
     "lon": -1.513,
     "pk_text": null,
     "prix": {
-      "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 0.903,
-      "gplc": 1.002
+      "e85": 0.894
     },
     "ruptures": [
-      "SP95"
+      "E10",
+      "GPLc",
+      "Gazole",
+      "SP95",
+      "SP98"
     ],
     "services": [
       "Toilettes publiques",
@@ -14862,11 +14639,11 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "e85": 0.899,
-      "gplc": 1.002
+      "e85": 0.889,
+      "gplc": 0.999
     },
     "ruptures": [
+      "E10",
       "SP95",
       "SP98"
     ],
@@ -14904,11 +14681,11 @@
     "lon": -0.502,
     "pk_text": null,
     "prix": {
-      "gazole": 2.481,
-      "e10": 2.246,
-      "sp98": 2.34,
+      "gazole": 2.289,
       "e85": 0.96,
-      "gplc": 1.143
+      "gplc": 1.143,
+      "e10": 2.246,
+      "sp98": 2.319
     },
     "ruptures": [
       "SP95"
@@ -14935,11 +14712,11 @@
     "lon": -0.507,
     "pk_text": null,
     "prix": {
-      "gazole": 2.481,
-      "e10": 2.246,
-      "sp98": 2.319,
+      "gazole": 2.271,
       "e85": 0.96,
-      "gplc": 1.143
+      "gplc": 1.143,
+      "e10": 2.246,
+      "sp98": 2.319
     },
     "ruptures": [
       "SP95"
@@ -14966,14 +14743,14 @@
     "lon": -1.104,
     "pk_text": null,
     "prix": {
-      "gazole": 2.807,
-      "e10": 2.482,
-      "sp98": 2.632,
-      "gplc": 1.144
+      "gazole": 2.689,
+      "gplc": 1.149,
+      "e10": 2.49,
+      "sp98": 2.64
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -15006,14 +14783,13 @@
     "lon": -1.32638,
     "pk_text": null,
     "prix": {
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.151
+      "gplc": 1.155,
+      "e10": 1.99
     },
     "ruptures": [
-      "Gazole",
-      "SP95"
+      "SP95",
+      "SP98"
     ],
     "services": [
       "Toilettes publiques",
@@ -15044,14 +14820,13 @@
     "lon": 0.8906768700000001,
     "pk_text": null,
     "prix": {
-      "gazole": 2.669,
+      "gazole": 2.529,
+      "gplc": 1.149,
       "e10": 2.369,
-      "sp98": 2.469,
-      "gplc": 1.149
+      "sp98": 2.469
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -15084,10 +14859,10 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.019,
-      "gplc": 1.131
+      "gplc": 1.131,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -15123,14 +14898,14 @@
     "lon": 0.536,
     "pk_text": null,
     "prix": {
-      "gazole": 2.58,
-      "e10": 2.41,
-      "sp98": 2.51,
-      "gplc": 1.06
+      "gazole": 2.44,
+      "gplc": 1.06,
+      "e10": 2.39,
+      "sp98": 2.49
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -15163,14 +14938,14 @@
     "lon": -0.13452322125889998,
     "pk_text": null,
     "prix": {
-      "gazole": 2.808,
-      "e10": 2.539,
-      "sp98": 2.689
+      "gazole": 2.69,
+      "e10": 2.529,
+      "sp98": 2.679
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -15202,14 +14977,14 @@
     "lon": -0.13178209154551,
     "pk_text": null,
     "prix": {
-      "gazole": 2.808,
-      "e10": 2.49,
-      "sp98": 2.64
+      "gazole": 2.69,
+      "e10": 2.497,
+      "sp98": 2.647
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -15245,13 +15020,13 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
+      "gplc": 1.064,
       "e10": 1.99,
-      "sp98": 1.99,
-      "gplc": 1.069
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -15279,10 +15054,10 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
+      "e85": 0.964,
+      "gplc": 1.153,
       "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 0.972,
-      "gplc": 1.152
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -15312,12 +15087,12 @@
     "lon": 2.4409142048333,
     "pk_text": null,
     "prix": {
-      "gazole": 2.25,
-      "e10": 1.99,
-      "e85": 0.955,
-      "gplc": 1.064
+      "gazole": 2.15,
+      "e85": 0.949,
+      "e10": 1.99
     },
     "ruptures": [
+      "GPLc",
       "SP95",
       "SP98"
     ],
@@ -15338,11 +15113,11 @@
     "lon": 2.1731592564109,
     "pk_text": null,
     "prix": {
-      "gazole": 2.25,
+      "gazole": 2.15,
+      "e85": 0.933,
+      "gplc": 1.021,
       "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 0.941,
-      "gplc": 1.021
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -15371,14 +15146,13 @@
     "lon": -0.826,
     "pk_text": null,
     "prix": {
-      "gazole": 2.504,
-      "e10": 2.308,
-      "sp98": 2.374,
-      "e85": 0.989
+      "gazole": 2.369,
+      "e85": 0.999,
+      "e10": 2.169,
+      "sp98": 2.244
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -15408,11 +15182,11 @@
     "lon": -1.048,
     "pk_text": null,
     "prix": {
-      "gazole": 2.522,
+      "gazole": 2.372,
+      "e85": 0.929,
+      "gplc": 1.177,
       "e10": 2.286,
-      "sp98": 2.359,
-      "e85": 0.969,
-      "gplc": 1.177
+      "sp98": 2.359
     },
     "ruptures": [
       "SP95"
@@ -15449,13 +15223,13 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
+      "e85": 1.059,
       "e10": 1.99,
-      "sp98": 1.99,
-      "e85": 1.059
+      "sp98": 1.99
     },
     "ruptures": [
-      "SP95",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": null,
     "pays": "FR"
@@ -15474,11 +15248,11 @@
     "lon": 0.799,
     "pk_text": null,
     "prix": {
-      "gazole": 2.372,
-      "e10": 2.084,
-      "sp98": 2.184,
-      "e85": 0.978,
-      "gplc": 1.038
+      "gazole": 2.257,
+      "e85": 0.975,
+      "gplc": 1.033,
+      "e10": 2.065,
+      "sp98": 2.165
     },
     "ruptures": [
       "SP95"
@@ -15514,15 +15288,11 @@
     "lon": 2.98723,
     "pk_text": null,
     "prix": {
-      "gazole": 2.439,
-      "e10": 2.246,
-      "sp98": 2.312
+      "gazole": 2.299,
+      "e10": 2.208,
+      "sp98": 2.279
     },
-    "ruptures": [
-      "SP95",
-      "E85",
-      "GPLc"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -15558,13 +15328,13 @@
     "pk_text": null,
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.018,
-      "gplc": 1.081
+      "gplc": 1.091,
+      "e10": 1.99
     },
     "ruptures": [
-      "SP95"
+      "SP95",
+      "SP98"
     ],
     "services": [
       "Toilettes publiques",
@@ -15596,15 +15366,12 @@
     "lon": 3.811929,
     "pk_text": null,
     "prix": {
-      "gazole": 2.787,
-      "e10": 2.531,
-      "sp98": 2.681,
-      "gplc": 1.123
+      "gazole": 2.678,
+      "gplc": 1.128,
+      "e10": 2.527,
+      "sp98": 2.677
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -15638,15 +15405,12 @@
     "lon": 3.81064,
     "pk_text": null,
     "prix": {
-      "gazole": 2.504,
-      "e10": 2.308,
-      "sp98": 2.374,
-      "e85": 0.989
+      "gazole": 2.369,
+      "e85": 0.999,
+      "e10": 2.169,
+      "sp98": 2.244
     },
-    "ruptures": [
-      "SP95",
-      "GPLc"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -15685,11 +15449,7 @@
       "e10": 2.225,
       "sp98": 2.338
     },
-    "ruptures": [
-      "SP95",
-      "E85",
-      "GPLc"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -15722,15 +15482,13 @@
     "lon": 4.134,
     "pk_text": "70",
     "prix": {
-      "gazole": 2.503,
-      "e10": 2.239,
-      "sp98": 2.314,
-      "e85": 1.059,
-      "gplc": 1.206
+      "gazole": 2.351,
+      "e85": 1.048,
+      "gplc": 1.206,
+      "e10": 2.234,
+      "sp98": 2.309
     },
-    "ruptures": [
-      "SP95"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -15767,12 +15525,11 @@
       "gazole": 2.25,
       "sp95": 1.99,
       "e85": 1.048,
-      "gplc": 1.155
+      "gplc": 1.155,
+      "e10": 1.99,
+      "sp98": 1.99
     },
-    "ruptures": [
-      "E10",
-      "SP98"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -15803,10 +15560,10 @@
     "pk_text": "100",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.154
+      "gplc": 1.154,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -15829,10 +15586,10 @@
     "pk_text": "45",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.154
+      "gplc": 1.154,
+      "e10": 1.99,
+      "sp98": 1.99
     },
     "ruptures": [
       "SP95"
@@ -15866,14 +15623,14 @@
     "lon": 3.34,
     "pk_text": "145",
     "prix": {
-      "gazole": 2.766,
-      "e10": 2.498,
-      "sp98": 2.648
+      "gazole": 2.656,
+      "e10": 2.494,
+      "sp98": 2.644
     },
     "ruptures": [
-      "SP95",
       "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -15907,11 +15664,11 @@
     "lon": 3.09,
     "pk_text": "180",
     "prix": {
-      "gazole": 2.476,
-      "e10": 2.279,
-      "sp98": 2.37,
+      "gazole": 2.282,
       "e85": 0.999,
-      "gplc": 1.17
+      "gplc": 1.17,
+      "e10": 2.256,
+      "sp98": 2.354
     },
     "ruptures": [
       "SP95"
@@ -15947,13 +15704,13 @@
     "pk_text": "180",
     "prix": {
       "gazole": 2.25,
-      "e10": 1.99,
-      "sp98": 1.99,
       "e85": 1.059,
-      "gplc": 1.154
+      "gplc": 1.154,
+      "e10": 1.99
     },
     "ruptures": [
-      "SP95"
+      "SP95",
+      "SP98"
     ],
     "services": null,
     "pays": "FR"
@@ -15972,15 +15729,12 @@
     "lon": 4.43950707,
     "pk_text": "45",
     "prix": {
-      "gazole": 2.439,
-      "e10": 2.246,
-      "sp98": 2.312,
-      "gplc": 1.099
+      "gazole": 2.299,
+      "gplc": 1.099,
+      "e10": 2.208,
+      "sp98": 2.279
     },
-    "ruptures": [
-      "SP95",
-      "E85"
-    ],
+    "ruptures": [],
     "services": [
       "Toilettes publiques",
       "Douches",
@@ -16015,14 +15769,14 @@
     "lon": 2.8474529225529004,
     "pk_text": "260",
     "prix": {
-      "gazole": 2.549,
-      "e10": 2.289,
-      "sp98": 2.399,
-      "gplc": 1.177
+      "gazole": 2.399,
+      "gplc": 1.177,
+      "e10": 2.259,
+      "sp98": 2.389
     },
     "ruptures": [
-      "SP95",
-      "E85"
+      "E85",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
@@ -16054,12 +15808,12 @@
     "pk_text": "100",
     "prix": {
       "gazole": 2.444,
-      "e10": 2.254,
-      "sp98": 2.324,
       "e85": 0.999,
-      "gplc": 1.084
+      "e10": 2.204,
+      "sp98": 2.264
     },
     "ruptures": [
+      "GPLc",
       "SP95"
     ],
     "services": [
@@ -16092,14 +15846,13 @@
     "lon": 4.701,
     "pk_text": "20",
     "prix": {
-      "gazole": 2.525,
-      "e10": 2.293,
-      "sp98": 2.393
+      "gazole": 2.377,
+      "e10": 2.283,
+      "sp98": 2.383
     },
     "ruptures": [
-      "SP95",
-      "E85",
-      "GPLc"
+      "GPLc",
+      "SP95"
     ],
     "services": [
       "Toilettes publiques",
