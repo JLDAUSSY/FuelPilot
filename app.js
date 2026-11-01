@@ -285,7 +285,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '7.4';
+const APP_VERSION = '7.5';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -1214,8 +1214,12 @@ async function detectCountryAndSetLanguage() {
     try {
       navigator.geolocation.getCurrentPosition(
         async (pos) => {
-          if (userManuallySelectedLang || !pos || !pos.coords) return;
+          if (!pos || !pos.coords) return;
           const { latitude, longitude } = pos.coords;
+          userGpsPosition = { lat: latitude, lon: longitude };
+          updateUserGpsMarker(latitude, longitude);
+
+          if (userManuallySelectedLang) return;
           try {
             const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}`);
             if (res.ok) {
@@ -1227,7 +1231,7 @@ async function detectCountryAndSetLanguage() {
           } catch (e) {}
         },
         () => {},
-        { enableHighAccuracy: false, timeout: 6000, maximumAge: 600000 }
+        { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
       );
     } catch (e) {}
   }
@@ -1454,6 +1458,10 @@ function initMap() {
   map = L.map('map', {
     zoomControl: false
   }).setView([46.2, 3.0], initialZoom);
+
+  // Dedicated custom pane for user GPS pastille to keep it above all routes and markers
+  map.createPane('gpsUserPane');
+  map.getPane('gpsUserPane').style.zIndex = '9999';
 
   L.control.zoom({ position: 'topright' }).addTo(map);
 
@@ -2654,6 +2662,11 @@ function fitMapToRouteAndStations() {
 
   const bounds = L.latLngBounds();
 
+  // Include user's current GPS position if available
+  if (userGpsPosition && userGpsPosition.lat && userGpsPosition.lon) {
+    bounds.extend([userGpsPosition.lat, userGpsPosition.lon]);
+  }
+
   // Include all routes (active + alternatives) so the whole comparison is visible on screen
   if (alternativeRoutes && alternativeRoutes.length > 0) {
     alternativeRoutes.forEach(r => {
@@ -2897,9 +2910,9 @@ function renderCurrentRouteStations() {
 
   // Filter upcoming stations if Live GPS Drive mode is active
   let candidateStations = currentRouteStations;
-  if (isGpsNavActive && userProgressionKmOnRoute > 0) {
-    // Only show stations that are ahead of user (station.distOnRoute >= userProgression - 0.5km)
-    candidateStations = candidateStations.filter(s => s.distOnRoute >= (userProgressionKmOnRoute - 0.5));
+  if (isGpsNavActive) {
+    // Only show stations that are ahead of user (station.distOnRoute >= userProgression - 0.3km)
+    candidateStations = candidateStations.filter(s => s.distOnRoute >= (userProgressionKmOnRoute - 0.3));
   }
 
   // Filter by brand
@@ -3117,7 +3130,7 @@ function renderCurrentRouteStations() {
         </div>
       </div>
       <div class="station-details">
-        <span class="distance-countdown">${(isGpsNavActive && userProgressionKmOnRoute > 0) ? `🎯 Dans ${Math.max(0, (st.distOnRoute - userProgressionKmOnRoute)).toFixed(1)} km` : t().fromStart(st.distOnRoute.toFixed(1))}</span>
+        <span class="distance-countdown">${isGpsNavActive ? t().fromCurrentPos(Math.max(0, (st.distOnRoute - userProgressionKmOnRoute)).toFixed(1)) : t().fromStart(st.distOnRoute.toFixed(1))}</span>
         ${sensFormatted ? `<span class="sens-tag">${sensFormatted}</span>` : ''}
         <span>• ${villeFormatted}</span>
       </div>
@@ -3571,7 +3584,11 @@ function updateUserGpsMarker(latitude, longitude) {
       iconSize: [22, 22],
       iconAnchor: [11, 11]
     });
-    userGpsMarker = L.marker([latitude, longitude], { icon: userIcon, zIndexOffset: 2000 }).addTo(map);
+    userGpsMarker = L.marker([latitude, longitude], {
+      pane: 'gpsUserPane',
+      icon: userIcon,
+      zIndexOffset: 3000
+    }).addTo(map);
   } else {
     userGpsMarker.setLatLng([latitude, longitude]);
     if (!map.hasLayer(userGpsMarker)) {
@@ -3585,22 +3602,33 @@ function initPermanentGpsTracking() {
   if (!navigator.geolocation) return;
   if (permanentGpsWatchId !== null) return;
 
+  const handlePos = (pos) => {
+    if (!pos || !pos.coords) return;
+    const { latitude, longitude, heading, speed } = pos.coords;
+    userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
+    updateUserGpsMarker(latitude, longitude);
+    if (isGpsNavActive) {
+      onGpsLocationUpdate(pos.coords);
+    }
+  };
+
+  // Immediate acquisition without waiting for device movement
+  navigator.geolocation.getCurrentPosition(
+    handlePos,
+    () => {},
+    { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
+  );
+
+  // Continuous tracking
   permanentGpsWatchId = navigator.geolocation.watchPosition(
-    (pos) => {
-      const { latitude, longitude, heading, speed } = pos.coords;
-      userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
-      updateUserGpsMarker(latitude, longitude);
-      if (isGpsNavActive) {
-        onGpsLocationUpdate(pos.coords);
-      }
-    },
+    handlePos,
     (err) => {
       // Passive error, silent
     },
     {
       enableHighAccuracy: true,
-      maximumAge: 5000,
-      timeout: 12000
+      maximumAge: 3000,
+      timeout: 10000
     }
   );
 }
@@ -3622,6 +3650,18 @@ function startGpsNavigation() {
   // If we already have a recent GPS position, process it immediately!
   if (userGpsPosition) {
     onGpsLocationUpdate(userGpsPosition);
+  } else {
+    // Request instant fix and update navigation state right away
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        onGpsLocationUpdate(pos.coords);
+      },
+      (err) => {
+        console.warn("Erreur GPS Navigation démarrage:", err);
+        alert(t().locationError || "Position GPS non disponible.");
+      },
+      { enableHighAccuracy: true, timeout: 8000, maximumAge: 5000 }
+    );
   }
 
   // Ensure high-accuracy watch is running
@@ -3640,6 +3680,9 @@ function startGpsNavigation() {
       }
     );
   }
+
+  // Force immediate re-render of station list so countdown "Dans X km" appears instantly
+  renderCurrentRouteStations();
 }
 
 function stopGpsNavigation() {
