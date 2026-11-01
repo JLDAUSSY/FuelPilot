@@ -285,7 +285,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '7.7';
+const APP_VERSION = '7.8';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -3607,94 +3607,62 @@ function formatGeolocationErrorMessage(err) {
   const msg = (err && err.message) ? ` (${err.message})` : '';
 
   if (code === 1) { // PERMISSION_DENIED
-    return "📍 Autorisation de localisation bloquée :\n\n" +
-      "Pour vous localiser sur la carte :\n" +
-      "1. Appuyez sur le cadenas 🔒 (ou paramètres) à gauche de 'jldaussy.github.io' dans la barre d'adresse en haut.\n" +
-      "2. Ouvrez 'Autorisations' / 'Paramètres du site' et réglez 'Localisation' sur Autoriser.\n" +
-      "3. Vérifiez également que l'icône 'Position' (GPS) est bien allumée dans le volet déroulant supérieur de votre smartphone.";
+    return "📍 Autorisation GPS refusée dans le navigateur Chrome :\n\n" +
+      "Vos applications natives (Google Maps, Waze) utilisent l'autorisation directe Android, mais Google Chrome a actuellement l'accès bloqué pour jldaussy.github.io.\n\n" +
+      "👉 Pour activer en 5 secondes :\n" +
+      "1. Tout en haut à gauche, appuyez sur le cadenas 🔒 (à gauche de jldaussy.github.io dans la barre d'adresse).\n" +
+      "2. Appuyez sur 'Autorisations' ou 'Paramètres du site'.\n" +
+      "3. Activez 'Localisation' sur AUTORISER (ou réinitialisez les autorisations).\n" +
+      "4. Rechargez la page : votre position GPS exacte s'affichera à Sanary-sur-Mer !";
   } else if (code === 2) { // POSITION_UNAVAILABLE
-    return "⚠️ Signal GPS introuvable" + msg + " :\n\nVérifiez que le GPS (Position) est bien activé dans les raccourcis de votre téléphone et que vous n'êtes pas en mode avion.";
+    return "⚠️ Signal GPS introuvable" + msg + " :\n\nVérifiez que le GPS (Position) est bien activé dans le volet déroulant supérieur de votre smartphone et que vous n'êtes pas en mode avion.";
   } else if (code === 3) { // TIMEOUT
-    return "⏱️ Délai de recherche GPS dépassé" + msg + " :\n\nLe capteur GPS met du temps à se synchroniser. Veuillez réappuyer sur le bouton dans un instant.";
+    return "⏱️ Délai satellite GPS dépassé" + msg + " :\n\nLe capteur GPS de votre appareil prend du temps à capter les satellites. Veuillez réappuyer sur le bouton dans quelques instants.";
   }
   return (t().locationError || "Impossible d'obtenir votre position GPS.") + msg;
 }
 
-// Fallback to network IP geolocation if hardware GPS fails or is denied
-async function tryFallbackNetworkLocation() {
-  try {
-    const res = await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client');
-    if (res.ok) {
-      const data = await res.json();
-      if (data && typeof data.latitude === 'number' && typeof data.longitude === 'number') {
-        const { latitude, longitude } = data;
-        userGpsPosition = { lat: latitude, lon: longitude, isApproximate: true };
-        updateUserGpsMarker(latitude, longitude);
-        if (map) {
-          map.setView([latitude, longitude], 13, { animate: true });
-          if (userGpsMarker) {
-            userGpsMarker.setTooltipContent("📍 Position approximative (Réseau)");
-            userGpsMarker.openTooltip();
-          }
-        }
-        return true;
-      }
-    }
-  } catch (e) {}
-  return false;
-}
-
-// Unified robust geolocation requester with instant cache retrieval and fallback
+// Unified GPS requester for user actions (departure point, center map, start navigation)
 function requestUserGeolocation(onSuccess, onError) {
-  if (!navigator.geolocation) {
-    if (onError) onError(new Error("Géolocalisation indisponible sur cet appareil."));
+  if (userGpsPosition && userGpsPosition.lat && userGpsPosition.lon) {
+    if (onSuccess) onSuccess({ coords: { latitude: userGpsPosition.lat, longitude: userGpsPosition.lon, heading: userGpsPosition.heading, speed: userGpsPosition.speed } });
     return;
   }
 
-  let hasResolved = false;
+  if (!navigator.geolocation) {
+    if (onError) onError({ code: 2, message: "Géolocalisation indisponible sur cet appareil." });
+    return;
+  }
 
-  const handleSuccess = (pos) => {
-    if (!pos || !pos.coords || hasResolved) return;
-    hasResolved = true;
-    const { latitude, longitude, heading, speed } = pos.coords;
-    userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
-    updateUserGpsMarker(latitude, longitude);
-    if (onSuccess) onSuccess(pos);
-  };
-
-  // 1. Fast Cache or Network Location:
-  // With maximumAge: Infinity, Android/iOS immediately returns the device's last known location in <20ms
+  // 1. High-accuracy GPS first
   navigator.geolocation.getCurrentPosition(
     (pos) => {
-      handleSuccess(pos);
+      const { latitude, longitude, heading, speed } = pos.coords;
+      userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
+      updateUserGpsMarker(latitude, longitude);
+      if (onSuccess) onSuccess(pos);
     },
-    (errFast) => {
-      // If permission is denied at OS/browser level, report immediately
-      if (errFast && errFast.code === 1) {
-        if (!hasResolved) {
-          hasResolved = true;
-          if (onError) onError(errFast);
-        }
+    (errHigh) => {
+      // If permission is denied at browser level (code 1), do NOT retry silently, report immediately
+      if (errHigh && errHigh.code === 1) {
+        if (onError) onError(errHigh);
         return;
       }
-
-      // If fast fix failed due to timeout or unavailable, try high accuracy with generous timeout (20s)
+      // If code 2 (unavailable) or 3 (timeout on satellite fix), fallback to network-assisted browser location (Fused Location / WiFi)
       navigator.geolocation.getCurrentPosition(
         (pos) => {
-          handleSuccess(pos);
+          const { latitude, longitude, heading, speed } = pos.coords;
+          userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
+          updateUserGpsMarker(latitude, longitude);
+          if (onSuccess) onSuccess(pos);
         },
-        (errPrecise) => {
-          if (!hasResolved) {
-            hasResolved = true;
-            tryFallbackNetworkLocation().then((ok) => {
-              if (!ok && onError) onError(errPrecise);
-            });
-          }
+        (errLow) => {
+          if (onError) onError(errHigh || errLow);
         },
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 60000 }
+        { enableHighAccuracy: false, timeout: 20000, maximumAge: 300000 }
       );
     },
-    { enableHighAccuracy: false, timeout: 10000, maximumAge: Infinity }
+    { enableHighAccuracy: true, timeout: 20000, maximumAge: 60000 }
   );
 }
 
@@ -3703,7 +3671,7 @@ function centerMapOnUser() {
   const btnLocate = document.getElementById('btn-locate-me');
   if (userGpsPosition && userGpsPosition.lat && userGpsPosition.lon) {
     if (map) {
-      map.setView([userGpsPosition.lat, userGpsPosition.lon], 14, { animate: true });
+      map.setView([userGpsPosition.lat, userGpsPosition.lon], 15, { animate: true });
       updateUserGpsMarker(userGpsPosition.lat, userGpsPosition.lon);
       if (userGpsMarker) userGpsMarker.openTooltip();
     }
@@ -3717,7 +3685,7 @@ function centerMapOnUser() {
       if (btnLocate) btnLocate.classList.remove('locating');
       const { latitude, longitude } = pos.coords;
       if (map) {
-        map.setView([latitude, longitude], 14, { animate: true });
+        map.setView([latitude, longitude], 15, { animate: true });
         if (userGpsMarker) userGpsMarker.openTooltip();
       }
     },
@@ -3744,58 +3712,45 @@ function initPermanentGpsTracking() {
     }
   };
 
-  // Stage 1: Fast cache retrieval
+  const handleErr = (err) => {
+    console.warn("GPS tracking error:", err);
+  };
+
+  // Immediate acquisition without waiting (fast cache first)
   navigator.geolocation.getCurrentPosition(
     handlePos,
-    (errFast) => {
-      // Stage 2: Fallback to high-accuracy
+    () => {
       navigator.geolocation.getCurrentPosition(
         handlePos,
-        (errPrecise) => {
-          tryFallbackNetworkLocation();
-        },
+        handleErr,
         { enableHighAccuracy: true, timeout: 20000, maximumAge: 60000 }
       );
     },
-    { enableHighAccuracy: false, timeout: 8000, maximumAge: Infinity }
+    { enableHighAccuracy: false, timeout: 5000, maximumAge: 300000 }
   );
 
-  // Stage 3: Continuous watching with automatic fallback
+  // Continuous watchPosition for live updates as the car drives
   try {
     permanentGpsWatchId = navigator.geolocation.watchPosition(
       handlePos,
-      (errWatch) => {
-        console.warn("Permanent GPS watch error, switching to standard accuracy fallback:", errWatch);
-        if (permanentGpsWatchId !== null) {
+      (err) => {
+        if (err && err.code !== 1 && permanentGpsWatchId !== null) {
           navigator.geolocation.clearWatch(permanentGpsWatchId);
           permanentGpsWatchId = navigator.geolocation.watchPosition(
             handlePos,
-            () => {},
-            { enableHighAccuracy: false, maximumAge: 10000, timeout: 20000 }
+            handleErr,
+            { enableHighAccuracy: false, maximumAge: 5000, timeout: 20000 }
           );
         }
       },
       {
         enableHighAccuracy: true,
-        maximumAge: 3000,
-        timeout: 15000
+        maximumAge: 2000,
+        timeout: 20000
       }
     );
   } catch (e) {
     console.warn("Watch position error:", e);
-  }
-
-  // Listen to Permissions API changes
-  if (typeof navigator !== 'undefined' && navigator.permissions && navigator.permissions.query) {
-    try {
-      navigator.permissions.query({ name: 'geolocation' }).then((status) => {
-        status.onchange = () => {
-          if (status.state === 'granted') {
-            requestUserGeolocation();
-          }
-        };
-      });
-    } catch (e) {}
   }
 }
 
