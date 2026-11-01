@@ -285,7 +285,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '7.6';
+const APP_VERSION = '7.7';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -2107,39 +2107,20 @@ function useCurrentGpsLocationAsStart() {
 
   if (userGpsPosition) {
     applyGpsAsStartPoint(userGpsPosition.lat, userGpsPosition.lon);
+    updateUserGpsMarker(userGpsPosition.lat, userGpsPosition.lon);
     return;
   }
 
-  if (!navigator.geolocation) {
-    alert(t().locationError || "Géolocalisation indisponible.");
-    if (startInput) startInput.value = '';
-    return;
-  }
-
-  navigator.geolocation.getCurrentPosition(
+  requestUserGeolocation(
     (pos) => {
       const { latitude, longitude } = pos.coords;
-      userGpsPosition = { lat: latitude, lon: longitude };
-      updateUserGpsMarker(latitude, longitude);
       applyGpsAsStartPoint(latitude, longitude);
     },
-    (errFast) => {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const { latitude, longitude } = pos.coords;
-          userGpsPosition = { lat: latitude, lon: longitude };
-          updateUserGpsMarker(latitude, longitude);
-          applyGpsAsStartPoint(latitude, longitude);
-        },
-        (errPrecise) => {
-          console.warn('Erreur acquisition GPS départ:', errPrecise);
-          alert(t().locationError || "Impossible d'obtenir votre position GPS.");
-          if (startInput) startInput.value = '';
-        },
-        { enableHighAccuracy: true, timeout: 10000, maximumAge: 10000 }
-      );
-    },
-    { enableHighAccuracy: false, timeout: 5000, maximumAge: 60000 }
+    (err) => {
+      console.warn('Erreur acquisition GPS départ:', err);
+      alert(formatGeolocationErrorMessage(err));
+      if (startInput) startInput.value = '';
+    }
   );
 }
 
@@ -3621,6 +3602,102 @@ function updateUserGpsMarker(latitude, longitude) {
   }
 }
 
+function formatGeolocationErrorMessage(err) {
+  const code = err && err.code;
+  const msg = (err && err.message) ? ` (${err.message})` : '';
+
+  if (code === 1) { // PERMISSION_DENIED
+    return "📍 Autorisation de localisation bloquée :\n\n" +
+      "Pour vous localiser sur la carte :\n" +
+      "1. Appuyez sur le cadenas 🔒 (ou paramètres) à gauche de 'jldaussy.github.io' dans la barre d'adresse en haut.\n" +
+      "2. Ouvrez 'Autorisations' / 'Paramètres du site' et réglez 'Localisation' sur Autoriser.\n" +
+      "3. Vérifiez également que l'icône 'Position' (GPS) est bien allumée dans le volet déroulant supérieur de votre smartphone.";
+  } else if (code === 2) { // POSITION_UNAVAILABLE
+    return "⚠️ Signal GPS introuvable" + msg + " :\n\nVérifiez que le GPS (Position) est bien activé dans les raccourcis de votre téléphone et que vous n'êtes pas en mode avion.";
+  } else if (code === 3) { // TIMEOUT
+    return "⏱️ Délai de recherche GPS dépassé" + msg + " :\n\nLe capteur GPS met du temps à se synchroniser. Veuillez réappuyer sur le bouton dans un instant.";
+  }
+  return (t().locationError || "Impossible d'obtenir votre position GPS.") + msg;
+}
+
+// Fallback to network IP geolocation if hardware GPS fails or is denied
+async function tryFallbackNetworkLocation() {
+  try {
+    const res = await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client');
+    if (res.ok) {
+      const data = await res.json();
+      if (data && typeof data.latitude === 'number' && typeof data.longitude === 'number') {
+        const { latitude, longitude } = data;
+        userGpsPosition = { lat: latitude, lon: longitude, isApproximate: true };
+        updateUserGpsMarker(latitude, longitude);
+        if (map) {
+          map.setView([latitude, longitude], 13, { animate: true });
+          if (userGpsMarker) {
+            userGpsMarker.setTooltipContent("📍 Position approximative (Réseau)");
+            userGpsMarker.openTooltip();
+          }
+        }
+        return true;
+      }
+    }
+  } catch (e) {}
+  return false;
+}
+
+// Unified robust geolocation requester with instant cache retrieval and fallback
+function requestUserGeolocation(onSuccess, onError) {
+  if (!navigator.geolocation) {
+    if (onError) onError(new Error("Géolocalisation indisponible sur cet appareil."));
+    return;
+  }
+
+  let hasResolved = false;
+
+  const handleSuccess = (pos) => {
+    if (!pos || !pos.coords || hasResolved) return;
+    hasResolved = true;
+    const { latitude, longitude, heading, speed } = pos.coords;
+    userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
+    updateUserGpsMarker(latitude, longitude);
+    if (onSuccess) onSuccess(pos);
+  };
+
+  // 1. Fast Cache or Network Location:
+  // With maximumAge: Infinity, Android/iOS immediately returns the device's last known location in <20ms
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      handleSuccess(pos);
+    },
+    (errFast) => {
+      // If permission is denied at OS/browser level, report immediately
+      if (errFast && errFast.code === 1) {
+        if (!hasResolved) {
+          hasResolved = true;
+          if (onError) onError(errFast);
+        }
+        return;
+      }
+
+      // If fast fix failed due to timeout or unavailable, try high accuracy with generous timeout (20s)
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          handleSuccess(pos);
+        },
+        (errPrecise) => {
+          if (!hasResolved) {
+            hasResolved = true;
+            tryFallbackNetworkLocation().then((ok) => {
+              if (!ok && onError) onError(errPrecise);
+            });
+          }
+        },
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 60000 }
+      );
+    },
+    { enableHighAccuracy: false, timeout: 10000, maximumAge: Infinity }
+  );
+}
+
 // Center map on user position smoothly
 function centerMapOnUser() {
   const btnLocate = document.getElementById('btn-locate-me');
@@ -3634,44 +3711,21 @@ function centerMapOnUser() {
   }
 
   if (btnLocate) btnLocate.classList.add('locating');
-  if (!navigator.geolocation) {
-    if (btnLocate) btnLocate.classList.remove('locating');
-    alert(t().locationError || "Géolocalisation indisponible.");
-    return;
-  }
 
-  navigator.geolocation.getCurrentPosition(
+  requestUserGeolocation(
     (pos) => {
       if (btnLocate) btnLocate.classList.remove('locating');
-      const { latitude, longitude, heading, speed } = pos.coords;
-      userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
-      updateUserGpsMarker(latitude, longitude);
+      const { latitude, longitude } = pos.coords;
       if (map) {
         map.setView([latitude, longitude], 14, { animate: true });
         if (userGpsMarker) userGpsMarker.openTooltip();
       }
     },
-    (errFast) => {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          if (btnLocate) btnLocate.classList.remove('locating');
-          const { latitude, longitude, heading, speed } = pos.coords;
-          userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
-          updateUserGpsMarker(latitude, longitude);
-          if (map) {
-            map.setView([latitude, longitude], 14, { animate: true });
-            if (userGpsMarker) userGpsMarker.openTooltip();
-          }
-        },
-        (errPrecise) => {
-          if (btnLocate) btnLocate.classList.remove('locating');
-          console.warn('Center on user error:', errPrecise);
-          alert(t().locationError || "Impossible d'obtenir votre position GPS.");
-        },
-        { enableHighAccuracy: true, timeout: 10000, maximumAge: 5000 }
-      );
-    },
-    { enableHighAccuracy: false, timeout: 5000, maximumAge: 60000 }
+    (err) => {
+      if (btnLocate) btnLocate.classList.remove('locating');
+      console.warn('Center on user error:', err);
+      alert(formatGeolocationErrorMessage(err));
+    }
   );
 }
 
@@ -3690,22 +3744,20 @@ function initPermanentGpsTracking() {
     }
   };
 
-  // Stage 1: Fast network fix (WiFi/IP/Cell - immediate, reliable on PC & mobile)
+  // Stage 1: Fast cache retrieval
   navigator.geolocation.getCurrentPosition(
     handlePos,
     (errFast) => {
-      console.warn("Fast GPS fix:", errFast);
+      // Stage 2: Fallback to high-accuracy
+      navigator.geolocation.getCurrentPosition(
+        handlePos,
+        (errPrecise) => {
+          tryFallbackNetworkLocation();
+        },
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 60000 }
+      );
     },
-    { enableHighAccuracy: false, timeout: 6000, maximumAge: 300000 }
-  );
-
-  // Stage 2: High-accuracy acquisition in parallel (refines coords if GNSS chip is available)
-  navigator.geolocation.getCurrentPosition(
-    handlePos,
-    (errPrecise) => {
-      console.warn("High-accuracy GPS fix:", errPrecise);
-    },
-    { enableHighAccuracy: true, timeout: 12000, maximumAge: 10000 }
+    { enableHighAccuracy: false, timeout: 8000, maximumAge: Infinity }
   );
 
   // Stage 3: Continuous watching with automatic fallback
@@ -3719,18 +3771,31 @@ function initPermanentGpsTracking() {
           permanentGpsWatchId = navigator.geolocation.watchPosition(
             handlePos,
             () => {},
-            { enableHighAccuracy: false, maximumAge: 10000, timeout: 15000 }
+            { enableHighAccuracy: false, maximumAge: 10000, timeout: 20000 }
           );
         }
       },
       {
         enableHighAccuracy: true,
         maximumAge: 3000,
-        timeout: 10000
+        timeout: 15000
       }
     );
   } catch (e) {
     console.warn("Watch position error:", e);
+  }
+
+  // Listen to Permissions API changes
+  if (typeof navigator !== 'undefined' && navigator.permissions && navigator.permissions.query) {
+    try {
+      navigator.permissions.query({ name: 'geolocation' }).then((status) => {
+        status.onchange = () => {
+          if (status.state === 'granted') {
+            requestUserGeolocation();
+          }
+        };
+      });
+    } catch (e) {}
   }
 }
 
@@ -3752,42 +3817,44 @@ function startGpsNavigation() {
   if (userGpsPosition) {
     onGpsLocationUpdate(userGpsPosition);
   } else {
-    // Request instant fix (try fast first, then high accuracy)
-    navigator.geolocation.getCurrentPosition(
+    requestUserGeolocation(
       (pos) => {
         onGpsLocationUpdate(pos.coords);
       },
-      (errFast) => {
-        navigator.geolocation.getCurrentPosition(
-          (pos) => {
-            onGpsLocationUpdate(pos.coords);
-          },
-          (errPrecise) => {
-            console.warn("Erreur GPS Navigation démarrage:", errPrecise);
-            alert(t().locationError || "Position GPS non disponible.");
-          },
-          { enableHighAccuracy: true, timeout: 10000, maximumAge: 5000 }
-        );
-      },
-      { enableHighAccuracy: false, timeout: 5000, maximumAge: 60000 }
+      (err) => {
+        console.warn("Erreur GPS Navigation démarrage:", err);
+        alert(formatGeolocationErrorMessage(err));
+      }
     );
   }
 
   // Ensure high-accuracy watch is running
   if (gpsWatchId === null) {
-    gpsWatchId = navigator.geolocation.watchPosition(
-      (pos) => {
-        onGpsLocationUpdate(pos.coords);
-      },
-      (err) => {
-        console.warn("Erreur GPS Navigation:", err);
-      },
-      {
-        enableHighAccuracy: true,
-        maximumAge: 2000,
-        timeout: 10000
-      }
-    );
+    try {
+      gpsWatchId = navigator.geolocation.watchPosition(
+        (pos) => {
+          onGpsLocationUpdate(pos.coords);
+        },
+        (err) => {
+          console.warn("Erreur GPS Navigation watch:", err);
+          if (gpsWatchId !== null) {
+            navigator.geolocation.clearWatch(gpsWatchId);
+            gpsWatchId = navigator.geolocation.watchPosition(
+              (pos) => onGpsLocationUpdate(pos.coords),
+              () => {},
+              { enableHighAccuracy: false, maximumAge: 10000, timeout: 20000 }
+            );
+          }
+        },
+        {
+          enableHighAccuracy: true,
+          maximumAge: 2000,
+          timeout: 15000
+        }
+      );
+    } catch (e) {
+      console.warn("Watch position error:", e);
+    }
   }
 
   // Force immediate re-render of station list so countdown "Dans X km" appears instantly
