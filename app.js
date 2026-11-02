@@ -285,7 +285,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '7.9';
+const APP_VERSION = '8.0';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -2170,7 +2170,9 @@ function useCurrentGpsLocationAsStart() {
     },
     (err) => {
       console.warn('Erreur acquisition GPS départ:', err);
-      alert(formatGeolocationErrorMessage(err));
+      if (err && err.code === 1) {
+        alert(formatGeolocationErrorMessage(err));
+      }
       if (startInput) startInput.value = '';
     }
   );
@@ -3745,59 +3747,92 @@ function requestUserGeolocation(onSuccess, onError) {
 
   let hasResponded = false;
 
-  // Étape 1 : Obtention quasi-instantanée (<150ms) via le cache OS ou Fused Location
-  navigator.geolocation.getCurrentPosition(
-    (fastPos) => {
-      const { latitude, longitude, heading, speed } = fastPos.coords;
-      userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
-      updateUserGpsMarker(latitude, longitude);
-      if (!hasResponded) {
-        hasResponded = true;
-        if (onSuccess) onSuccess(fastPos);
-      }
+  const deliverPosition = (pos) => {
+    if (!pos || !pos.coords) return;
+    const { latitude, longitude, heading, speed } = pos.coords;
+    userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
+    updateUserGpsMarker(latitude, longitude);
+    if (!hasResponded) {
+      hasResponded = true;
+      if (onSuccess) onSuccess(pos);
+    }
+  };
 
-      // Étape 2 en arrière-plan : Affinage haute précision GPS par satellite
+  // 1. Priorité absolue : Cache OS instantané (maximumAge: Infinity)
+  // Sur mobile, le système renvoie la dernière position connue en <50ms
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      deliverPosition(pos);
+      // Affinage satellite haute précision en tâche de fond
       navigator.geolocation.getCurrentPosition(
-        (precisePos) => {
-          const coords = precisePos.coords;
-          userGpsPosition = { lat: coords.latitude, lon: coords.longitude, heading: coords.heading, speed: coords.speed };
-          updateUserGpsMarker(coords.latitude, coords.longitude);
-        },
+        (precisePos) => deliverPosition(precisePos),
         () => {},
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+        { enableHighAccuracy: true, timeout: 30000, maximumAge: 0 }
       );
     },
-    (fastErr) => {
-      // Si l'utilisateur a refusé explicitement la permission (code 1 = PERMISSION_DENIED)
-      if (fastErr && fastErr.code === 1) {
+    (errFast) => {
+      // Si l'utilisateur a refusé explicitement la permission Chrome (code 1)
+      if (errFast && errFast.code === 1) {
         if (!hasResponded) {
           hasResponded = true;
-          if (onError) onError(fastErr);
+          if (onError) onError(errFast);
         }
         return;
       }
 
-      // Si le fix rapide échoue ou expire, tenter la haute précision
-      navigator.geolocation.getCurrentPosition(
-        (precisePos) => {
-          const { latitude, longitude, heading, speed } = precisePos.coords;
-          userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
-          updateUserGpsMarker(latitude, longitude);
-          if (!hasResponded) {
-            hasResponded = true;
-            if (onSuccess) onSuccess(precisePos);
-          }
-        },
-        (err) => {
-          if (!hasResponded) {
-            hasResponded = true;
-            if (onError) onError(err);
-          }
-        },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 }
-      );
+      // 2. Si pas de cache disponible, écouter activement via watchPosition avec haute précision
+      let tempWatchId = null;
+      const safetyTimer = setTimeout(() => {
+        if (tempWatchId !== null) {
+          navigator.geolocation.clearWatch(tempWatchId);
+          tempWatchId = null;
+        }
+        if (!hasResponded) {
+          hasResponded = true;
+          if (onError) onError({ code: 3, message: "Recherche satellite prolongée" });
+        }
+      }, 30000);
+
+      try {
+        tempWatchId = navigator.geolocation.watchPosition(
+          (pos) => {
+            clearTimeout(safetyTimer);
+            if (tempWatchId !== null) {
+              navigator.geolocation.clearWatch(tempWatchId);
+              tempWatchId = null;
+            }
+            deliverPosition(pos);
+          },
+          (errWatch) => {
+            if (errWatch && errWatch.code === 1) {
+              clearTimeout(safetyTimer);
+              if (tempWatchId !== null) {
+                navigator.geolocation.clearWatch(tempWatchId);
+                tempWatchId = null;
+              }
+              if (!hasResponded) {
+                hasResponded = true;
+                if (onError) onError(errWatch);
+              }
+            }
+          },
+          { enableHighAccuracy: true, maximumAge: 60000, timeout: 30000 }
+        );
+      } catch (e) {
+        clearTimeout(safetyTimer);
+        navigator.geolocation.getCurrentPosition(
+          deliverPosition,
+          (err) => {
+            if (!hasResponded) {
+              hasResponded = true;
+              if (onError) onError(err);
+            }
+          },
+          { enableHighAccuracy: true, timeout: 30000, maximumAge: 60000 }
+        );
+      }
     },
-    { enableHighAccuracy: false, timeout: 3500, maximumAge: 300000 }
+    { enableHighAccuracy: false, timeout: 6000, maximumAge: Infinity }
   );
 }
 
@@ -3827,7 +3862,10 @@ function centerMapOnUser() {
     (err) => {
       if (btnLocate) btnLocate.classList.remove('locating');
       console.warn('Center on user error:', err);
-      alert(formatGeolocationErrorMessage(err));
+      // Afficher l'alerte explicative UNIQUEMENT si la permission est refusée dans Chrome
+      if (err && err.code === 1) {
+        alert(formatGeolocationErrorMessage(err));
+      }
     }
   );
 }
@@ -3859,10 +3897,10 @@ function initPermanentGpsTracking() {
       navigator.geolocation.getCurrentPosition(
         handlePos,
         handleErr,
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 60000 }
+        { enableHighAccuracy: true, timeout: 30000, maximumAge: 60000 }
       );
     },
-    { enableHighAccuracy: false, timeout: 5000, maximumAge: 300000 }
+    { enableHighAccuracy: false, timeout: 10000, maximumAge: Infinity }
   );
 
   // Continuous watchPosition for live updates as the car drives
