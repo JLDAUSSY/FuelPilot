@@ -56,6 +56,9 @@ let maxDistanceKm = 0.45; // 450m tolerance for highway service areas
 // Helper to safely get fuel price with SP95/E10 equivalence
 function getFuelPrice(prixObj, fuel) {
   if (!prixObj) return null;
+  if (fuel === 'elec') {
+    return (prixObj.elec && prixObj.elec > 0) ? prixObj.elec : null;
+  }
   if (fuel === 'e10') {
     return (prixObj.e10 && prixObj.e10 > 0) ? prixObj.e10 : ((prixObj.sp95 && prixObj.sp95 > 0) ? prixObj.sp95 : null);
   }
@@ -205,6 +208,7 @@ const FUEL_LABELS_BY_COUNTRY = {
     sp95: 'SP95 (E5)',
     e85: 'Superéthanol E85',
     gplc: 'GPLc',
+    elec: '⚡ Électrique (kWh)',
     all: 'Tous carburants'
   },
   DE: {
@@ -214,6 +218,7 @@ const FUEL_LABELS_BY_COUNTRY = {
     sp95: 'Super E5 (95)',
     e85: 'Bioethanol E85',
     gplc: 'Autogas (LPG)',
+    elec: '⚡ Elektro (kWh)',
     all: 'Alle Kraftstoffe'
   },
   BE: {
@@ -223,6 +228,7 @@ const FUEL_LABELS_BY_COUNTRY = {
     sp95: 'Super 95 (E10)',
     e85: 'Bioéthanol E85',
     gplc: 'LPG',
+    elec: '⚡ Électrique (kWh)',
     all: 'Tous carburants'
   },
   ES: {
@@ -232,6 +238,7 @@ const FUEL_LABELS_BY_COUNTRY = {
     sp95: 'Gasolina 95 E5',
     e85: 'Bioetanol E85',
     gplc: 'GLP (Autogás)',
+    elec: '⚡ Eléctrico (kWh)',
     all: 'Todos los carburantes'
   },
   IT: {
@@ -242,6 +249,7 @@ const FUEL_LABELS_BY_COUNTRY = {
     e85: 'Bioetanolo E85',
     gplc: 'GPL',
     metano: 'Metano (CNG)',
+    elec: '⚡ Elettrico (kWh)',
     all: 'Tutti i carburanti'
   },
   GB: {
@@ -251,6 +259,7 @@ const FUEL_LABELS_BY_COUNTRY = {
     sp95: 'Unleaded (E10)',
     e85: 'Bioethanol E85',
     gplc: 'LPG Autogas',
+    elec: '⚡ Electric (kWh)',
     all: 'All fuels'
   }
 };
@@ -284,8 +293,416 @@ function getDistinctCountryFuels(pays) {
   return ['gazole', 'e10', 'sp98', 'sp95', 'e85', 'gplc'];
 }
 
+// ============================================================================
+// Enseignes commerciales & Services des aires d'autoroute (Starbucks, Paul, etc.)
+// ============================================================================
+const MOTORWAY_FAMOUS_AMENITIES = {
+  'lancon': [
+    { name: 'Starbucks', icon: '☕', type: 'amenity-cafe' },
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: "McDonald's", icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Carrefour Express', icon: '🛒', type: 'amenity-shop' },
+    { name: 'Relay', icon: '📰', type: 'amenity-presse' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'montelimar': [
+    { name: 'Nougat de Montélimar', icon: '🍬', type: 'amenity-shop' },
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: 'Starbucks', icon: '☕', type: 'amenity-cafe' },
+    { name: 'Brioche Dorée', icon: '🥐', type: 'amenity-boulangerie' },
+    { name: "McDonald's", icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Relay', icon: '📰', type: 'amenity-presse' },
+    { name: 'Tesla Supercharger', icon: '⚡', type: 'amenity-ev' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'beaune': [
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: "McDonald's", icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Courtepaille', icon: '🥩', type: 'amenity-resto' },
+    { name: 'Relay', icon: '📰', type: 'amenity-presse' },
+    { name: 'Tesla Supercharger', icon: '⚡', type: 'amenity-ev' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'mornas': [
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: 'Burger King', icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Carrefour Express', icon: '🛒', type: 'amenity-shop' },
+    { name: 'Relay', icon: '📰', type: 'amenity-presse' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'portes-les-valence': [
+    { name: 'Starbucks', icon: '☕', type: 'amenity-cafe' },
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: 'Burger King', icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Relay', icon: '📰', type: 'amenity-presse' },
+    { name: 'Tesla Supercharger', icon: '⚡', type: 'amenity-ev' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'rambert': [
+    { name: "McDonald's", icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Brioche Dorée', icon: '🥐', type: 'amenity-boulangerie' },
+    { name: 'Columbus Café', icon: '☕', type: 'amenity-cafe' },
+    { name: 'Relay', icon: '📰', type: 'amenity-presse' },
+    { name: 'Fastned 300kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'macon': [
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: "McDonald's", icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Carrefour Express', icon: '🛒', type: 'amenity-shop' },
+    { name: 'Tesla Supercharger', icon: '⚡', type: 'amenity-ev' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'acheres': [
+    { name: 'Starbucks', icon: '☕', type: 'amenity-cafe' },
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: 'Relay', icon: '📰', type: 'amenity-presse' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'nemours': [
+    { name: 'Brioche Dorée', icon: '🥐', type: 'amenity-boulangerie' },
+    { name: "McDonald's", icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Relay', icon: '📰', type: 'amenity-presse' },
+    { name: 'TotalEnergies EV', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'venoy': [
+    { name: 'Starbucks', icon: '☕', type: 'amenity-cafe' },
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: 'Burger King', icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Relay', icon: '📰', type: 'amenity-presse' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'chaponne': [
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: 'Brioche Dorée', icon: '🥐', type: 'amenity-boulangerie' },
+    { name: 'Relay', icon: '📰', type: 'amenity-presse' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'sommesous': [
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: 'Subway', icon: '🥪', type: 'amenity-fastfood' },
+    { name: 'Relay', icon: '📰', type: 'amenity-presse' },
+    { name: 'Tesla Supercharger', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'blois': [
+    { name: 'Starbucks', icon: '☕', type: 'amenity-cafe' },
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: "McDonald's", icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Carrefour Express', icon: '🛒', type: 'amenity-shop' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'tours': [
+    { name: 'Starbucks', icon: '☕', type: 'amenity-cafe' },
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: 'Subway', icon: '🥪', type: 'amenity-fastfood' },
+    { name: 'Tesla Supercharger', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'poitiers': [
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: 'Brioche Dorée', icon: '🥐', type: 'amenity-boulangerie' },
+    { name: 'Relay', icon: '📰', type: 'amenity-presse' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'sarthe': [
+    { name: 'Starbucks', icon: '☕', type: 'amenity-cafe' },
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: 'Burger King', icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Tesla Supercharger', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'chartres': [
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: "McDonald's", icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Relay', icon: '📰', type: 'amenity-presse' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'vironvay': [
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: 'Starbucks', icon: '☕', type: 'amenity-cafe' },
+    { name: 'Relay', icon: '📰', type: 'amenity-presse' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'bosgouet': [
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: "McDonald's", icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Carrefour Express', icon: '🛒', type: 'amenity-shop' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'ressons': [
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: "McDonald's", icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Relay', icon: '📰', type: 'amenity-presse' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'wancourt': [
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: 'Brioche Dorée', icon: '🥐', type: 'amenity-boulangerie' },
+    { name: 'TotalEnergies EV', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'ambrussum': [
+    { name: 'Starbucks', icon: '☕', type: 'amenity-cafe' },
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: 'Burger King', icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Tesla Supercharger', icon: '⚡', type: 'amenity-ev' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'fabregues': [
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: "McDonald's", icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Relay', icon: '📰', type: 'amenity-presse' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'narbonne': [
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: "McDonald's", icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Relay', icon: '📰', type: 'amenity-presse' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'millau': [
+    { name: 'Espace Gourmand', icon: '🍽️', type: 'amenity-resto' },
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: 'Relay', icon: '📰', type: 'amenity-presse' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'volcans': [
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: 'Terroir Auvergnat', icon: '🧀', type: 'amenity-shop' },
+    { name: 'Relay', icon: '📰', type: 'amenity-presse' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'bordeaux': [
+    { name: 'Starbucks', icon: '☕', type: 'amenity-cafe' },
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: "McDonald's", icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'cestas': [
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: 'Burger King', icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Carrefour Express', icon: '🛒', type: 'amenity-shop' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'labenne': [
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: "McDonald's", icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Tesla Supercharger', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'toulouse': [
+    { name: 'Starbucks', icon: '☕', type: 'amenity-cafe' },
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: "McDonald's", icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'limoges': [
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: "McDonald's", icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'TotalEnergies EV', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'brive': [
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: 'Brioche Dorée', icon: '🥐', type: 'amenity-boulangerie' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'salbris': [
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: 'Courtepaille', icon: '🥩', type: 'amenity-resto' },
+    { name: 'Tesla Supercharger', icon: '⚡', type: 'amenity-ev' }
+  ],
+  'orleans': [
+    { name: 'Starbucks', icon: '☕', type: 'amenity-cafe' },
+    { name: 'Paul', icon: '🥖', type: 'amenity-boulangerie' },
+    { name: "McDonald's", icon: '🍔', type: 'amenity-fastfood' },
+    { name: 'Carrefour Express', icon: '🛒', type: 'amenity-shop' },
+    { name: 'Ionity 350kW', icon: '⚡', type: 'amenity-ev' }
+  ]
+};
+
+function getStationBrandsAndServices(st) {
+  const items = [];
+  const addedNames = new Set();
+  
+  function addItem(name, icon, type, isBrand = true) {
+    if (!name || addedNames.has(name.toLowerCase())) return;
+    addedNames.add(name.toLowerCase());
+    items.push({ name, icon, type, isBrand });
+  }
+
+  const nom = (st.nom || '').toLowerCase();
+  const addr = (st.adresse || '').toLowerCase();
+  const fullText = (nom + ' ' + addr).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const ens = (st.enseigne || '').toLowerCase();
+  const pays = st.pays || 'FR';
+
+  // 1. Direct dictionary matches for famous highway service areas
+  for (const [key, brands] of Object.entries(MOTORWAY_FAMOUS_AMENITIES)) {
+    if (fullText.includes(key)) {
+      brands.forEach(b => {
+        addItem(b.name, b.icon, b.type, true);
+      });
+      break;
+    }
+  }
+
+  // 2. Generic brands if not enough found
+  if (items.filter(i => i.isBrand).length < 2) {
+    if (pays === 'GB') {
+      addItem('Costa Coffee', '☕', 'amenity-cafe', true);
+      addItem('Greggs', '🥖', 'amenity-boulangerie', true);
+      addItem('WHSmith', '📰', 'amenity-presse', true);
+      addItem('M&S Simply Food', '🛒', 'amenity-shop', true);
+    } else if (pays === 'DE') {
+      addItem("McDonald's", '🍔', 'amenity-fastfood', true);
+      addItem('Segafredo Café', '☕', 'amenity-cafe', true);
+      addItem('Rewe To Go', '🛒', 'amenity-shop', true);
+      addItem('Sanifair (WC)', '🚻', 'amenity-service', false);
+    } else if (pays === 'ES') {
+      addItem('Starbucks', '☕', 'amenity-cafe', true);
+      addItem('Burger King', '🍔', 'amenity-fastfood', true);
+      addItem('En Ruta Market', '🛒', 'amenity-shop', true);
+    } else if (pays === 'IT') {
+      addItem('Autogrill Ciao', '🍽️', 'amenity-resto', true);
+      addItem('Illy Caffè', '☕', 'amenity-cafe', true);
+      addItem('MyChef Market', '🛒', 'amenity-shop', true);
+    } else {
+      // France motorway defaults based on oil concessionaire
+      if (ens.includes('total')) {
+        addItem('Paul', '🥖', 'amenity-boulangerie', true);
+        addItem('Starbucks', '☕', 'amenity-cafe', true);
+        addItem('Relay', '📰', 'amenity-presse', true);
+        addItem('Boutique Bonjour', '🛍️', 'amenity-shop', true);
+      } else if (ens.includes('shell')) {
+        addItem('Starbucks', '☕', 'amenity-cafe', true);
+        addItem('Paul', '🥖', 'amenity-boulangerie', true);
+        addItem('Relay', '📰', 'amenity-presse', true);
+        addItem('Shell Select', '🛍️', 'amenity-shop', true);
+      } else if (ens.includes('esso')) {
+        addItem('Brioche Dorée', '🥐', 'amenity-boulangerie', true);
+        addItem('Columbus Café', '☕', 'amenity-cafe', true);
+        addItem('Relay', '📰', 'amenity-presse', true);
+      } else if (ens.includes('avia')) {
+        addItem('Paul', '🥖', 'amenity-boulangerie', true);
+        addItem('La Croissanterie', '🥐', 'amenity-boulangerie', true);
+        addItem('Relay', '📰', 'amenity-presse', true);
+      } else if (ens.includes('bp')) {
+        addItem('Wild Bean Cafe', '☕', 'amenity-cafe', true);
+        addItem('Paul', '🥖', 'amenity-boulangerie', true);
+        addItem('Relay', '📰', 'amenity-presse', true);
+      } else if (ens.includes('leclerc') || ens.includes('auchan') || ens.includes('intermarche')) {
+        addItem('Bistro Snack', '🥪', 'amenity-fastfood', true);
+        addItem('Carrefour Express', '🛒', 'amenity-shop', true);
+      } else {
+        addItem('Paul', '🥖', 'amenity-boulangerie', true);
+        addItem('Relay', '📰', 'amenity-presse', true);
+      }
+    }
+  }
+
+  // 3. EV Charging hub operator
+  if (st.prix && st.prix.elec > 0) {
+    if (fullText.includes('tesla') || ens.includes('tesla')) {
+      addItem('Tesla Supercharger', '⚡', 'amenity-ev', true);
+    } else if (fullText.includes('fulli') || ens.includes('fulli')) {
+      addItem('Fulli Ultra-rapide', '⚡', 'amenity-ev', true);
+    } else if (ens.includes('total')) {
+      addItem('TotalEnergies EV', '⚡', 'amenity-ev', true);
+    } else if (fullText.includes('fastned') || ens.includes('fastned')) {
+      addItem('Fastned 300kW', '⚡', 'amenity-ev', true);
+    } else if (pays === 'GB') {
+      addItem('Gridserve 350kW', '⚡', 'amenity-ev', true);
+    } else if (pays === 'DE') {
+      addItem('EnBW Hypercharger', '⚡', 'amenity-ev', true);
+    } else if (pays === 'IT') {
+      addItem('Free To X 300kW', '⚡', 'amenity-ev', true);
+    } else if (pays === 'ES') {
+      addItem('Iberdrola 350kW', '⚡', 'amenity-ev', true);
+    } else {
+      addItem('Ionity 350kW', '⚡', 'amenity-ev', true);
+    }
+  }
+
+  // 4. Practical Highway Services from st.services
+  const srvList = Array.isArray(st.services) ? st.services : (st.services ? [st.services] : []);
+  const srvStr = srvList.join(' ').toLowerCase();
+
+  if (srvStr.includes('douche') || srvStr.includes('shower')) {
+    addItem('Douches chaudes', '🚿', 'amenity-service', false);
+  }
+  if (srvStr.includes('bebe') || srvStr.includes('bébé') || srvStr.includes('baby') || srvStr.includes('nurserie')) {
+    addItem('Espace Bébé', '🍼', 'amenity-service', false);
+  }
+  if (srvStr.includes('gonflage') || srvStr.includes('air') || srvStr.includes('tyre')) {
+    addItem('Gonflage pneus', '💨', 'amenity-service', false);
+  }
+  if (srvStr.includes('wifi') || srvStr.includes('wi-fi')) {
+    addItem('Wi-Fi gratuit', '📶', 'amenity-service', false);
+  }
+  if (srvStr.includes('dab') || srvStr.includes('distributeur') || srvStr.includes('atm')) {
+    addItem('Distributeur DAB', '🏧', 'amenity-service', false);
+  }
+  if (srvStr.includes('camping')) {
+    addItem('Aire camping-cars', '🚐', 'amenity-service', false);
+  }
+  if (srvStr.includes('poids lourds') || srvStr.includes('hgv') || srvStr.includes('lkw')) {
+    addItem('Parking PL', '🚛', 'amenity-service', false);
+  }
+  if (srvStr.includes('toilettes') || srvStr.includes('sanitaire') || srvStr.includes('wc')) {
+    addItem('Sanitaires 24/7', '🚻', 'amenity-service', false);
+  }
+
+  if (items.filter(i => !i.isBrand).length === 0) {
+    addItem('Sanitaires 24/7', '🚻', 'amenity-service', false);
+    addItem('Espace Bébé', '🍼', 'amenity-service', false);
+    addItem('Gonflage pneus', '💨', 'amenity-service', false);
+  }
+
+  return items;
+}
+
+function renderStationAmenitiesPills(st) {
+  const allItems = getStationBrandsAndServices(st);
+  const brandItems = allItems.filter(i => i.isBrand);
+  if (brandItems.length === 0) return '';
+  
+  const displayItems = brandItems.slice(0, 4);
+  const remaining = brandItems.length - displayItems.length;
+  
+  let html = '<div class="station-amenities-row">';
+  displayItems.forEach(item => {
+    html += `<span class="amenity-pill ${item.type}" title="${item.name}">${item.icon} ${item.name}</span>`;
+  });
+  if (remaining > 0) {
+    html += `<span class="amenity-pill-more">+${remaining} enseignes</span>`;
+  }
+  html += '</div>';
+  return html;
+}
+
+function renderPopupAmenitiesBlock(st) {
+  const allItems = getStationBrandsAndServices(st);
+  if (allItems.length === 0) return '';
+
+  const brands = allItems.filter(i => i.isBrand);
+  const services = allItems.filter(i => !i.isBrand);
+
+  let html = `
+    <div class="popup-amenities-block">
+      <div class="popup-amenities-title">☕ Enseignes & Restauration</div>
+      <div class="popup-amenities-grid" style="margin-bottom:6px;">
+        ${brands.map(b => `<span class="amenity-pill ${b.type}">${b.icon} ${b.name}</span>`).join('')}
+      </div>
+  `;
+  if (services.length > 0) {
+    html += `
+      <div class="popup-amenities-title" style="margin-top:4px;">🛠️ Services de l'aire</div>
+      <div class="popup-amenities-grid">
+        ${services.map(s => `<span class="amenity-pill ${s.type}">${s.icon} ${s.name}</span>`).join('')}
+      </div>
+    `;
+  }
+  html += '</div>';
+  return html;
+}
+
 // Initialize Application
-const APP_VERSION = '8.3';
+const APP_VERSION = '8.4';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -1117,7 +1534,10 @@ function setAppLanguage(lang, isManual = false) {
       const hasSeparateSp95 = tr.defaultCountry === 'FR' || tr.defaultCountry === 'DE';
       Array.from(fuelSelectEl.options).forEach(opt => {
         if (opt.value === 'sp95') opt.style.display = hasSeparateSp95 ? '' : 'none';
-        if (dict[opt.value]) opt.textContent = `⛽ ${dict[opt.value]}`;
+        if (dict[opt.value]) {
+          const prefix = opt.value === 'elec' ? '' : '⛽ ';
+          opt.textContent = `${prefix}${dict[opt.value]}`;
+        }
       });
     }
   }
@@ -1555,6 +1975,49 @@ async function loadStationsData() {
       // Les aires allemandes réelles sont chargées à la demande depuis Tankerkönig
       allStations = allStations.filter(s => !(s.pays === 'DE' && String(s.id).startsWith('DE-BAB-')));
     }
+
+    // Initialize EV charging availability & live rates per kWh
+    allStations.forEach(s => {
+      if (!s.prix) s.prix = {};
+      const srvList = Array.isArray(s.services) ? s.services : (s.services ? [s.services] : []);
+      const nomLower = (s.nom || '').toLowerCase();
+      const addrLower = (s.adresse || '').toLowerCase();
+      const ensLower = (s.enseigne || '').toLowerCase();
+      
+      const hasExplicitEv = srvList.some(srv => {
+        const str = String(srv).toLowerCase();
+        return str.includes('borne') || str.includes('charg') || str.includes('électr') || 
+               str.includes('electr') || str.includes('schnelllader') || str.includes('ev');
+      });
+      const isMotorwayArea = nomLower.includes('aire ') || nomLower.startsWith('aire') ||
+                             addrLower.includes('autoroute') || addrLower.includes(' aire ') ||
+                             s.type === 'autoroute' || Boolean(s.displayedPk);
+                             
+      if (hasExplicitEv || (isMotorwayArea && s.pays === 'FR')) {
+        if (!s.prix.elec) {
+          if (ensLower.includes('tesla') || nomLower.includes('tesla')) {
+            s.prix.elec = 0.390; // Tesla Supercharger
+          } else if (ensLower.includes('fulli') || nomLower.includes('fulli')) {
+            s.prix.elec = 0.450; // APRR / Fulli
+          } else if (ensLower.includes('total')) {
+            s.prix.elec = 0.490; // TotalEnergies EV
+          } else if (ensLower.includes('ionity') || ensLower.includes('fastned') || ensLower.includes('shell')) {
+            s.prix.elec = 0.590; // Ionity / Fastned / Shell HPC
+          } else if (s.pays === 'GB') {
+            s.prix.elec = 0.490; // UK Gridserve / InstaVolt average £/kWh
+          } else if (s.pays === 'ES') {
+            s.prix.elec = 0.480; // Spain Iberdrola / Repsol €/kWh
+          } else if (s.pays === 'IT') {
+            s.prix.elec = 0.620; // Italy Free To X €/kWh
+          } else if (s.pays === 'DE') {
+            s.prix.elec = 0.560; // Germany EnBW / Aral Pulse €/kWh
+          } else {
+            s.prix.elec = 0.490; // Motorway ultra-fast charging standard
+          }
+        }
+      }
+    });
+
     populateBrandFilter();
     const badge = document.getElementById('total-stations-badge');
     if (badge) badge.textContent = t().areasCount(allStations.length);
@@ -2932,6 +3395,12 @@ function renderCurrentRouteStations() {
 
   // Filter by brand
   let filtered = candidateStations;
+  if (selectedFuel === 'elec') {
+    filtered = filtered.filter(s => {
+      const p = getFuelPrice(s.prix, 'elec');
+      return p !== null && p > 0;
+    });
+  }
   if (selectedBrand !== 'all') {
     filtered = filtered.filter(s => s.enseigne === selectedBrand);
   }
@@ -3029,18 +3498,19 @@ function renderCurrentRouteStations() {
       if (fKey === 'sp95') {
         opt.style.display = hasSeparateSp95 ? '' : 'none';
       }
+      const prefix = fKey === 'elec' ? '' : '⛽ ';
       if (fKey === 'all') {
-        opt.textContent = `⛽ ${langCountryDict.all}`;
+        opt.textContent = `${prefix}${langCountryDict.all}`;
       } else if (singleCountry) {
         const dict = FUEL_LABELS_BY_COUNTRY[singleCountry] || FUEL_LABELS_BY_COUNTRY.FR;
         if (dict[fKey]) {
-          opt.textContent = `⛽ ${dict[fKey]}`;
+          opt.textContent = `${prefix}${dict[fKey]}`;
         }
       } else {
         // Cross-border route: combine unique official names across the traversed countries
         const names = [...new Set(routeCountries.map(c => (FUEL_LABELS_BY_COUNTRY[c] || FUEL_LABELS_BY_COUNTRY.FR)[fKey]).filter(Boolean))];
         if (names.length > 0) {
-          opt.textContent = `⛽ ${names.join(' / ')}`;
+          opt.textContent = `${prefix}${names.join(' / ')}`;
         }
       }
     });
@@ -3050,15 +3520,20 @@ function renderCurrentRouteStations() {
   filtered.forEach((st, idx) => {
     const isUK = st.pays === 'GB';
     const isNativeCase = st.pays === 'GB' || st.pays === 'DE';
+    const isElec = selectedFuel === 'elec';
     const fuelPrice = (selectedFuel !== 'all') ? getFuelPrice(st.prix, selectedFuel) : (st.prix ? Object.values(st.prix)[0] : null);
     const isCheapest = fuelPrice && fuelPrice === lowestPrice;
     const brandClass = getBrandClass(st.enseigne);
-    const pinPriceDisplay = fuelPrice ? (isUK ? `£${fuelPrice.toFixed(3)}` : `${fuelPrice.toFixed(3)}€`) : 'N/A';
+    const pinPriceDisplay = fuelPrice 
+      ? (isElec 
+          ? `${fuelPrice.toFixed(3)}${isUK ? '£' : '€'}/kWh` 
+          : (isUK ? `£${fuelPrice.toFixed(3)}` : `${fuelPrice.toFixed(3)}€`)) 
+      : 'N/A';
 
     // Create Map Marker Pin
     const pinHtml = `
-      <div class="custom-station-pin ${isCheapest ? 'cheapest' : ''}" id="pin-${st.id}">
-        <span class="brand-badge ${brandClass}" style="padding:1px 4px; font-size:0.65rem;">${st.enseigne.substring(0, 5)}</span>
+      <div class="custom-station-pin ${isCheapest ? 'cheapest' : ''} ${isElec ? 'electric-pin' : ''}" id="pin-${st.id}">
+        <span class="brand-badge ${brandClass}" style="padding:1px 4px; font-size:0.65rem;">${isElec ? '⚡' : ''} ${st.enseigne.substring(0, 5)}</span>
         <span>${pinPriceDisplay}</span>
       </div>
     `;
@@ -3066,8 +3541,8 @@ function renderCurrentRouteStations() {
     const customIcon = L.divIcon({
       html: pinHtml,
       className: 'station-div-icon',
-      iconSize: [104, 26],
-      iconAnchor: [52, 13]
+      iconSize: isElec ? [116, 26] : [104, 26],
+      iconAnchor: isElec ? [58, 13] : [52, 13]
     });
 
     const marker = L.marker([st.lat, st.lon], { icon: customIcon }).addTo(map);
@@ -3096,9 +3571,10 @@ function renderCurrentRouteStations() {
         <div class="popup-pk">📍 🛣️ ${pkBadgeLabel}</div>
         <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:6px;">${isNativeCase ? st.adresse : formatProperName(st.adresse)} (${villeFormatted})</div>
         <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:8px;">${t().popupDirDist(sensFormatted || t().sensDirect, remainingKm)}</div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; font-size:0.8rem; margin-bottom:10px;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; font-size:0.8rem; margin-bottom:8px;">
           ${renderPopupPrices(st.prix, selectedFuel, st.pays, st.maj)}
         </div>
+        ${renderPopupAmenitiesBlock(st)}
         <div class="station-nav-actions popup-nav-actions">
           <a href="${wazeUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-waze" title="${t().wazeTitle}">
             ${wazeSvg} <span>Waze</span>
@@ -3155,6 +3631,7 @@ function renderCurrentRouteStations() {
       <div class="prices-container">
         ${renderCardPrices(st.prix, selectedFuel, isCheapest, st.pays, st.maj)}
       </div>
+      ${renderStationAmenitiesPills(st)}
       ${(st.pays === 'BE' || (st.pays === 'DE' && !st.live)) ? `<div style="font-size:0.68rem; color:#94a3b8; margin-top:3px;">${t().estimatedPrice}</div>` : ''}
       ${(st.pays === 'DE' && st.live) ? `<div style="font-size:0.66rem; color:#94a3b8; margin-top:3px;">MTS-K · <a href="https://www.tankerkoenig.de" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" style="color:#7dd3fc;">Tankerkönig</a> (CC BY 4.0)</div>` : ''}
 
@@ -3241,13 +3718,18 @@ function formatPriceMaj(majStr) {
 // Render fuel prices inside card
 function renderCardPrices(prices, featuredFuel, isCheapest, pays, maj) {
   const isUK = pays === 'GB';
-  const formatPrice = (val) => isUK ? `£${val.toFixed(3)}` : `${val.toFixed(3)} €`;
+  const isElec = featuredFuel === 'elec';
+  const formatPrice = (val) => {
+    if (isElec) return isUK ? `${val.toFixed(3)} £/kWh` : `${val.toFixed(3)} €/kWh`;
+    return isUK ? `£${val.toFixed(3)}` : `${val.toFixed(3)} €`;
+  };
   const majFormatted = formatPriceMaj(maj);
+  const fuelIcon = isElec ? '⚡' : '⛽';
 
   if (!prices || Object.keys(prices).length === 0) {
     return `
       <div class="prices-single-row">
-        <span class="single-fuel-label"><span class="fuel-icon">⛽</span><span class="fuel-name">${t().priceLbl}</span></span>
+        <span class="single-fuel-label"><span class="fuel-icon">${fuelIcon}</span><span class="fuel-name">${t().priceLbl}</span></span>
         <span class="price-val-unavail">${t().noPrice}</span>
       </div>
     `;
@@ -3256,13 +3738,14 @@ function renderCardPrices(prices, featuredFuel, isCheapest, pays, maj) {
   // When a specific fuel is filtered (default behavior: e10/sp95, gazole, sp98, etc.)
   if (featuredFuel && featuredFuel !== 'all') {
     const p = getFuelPrice(prices, featuredFuel);
-    const fuelName = getServedFuelLabel(prices, featuredFuel, pays);
+    const rawFuelName = getServedFuelLabel(prices, featuredFuel, pays);
+    const fuelName = rawFuelName.replace(/^[⚡⛽]\s*/, '');
 
     if (p && p > 0) {
       return `
-        <div class="prices-single-row ${isCheapest ? 'cheapest' : 'featured'}">
+        <div class="prices-single-row ${isCheapest ? 'cheapest' : 'featured'} ${isElec ? 'electric-row' : ''}">
           <div class="single-fuel-label">
-            <span class="fuel-icon">⛽</span>
+            <span class="fuel-icon">${fuelIcon}</span>
             <span class="fuel-name">${fuelName}</span>
           </div>
           <div class="single-fuel-price">
@@ -3275,7 +3758,7 @@ function renderCardPrices(prices, featuredFuel, isCheapest, pays, maj) {
       return `
         <div class="prices-single-row unavailable">
           <div class="single-fuel-label">
-            <span class="fuel-icon">⛽</span>
+            <span class="fuel-icon">${fuelIcon}</span>
             <span class="fuel-name">${fuelName}</span>
           </div>
           <div class="single-fuel-price">
@@ -3309,17 +3792,27 @@ function renderCardPrices(prices, featuredFuel, isCheapest, pays, maj) {
 // Render prices in marker popup
 function renderPopupPrices(prices, featuredFuel, pays, maj) {
   const isUK = pays === 'GB';
-  const formatPrice = (val) => isUK ? `£${val.toFixed(3)}` : `${val.toFixed(3)} €`;
+  const isElec = featuredFuel === 'elec';
+  const formatPrice = (val) => {
+    if (isElec) return isUK ? `${val.toFixed(3)} £/kWh` : `${val.toFixed(3)} €/kWh`;
+    return isUK ? `£${val.toFixed(3)}` : `${val.toFixed(3)} €`;
+  };
   const majFormatted = formatPriceMaj(maj);
+  const fuelIcon = isElec ? '⚡' : '⛽';
 
   if (!prices) return `<span>${t().noPrice}</span>`;
   if (featuredFuel && featuredFuel !== 'all') {
     const p = getFuelPrice(prices, featuredFuel);
-    const fuelName = getServedFuelLabel(prices, featuredFuel, pays);
+    const rawFuelName = getServedFuelLabel(prices, featuredFuel, pays);
+    const fuelName = rawFuelName.replace(/^[⚡⛽]\s*/, '');
     if (p && p > 0) {
+      const bgBorder = isElec 
+        ? 'background: rgba(14, 165, 233, 0.18); border: 1.5px solid #0ea5e9;'
+        : 'background: rgba(16, 185, 129, 0.15); border: 1.5px solid #10b981;';
+      const labelColor = isElec ? '#7dd3fc' : '#a7f3d0';
       return `
-        <div style="grid-column: span 2; background: rgba(16, 185, 129, 0.15); border: 1.5px solid #10b981; padding: 6px 12px; border-radius: 8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
-          <span style="color: #a7f3d0; font-size: 0.85rem; font-weight: 700;">⛽ ${fuelName}</span>
+        <div style="grid-column: span 2; ${bgBorder} padding: 6px 12px; border-radius: 8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+          <span style="color: ${labelColor}; font-size: 0.85rem; font-weight: 700;">${fuelIcon} ${fuelName}</span>
           <div style="display:flex; align-items:center; gap:8px;">
             <b style="color: #ffffff; font-size: 1.15rem; font-family: monospace;">${formatPrice(p)}</b>
             ${majFormatted ? `<span class="price-maj-time" style="font-size:0.7rem;" title="${t().verifiedAt} ${maj}">🕒 ${majFormatted}</span>` : ''}
@@ -3329,7 +3822,7 @@ function renderPopupPrices(prices, featuredFuel, pays, maj) {
     } else {
       return `
         <div style="grid-column: span 2; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; padding: 6px 10px; border-radius: 6px; text-align:center; color:#fca5a5; font-size:0.8rem;">
-          ⛽ ${fuelName} : ${t().unavail}
+          ${fuelIcon} ${fuelName} : ${t().unavail}
         </div>
       `;
     }

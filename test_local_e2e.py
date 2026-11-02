@@ -156,8 +156,46 @@ try:
         print("No blocking alert, smooth handling.")
     print("[PASS] Locate button clicked cleanly.")
 
+    print("\n--- TEST 7: Commercial Brands (Starbucks, Paul, etc.) & Amenities ---")
+    amenity_pills = driver.find_elements(By.CLASS_NAME, 'amenity-pill')
+    print(f"Found {len(amenity_pills)} commercial brand/amenity pills on cards.")
+    assert len(amenity_pills) > 0, "FAILURE: No amenity pills found on cards!"
+    print(f"Sample amenity pill text: '{amenity_pills[0].text}'")
+
+    # Click on the first card to open popup and verify popup amenities block
+    first_card = driver.find_element(By.CLASS_NAME, 'station-card')
+    driver.execute_script("arguments[0].click();", first_card)
+    time.sleep(0.5)
+    popup_blocks = driver.find_elements(By.CLASS_NAME, 'popup-amenities-block')
+    print(f"Popup amenities blocks found: {len(popup_blocks)}")
+    assert len(popup_blocks) > 0, "FAILURE: Popup does not contain popup-amenities-block!"
+    popup_text = popup_blocks[0].text
+    print(f"Popup amenities content:\n{popup_text}")
+    print("[PASS] Commercial brands and motorway amenities render on both cards and popup.")
+
+    print("\n--- TEST 8: Electric (kWh) Fuel Selection & Pricing ---")
+    fuel_select = driver.find_element(By.ID, 'select-fuel')
+    driver.execute_script("arguments[0].value = 'elec'; arguments[0].dispatchEvent(new Event('change'));", fuel_select)
+    time.sleep(1)
+    
+    # Check that stations are rendered with €/kWh or £/kWh
+    elec_cards = driver.find_elements(By.CLASS_NAME, 'station-card')
+    print(f"Found {len(elec_cards)} electric-equipped stations on route.")
+    assert len(elec_cards) > 0, "FAILURE: No electric stations rendered after selecting elec!"
+    
+    prices_text = elec_cards[0].find_element(By.CLASS_NAME, 'prices-container').get_attribute('textContent')
+    print(f"Sample electric price display: '{prices_text.strip()}'")
+    assert "/kWh" in prices_text or "kWh" in prices_text, f"FAILURE: Price text does not specify /kWh! Got: {prices_text}"
+    print("[PASS] Electric charging stations correctly filtered and priced per kWh.")
+
+    print("\n--- Final Console Error Check ---")
+    logs = driver.get_log('browser')
+    severe = [l for l in logs if l['level'] == 'SEVERE']
+    assert len(severe) == 0, f"FAILURE: Encountered console errors: {severe}"
+    print("[PASS] 0 severe console errors throughout all tests.")
+
     print("\n==========================================")
-    print("ALL 6 RIGOROUS AUTOMATED TESTS PASSED! 100%")
+    print("ALL 8 RIGOROUS AUTOMATED TESTS PASSED! 100%")
     print("==========================================")
 
 finally:

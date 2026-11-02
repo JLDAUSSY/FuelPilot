@@ -2677,3 +2677,117 @@ header {
     transform: scale(1.08);
   }
 }
+
+/* ==========================================================================
+   Amenities & Commercial Brands on Motorway Service Areas
+   ========================================================================== */
+.station-amenities-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.amenity-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.amenity-pill:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(56, 189, 248, 0.5);
+}
+
+.amenity-pill.amenity-cafe {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: #fbbf24;
+}
+
+.amenity-pill.amenity-boulangerie {
+  background: rgba(234, 179, 8, 0.12);
+  border-color: rgba(234, 179, 8, 0.3);
+  color: #fde047;
+}
+
+.amenity-pill.amenity-fastfood, .amenity-pill.amenity-resto {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+}
+
+.amenity-pill.amenity-ev {
+  background: rgba(14, 165, 233, 0.18);
+  border-color: rgba(14, 165, 233, 0.5);
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.amenity-pill.amenity-shop, .amenity-pill.amenity-presse {
+  background: rgba(168, 85, 247, 0.12);
+  border-color: rgba(168, 85, 247, 0.3);
+  color: #d8b4fe;
+}
+
+.amenity-pill.amenity-service {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: #6ee7b7;
+}
+
+.amenity-pill-more {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 6px;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+}
+
+.popup-amenities-block {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.popup-amenities-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.popup-amenities-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.custom-station-pin.electric-pin {
+  border-color: #0ea5e9;
+  background: rgba(15, 23, 42, 0.95);
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.35);
+}
+
+.prices-single-row.electric-row {
+  border-color: rgba(14, 165, 233, 0.5);
+  background: rgba(14, 165, 233, 0.12);
+}
+
+
