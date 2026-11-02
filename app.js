@@ -531,10 +531,16 @@ function getStationBrandsAndServices(st) {
   const ens = (st.enseigne || '').toLowerCase();
   const pays = st.pays || 'FR';
 
+  // Check current fuel choice
+  const isThermalFuel = selectedFuel && selectedFuel !== 'elec' && selectedFuel !== 'all';
+  const isElectricOnly = selectedFuel === 'elec';
+
   // 1. Direct dictionary matches for famous highway service areas
   for (const [key, brands] of Object.entries(MOTORWAY_FAMOUS_AMENITIES)) {
     if (fullText.includes(key)) {
       brands.forEach(b => {
+        // When user selects a thermal fuel (essence / gazole), exclude electric charging hubs
+        if (isThermalFuel && b.type === 'amenity-ev') return;
         addItem(b.name, b.icon, b.type, true);
       });
       break;
@@ -595,8 +601,8 @@ function getStationBrandsAndServices(st) {
     }
   }
 
-  // 3. EV Charging hub operator
-  if (st.prix && st.prix.elec > 0) {
+  // 3. EV Charging hub operator (only if electric or all fuels)
+  if (!isThermalFuel && st.prix && st.prix.elec > 0) {
     if (fullText.includes('tesla') || ens.includes('tesla')) {
       addItem('Tesla Supercharger', '⚡', 'amenity-ev', true);
     } else if (fullText.includes('fulli') || ens.includes('fulli')) {
@@ -651,6 +657,11 @@ function getStationBrandsAndServices(st) {
     addItem('Sanitaires 24/7', '🚻', 'amenity-service', false);
     addItem('Espace Bébé', '🍼', 'amenity-service', false);
     addItem('Gonflage pneus', '💨', 'amenity-service', false);
+  }
+
+  // If electric is selected, prioritize EV charging hub at the front of brand items
+  if (isElectricOnly) {
+    items.sort((a, b) => (b.type === 'amenity-ev' ? 1 : 0) - (a.type === 'amenity-ev' ? 1 : 0));
   }
 
   return items;
