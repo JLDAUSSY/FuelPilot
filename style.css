@@ -2791,3 +2791,15 @@ header {
 }
 
 
+
+.amenity-pill .amenity-svg {
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.amenity-pill .amenity-emoji {
+  display: inline-block;
+  font-size: 0.85rem;
+  line-height: 1;
+}

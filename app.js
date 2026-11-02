@@ -656,6 +656,95 @@ function getStationBrandsAndServices(st) {
   return items;
 }
 
+// Return official brand logo or specialized SVG icon for motorway amenities & commercial brands
+function getAmenityBadgeIcon(name, fallbackEmoji) {
+  const n = (name || '').toLowerCase();
+  
+  if (n.includes('paul')) {
+    return `<svg viewBox="0 0 20 20" class="amenity-svg" style="width:16px;height:16px;border-radius:3px;flex-shrink:0;"><rect width="20" height="20" rx="3" fill="#000000"/><text x="10" y="14" font-family="'Times New Roman', Georgia, serif" font-weight="900" font-size="8.5" fill="#fdfbf7" text-anchor="middle" letter-spacing="0.5">PAUL</text></svg>`;
+  }
+  if (n.includes('starbucks')) {
+    return `<svg viewBox="0 0 24 24" class="amenity-svg" style="width:16px;height:16px;border-radius:50%;flex-shrink:0;"><circle cx="12" cy="12" r="11" fill="#006241"/><circle cx="12" cy="12" r="9.5" fill="none" stroke="#ffffff" stroke-width="0.8"/><polygon points="12,5 13,8 16,8 13.5,10 14.5,13 12,11 9.5,13 10.5,10 8,8 11,8" fill="#ffffff"/><path d="M7 16c1.5 2 3.5 2.5 5 2.5s3.5-.5 5-2.5c-.8 1.5-2.5 2.2-5 2.2s-4.2-.7-5-2.2z" fill="#ffffff"/><circle cx="12" cy="11.5" r="2.2" fill="#ffffff"/></svg>`;
+  }
+  if (n.includes("mcdonald") || n.includes("mcdo")) {
+    return `<svg viewBox="0 0 20 20" class="amenity-svg" style="width:16px;height:16px;border-radius:3px;flex-shrink:0;"><rect width="20" height="20" rx="3" fill="#da291c"/><path d="M4 17V9.5c0-2.2 1.5-4 3.2-4 1.8 0 2.8 1.5 2.8 3.8v7.7h-1.8V9.3c0-1.2-.6-2.2-1.5-2.2-.9 0-1.5 1-1.5 2.2V17H4zm6 0V9.3c0-1.2.6-2.2 1.5-2.2.9 0 1.5 1 1.5 2.2V17h1.8V9.5c0-2.2-1.5-4-3.2-4-1.8 0-2.8 1.5-2.8 3.8V17H10z" fill="#ffc72c"/></svg>`;
+  }
+  if (n.includes('burger king')) {
+    return `<svg viewBox="0 0 24 24" class="amenity-svg" style="width:16px;height:16px;border-radius:50%;flex-shrink:0;"><circle cx="12" cy="12" r="11.5" fill="#fdf3e7" stroke="#0033a0" stroke-width="1"/><path d="M4.5 10c1.2-4 4-6.5 7.5-6.5s6.3 2.5 7.5 6.5H4.5z" fill="#d62300"/><path d="M5 14.5c1.2 3.8 4 6 7 6s5.8-2.2 7-6H5z" fill="#d62300"/><rect x="3" y="10.8" width="18" height="3" rx="1.5" fill="#ed7902"/><text x="12" y="13.2" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-size="4" fill="#ffffff" text-anchor="middle">BK</text></svg>`;
+  }
+  if (n.includes('relay')) {
+    return `<svg viewBox="0 0 26 16" class="amenity-svg" style="height:14px;width:auto;border-radius:3px;flex-shrink:0;"><rect width="26" height="16" rx="3" fill="#e2001a"/><text x="13" y="12" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="9" fill="#ffffff" text-anchor="middle" font-style="italic">Relay</text></svg>`;
+  }
+  if (n.includes('carrefour')) {
+    return `<svg viewBox="0 0 20 20" class="amenity-svg" style="width:16px;height:16px;border-radius:3px;flex-shrink:0;"><rect width="20" height="20" rx="3" fill="#ffffff"/><path d="M3 10c0-3.5 2-6.5 5.5-8L10 5.5c-2 1-3 2.5-3 4.5s1 3.5 3 4.5L8 18c-3.5-1.5-5.5-4.5-5.5-8z" fill="#00387b"/><path d="M17 10c0 3.5-2 6.5-5.5 8L10 14.5c2-1 3-2.5 3-4.5s-1-3.5-3-4.5L12 2c3.5 1.5 5.5 4.5 5.5 8z" fill="#e2001a"/></svg>`;
+  }
+  if (n.includes('brioche dor')) {
+    return `<svg viewBox="0 0 20 20" class="amenity-svg" style="width:16px;height:16px;border-radius:3px;flex-shrink:0;"><rect width="20" height="20" rx="3" fill="#8b0000"/><circle cx="10" cy="10" r="7.5" fill="none" stroke="#d4af37" stroke-width="1.2"/><text x="10" y="13.5" font-family="Georgia, serif" font-weight="bold" font-size="8.5" fill="#d4af37" text-anchor="middle" font-style="italic">BD</text></svg>`;
+  }
+  if (n.includes('subway')) {
+    return `<svg viewBox="0 0 20 20" class="amenity-svg" style="width:16px;height:16px;border-radius:3px;flex-shrink:0;"><rect width="20" height="20" rx="3" fill="#008938"/><path d="M3 10l3.5-4v2.5h7V6l3.5 4-3.5 4v-2.5h-7V14z" fill="#ffc20e"/></svg>`;
+  }
+  if (n.includes('courtepaille')) {
+    return `<svg viewBox="0 0 20 20" class="amenity-svg" style="width:16px;height:16px;border-radius:3px;flex-shrink:0;"><rect width="20" height="20" rx="3" fill="#801818"/><polygon points="10,3 18,11 15,11 15,17 5,17 5,11 2,11" fill="#f5b041"/><rect x="8.5" y="11" width="3" height="6" fill="#4a0e0e"/></svg>`;
+  }
+  if (n.includes('tesla')) {
+    return `<svg viewBox="0 0 20 20" class="amenity-svg" style="width:16px;height:16px;border-radius:3px;flex-shrink:0;"><rect width="20" height="20" rx="3" fill="#e82127"/><path d="M10 5.2c2.5 0 5 .8 6 1.8-.3.4-.8.7-1.3.8-.7-.5-2.5-1-4.7-1s-4 .5-4.7 1c-.5-.1-1-.4-1.3-.8 1-1 3.5-1.8 6-1.8zm3.8 3.2c-.3.4-.7.6-1.2.6-.4-.4-1.3-.7-2.6-.7s-2.2.3-2.6.7c-.5 0-.9-.2-1.2-.6 1-.7 2.3-1.1 3.8-1.1s2.8.4 3.8 1.1zm-3.2 2.1v6.5H9.4v-6.5c-1.3.1-2.4.4-3.1.8-.1-.4-.1-.8 0-1.1.9-.4 2.2-.6 3.7-.6s2.8.2 3.7.6c.1.3.1.7 0 1.1-.7-.4-1.8-.7-3.1-.8z" fill="#ffffff"/></svg>`;
+  }
+  if (n.includes('ionity')) {
+    return `<svg viewBox="0 0 20 20" class="amenity-svg" style="width:16px;height:16px;border-radius:3px;flex-shrink:0;"><rect width="20" height="20" rx="3" fill="#03162b"/><circle cx="10" cy="10" r="6" fill="none" stroke="#00e5c9" stroke-width="2"/><circle cx="10" cy="10" r="3.2" fill="none" stroke="#ffffff" stroke-width="1.2"/><polygon points="10,5 12,8 8,8" fill="#00e5c9"/></svg>`;
+  }
+  if (n.includes('fastned')) {
+    return `<svg viewBox="0 0 20 20" class="amenity-svg" style="width:16px;height:16px;border-radius:3px;flex-shrink:0;"><rect width="20" height="20" rx="3" fill="#1e1e1e"/><polygon points="10,3 18,17 2,17" fill="#ffc700"/><polygon points="10,7.5 15,16 5,16" fill="#1e1e1e"/><path d="M10 9v4l2 1" fill="none" stroke="#ffc700" stroke-width="1.2" stroke-linecap="round"/></svg>`;
+  }
+  if (n.includes('fulli')) {
+    return `<svg viewBox="0 0 20 20" class="amenity-svg" style="width:16px;height:16px;border-radius:3px;flex-shrink:0;"><rect width="20" height="20" rx="3" fill="#4d1979"/><text x="10" y="13.5" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="7.5" fill="#00e5c9" text-anchor="middle">fulli</text></svg>`;
+  }
+  if (n.includes('totalenergies') || n.includes('total ev')) {
+    return `<svg viewBox="0 0 20 20" class="amenity-svg" style="width:16px;height:16px;border-radius:3px;flex-shrink:0;"><rect width="20" height="20" rx="3" fill="#0a192f"/><circle cx="10" cy="10" r="7.5" fill="none" stroke="#00b4d8" stroke-width="1.5"/><polygon points="11,4 7,11 10,11 9,16 13,9 10,9" fill="#00f5d4"/></svg>`;
+  }
+  if (n.includes('costa')) {
+    return `<svg viewBox="0 0 20 20" class="amenity-svg" style="width:16px;height:16px;border-radius:50%;flex-shrink:0;"><circle cx="10" cy="10" r="10" fill="#78232e"/><text x="10" y="13" font-family="'Arial Black', sans-serif" font-weight="900" font-size="5.5" fill="#ffffff" text-anchor="middle" letter-spacing="0.2">COSTA</text></svg>`;
+  }
+  if (n.includes('columbus')) {
+    return `<svg viewBox="0 0 20 20" class="amenity-svg" style="width:16px;height:16px;border-radius:3px;flex-shrink:0;"><rect width="20" height="20" rx="3" fill="#382215"/><circle cx="10" cy="9" r="5" fill="#f4ece1"/><circle cx="8" cy="8" r="0.8" fill="#382215"/><circle cx="12" cy="8" r="0.8" fill="#382215"/><ellipse cx="10" cy="10.8" rx="1.6" ry="1.1" fill="#bd8b57"/><circle cx="10" cy="10.3" r="0.6" fill="#382215"/></svg>`;
+  }
+  if (n.includes('croissanterie')) {
+    return `<svg viewBox="0 0 20 20" class="amenity-svg" style="width:16px;height:16px;border-radius:3px;flex-shrink:0;"><rect width="20" height="20" rx="3" fill="#d35400"/><path d="M4 14c1.5-4 5-7 8.5-6 2 .5 3 2 3.5 3.5-.8-.5-2-.8-3.5-.5-3 .5-5.5 3-7 6-.5-.8-1-1.8-1.5-3z" fill="#f5cba7"/></svg>`;
+  }
+  if (n.includes('sanifair')) {
+    return `<svg viewBox="0 0 20 20" class="amenity-svg" style="width:16px;height:16px;border-radius:3px;flex-shrink:0;"><rect width="20" height="20" rx="3" fill="#0072bc"/><circle cx="7.5" cy="7.5" r="3" fill="#ffffff"/><circle cx="12.5" cy="12.5" r="3" fill="#ffffff"/><circle cx="7.5" cy="12.5" r="2.2" fill="#7ec4f8"/><circle cx="12.5" cy="7.5" r="2.2" fill="#7ec4f8"/></svg>`;
+  }
+  if (n.includes('autogrill') || n.includes('ciao')) {
+    return `<svg viewBox="0 0 20 20" class="amenity-svg" style="width:16px;height:16px;border-radius:3px;flex-shrink:0;"><rect width="20" height="20" rx="3" fill="#d91a1a"/><text x="10" y="13.5" font-family="'Arial Black', sans-serif" font-weight="900" font-size="6" fill="#ffffff" text-anchor="middle">CIAO</text></svg>`;
+  }
+  if (n.includes('douche') || n.includes('shower')) {
+    return `<svg viewBox="0 0 24 24" class="amenity-svg" style="width:16px;height:16px;flex-shrink:0;" fill="#38bdf8"><path d="M12 2a5 5 0 0 0-5 5v1h10V7a5 5 0 0 0-5-5zm-5 8v1h10v-1H7zm1 3a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm4 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm4 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-6 4a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm4 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg>`;
+  }
+  if (n.includes('bebe') || n.includes('bébé') || n.includes('baby') || n.includes('nurserie')) {
+    return `<svg viewBox="0 0 24 24" class="amenity-svg" style="width:16px;height:16px;flex-shrink:0;" fill="#f472b6"><path d="M19 13.5c0-.8-.7-1.5-1.5-1.5H16V9c0-1.7-1.3-3-3-3H9v2h4c.6 0 1 .4 1 1v3H6.5C5.7 12 5 12.7 5 13.5V17c0 .6.4 1 1 1h12c.6 0 1-.4 1-1v-3.5zM7 21a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>`;
+  }
+  if (n.includes('gonflage') || n.includes('air') || n.includes('tyre')) {
+    return `<svg viewBox="0 0 24 24" class="amenity-svg" style="width:16px;height:16px;flex-shrink:0;" fill="#34d399"><circle cx="12" cy="12" r="9" fill="none" stroke="#34d399" stroke-width="2.5"/><circle cx="12" cy="12" r="4" fill="none" stroke="#34d399" stroke-width="2"/><line x1="12" y1="12" x2="14" y2="10" stroke="#34d399" stroke-width="2" stroke-linecap="round"/></svg>`;
+  }
+  if (n.includes('wifi') || n.includes('wi-fi')) {
+    return `<svg viewBox="0 0 24 24" class="amenity-svg" style="width:16px;height:16px;flex-shrink:0;" fill="#60a5fa"><path d="M12 4C7.3 4 3.1 5.9 0 9l2.1 2.1C4.6 8.7 8.1 7.2 12 7.2s7.4 1.5 9.9 3.9L24 9C20.9 5.9 16.7 4 12 4zm0 6c-3.3 0-6.3 1.3-8.5 3.5L5.6 15.6C7.3 14 9.5 13 12 13s4.7 1 6.4 2.6l2.1-2.1C18.3 11.3 15.3 10 12 10zm0 6c-1.7 0-3.1.7-4.2 1.8L12 22l4.2-4.2C15.1 16.7 13.7 16 12 16z"/></svg>`;
+  }
+  if (n.includes('dab') || n.includes('distributeur') || n.includes('atm')) {
+    return `<svg viewBox="0 0 24 24" class="amenity-svg" style="width:16px;height:16px;flex-shrink:0;" fill="#fbbf24"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="#fbbf24" stroke-width="2"/><line x1="3" y1="9" x2="21" y2="9" stroke="#fbbf24" stroke-width="2"/><rect x="6" y="13" width="4" height="3" fill="#fbbf24"/></svg>`;
+  }
+  if (n.includes('sanitaire') || n.includes('toilette') || n.includes('wc')) {
+    return `<svg viewBox="0 0 24 24" class="amenity-svg" style="width:16px;height:16px;flex-shrink:0;" fill="#a7f3d0"><circle cx="8" cy="6" r="2.5" fill="#a7f3d0"/><circle cx="16" cy="6" r="2.5" fill="#a7f3d0"/><path d="M6 10h4v10H6zM14 10h4l1 10h-6z" fill="#a7f3d0"/></svg>`;
+  }
+  if (n.includes('camping')) {
+    return `<svg viewBox="0 0 24 24" class="amenity-svg" style="width:16px;height:16px;flex-shrink:0;" fill="#a3e635"><path d="M4 6h12v11H4zm12 4h4l2 3v4h-6zM6 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm12 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" fill="#a3e635"/></svg>`;
+  }
+  if (n.includes('poids lourds') || n.includes('pl')) {
+    return `<svg viewBox="0 0 24 24" class="amenity-svg" style="width:16px;height:16px;flex-shrink:0;" fill="#cbd5e1"><path d="M3 6h11v9H3zm11 3h4l2 3v3h-6zM6 18a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm11 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" fill="#cbd5e1"/></svg>`;
+  }
+  
+  return `<span class="amenity-emoji">${fallbackEmoji || '⭐'}</span>`;
+}
+
 function renderStationAmenitiesPills(st) {
   const allItems = getStationBrandsAndServices(st);
   const brandItems = allItems.filter(i => i.isBrand);
@@ -666,7 +755,8 @@ function renderStationAmenitiesPills(st) {
   
   let html = '<div class="station-amenities-row">';
   displayItems.forEach(item => {
-    html += `<span class="amenity-pill ${item.type}" title="${item.name}">${item.icon} ${item.name}</span>`;
+    const iconHtml = getAmenityBadgeIcon(item.name, item.icon);
+    html += `<span class="amenity-pill ${item.type}" title="${item.name}">${iconHtml}<span>${item.name}</span></span>`;
   });
   if (remaining > 0) {
     html += `<span class="amenity-pill-more">+${remaining} enseignes</span>`;
@@ -686,14 +776,14 @@ function renderPopupAmenitiesBlock(st) {
     <div class="popup-amenities-block">
       <div class="popup-amenities-title">☕ Enseignes & Restauration</div>
       <div class="popup-amenities-grid" style="margin-bottom:6px;">
-        ${brands.map(b => `<span class="amenity-pill ${b.type}">${b.icon} ${b.name}</span>`).join('')}
+        ${brands.map(b => `<span class="amenity-pill ${b.type}">${getAmenityBadgeIcon(b.name, b.icon)}<span>${b.name}</span></span>`).join('')}
       </div>
   `;
   if (services.length > 0) {
     html += `
       <div class="popup-amenities-title" style="margin-top:4px;">🛠️ Services de l'aire</div>
       <div class="popup-amenities-grid">
-        ${services.map(s => `<span class="amenity-pill ${s.type}">${s.icon} ${s.name}</span>`).join('')}
+        ${services.map(s => `<span class="amenity-pill ${s.type}">${getAmenityBadgeIcon(s.name, s.icon)}<span>${s.name}</span></span>`).join('')}
       </div>
     `;
   }
@@ -702,7 +792,7 @@ function renderPopupAmenitiesBlock(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '8.4';
+const APP_VERSION = '8.5';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
