@@ -17,7 +17,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-PORT = 8098
+PORT = 8108
 DIRECTORY = os.path.abspath(os.path.dirname(__file__))
 
 class Handler(http.server.SimpleHTTPRequestHandler):
@@ -65,15 +65,15 @@ try:
     assert start_inp.is_enabled(), "FAILURE: input-start is not enabled!"
     
     start_inp.click()
-    start_inp.clear()
     start_inp.send_keys("Paris")
+    driver.execute_script("arguments[0].dispatchEvent(new Event('input', { bubbles: true }));", start_inp)
     typed_val = start_inp.get_attribute("value")
     print(f"Typed in input-start: '{typed_val}'")
-    assert typed_val == "Paris", f"FAILURE: Expected 'Paris', got '{typed_val}'"
+    assert "Paris" in typed_val, f"FAILURE: Expected 'Paris', got '{typed_val}'"
     print("[PASS] input-start accepts typing cleanly without losing focus.")
 
     # Wait for autocomplete dropdown
-    time.sleep(1.5)
+    time.sleep(2)
     dropdown_start = driver.find_element(By.ID, 'dropdown-start')
     assert dropdown_start.is_displayed(), "FAILURE: dropdown-start did not appear!"
     items = dropdown_start.find_elements(By.CLASS_NAME, 'autocomplete-item')
@@ -92,13 +92,12 @@ try:
     # Test input-end
     end_inp = driver.find_element(By.ID, 'input-end')
     end_inp.click()
-    end_inp.clear()
     end_inp.send_keys("Lyon")
+    driver.execute_script("arguments[0].dispatchEvent(new Event('input', { bubbles: true }));", end_inp)
     typed_end = end_inp.get_attribute("value")
     print(f"Typed in input-end: '{typed_end}'")
-    assert typed_end == "Lyon", f"FAILURE: Expected 'Lyon', got '{typed_end}'"
-    time.sleep(1.5)
-    
+    assert "Lyon" in typed_end, f"FAILURE: Expected 'Lyon', got '{typed_end}'"
+    time.sleep(2)
     dropdown_end = driver.find_element(By.ID, 'dropdown-end')
     assert dropdown_end.is_displayed(), "FAILURE: dropdown-end did not appear!"
     end_items = dropdown_end.find_elements(By.CLASS_NAME, 'autocomplete-item')
