@@ -802,8 +802,141 @@ function renderPopupAmenitiesBlock(st) {
   return html;
 }
 
+// ============================================================================
+// Live Weather (Open-Meteo API) & In-Memory Cache
+// ============================================================================
+const weatherCache = new Map();
+
+function getWeatherInfo(code, isDay = 1) {
+  if (code === 0) {
+    return isDay ? { icon: '☀️', desc: 'Ensoleillé' } : { icon: '🌙', desc: 'Nuit claire' };
+  } else if (code === 1 || code === 2) {
+    return isDay ? { icon: '🌤️', desc: 'Éclaircies' } : { icon: '☁️', desc: 'Partiellement nuageux' };
+  } else if (code === 3) {
+    return { icon: '☁️', desc: 'Couvert' };
+  } else if (code === 45 || code === 48) {
+    return { icon: '🌫️', desc: 'Brouillard' };
+  } else if (code >= 51 && code <= 57) {
+    return { icon: '🌦️', desc: 'Bruine' };
+  } else if ((code >= 61 && code <= 67) || (code >= 80 && code <= 82)) {
+    return { icon: '🌧️', desc: 'Pluie' };
+  } else if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) {
+    return { icon: '❄️', desc: 'Neige' };
+  } else if (code >= 95) {
+    return { icon: '⛈️', desc: 'Orage' };
+  }
+  return isDay ? { icon: '☀️', desc: 'Beau temps' } : { icon: '🌙', desc: 'Ciel dégagé' };
+}
+
+function getCachedWeather(lat, lon) {
+  if (typeof lat !== 'number' || typeof lon !== 'number') return null;
+  const key = `${lat.toFixed(2)},${lon.toFixed(2)}`;
+  const item = weatherCache.get(key);
+  if (item && (Date.now() - item.time < 30 * 60 * 1000)) {
+    return item;
+  }
+  return null;
+}
+
+async function fetchWeatherForStations(stations) {
+  if (!stations || stations.length === 0) return;
+  const needed = [];
+  const coordsKeys = new Set();
+
+  stations.forEach(st => {
+    if (typeof st.lat !== 'number' || typeof st.lon !== 'number') return;
+    const key = `${st.lat.toFixed(2)},${st.lon.toFixed(2)}`;
+    if (coordsKeys.has(key)) return;
+    coordsKeys.add(key);
+    const cached = getCachedWeather(st.lat, st.lon);
+    if (!cached) {
+      needed.push({ lat: st.lat, lon: st.lon, key });
+    }
+  });
+
+  if (needed.length === 0) return;
+
+  const batch = needed.slice(0, 40);
+  const lats = batch.map(b => b.lat.toFixed(3)).join(',');
+  const lons = batch.map(b => b.lon.toFixed(3)).join(',');
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}&current=temperature_2m,weather_code,is_day`;
+
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return;
+    const data = await res.json();
+    const items = Array.isArray(data) ? data : [data];
+
+    items.forEach((item, idx) => {
+      if (item && item.current && batch[idx]) {
+        const temp = Math.round(item.current.temperature_2m);
+        const code = item.current.weather_code;
+        const isDay = item.current.is_day !== undefined ? item.current.is_day : 1;
+        const info = getWeatherInfo(code, isDay);
+        const wData = { temp, icon: info.icon, desc: info.desc, time: Date.now() };
+        weatherCache.set(batch[idx].key, wData);
+      }
+    });
+
+    stations.forEach(st => {
+      const w = getCachedWeather(st.lat, st.lon);
+      if (!w) return;
+      const cardEl = document.getElementById(`weather-card-${st.id}`);
+      if (cardEl) {
+        cardEl.innerHTML = `${w.icon} ${w.temp}°C`;
+        cardEl.title = `${w.desc} (${w.temp}°C)`;
+        cardEl.style.display = 'inline-flex';
+      }
+      const popupEl = document.getElementById(`weather-popup-${st.id}`);
+      if (popupEl) {
+        popupEl.innerHTML = `<span class="popup-weather-icon">${w.icon}</span> <strong>${w.temp}°C</strong> · ${w.desc}`;
+        popupEl.style.display = 'flex';
+      }
+    });
+  } catch (err) {}
+}
+
+// ============================================================================
+// Motorway Opening Hours & 24/7 Status
+// ============================================================================
+function getStationOpeningStatus(st) {
+  const now = new Date();
+  const timeVal = now.getHours() + now.getMinutes() / 60;
+
+  // Motorway Concessions standards:
+  // 06h30 - 21h30: Open
+  // 21h30 - 22h30: Closing soon
+  // 22h30 - 06h30: Night (Automate CB 24/24, food closed)
+  const isOpen = timeVal >= 6.5 && timeVal < 21.5;
+  const isClosingSoon = timeVal >= 21.5 && timeVal < 22.5;
+
+  const tr = t();
+  if (isOpen) {
+    return {
+      statusClass: 'status-open',
+      cardBadge: tr.statusOpen || '🟢 Restauration ouverte',
+      popupSchedule: `${tr.statusOpen || 'Restauration ouverte'} (06h30 - 21h30)`,
+      fuelSchedule: tr.pumps247 || 'Pompes & bornes CB : 24h/24'
+    };
+  } else if (isClosingSoon) {
+    return {
+      statusClass: 'status-closing',
+      cardBadge: tr.statusClosing || '🟡 Restauration : fermeture proche',
+      popupSchedule: `${tr.statusClosing || 'Fermeture resto proche'} (fermeture 22h00)`,
+      fuelSchedule: tr.pumps247 || 'Pompes & bornes CB : 24h/24'
+    };
+  } else {
+    return {
+      statusClass: 'status-night',
+      cardBadge: tr.statusNight || '🌙 Carburant 24/7 · Resto fermé',
+      popupSchedule: `${tr.statusNight || 'Restauration fermée'} (réouverture 06h30)`,
+      fuelSchedule: tr.pumps247 || 'Pompes & bornes CB : 24h/24'
+    };
+  }
+}
+
 // Initialize Application
-const APP_VERSION = '8.5';
+const APP_VERSION = '8.6';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -968,7 +1101,12 @@ const I18N_DICT = {
     today: "Aujourd'hui",
     yesterday: "Hier",
     atTime: "à",
-    verifiedAt: "Relevé :"
+    verifiedAt: "Relevé :",
+    toggleExit: "🚪 Stations à la sortie (< 1,5 km)",
+    statusOpen: "🟢 Restauration ouverte",
+    statusClosing: "🟡 Restauration : fermeture proche",
+    statusNight: "🌙 Carburant 24/7 · Resto fermé",
+    pumps247: "Pompes & Automate CB : 24h/24, 7j/7"
   },
   de: {
     pageTitle: "FuelPilot • Autobahn-Tankstellen & Kraftstoffpreise",
@@ -1069,7 +1207,12 @@ const I18N_DICT = {
     today: "Heute",
     yesterday: "Gestern",
     atTime: "um",
-    verifiedAt: "Stand:"
+    verifiedAt: "Stand:",
+    toggleExit: "🚪 Ausfahrt-Tankstellen (< 1,5 km)",
+    statusOpen: "🟢 Gastronomie geöffnet",
+    statusClosing: "🟡 Gastronomie schließt bald",
+    statusNight: "🌙 Kraftstoff 24/7 · Gastro zu",
+    pumps247: "Zapfsäulen & Automat: 24/7"
   },
   en: {
     pageTitle: "FuelPilot • Motorway Fuel Prices & Service Areas",
@@ -1170,7 +1313,12 @@ const I18N_DICT = {
     today: "Today",
     yesterday: "Yesterday",
     atTime: "at",
-    verifiedAt: "Updated:"
+    verifiedAt: "Updated:",
+    toggleExit: "🚪 Exit stations (< 1.5 km)",
+    statusOpen: "🟢 Dining & shops open",
+    statusClosing: "🟡 Dining closing soon",
+    statusNight: "🌙 Fuel 24/7 · Dining closed",
+    pumps247: "Pumps & Card pay: 24/7"
   },
   it: {
     pageTitle: "FuelPilot • Prezzi Carburante e Aree Autostradali",
@@ -1271,7 +1419,12 @@ const I18N_DICT = {
     today: "Oggi",
     yesterday: "Ieri",
     atTime: "alle",
-    verifiedAt: "Rilevato:"
+    verifiedAt: "Rilevato:",
+    toggleExit: "🚪 Stazioni all'uscita (< 1,5 km)",
+    statusOpen: "🟢 Ristorazione aperta",
+    statusClosing: "🟡 Chiusura ristoro a breve",
+    statusNight: "🌙 Carburante 24/7 · Ristoro chiuso",
+    pumps247: "Pompe & self-service: 24h/24"
   },
   es: {
     pageTitle: "FuelPilot • Precios Carburante y Áreas de Autopista",
@@ -1372,7 +1525,12 @@ const I18N_DICT = {
     today: "Hoy",
     yesterday: "Ayer",
     atTime: "a las",
-    verifiedAt: "Actualizado:"
+    verifiedAt: "Actualizado:",
+    toggleExit: "🚪 Estaciones en salida (< 1,5 km)",
+    statusOpen: "🟢 Restauración abierta",
+    statusClosing: "🟡 Cierre rest. próximo",
+    statusNight: "🌙 Carburante 24/7 · Rest. cerrada",
+    pumps247: "Surtidores & tarjeta: 24h/24"
   }
 };
 
@@ -1605,6 +1763,11 @@ function setAppLanguage(lang, isManual = false) {
     const isCollapsed = document.body.classList.contains('mobile-route-collapsed');
     editBtn.innerHTML = isCollapsed ? tr.editBtn : tr.closeBtn;
     editBtn.title = tr.editBtnTitle;
+  }
+
+  const exitToggleText = document.getElementById('i18n-toggle-exit');
+  if (exitToggleText && tr.toggleExit) {
+    exitToggleText.textContent = tr.toggleExit;
   }
 
   const brandSelect = document.getElementById('select-brand');
@@ -2794,6 +2957,16 @@ function setupEventListeners() {
     renderCurrentRouteStations();
   });
 
+  // Exit stations (< 1.5 km) toggle
+  const chkExitStations = document.getElementById('chk-exit-stations');
+  if (chkExitStations) {
+    chkExitStations.addEventListener('change', () => {
+      if (activeRouteData) {
+        processStationsOnRoute(activeRouteData);
+      }
+    });
+  }
+
   // Sort dropdown
   document.getElementById('select-sort').addEventListener('change', (e) => {
     currentSort = e.target.value;
@@ -3370,10 +3543,22 @@ function processStationsOnRoute(route) {
       }
     }
 
-    const stationToleranceKm = s.pays === 'GB' ? 0.95 : maxDistanceKm;
+    const exitStationsChk = document.getElementById('chk-exit-stations');
+    const includeExit = Boolean(exitStationsChk && exitStationsChk.checked);
+    const isExitCandidate = Boolean(s.is_exit_station || (!s.pk_text && !s.nom?.toLowerCase().includes('aire') && !s.adresse?.toLowerCase().includes('aire')));
+    
+    // When exit stations toggle is ON, expand search tolerance up to 1.8 km
+    const stationToleranceKm = includeExit ? 1.80 : (s.pays === 'GB' ? 0.95 : maxDistanceKm);
+
     if (minDist <= stationToleranceKm) {
+      const isExit = Boolean(isExitCandidate && (minDist > 0.35 || s.is_exit_station));
+      if (!includeExit && isExit) {
+        return; // Exclude exit stations when user has not checked the toggle
+      }
+
       const sensLow = (s.sens || '').toLowerCase();
-      const isDoubleSens = sensLow.includes('double');
+      // Exit stations accessible via interchange roundabouts in both directions
+      const isDoubleSens = sensLow.includes('double') || isExit;
 
       if (s.pays === 'GB') {
         // UK Motorway Service Areas (MSAs): check cardinal direction if directional twin site
@@ -3387,7 +3572,6 @@ function processStationsOnRoute(route) {
         }
       } else {
         // Directional check: in France/Spain/Italy, vehicles drive on the right.
-        // Highway stations accessible in the direction of travel are on the RIGHT (bestCross < 0).
         const isRightSide = bestCross < 0;
         if (!isRightSide && !isDoubleSens) {
           // Exclude twin station on opposing carriageway
@@ -3395,7 +3579,6 @@ function processStationsOnRoute(route) {
         }
       }
 
-      // Station is along this highway route in the driver's direction of travel!
       // Official highway Point Kilométrique (PK)
       let displayedPk = s.pk_text || null;
 
@@ -3403,7 +3586,9 @@ function processStationsOnRoute(route) {
         ...s,
         distOnRoute: bestKmOnRoute,
         displayedPk: displayedPk,
-        minDistToAxisM: Math.round(minDist * 1000)
+        minDistToAxisM: Math.round(minDist * 1000),
+        isExitStation: isExit,
+        exitDistanceM: Math.round(minDist * 1000)
       });
     }
   });
@@ -3508,12 +3693,20 @@ function renderCurrentRouteStations() {
 
   // Find lowest price for selected fuel among candidate stations
   let lowestPrice = 999;
+  let motorwayPriceSum = 0;
+  let motorwayCount = 0;
+
   if (selectedFuel !== 'all') {
     filtered.forEach(s => {
       const p = getFuelPrice(s.prix, selectedFuel);
       if (p && p < lowestPrice) lowestPrice = p;
+      if (!s.isExitStation && p && p > 0) {
+        motorwayPriceSum += p;
+        motorwayCount++;
+      }
     });
   }
+  const avgMotorwayPrice = motorwayCount > 0 ? (motorwayPriceSum / motorwayCount) : null;
 
   // Sort stations
   if (currentSort === 'route') {
@@ -3631,10 +3824,13 @@ function renderCurrentRouteStations() {
           : (isUK ? `£${fuelPrice.toFixed(3)}` : `${fuelPrice.toFixed(3)}€`)) 
       : 'N/A';
 
+    const exitPinClass = st.isExitStation ? 'exit-pin' : '';
+    const exitPinIcon = st.isExitStation ? '🚪 ' : '';
+
     // Create Map Marker Pin
     const pinHtml = `
-      <div class="custom-station-pin ${isCheapest ? 'cheapest' : ''} ${isElec ? 'electric-pin' : ''}" id="pin-${st.id}">
-        <span class="brand-badge ${brandClass}" style="padding:1px 4px; font-size:0.65rem;">${isElec ? '⚡' : ''} ${st.enseigne.substring(0, 5)}</span>
+      <div class="custom-station-pin ${isCheapest ? 'cheapest' : ''} ${isElec ? 'electric-pin' : ''} ${exitPinClass}" id="pin-${st.id}">
+        <span class="brand-badge ${brandClass}" style="padding:1px 4px; font-size:0.65rem;">${exitPinIcon}${isElec ? '⚡' : ''} ${st.enseigne.substring(0, 5)}</span>
         <span>${pinPriceDisplay}</span>
       </div>
     `;
@@ -3647,6 +3843,36 @@ function renderCurrentRouteStations() {
     });
 
     const marker = L.marker([st.lat, st.lon], { icon: customIcon }).addTo(map);
+
+    // Opening status & weather
+    const openingStatus = getStationOpeningStatus(st);
+    const cachedWeather = getCachedWeather(st.lat, st.lon);
+    const weatherPopupHtml = cachedWeather
+      ? `<span class="popup-weather-icon">${cachedWeather.icon}</span> <strong>${cachedWeather.temp}°C</strong> · ${cachedWeather.desc}`
+      : `<span>🌤️ Météo en cours...</span>`;
+
+    // Exit savings calculation vs average motorway service area
+    let exitSavingsHtml = '';
+    let cardSavingsHtml = '';
+    if (st.isExitStation && avgMotorwayPrice && fuelPrice && fuelPrice < avgMotorwayPrice) {
+      const diffUnit = avgMotorwayPrice - fuelPrice;
+      const vol = isElec ? 40 : 50;
+      const totalSaved = diffUnit * vol;
+      const cur = isUK ? '£' : '€';
+      const unitLbl = isElec ? 'kWh' : 'L';
+      if (totalSaved >= 0.5) {
+        cardSavingsHtml = `
+          <div class="station-savings-badge" title="Économie estimée par rapport au prix moyen sur l'autoroute">
+            💰 Économie : ~${totalSaved.toFixed(1)} ${cur} sur le plein (-${diffUnit.toFixed(3)} ${cur}/${unitLbl})
+          </div>
+        `;
+        exitSavingsHtml = `
+          <div class="popup-savings-banner">
+            💰 Économie estimée : ~<strong>${totalSaved.toFixed(1)} ${cur}</strong> sur le plein (-${diffUnit.toFixed(3)} ${cur}/${unitLbl})
+          </div>
+        `;
+      }
+    }
 
     // Popup content
     const flag = st.pays === 'GB' ? '🇬🇧' : (st.pays === 'DE' ? '🇩🇪' : (st.pays === 'BE' ? '🇧🇪' : (st.pays === 'ES' ? '🇪🇸' : (st.pays === 'IT' ? '🇮🇹' : '🇫🇷'))));
@@ -3669,12 +3895,26 @@ function renderCurrentRouteStations() {
     const popupContent = `
       <div class="station-popup">
         <div class="popup-title"><span class="flag-icon">${flag}</span> ${st.enseigne} - ${nomFormatted}</div>
-        <div class="popup-pk">📍 🛣️ ${pkBadgeLabel}</div>
-        <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:6px;">${isNativeCase ? st.adresse : formatProperName(st.adresse)} (${villeFormatted})</div>
-        <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:8px;">${t().popupDirDist(sensFormatted || t().sensDirect, remainingKm)}</div>
+        <div class="popup-pk">📍 🛣️ ${pkBadgeLabel} ${st.isExitStation ? `<span class="popup-exit-badge" style="margin-left:4px;">🚪 Sortie (${st.exitDistanceM || 800}m)</span>` : ''}</div>
+        <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:4px;">${isNativeCase ? st.adresse : formatProperName(st.adresse)} (${villeFormatted})</div>
+        <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:6px;">${t().popupDirDist(sensFormatted || t().sensDirect, remainingKm)}</div>
+        
+        <div class="popup-weather-row" id="weather-popup-${st.id}">
+          ${weatherPopupHtml}
+        </div>
+
+        ${exitSavingsHtml}
+
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; font-size:0.8rem; margin-bottom:8px;">
           ${renderPopupPrices(st.prix, selectedFuel, st.pays, st.maj)}
         </div>
+
+        <div class="popup-opening-hours">
+          <div class="popup-hours-title">🕒 HORAIRES D'OUVERTURE</div>
+          <div class="popup-hours-line">⛽ <strong>Pompes & bornes :</strong> 24h/24 (Automate CB)</div>
+          <div class="popup-hours-line">☕ <strong>Restauration :</strong> ${openingStatus.popupSchedule}</div>
+        </div>
+
         ${renderPopupAmenitiesBlock(st)}
         <div class="station-nav-actions popup-nav-actions">
           <a href="${wazeUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-waze" title="${t().wazeTitle}">
@@ -3697,12 +3937,17 @@ function renderCurrentRouteStations() {
     card.innerHTML = `
       ${isCheapest ? `<div class="best-price-ribbon">${t().bestPrice}</div>` : ''}
       <div class="card-top">
-        <div style="display:flex; align-items:center;">
+        <div style="display:flex; align-items:center; gap:4px; flex-wrap:wrap;">
           <span class="station-rank">#${idx + 1}</span>
           <span class="flag-icon">${flag}</span>
           <span class="brand-badge ${brandClass}">${st.enseigne}</span>
+          ${st.isExitStation ? `<span class="station-type-badge exit-badge" title="Station située à la sortie de l'autoroute">🚪 Sortie (${st.exitDistanceM || 800}m)</span>` : ''}
+          <span class="opening-status-badge ${openingStatus.statusClass}" title="${openingStatus.popupSchedule}">${openingStatus.cardBadge}</span>
         </div>
         <div class="card-top-right">
+          <span class="station-weather-pill" id="weather-card-${st.id}" title="${cachedWeather ? cachedWeather.desc : 'Météo en direct'}">
+            ${cachedWeather ? `${cachedWeather.icon} ${cachedWeather.temp}°C` : '🌤️ --°C'}
+          </span>
           <div class="station-logo-badge" title="${st.enseigne}">
             ${getBrandLogoSvg(st.enseigne)}
           </div>
@@ -3732,6 +3977,7 @@ function renderCurrentRouteStations() {
       <div class="prices-container">
         ${renderCardPrices(st.prix, selectedFuel, isCheapest, st.pays, st.maj)}
       </div>
+      ${cardSavingsHtml}
       ${renderStationAmenitiesPills(st)}
       ${(st.pays === 'BE' || (st.pays === 'DE' && !st.live)) ? `<div style="font-size:0.68rem; color:#94a3b8; margin-top:3px;">${t().estimatedPrice}</div>` : ''}
       ${(st.pays === 'DE' && st.live) ? `<div style="font-size:0.66rem; color:#94a3b8; margin-top:3px;">MTS-K · <a href="https://www.tankerkoenig.de" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" style="color:#7dd3fc;">Tankerkönig</a> (CC BY 4.0)</div>` : ''}
@@ -3770,6 +4016,9 @@ function renderCurrentRouteStations() {
   if (!amazonInserted && AFFILIATE_CONFIG.amazon.enabled && filtered.length > 0) {
     listContainer.appendChild(createAmazonCard());
   }
+
+  // Asynchronously fetch and display live weather from Open-Meteo
+  fetchWeatherForStations(filtered);
 }
 
 // Helper to format official price verification date/time (e.g. "Aujourd'hui à 08h15", "Hier à 18h24", "01/11 à 09h30")

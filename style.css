@@ -2803,3 +2803,185 @@ header {
   font-size: 0.85rem;
   line-height: 1;
 }
+
+
+/* ==========================================================================
+   v8.6 FEATURES: EXIT STATIONS, WEATHER (OPEN-METEO) & OPENING HOURS
+   ========================================================================== */
+
+/* 1. Filter toggle for Exit Stations (< 1.5 km) */
+.filter-toggles-row {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 4px 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.filter-toggle-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  user-select: none;
+  width: 100%;
+}
+
+.filter-toggle-label input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  accent-color: #10b981;
+}
+
+.filter-toggle-label:hover {
+  color: #f8fafc;
+}
+
+/* Exit Station Badges & Pins */
+.station-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.station-type-badge.exit-badge {
+  background: rgba(245, 158, 11, 0.16);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #fbbf24;
+}
+
+.custom-station-pin.exit-pin {
+  border-color: #f59e0b;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+.station-savings-badge {
+  margin-top: 6px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.15));
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #34d399;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.popup-exit-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: rgba(245, 158, 11, 0.18);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fef08a;
+  margin-bottom: 6px;
+}
+
+.popup-savings-banner {
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.45);
+  color: #6ee7b7;
+  margin-bottom: 8px;
+}
+
+/* 4. Live Weather Pill (Open-Meteo) */
+.station-weather-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 0.70rem;
+  font-weight: 700;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  color: #bae6fd;
+  white-space: nowrap;
+}
+
+.popup-weather-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: #e2e8f0;
+  margin-bottom: 6px;
+  padding: 3px 6px;
+  background: rgba(56, 189, 248, 0.08);
+  border-radius: 4px;
+  border: 1px solid rgba(56, 189, 248, 0.18);
+}
+
+/* 5. Opening Hours & 24/7 Status Badges */
+.opening-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.opening-status-badge.status-open {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #6ee7b7;
+}
+
+.opening-status-badge.status-closing {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #fde047;
+}
+
+.opening-status-badge.status-night {
+  background: rgba(148, 163, 184, 0.15);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  color: #cbd5e1;
+}
+
+.popup-opening-hours {
+  margin-top: 6px;
+  padding: 6px 8px;
+  background: rgba(15, 23, 42, 0.55);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.74rem;
+  margin-bottom: 6px;
+}
+
+.popup-hours-title {
+  font-weight: 800;
+  color: #94a3b8;
+  font-size: 0.68rem;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.popup-hours-line {
+  color: #e2e8f0;
+  margin-bottom: 2px;
+  line-height: 1.35;
+}

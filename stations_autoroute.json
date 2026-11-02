@@ -67414,5 +67414,6733 @@
     "ruptures": [],
     "horaires": "24h/24",
     "maj": "2026-10-30T19:00:00Z"
+  },
+  {
+    "id": 6110002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Boulevard Carnot",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Boulevard Carnot",
+    "ville": "Le Cannet",
+    "cp": "06110",
+    "departement": "06",
+    "lat": 43.572,
+    "lon": 7.016,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.309,
+      "e10": 2.179,
+      "sp98": 2.269
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-31 01:32:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 78140010,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "27,RUE LOUIS BREGUET",
+    "sens": "Double sens (Sortie)",
+    "adresse": "27,RUE LOUIS BREGUET",
+    "ville": "VELIZY VILLACOUBLAY",
+    "cp": "78140",
+    "departement": "78",
+    "lat": 48.781,
+    "lon": 2.183,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.349,
+      "sp98": 2.399
+    },
+    "ruptures": [
+      "GPLc",
+      "E10"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 18:52:26",
+    "is_exit_station": true
+  },
+  {
+    "id": 91100019,
+    "enseigne": "Esso",
+    "autoroute": "",
+    "nom": "46 avenue du 8 mai 1945",
+    "sens": "Double sens (Sortie)",
+    "adresse": "46 avenue du 8 mai 1945",
+    "ville": "CORBEIL ESSONNES",
+    "cp": "91100",
+    "departement": "91",
+    "lat": 48.611,
+    "lon": 2.452,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.281,
+      "e10": 2.106,
+      "sp98": 2.206
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Piste poids lourds",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 11:05:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 73420001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "214 Chemin de la Boisière",
+    "sens": "Double sens (Sortie)",
+    "adresse": "214 Chemin de la Boisière",
+    "ville": "Drumettaz-Clarafond",
+    "cp": "73420",
+    "departement": "73",
+    "lat": 45.657,
+    "lon": 5.911,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.159,
+      "e85": 0.895,
+      "gplc": 1.099,
+      "e10": 2.059,
+      "sp98": 2.169
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Vente de fioul domestique",
+      "Station de gonflage",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 00:00:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 59760001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Avenue de l'Ancien Village",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Avenue de l'Ancien Village",
+    "ville": "GRANDE-SYNTHE",
+    "cp": "59760",
+    "departement": "59",
+    "lat": 51.011,
+    "lon": 2.293,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.234,
+      "gplc": 0.999,
+      "e10": 2.049,
+      "sp98": 2.139
+    },
+    "ruptures": [
+      "SP95",
+      "E85"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Vente de pétrole lampant",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 10:04:24",
+    "is_exit_station": true
+  },
+  {
+    "id": 94000004,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "22 Avenue Pierre Brossolette",
+    "sens": "Double sens (Sortie)",
+    "adresse": "22 Avenue Pierre Brossolette",
+    "ville": "Créteil",
+    "cp": "94000",
+    "departement": "94",
+    "lat": 48.791,
+    "lon": 2.462,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.301,
+      "e85": 0.926,
+      "e10": 2.118,
+      "sp98": 2.218
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-01 00:26:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 95220003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "61 Boulevard DU HAVRE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "61 Boulevard DU HAVRE",
+    "ville": "Herblay",
+    "cp": "95220",
+    "departement": "95",
+    "lat": 49.006,
+    "lon": 2.172,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.301,
+      "e10": 2.124,
+      "sp98": 2.224
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "GPLc"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-02 07:32:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 95570007,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "RN1",
+    "sens": "Double sens (Sortie)",
+    "adresse": "RN1",
+    "ville": "Moisselles",
+    "cp": "95570",
+    "departement": "95",
+    "lat": 49.041,
+    "lon": 2.343,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.293,
+      "e10": 2.082,
+      "sp98": 2.182
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 10:55:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 93300001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "43 Avenue du Président Roosevelt",
+    "sens": "Double sens (Sortie)",
+    "adresse": "43 Avenue du Président Roosevelt",
+    "ville": "Aubervilliers",
+    "cp": "93300",
+    "departement": "93",
+    "lat": 48.918,
+    "lon": 2.379,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.319,
+      "e10": 2.299,
+      "sp98": 2.479
+    },
+    "ruptures": [],
+    "services": [
+      "Station de gonflage",
+      "Carburant additivé",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 12:08:11",
+    "is_exit_station": true
+  },
+  {
+    "id": 91460013,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "N104 LIEUDIT BEAUVERT",
+    "sens": "Double sens (Sortie)",
+    "adresse": "N104 LIEUDIT BEAUVERT",
+    "ville": "Marcoussis",
+    "cp": "91460",
+    "departement": "91",
+    "lat": 48.648,
+    "lon": 2.189,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.359,
+      "e10": 2.269,
+      "sp98": 2.449
+    },
+    "ruptures": [],
+    "services": [
+      "Toilettes publiques",
+      "Douches",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Restauration sur place",
+      "Bar",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Espace bébé"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 12:03:53",
+    "is_exit_station": true
+  },
+  {
+    "id": 1120005,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Route de Thil",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Route de Thil",
+    "ville": "LA BOISSE",
+    "cp": "01120",
+    "departement": "01",
+    "lat": 45.847,
+    "lon": 5.048,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.129,
+      "e85": 0.869,
+      "e10": 2.015,
+      "sp98": 2.129
+    },
+    "ruptures": [
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Location de véhicule",
+      "Lavage automatique",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 05:12:19",
+    "is_exit_station": true
+  },
+  {
+    "id": 94000006,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "69 Avenue Pierre Brossolette",
+    "sens": "Double sens (Sortie)",
+    "adresse": "69 Avenue Pierre Brossolette",
+    "ville": "Créteil",
+    "cp": "94000",
+    "departement": "94",
+    "lat": 48.79,
+    "lon": 2.464,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.645,
+      "sp95": 2.359,
+      "sp98": 2.455
+    },
+    "ruptures": [],
+    "services": [
+      "Boutique non alimentaire",
+      "Carburant additivé",
+      "Vente de gaz domestique (Butane, Propane)"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-30 07:01:20",
+    "is_exit_station": true
+  },
+  {
+    "id": 48200007,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "D809 Aire de la Garde",
+    "sens": "Double sens (Sortie)",
+    "adresse": "D809 Aire de la Garde",
+    "ville": "Albaret-Sainte-Marie",
+    "cp": "48200",
+    "departement": "48",
+    "lat": 44.871,
+    "lon": 3.253,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.329,
+      "e10": 2.319,
+      "sp98": 2.489
+    },
+    "ruptures": [],
+    "services": [
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 12:04:49",
+    "is_exit_station": true
+  },
+  {
+    "id": 74130006,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "516 Avenue de Genève",
+    "sens": "Double sens (Sortie)",
+    "adresse": "516 Avenue de Genève",
+    "ville": "BONNEVILLE",
+    "cp": "74130",
+    "departement": "74",
+    "lat": 46.084,
+    "lon": 6.404,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.199,
+      "e85": 0.869,
+      "e10": 2.129,
+      "sp98": 2.229
+    },
+    "ruptures": [
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Laverie",
+      "Boutique alimentaire",
+      "Carburant additivé",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Bornes électriques",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 11:23:59",
+    "is_exit_station": true
+  },
+  {
+    "id": 54200007,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "678 Avenue du Général Bigeard",
+    "sens": "Double sens (Sortie)",
+    "adresse": "678 Avenue du Général Bigeard",
+    "ville": "TOUL",
+    "cp": "54200",
+    "departement": "54",
+    "lat": 48.664,
+    "lon": 5.888,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.47,
+      "gplc": 1.075,
+      "e10": 2.2,
+      "sp98": 2.27
+    },
+    "ruptures": [
+      "SP95",
+      "E85"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Laverie",
+      "Relais colis",
+      "Boutique alimentaire",
+      "Restauration à emporter",
+      "Restauration sur place",
+      "Station de gonflage",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-30 11:11:31",
+    "is_exit_station": true
+  },
+  {
+    "id": 13112003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Chemin des Matelots",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Chemin des Matelots",
+    "ville": "LA DESTROUSSE",
+    "cp": "13112",
+    "departement": "13",
+    "lat": 43.39,
+    "lon": 5.596,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.219,
+      "e10": 2.105,
+      "sp98": 2.279
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 08:04:04",
+    "is_exit_station": true
+  },
+  {
+    "id": 11700001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "RN113",
+    "sens": "Double sens (Sortie)",
+    "adresse": "RN113",
+    "ville": "CAPENDU",
+    "cp": "11700",
+    "departement": "11",
+    "lat": 43.18546,
+    "lon": 2.5573,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.309,
+      "e10": 2.159,
+      "sp98": 2.319
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 14:00:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 93300003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "100 RUE CHARLES TILLON",
+    "sens": "Double sens (Sortie)",
+    "adresse": "100 RUE CHARLES TILLON",
+    "ville": "AUBERVILLIERS",
+    "cp": "93300",
+    "departement": "93",
+    "lat": 48.919,
+    "lon": 2.394,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.399,
+      "e10": 2.279,
+      "sp98": 2.479
+    },
+    "ruptures": [],
+    "services": [
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 18:50:25",
+    "is_exit_station": true
+  },
+  {
+    "id": 86130011,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ZAC DES GRANDS CHAMPS",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ZAC DES GRANDS CHAMPS",
+    "ville": "Jaunay-Marigny",
+    "cp": "86130",
+    "departement": "86",
+    "lat": 46.69958,
+    "lon": 0.37859,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.395,
+      "e85": 0.819,
+      "e10": 2.097,
+      "sp98": 2.197
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-10-31 09:54:34",
+    "is_exit_station": true
+  },
+  {
+    "id": 11700009,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "LIEU DIT \"ROC DEL DIE\"",
+    "sens": "Double sens (Sortie)",
+    "adresse": "LIEU DIT \"ROC DEL DIE\"",
+    "ville": "Capendu",
+    "cp": "11700",
+    "departement": "11",
+    "lat": 43.18808,
+    "lon": 2.56439,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.135,
+      "e85": 0.869,
+      "e10": 2.089,
+      "sp98": 2.179
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-02 09:17:20",
+    "is_exit_station": true
+  },
+  {
+    "id": 94000012,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ROUTE DE CHOISY - RN186",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ROUTE DE CHOISY - RN186",
+    "ville": "Créteil",
+    "cp": "94000",
+    "departement": "94",
+    "lat": 48.753,
+    "lon": 2.361,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.319,
+      "e10": 2.269,
+      "sp98": 2.439
+    },
+    "ruptures": [
+      "GPLc"
+    ],
+    "services": [
+      "Carburant additivé",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 12:06:23",
+    "is_exit_station": true
+  },
+  {
+    "id": 93200008,
+    "enseigne": "Eni",
+    "autoroute": "",
+    "nom": "112 AV P. VAILLANT COUTURIER",
+    "sens": "Double sens (Sortie)",
+    "adresse": "112 AV P. VAILLANT COUTURIER",
+    "ville": "Saint-Denis",
+    "cp": "93200",
+    "departement": "93",
+    "lat": 48.935,
+    "lon": 2.368,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.419,
+      "e85": 0.929,
+      "e10": 2.289,
+      "sp98": 2.459
+    },
+    "ruptures": [],
+    "services": [
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 18:52:05",
+    "is_exit_station": true
+  },
+  {
+    "id": 46600003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Le Bourg - RN 20",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Le Bourg - RN 20",
+    "ville": "CRESSENSAC",
+    "cp": "46600",
+    "departement": "46",
+    "lat": 45.021,
+    "lon": 1.52,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.25,
+      "e10": 1.99,
+      "sp98": 1.99
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Carburant additivé",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-30 14:47:51",
+    "is_exit_station": true
+  },
+  {
+    "id": 54380011,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "1 Avenue du Général De Gaulle",
+    "sens": "Double sens (Sortie)",
+    "adresse": "1 Avenue du Général De Gaulle",
+    "ville": "Dieulouard",
+    "cp": "54380",
+    "departement": "54",
+    "lat": 48.84625,
+    "lon": 6.07105,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.429,
+      "sp95": 2.311,
+      "sp98": 2.374
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "E10"
+    ],
+    "services": [
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-26 16:54:42",
+    "is_exit_station": true
+  },
+  {
+    "id": 13680010,
+    "enseigne": "Carrefour",
+    "autoroute": "",
+    "nom": "1 AV DE LA 1ERE ARMEE FRANCAISE, CARREFOUR CONTACT",
+    "sens": "Double sens (Sortie)",
+    "adresse": "1 AV DE LA 1ERE ARMEE FRANCAISE, CARREFOUR CONTACT",
+    "ville": "LANCON-PROVENCE",
+    "cp": "13680",
+    "departement": "13",
+    "lat": 43.58718,
+    "lon": 5.13929,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.399,
+      "e85": 0.929,
+      "e10": 2.135,
+      "sp98": 2.249
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Laverie",
+      "Relais colis",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Location de véhicule",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Bornes électriques"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-23 09:23:12",
+    "is_exit_station": true
+  },
+  {
+    "id": 54200012,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "RUE PAUL KELLER",
+    "sens": "Double sens (Sortie)",
+    "adresse": "RUE PAUL KELLER",
+    "ville": "TOUL",
+    "cp": "54200",
+    "departement": "54",
+    "lat": 48.67219,
+    "lon": 5.88828,
+    "pk_text": null,
+    "prix": {
+      "e85": 0.919
+    },
+    "ruptures": [
+      "GPLc",
+      "SP95",
+      "SP98",
+      "E10",
+      "Gazole"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Relais colis",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Vente de fioul domestique",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 84310002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "28 Chemin du Clos Neuf",
+    "sens": "Double sens (Sortie)",
+    "adresse": "28 Chemin du Clos Neuf",
+    "ville": "Morières-lès-Avignon",
+    "cp": "84310",
+    "departement": "84",
+    "lat": 43.94345,
+    "lon": 4.90789,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.189,
+      "e85": 0.879,
+      "e10": 2.079,
+      "sp98": 2.199
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Location de véhicule",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:00:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 19800004,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "15 ROUTE NATIONALE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "15 ROUTE NATIONALE",
+    "ville": "EYREIN",
+    "cp": "19800",
+    "departement": "19",
+    "lat": 45.343,
+    "lon": 1.934,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.455,
+      "sp95": 2.273,
+      "sp98": 2.336
+    },
+    "ruptures": [],
+    "services": [
+      "Toilettes publiques",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Piste poids lourds",
+      "Lavage manuel",
+      "Services réparation / entretien",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-09-22 10:21:52",
+    "is_exit_station": true
+  },
+  {
+    "id": 89190006,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Avenue de la gare",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Avenue de la gare",
+    "ville": "Villeneuve-l'Archevêque",
+    "cp": "89190",
+    "departement": "89",
+    "lat": 48.237,
+    "lon": 3.552,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.459,
+      "sp95": 2.299,
+      "sp98": 2.319
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "E10"
+    ],
+    "services": [
+      "Laverie",
+      "Relais colis",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Restauration sur place",
+      "Vente de pétrole lampant",
+      "Location de véhicule",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-26 12:12:40",
+    "is_exit_station": true
+  },
+  {
+    "id": 83550004,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Boulevard des Vallons",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Boulevard des Vallons",
+    "ville": "VIDAUBAN",
+    "cp": "83550",
+    "departement": "83",
+    "lat": 43.428,
+    "lon": 6.442,
+    "pk_text": null,
+    "prix": {
+      "e10": 2.119,
+      "sp98": 2.239
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP95",
+      "Gazole"
+    ],
+    "services": [
+      "Laverie",
+      "Relais colis",
+      "Boutique alimentaire",
+      "Restauration à emporter",
+      "Station de gonflage",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Bornes électriques",
+      "Wifi",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-26 09:54:43",
+    "is_exit_station": true
+  },
+  {
+    "id": 3400005,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ZONE ARTISANALE DU LARRY",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ZONE ARTISANALE DU LARRY",
+    "ville": "TOULON SUR ALLIER",
+    "cp": "03400",
+    "departement": "03",
+    "lat": 46.50639,
+    "lon": 3.36172,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.542
+    },
+    "ruptures": [],
+    "services": [
+      "Piste poids lourds",
+      "Vente d'additifs carburants"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 00:05:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 6110008,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "14 Chemin des Campelières",
+    "sens": "Double sens (Sortie)",
+    "adresse": "14 Chemin des Campelières",
+    "ville": "Le Cannet",
+    "cp": "06110",
+    "departement": "06",
+    "lat": 43.581,
+    "lon": 7.007,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.319,
+      "e85": 1.098,
+      "e10": 2.199,
+      "sp98": 2.318
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Boutique alimentaire",
+      "Vente de fioul domestique",
+      "Station de gonflage",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Services réparation / entretien",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Vente d'additifs carburants"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 08:22:31",
+    "is_exit_station": true
+  },
+  {
+    "id": 91090001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Rue de Corbeil",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Rue de Corbeil",
+    "ville": "LISSES",
+    "cp": "91090",
+    "departement": "91",
+    "lat": 48.59986,
+    "lon": 2.4344,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.219,
+      "sp95": 2.127,
+      "e10": 2.069,
+      "sp98": 2.179
+    },
+    "ruptures": [
+      "E85",
+      "GPLc"
+    ],
+    "services": [
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 08:58:55",
+    "is_exit_station": true
+  },
+  {
+    "id": 38670003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "1515 AVENUE MISTRAL",
+    "sens": "Double sens (Sortie)",
+    "adresse": "1515 AVENUE MISTRAL",
+    "ville": "Chasse-sur-Rhône",
+    "cp": "38670",
+    "departement": "38",
+    "lat": 45.574,
+    "lon": 4.811,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.129,
+      "e85": 0.869,
+      "gplc": 0.999,
+      "e10": 1.999,
+      "sp98": 2.199
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Vente d'additifs carburants",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 08:30:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 31076001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "36 route de bayonne",
+    "sens": "Double sens (Sortie)",
+    "adresse": "36 route de bayonne",
+    "ville": "TOULOUSE",
+    "cp": "31076",
+    "departement": "31",
+    "lat": 43.609,
+    "lon": 1.397,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.165,
+      "sp95": 2.11,
+      "e85": 0.869,
+      "gplc": 1.076,
+      "e10": 2.03,
+      "sp98": 2.158
+    },
+    "ruptures": [],
+    "services": [
+      "Relais colis",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Location de véhicule",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Services réparation / entretien",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 13:10:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 38140005,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Parc d'activités Bièvre Dauphine, 305 Rue du Grand-Champ",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Parc d'activités Bièvre Dauphine, 305 Rue du Grand-Champ",
+    "ville": "APPRIEU",
+    "cp": "38140",
+    "departement": "38",
+    "lat": 45.399,
+    "lon": 5.468,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.129,
+      "e85": 0.869,
+      "e10": 2.009,
+      "sp98": 2.129
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Laverie",
+      "Station de gonflage",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 08:38:56",
+    "is_exit_station": true
+  },
+  {
+    "id": 94651002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "334 THAIS SUD C.C Belle Epine",
+    "sens": "Double sens (Sortie)",
+    "adresse": "334 THAIS SUD C.C Belle Epine",
+    "ville": "Thiais",
+    "cp": "94651",
+    "departement": "94",
+    "lat": 48.755,
+    "lon": 2.375,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.329,
+      "e85": 0.969,
+      "gplc": 1.109,
+      "e10": 2.239,
+      "sp98": 2.409
+    },
+    "ruptures": [],
+    "services": [
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Services réparation / entretien",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 18:49:48",
+    "is_exit_station": true
+  },
+  {
+    "id": 54300005,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "RN 333",
+    "sens": "Double sens (Sortie)",
+    "adresse": "RN 333",
+    "ville": "VITRIMONT",
+    "cp": "54300",
+    "departement": "54",
+    "lat": 48.591,
+    "lon": 6.426,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.392,
+      "gplc": 1.036,
+      "e10": 2.284,
+      "sp98": 2.384
+    },
+    "ruptures": [
+      "SP95",
+      "E85"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Douches",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Restauration sur place",
+      "Station de gonflage",
+      "Espace bébé"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 10:55:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 94150009,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ROUTE NATIONALE 186",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ROUTE NATIONALE 186",
+    "ville": "RUNGIS",
+    "cp": "94150",
+    "departement": "94",
+    "lat": 48.753,
+    "lon": 2.361,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.359,
+      "gplc": 1.159,
+      "e10": 2.289,
+      "sp98": 2.459
+    },
+    "ruptures": [],
+    "services": [
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Vente d'additifs carburants",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 12:04:16",
+    "is_exit_station": true
+  },
+  {
+    "id": 12150003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Rue du General de Gaulle",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Rue du General de Gaulle",
+    "ville": "Sévérac-le-Château",
+    "cp": "12150",
+    "departement": "12",
+    "lat": 44.3197,
+    "lon": 3.06825,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.306,
+      "sp95": 2.223,
+      "sp98": 2.18
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "E10"
+    ],
+    "services": [
+      "Vente de pétrole lampant",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:53:32",
+    "is_exit_station": true
+  },
+  {
+    "id": 46240001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Route de Gramat",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Route de Gramat",
+    "ville": "LABASTIDE-MURAT",
+    "cp": "46240",
+    "departement": "46",
+    "lat": 44.65,
+    "lon": 1.571,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.169,
+      "sp95": 2.119,
+      "sp98": 2.179
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "E10"
+    ],
+    "services": [
+      "Laverie",
+      "Relais colis",
+      "Station de gonflage",
+      "Aire de camping-cars",
+      "Location de véhicule",
+      "Piste poids lourds",
+      "Lavage manuel",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 11:06:13",
+    "is_exit_station": true
+  },
+  {
+    "id": 94150008,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ROUTE NATIONALE 186",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ROUTE NATIONALE 186",
+    "ville": "RUNGIS",
+    "cp": "94150",
+    "departement": "94",
+    "lat": 48.754,
+    "lon": 2.362,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.329,
+      "gplc": 1.149,
+      "e10": 2.299,
+      "sp98": 2.469
+    },
+    "ruptures": [],
+    "services": [
+      "Toilettes publiques",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Vente d'additifs carburants",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 12:07:48",
+    "is_exit_station": true
+  },
+  {
+    "id": 91814001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ROUTE DE VILLOISON",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ROUTE DE VILLOISON",
+    "ville": "VILLABE",
+    "cp": "91100",
+    "departement": "91",
+    "lat": 48.584,
+    "lon": 2.444,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.202,
+      "sp95": 2.124,
+      "e85": 0.779,
+      "gplc": 1.076,
+      "e10": 2.051,
+      "sp98": 2.138
+    },
+    "ruptures": [],
+    "services": [
+      "Station de gonflage",
+      "Location de véhicule",
+      "Piste poids lourds",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Vente d'additifs carburants",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 00:49:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 33140009,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "21 Route de Léognan",
+    "sens": "Double sens (Sortie)",
+    "adresse": "21 Route de Léognan",
+    "ville": "VILLENAVE D'ORNON",
+    "cp": "33140",
+    "departement": "33",
+    "lat": 44.77,
+    "lon": -0.579,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.279,
+      "e10": 2.209
+    },
+    "ruptures": [
+      "SP98"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Carburant additivé",
+      "Lavage automatique",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 12:03:25",
+    "is_exit_station": true
+  },
+  {
+    "id": 25640008,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "RUE DE LA GRAPPE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "RUE DE LA GRAPPE",
+    "ville": "Marchaux",
+    "cp": "25640",
+    "departement": "25",
+    "lat": 47.32077,
+    "lon": 6.12837,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.219,
+      "sp95": 2.199,
+      "e85": 0.869,
+      "e10": 2.159
+    },
+    "ruptures": [
+      "GPLc",
+      "SP98"
+    ],
+    "services": [
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 13:55:10",
+    "is_exit_station": true
+  },
+  {
+    "id": 38113001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Route de Valence",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Route de Valence",
+    "ville": "VEUREY-VOROIZE",
+    "cp": "38113",
+    "departement": "38",
+    "lat": 45.265,
+    "lon": 5.623,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.485,
+      "e10": 2.34,
+      "sp98": 2.452
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Piste poids lourds",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-16 16:06:35",
+    "is_exit_station": true
+  },
+  {
+    "id": 13127012,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "BD VICTOR GELU",
+    "sens": "Double sens (Sortie)",
+    "adresse": "BD VICTOR GELU",
+    "ville": "VITROLLES",
+    "cp": "13127",
+    "departement": "13",
+    "lat": 43.446,
+    "lon": 5.247,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.339,
+      "e10": 2.249,
+      "sp98": 2.399
+    },
+    "ruptures": [
+      "GPLc"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 12:04:25",
+    "is_exit_station": true
+  },
+  {
+    "id": 91100021,
+    "enseigne": "Esso",
+    "autoroute": "",
+    "nom": "18 Boulevard Jean jaures",
+    "sens": "Double sens (Sortie)",
+    "adresse": "18 Boulevard Jean jaures",
+    "ville": "CORBEIL ESSONNES",
+    "cp": "91100",
+    "departement": "91",
+    "lat": 48.606,
+    "lon": 2.466,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.339,
+      "e85": 0.999,
+      "e10": 2.199,
+      "sp98": 2.349
+    },
+    "ruptures": [
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Piste poids lourds",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 00:00:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 56800001,
+    "enseigne": "Eni",
+    "autoroute": "",
+    "nom": "Z.A. ST DENIS",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Z.A. ST DENIS",
+    "ville": "Ploërmel",
+    "cp": "56800",
+    "departement": "56",
+    "lat": 47.931,
+    "lon": -2.381,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.29,
+      "e85": 0.839,
+      "gplc": 1.058,
+      "e10": 2.129,
+      "sp98": 2.279
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [
+      "Relais colis",
+      "Station de gonflage",
+      "Location de véhicule",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Bornes électriques",
+      "Vente d'additifs carburants",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 08:46:06",
+    "is_exit_station": true
+  },
+  {
+    "id": 83130003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "1394 Avenue de Draguignan",
+    "sens": "Double sens (Sortie)",
+    "adresse": "1394 Avenue de Draguignan",
+    "ville": "LA GARDE",
+    "cp": "83130",
+    "departement": "83",
+    "lat": 43.143,
+    "lon": 6.037,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.323,
+      "sp95": 2.176,
+      "e85": 0.961,
+      "sp98": 2.195
+    },
+    "ruptures": [
+      "GPLc",
+      "E10"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Restauration sur place",
+      "Bar",
+      "Vente de fioul domestique",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "GNV",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Bornes électriques",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 10:47:22",
+    "is_exit_station": true
+  },
+  {
+    "id": 83160001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ROUTE DE L'UNIVERSITE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ROUTE DE L'UNIVERSITE",
+    "ville": "La Valette-du-Var",
+    "cp": "83160",
+    "departement": "83",
+    "lat": 43.14,
+    "lon": 6.014,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.376,
+      "e85": 0.966,
+      "e10": 2.053,
+      "sp98": 2.187
+    },
+    "ruptures": [
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Relais colis",
+      "Boutique alimentaire",
+      "Station de gonflage",
+      "Location de véhicule",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 22:36:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 33240011,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "4 RUE NATIONALE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "4 RUE NATIONALE",
+    "ville": "Saint-André-de-Cubzac",
+    "cp": "33240",
+    "departement": "33",
+    "lat": 44.989,
+    "lon": -0.449,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.25,
+      "e85": 0.889,
+      "e10": 1.99,
+      "sp98": 1.99
+    },
+    "ruptures": [
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Laverie",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Vente d'additifs carburants",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 13:52:18",
+    "is_exit_station": true
+  },
+  {
+    "id": 63960005,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "16 CHEMIN DU CHARDONNET",
+    "sens": "Double sens (Sortie)",
+    "adresse": "16 CHEMIN DU CHARDONNET",
+    "ville": "Veyre-Monton",
+    "cp": "63960",
+    "departement": "63",
+    "lat": 45.671,
+    "lon": 3.172,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.389,
+      "e85": 0.899,
+      "e10": 2.099
+    },
+    "ruptures": [
+      "GPLc",
+      "SP98",
+      "SP95"
+    ],
+    "services": [
+      "Relais colis",
+      "Boutique alimentaire",
+      "Station de gonflage",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-30 10:54:22",
+    "is_exit_station": true
+  },
+  {
+    "id": 77140011,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "10 AVENUE DU GENERAL DE GAULLE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "10 AVENUE DU GENERAL DE GAULLE",
+    "ville": "NEMOURS",
+    "cp": "77140",
+    "departement": "77",
+    "lat": 48.26687,
+    "lon": 2.70651,
+    "pk_text": null,
+    "prix": {
+      "gplc": 1.045
+    },
+    "ruptures": [
+      "E85",
+      "SP98"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 59125003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "2 Rue de la Concorde",
+    "sens": "Double sens (Sortie)",
+    "adresse": "2 Rue de la Concorde",
+    "ville": "Trith-Saint-Léger",
+    "cp": "59125",
+    "departement": "59",
+    "lat": 50.327,
+    "lon": 3.489,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.25,
+      "e10": 1.99
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP98",
+      "SP95"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Location de véhicule",
+      "Piste poids lourds",
+      "Services réparation / entretien",
+      "Wifi",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 14:06:17",
+    "is_exit_station": true
+  },
+  {
+    "id": 6220006,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "1750 CHEMIN SAINT BERNARD",
+    "sens": "Double sens (Sortie)",
+    "adresse": "1750 CHEMIN SAINT BERNARD",
+    "ville": "VALLAURIS",
+    "cp": "06220",
+    "departement": "06",
+    "lat": 43.593,
+    "lon": 7.057,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.179,
+      "e85": 0.869,
+      "e10": 2.049,
+      "sp98": 2.169
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Wifi",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-31 08:47:07",
+    "is_exit_station": true
+  },
+  {
+    "id": 77140006,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "1 rue JM JACQUARD",
+    "sens": "Double sens (Sortie)",
+    "adresse": "1 rue JM JACQUARD",
+    "ville": "NEMOURS",
+    "cp": "77140",
+    "departement": "77",
+    "lat": 48.269,
+    "lon": 2.701,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.18,
+      "e10": 2.032,
+      "sp98": 2.14
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "GPLc"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Laverie",
+      "Station de gonflage",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 10:28:10",
+    "is_exit_station": true
+  },
+  {
+    "id": 62710002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Rue Roger Salengro",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Rue Roger Salengro",
+    "ville": "Courrières",
+    "cp": "62710",
+    "departement": "62",
+    "lat": 50.46088,
+    "lon": 2.96092,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.201,
+      "sp98": 2.174
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc",
+      "E85",
+      "E10"
+    ],
+    "services": [
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 05:22:17",
+    "is_exit_station": true
+  },
+  {
+    "id": 26270007,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "1287 RN 7 - LES BLACHES",
+    "sens": "Double sens (Sortie)",
+    "adresse": "1287 RN 7 - LES BLACHES",
+    "ville": "Cliousclat",
+    "cp": "26270",
+    "departement": "26",
+    "lat": 44.72,
+    "lon": 4.806,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.15,
+      "e85": 0.931,
+      "e10": 1.99
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc",
+      "SP98"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-31 08:40:45",
+    "is_exit_station": true
+  },
+  {
+    "id": 83130004,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "119 rue Pierre Revelli",
+    "sens": "Double sens (Sortie)",
+    "adresse": "119 rue Pierre Revelli",
+    "ville": "LA GARDE",
+    "cp": "83130",
+    "departement": "83",
+    "lat": 43.12995,
+    "lon": 6.01242,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.16,
+      "sp95": 2.125,
+      "e85": 0.869,
+      "e10": 2.053
+    },
+    "ruptures": [
+      "GPLc",
+      "SP98"
+    ],
+    "services": [
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 10:16:18",
+    "is_exit_station": true
+  },
+  {
+    "id": 6110004,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "150 AVENUE DU CAMPON",
+    "sens": "Double sens (Sortie)",
+    "adresse": "150 AVENUE DU CAMPON",
+    "ville": "Le Cannet",
+    "cp": "06110",
+    "departement": "06",
+    "lat": 43.575,
+    "lon": 7.012,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.246,
+      "e85": 1.064,
+      "e10": 2.124,
+      "sp98": 2.224
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-01 00:26:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 83130005,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "46 PLACE CLAUDE CHIAPPE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "46 PLACE CLAUDE CHIAPPE",
+    "ville": "LA GARDE",
+    "cp": "83130",
+    "departement": "83",
+    "lat": 43.12488,
+    "lon": 6.00718,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.16,
+      "sp95": 2.125,
+      "sp98": 2.169
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "E10"
+    ],
+    "services": [
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 10:15:18",
+    "is_exit_station": true
+  },
+  {
+    "id": 59300006,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Chemin des Bourgeois",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Chemin des Bourgeois",
+    "ville": "Valenciennes",
+    "cp": "59300",
+    "departement": "59",
+    "lat": 50.34352,
+    "lon": 3.51736,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.236,
+      "e10": 2.05,
+      "sp98": 2.219
+    },
+    "ruptures": [
+      "GPLc",
+      "SP95",
+      "E85"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Laverie",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Restauration sur place",
+      "Bar",
+      "Vente de pétrole lampant",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 16:24:55",
+    "is_exit_station": true
+  },
+  {
+    "id": 61000002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "174 avenue Quakenbruck",
+    "sens": "Double sens (Sortie)",
+    "adresse": "174 avenue Quakenbruck",
+    "ville": "Alençon",
+    "cp": "61000",
+    "departement": "61",
+    "lat": 48.44432,
+    "lon": 0.112,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.278,
+      "e10": 2.15,
+      "sp98": 2.25
+    },
+    "ruptures": [
+      "GPLc",
+      "E85",
+      "SP95"
+    ],
+    "services": [
+      "Carburant additivé",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:27:43",
+    "is_exit_station": true
+  },
+  {
+    "id": 61200007,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Avenue de la 2ème D.B.",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Avenue de la 2ème D.B.",
+    "ville": "Argentan",
+    "cp": "61200",
+    "departement": "61",
+    "lat": 48.733,
+    "lon": -0.035,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.181,
+      "sp95": 2.118,
+      "e85": 0.869,
+      "e10": 2.054,
+      "sp98": 2.245
+    },
+    "ruptures": [],
+    "services": [
+      "Laverie",
+      "Relais colis",
+      "Station de gonflage",
+      "Location de véhicule",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Bornes électriques",
+      "Wifi",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:23:35",
+    "is_exit_station": true
+  },
+  {
+    "id": 60110002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Cc Les Marquises, Rue Marcel Coquet",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Cc Les Marquises, Rue Marcel Coquet",
+    "ville": "Méru",
+    "cp": "60110",
+    "departement": "60",
+    "lat": 49.223,
+    "lon": 2.137,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.214,
+      "e10": 2.189,
+      "sp98": 2.199
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "GPLc"
+    ],
+    "services": [
+      "Vente de gaz domestique (Butane, Propane)",
+      "Bornes électriques",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:36:21",
+    "is_exit_station": true
+  },
+  {
+    "id": 83160003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "AV.DE L'UNIVERSITE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "AV.DE L'UNIVERSITE",
+    "ville": "La Valette-du-Var",
+    "cp": "83160",
+    "departement": "83",
+    "lat": 43.13759,
+    "lon": 6.01337,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.15
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "GPLc",
+      "SP98",
+      "E10"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Vente d'additifs carburants",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 08:53:57",
+    "is_exit_station": true
+  },
+  {
+    "id": 59760005,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "1 AV DE PETITE SYNTHE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "1 AV DE PETITE SYNTHE",
+    "ville": "Grande-Synthe",
+    "cp": "59760",
+    "departement": "59",
+    "lat": 51.014,
+    "lon": 2.307,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.25,
+      "e10": 1.99,
+      "sp98": 1.99
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "GPLc"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 14:56:26",
+    "is_exit_station": true
+  },
+  {
+    "id": 83210003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Avenue Charles de Gaulle rn 97",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Avenue Charles de Gaulle rn 97",
+    "ville": "LA FARLèDE",
+    "cp": "83210",
+    "departement": "83",
+    "lat": 43.163,
+    "lon": 6.045,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.159,
+      "sp95": 2.139,
+      "gplc": 1.049,
+      "e10": 2.059,
+      "sp98": 2.169
+    },
+    "ruptures": [
+      "E85"
+    ],
+    "services": [
+      "Relais colis",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Restauration sur place",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 12:31:47",
+    "is_exit_station": true
+  },
+  {
+    "id": 26800005,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Les Basseaux",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Les Basseaux",
+    "ville": "ÉTOILE-SUR-RHôNE",
+    "cp": "26800",
+    "departement": "26",
+    "lat": 44.85,
+    "lon": 4.87,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.169,
+      "e85": 0.869,
+      "e10": 2.082,
+      "sp98": 2.254
+    },
+    "ruptures": [
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Laverie",
+      "Relais colis",
+      "Vente de fioul domestique",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Aire de camping-cars",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Bornes électriques",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:14:04",
+    "is_exit_station": true
+  },
+  {
+    "id": 59710007,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "81 RUE DE SECLIN",
+    "sens": "Double sens (Sortie)",
+    "adresse": "81 RUE DE SECLIN",
+    "ville": "Avelin",
+    "cp": "59710",
+    "departement": "59",
+    "lat": 50.54036,
+    "lon": 3.07375,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.15,
+      "e85": 0.896
+    },
+    "ruptures": [
+      "SP98",
+      "SP95",
+      "GPLc",
+      "E10"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 33600010,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "741 COURS DE LA LIBERATION",
+    "sens": "Double sens (Sortie)",
+    "adresse": "741 COURS DE LA LIBERATION",
+    "ville": "PESSAC",
+    "cp": "33600",
+    "departement": "33",
+    "lat": 44.79528,
+    "lon": -0.60451,
+    "pk_text": null,
+    "prix": {
+      "e85": 0.895
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc",
+      "SP98",
+      "E10",
+      "Gazole"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 33402001,
+    "enseigne": "BP",
+    "autoroute": "",
+    "nom": "Rue Pacaris BP 109",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Rue Pacaris BP 109",
+    "ville": "Talence",
+    "cp": "33400",
+    "departement": "33",
+    "lat": 44.79956,
+    "lon": -0.58415,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.14,
+      "sp95": 2.099,
+      "e10": 2.017
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP98"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Vente de gaz domestique (Butane, Propane)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 08:50:48",
+    "is_exit_station": true
+  },
+  {
+    "id": 83260003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "1400 Chemin Long",
+    "sens": "Double sens (Sortie)",
+    "adresse": "1400 Chemin Long",
+    "ville": "LA CRAU",
+    "cp": "83260",
+    "departement": "83",
+    "lat": 43.132,
+    "lon": 6.069,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.299,
+      "e85": 0.929,
+      "e10": 2.099,
+      "sp98": 2.199
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Relais colis",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 12:53:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 91100016,
+    "enseigne": "Esso",
+    "autoroute": "",
+    "nom": "RUE SIGMUND FREUD",
+    "sens": "Double sens (Sortie)",
+    "adresse": "RUE SIGMUND FREUD",
+    "ville": "CORBEIL ESSONNES",
+    "cp": "91100",
+    "departement": "91",
+    "lat": 48.608,
+    "lon": 2.449,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.15
+    },
+    "ruptures": [
+      "E85",
+      "SP98",
+      "E10"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Wifi",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 13011027,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "73 Boulevard de Saint Marcel",
+    "sens": "Double sens (Sortie)",
+    "adresse": "73 Boulevard de Saint Marcel",
+    "ville": "Marseille 11e Arrondissement",
+    "cp": "13011",
+    "departement": "13",
+    "lat": 43.28888,
+    "lon": 5.45988,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.399,
+      "e10": 2.229,
+      "sp98": 2.339
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "GPLc"
+    ],
+    "services": [
+      "Relais colis",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Bornes électriques",
+      "Vente d'additifs carburants",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-19 17:04:09",
+    "is_exit_station": true
+  },
+  {
+    "id": 94594002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "103 Boulevard Circulaire E Fruileg",
+    "sens": "Double sens (Sortie)",
+    "adresse": "103 Boulevard Circulaire E Fruileg",
+    "ville": "RUNGIS",
+    "cp": "94594",
+    "departement": "94",
+    "lat": 48.765,
+    "lon": 2.357,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.25,
+      "e10": 1.99,
+      "sp98": 1.99
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "GPLc"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Restauration à emporter",
+      "Vente de fioul domestique",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Wifi"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 74520004,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "50 chemin des Grands Chavannoux",
+    "sens": "Double sens (Sortie)",
+    "adresse": "50 chemin des Grands Chavannoux",
+    "ville": "VULBENS",
+    "cp": "74520",
+    "departement": "74",
+    "lat": 46.105,
+    "lon": 5.959,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.272,
+      "sp95": 2.269,
+      "e85": 0.869,
+      "e10": 2.167,
+      "sp98": 2.326
+    },
+    "ruptures": [
+      "GPLc"
+    ],
+    "services": [
+      "Laverie",
+      "Station de gonflage",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 10:32:59",
+    "is_exit_station": true
+  },
+  {
+    "id": 95570003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Route Nationale 1",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Route Nationale 1",
+    "ville": "MOISSELLES",
+    "cp": "95570",
+    "departement": "95",
+    "lat": 49.041,
+    "lon": 2.342,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.184,
+      "sp95": 2.196,
+      "e85": 0.848,
+      "e10": 2.128,
+      "sp98": 2.219
+    },
+    "ruptures": [
+      "GPLc"
+    ],
+    "services": [
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 10:23:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 1700003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "RN 83",
+    "sens": "Double sens (Sortie)",
+    "adresse": "RN 83",
+    "ville": "Miribel",
+    "cp": "01700",
+    "departement": "01",
+    "lat": 45.871,
+    "lon": 4.912,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.273,
+      "e10": 2.118,
+      "sp98": 2.218
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-02 11:05:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 33080001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "avenue des 40 journaux",
+    "sens": "Double sens (Sortie)",
+    "adresse": "avenue des 40 journaux",
+    "ville": "BORDEAUX",
+    "cp": "33300",
+    "departement": "33",
+    "lat": 44.884,
+    "lon": -0.563,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.19,
+      "e85": 0.807,
+      "gplc": 1.011,
+      "e10": 2.008,
+      "sp98": 2.122
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:41:38",
+    "is_exit_station": true
+  },
+  {
+    "id": 74520011,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ACQUIT EST",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ACQUIT EST",
+    "ville": "Valleiry",
+    "cp": "74520",
+    "departement": "74",
+    "lat": 46.11092,
+    "lon": 5.97894,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.25,
+      "e85": 0.934,
+      "e10": 1.99,
+      "sp98": 1.99
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-29 07:15:58",
+    "is_exit_station": true
+  },
+  {
+    "id": 58200002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "RN7 COSNE SUD",
+    "sens": "Double sens (Sortie)",
+    "adresse": "RN7 COSNE SUD",
+    "ville": "COSNE-COURS-SUR-LOIRE",
+    "cp": "58200",
+    "departement": "58",
+    "lat": 47.39,
+    "lon": 2.923,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.289,
+      "e10": 2.099,
+      "sp98": 2.189
+    },
+    "ruptures": [
+      "E85",
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Laverie",
+      "Station de gonflage",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 12:23:21",
+    "is_exit_station": true
+  },
+  {
+    "id": 54200005,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "2 Rue Paul Keller",
+    "sens": "Double sens (Sortie)",
+    "adresse": "2 Rue Paul Keller",
+    "ville": "TOUL",
+    "cp": "54200",
+    "departement": "54",
+    "lat": 48.673,
+    "lon": 5.886,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.359,
+      "gplc": 0.999,
+      "e10": 2.299,
+      "sp98": 2.399
+    },
+    "ruptures": [
+      "E85",
+      "SP95"
+    ],
+    "services": [
+      "Relais colis",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 00:07:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 42152007,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "19 Bis avenue Berthelot",
+    "sens": "Double sens (Sortie)",
+    "adresse": "19 Bis avenue Berthelot",
+    "ville": "L'Horme",
+    "cp": "42152",
+    "departement": "42",
+    "lat": 45.49,
+    "lon": 4.552,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.299,
+      "e85": 0.949,
+      "e10": 2.169,
+      "sp98": 2.269
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Relais colis",
+      "Boutique alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Vente d'additifs carburants",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 20:00:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 31300007,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "104 AV GDE BRETAGNE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "104 AV GDE BRETAGNE",
+    "ville": "TOULOUSE",
+    "cp": "31300",
+    "departement": "31",
+    "lat": 43.59914,
+    "lon": 1.41729,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.25,
+      "e85": 0.911,
+      "e10": 1.99
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 19600003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Lieu-dit La Croix-Blanche",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Lieu-dit La Croix-Blanche",
+    "ville": "Nespouls",
+    "cp": "19600",
+    "departement": "19",
+    "lat": 45.033,
+    "lon": 1.503,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.25,
+      "e85": 0.943,
+      "e10": 1.99,
+      "sp98": 1.99
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Laverie",
+      "Boutique alimentaire",
+      "Restauration à emporter",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Aire de camping-cars",
+      "Location de véhicule",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Services réparation / entretien",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Bornes électriques",
+      "Vente d'additifs carburants",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 15:15:08",
+    "is_exit_station": true
+  },
+  {
+    "id": 11540001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ROUTE NATIONALE 9",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ROUTE NATIONALE 9",
+    "ville": "ROQUEFORT-DES-CORBIèRES",
+    "cp": "11540",
+    "departement": "11",
+    "lat": 42.992,
+    "lon": 2.971,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.25,
+      "e85": 0.919,
+      "gplc": 1.025,
+      "e10": 1.99,
+      "sp98": 1.99
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Douches",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Restauration sur place",
+      "Bar",
+      "Vente de fioul domestique",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Vente d'additifs carburants",
+      "Wifi",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 15:11:22",
+    "is_exit_station": true
+  },
+  {
+    "id": 6240004,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "96 avenue Prince Rainier III",
+    "sens": "Double sens (Sortie)",
+    "adresse": "96 avenue Prince Rainier III",
+    "ville": "Beausoleil",
+    "cp": "06240",
+    "departement": "06",
+    "lat": 43.745,
+    "lon": 7.427,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.499,
+      "sp95": 2.271,
+      "sp98": 2.346
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "E10"
+    ],
+    "services": [
+      "Laverie",
+      "Relais colis",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Vente de fioul domestique",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Vente d'additifs carburants",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-23 05:47:36",
+    "is_exit_station": true
+  },
+  {
+    "id": 84470001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "778 Route d'Avignon",
+    "sens": "Double sens (Sortie)",
+    "adresse": "778 Route d'Avignon",
+    "ville": "Châteauneuf-de-Gadagne",
+    "cp": "84470",
+    "departement": "84",
+    "lat": 43.92849,
+    "lon": 4.93805,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.39,
+      "e10": 2.21,
+      "sp98": 2.32
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Boutique alimentaire",
+      "Station de gonflage",
+      "Lavage automatique",
+      "Services réparation / entretien",
+      "Vente de gaz domestique (Butane, Propane)"
+    ],
+    "pays": "FR",
+    "maj": "2026-09-30 11:35:10",
+    "is_exit_station": true
+  },
+  {
+    "id": 13320004,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "LE COLLET ROUGE R.N.8",
+    "sens": "Double sens (Sortie)",
+    "adresse": "LE COLLET ROUGE R.N.8",
+    "ville": "Bouc-Bel-Air",
+    "cp": "13320",
+    "departement": "13",
+    "lat": 43.435,
+    "lon": 5.397,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.272,
+      "e85": 1.069,
+      "e10": 2.058,
+      "sp98": 2.158
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-01 00:26:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 26800008,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "15 AVE JEAN JAURES",
+    "sens": "Double sens (Sortie)",
+    "adresse": "15 AVE JEAN JAURES",
+    "ville": "Portes-lès-valence",
+    "cp": "26800",
+    "departement": "26",
+    "lat": 44.87873,
+    "lon": 4.87818,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.329,
+      "e10": 2.229,
+      "sp98": 2.329
+    },
+    "ruptures": [],
+    "services": [
+      "Toilettes publiques",
+      "Boutique alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 21:00:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 24330003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "RN 89 - NIVERSAC",
+    "sens": "Double sens (Sortie)",
+    "adresse": "RN 89 - NIVERSAC",
+    "ville": "Saint-Laurent-sur-Manoire",
+    "cp": "24330",
+    "departement": "24",
+    "lat": 45.138,
+    "lon": 0.807,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.25,
+      "e10": 1.99
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "GPLc",
+      "SP98"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Lavage manuel",
+      "Services réparation / entretien",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Vente d'additifs carburants",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 08:21:28",
+    "is_exit_station": true
+  },
+  {
+    "id": 83480005,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "RN 7 Quartier le GABRON",
+    "sens": "Double sens (Sortie)",
+    "adresse": "RN 7 Quartier le GABRON",
+    "ville": "PUGET-SUR-ARGENS",
+    "cp": "83480",
+    "departement": "83",
+    "lat": 43.458,
+    "lon": 6.678,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.189,
+      "sp95": 2.159,
+      "e85": 0.908,
+      "e10": 2.109
+    },
+    "ruptures": [
+      "SP98",
+      "GPLc"
+    ],
+    "services": [
+      "Carburant additivé",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 07:19:34",
+    "is_exit_station": true
+  },
+  {
+    "id": 69410006,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "3 AVE GENERAL DE GAULLE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "3 AVE GENERAL DE GAULLE",
+    "ville": "CHAMPAGNE-AU-MONT-D'OR",
+    "cp": "69410",
+    "departement": "69",
+    "lat": 45.80042,
+    "lon": 4.78673,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.289,
+      "e10": 2.149,
+      "sp98": 2.249
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Boutique alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 06:00:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 69570002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "AIRE PORTE DE LYON",
+    "sens": "Double sens (Sortie)",
+    "adresse": "AIRE PORTE DE LYON",
+    "ville": "DARDILLY",
+    "cp": "69570",
+    "departement": "69",
+    "lat": 45.813,
+    "lon": 4.756,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.278,
+      "e85": 1.033,
+      "e10": 2.135,
+      "sp98": 2.235
+    },
+    "ruptures": [
+      "GPLc",
+      "SP95"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-01 00:26:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 84310003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "502 Avenue Jean Monnet",
+    "sens": "Double sens (Sortie)",
+    "adresse": "502 Avenue Jean Monnet",
+    "ville": "MORIèRES-LèS-AVIGNON",
+    "cp": "84310",
+    "departement": "84",
+    "lat": 43.941,
+    "lon": 4.897,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.3,
+      "e85": 0.94,
+      "e10": 2.17,
+      "sp98": 2.3
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Relais colis",
+      "Station de gonflage",
+      "Lavage automatique",
+      "Services réparation / entretien",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 08:01:32",
+    "is_exit_station": true
+  },
+  {
+    "id": 78000005,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "50 Rue du Pont Colbert",
+    "sens": "Double sens (Sortie)",
+    "adresse": "50 Rue du Pont Colbert",
+    "ville": "Versailles",
+    "cp": "78000",
+    "departement": "78",
+    "lat": 48.788,
+    "lon": 2.15,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.286,
+      "e85": 0.929,
+      "e10": 2.138,
+      "sp98": 2.238
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-02 10:55:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 84700002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ROUTE NATIONALE 7",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ROUTE NATIONALE 7",
+    "ville": "Sorgues",
+    "cp": "84700",
+    "departement": "84",
+    "lat": 44.026,
+    "lon": 4.873,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.26,
+      "e10": 2.156,
+      "sp98": 2.256
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-02 10:55:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 11480008,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "route départementale 6009",
+    "sens": "Double sens (Sortie)",
+    "adresse": "route départementale 6009",
+    "ville": "La Palme",
+    "cp": "11480",
+    "departement": "11",
+    "lat": 42.94544,
+    "lon": 2.989,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.279,
+      "e85": 0.959,
+      "gplc": 1.099,
+      "e10": 2.179,
+      "sp98": 2.269
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [
+      "Boutique non alimentaire",
+      "Vente de fioul domestique",
+      "Carburant additivé",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:15:39",
+    "is_exit_station": true
+  },
+  {
+    "id": 13012024,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "120 rue saint jean du desert",
+    "sens": "Double sens (Sortie)",
+    "adresse": "120 rue saint jean du desert",
+    "ville": "Marseille",
+    "cp": "13012",
+    "departement": "13",
+    "lat": 43.296,
+    "lon": 5.432,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.219,
+      "e10": 2.065,
+      "sp98": 2.185
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Carburant additivé",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:11:22",
+    "is_exit_station": true
+  },
+  {
+    "id": 13180002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "rue du 19 mars 1962",
+    "sens": "Double sens (Sortie)",
+    "adresse": "rue du 19 mars 1962",
+    "ville": "Gignac-la-Nerthe",
+    "cp": "13180",
+    "departement": "13",
+    "lat": 43.38754,
+    "lon": 5.23278,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.374,
+      "sp95": 2.125
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP98",
+      "E10"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-01 09:43:53",
+    "is_exit_station": true
+  },
+  {
+    "id": 42400007,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "14 QUAI DE LA RIVE RN88",
+    "sens": "Double sens (Sortie)",
+    "adresse": "14 QUAI DE LA RIVE RN88",
+    "ville": "Saint-Chamond",
+    "cp": "42400",
+    "departement": "42",
+    "lat": 45.479,
+    "lon": 4.519,
+    "pk_text": null,
+    "prix": {
+      "e85": 0.909
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc",
+      "SP98",
+      "E10",
+      "Gazole"
+    ],
+    "services": [
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 57140006,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "1 AVENUE DES 2 FONTAINES",
+    "sens": "Double sens (Sortie)",
+    "adresse": "1 AVENUE DES 2 FONTAINES",
+    "ville": "WOIPPY",
+    "cp": "57140",
+    "departement": "57",
+    "lat": 49.149,
+    "lon": 6.172,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.26,
+      "e85": 0.871,
+      "e10": 2.265,
+      "sp98": 2.228
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 10:23:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 12150004,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Avenue Marie Curie",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Avenue Marie Curie",
+    "ville": "SéVéRAC-LE-CHâTEAU",
+    "cp": "12150",
+    "departement": "12",
+    "lat": 44.32524,
+    "lon": 3.06544,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.202,
+      "e10": 2.07,
+      "sp98": 2.178
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Vente de gaz domestique (Butane, Propane)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 08:50:07",
+    "is_exit_station": true
+  },
+  {
+    "id": 51320003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ROUTE NATIONALE 4",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ROUTE NATIONALE 4",
+    "ville": "SOMMESOUS",
+    "cp": "51320",
+    "departement": "51",
+    "lat": 48.73195,
+    "lon": 4.20515,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.15,
+      "e85": 0.929,
+      "e10": 1.99,
+      "sp98": 1.99
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 59133002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "47 rue Jean Baptiste Lebas",
+    "sens": "Double sens (Sortie)",
+    "adresse": "47 rue Jean Baptiste Lebas",
+    "ville": "Phalempin",
+    "cp": "59133",
+    "departement": "59",
+    "lat": 50.521,
+    "lon": 3.021,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.409,
+      "sp98": 2.399
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "E10",
+      "SP95"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-19 12:37:57",
+    "is_exit_station": true
+  },
+  {
+    "id": 6250010,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "492 ROUTE DU CANNET",
+    "sens": "Double sens (Sortie)",
+    "adresse": "492 ROUTE DU CANNET",
+    "ville": "MOUGINS",
+    "cp": "06250",
+    "departement": "06",
+    "lat": 43.58339,
+    "lon": 7.00957,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.15,
+      "e85": 0.928,
+      "e10": 1.99
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc",
+      "SP98"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 14125001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ZAC DE L'ETOILE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ZAC DE L'ETOILE",
+    "ville": "Mondeville",
+    "cp": "14120",
+    "departement": "14",
+    "lat": 49.163,
+    "lon": -0.298,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.408,
+      "e85": 0.827,
+      "gplc": 1.076,
+      "e10": 2.047,
+      "sp98": 2.153
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 13:10:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 73140001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "4 PLACE DE LA VANOISE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "4 PLACE DE LA VANOISE",
+    "ville": "SAINT-MICHEL-DE-MAURIENNE",
+    "cp": "73140",
+    "departement": "73",
+    "lat": 45.218,
+    "lon": 6.472,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.399,
+      "sp95": 2.279,
+      "sp98": 2.347
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "E10"
+    ],
+    "services": [
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-15 08:36:38",
+    "is_exit_station": true
+  },
+  {
+    "id": 6320004,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Quartier le Prat",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Quartier le Prat",
+    "ville": "LA TURBIE",
+    "cp": "06320",
+    "departement": "06",
+    "lat": 43.745,
+    "lon": 7.392,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.487,
+      "sp95": 2.398,
+      "e85": 1.118,
+      "sp98": 2.443
+    },
+    "ruptures": [
+      "GPLc",
+      "E10"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Restauration sur place",
+      "Bar",
+      "Vente de fioul domestique",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Location de véhicule",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Vente d'additifs carburants",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-20 17:42:26",
+    "is_exit_station": true
+  },
+  {
+    "id": 94000009,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "63 Avenue du Général de Gaulle",
+    "sens": "Double sens (Sortie)",
+    "adresse": "63 Avenue du Général de Gaulle",
+    "ville": "Créteil",
+    "cp": "94000",
+    "departement": "94",
+    "lat": 48.79039,
+    "lon": 2.44517,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.15
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP95",
+      "SP98"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 13700010,
+    "enseigne": "BP",
+    "autoroute": "",
+    "nom": "92 AEROPORT BP 36",
+    "sens": "Double sens (Sortie)",
+    "adresse": "92 AEROPORT BP 36",
+    "ville": "MARIGNANE",
+    "cp": "13700",
+    "departement": "13",
+    "lat": 43.444,
+    "lon": 5.225,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.25,
+      "e85": 0.924,
+      "e10": 1.99,
+      "sp98": 1.99
+    },
+    "ruptures": [
+      "GPLc"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 67120005,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "15 rue de la Gare",
+    "sens": "Double sens (Sortie)",
+    "adresse": "15 rue de la Gare",
+    "ville": "DUTTLENHEIM",
+    "cp": "67120",
+    "departement": "67",
+    "lat": 48.527,
+    "lon": 7.568,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.255,
+      "e10": 2.179,
+      "sp98": 2.27
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:49:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 33610001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Centre Commercial Le Bourg",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Centre Commercial Le Bourg",
+    "ville": "CESTAS",
+    "cp": "33610",
+    "departement": "33",
+    "lat": 44.7397,
+    "lon": -0.68126,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.395,
+      "e85": 0.806,
+      "e10": 2.069,
+      "sp98": 2.169
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Location de véhicule",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Vente d'additifs carburants",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 08:41:42",
+    "is_exit_station": true
+  },
+  {
+    "id": 59113001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "impasse roger bouvry",
+    "sens": "Double sens (Sortie)",
+    "adresse": "impasse roger bouvry",
+    "ville": "SECLIN",
+    "cp": "59113",
+    "departement": "59",
+    "lat": 50.541,
+    "lon": 3.021,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.358,
+      "sp95": 2.18,
+      "e85": 1.005,
+      "e10": 2.135
+    },
+    "ruptures": [
+      "GPLc",
+      "SP98"
+    ],
+    "services": [
+      "Laverie",
+      "Relais colis",
+      "Station de gonflage",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-16 13:04:59",
+    "is_exit_station": true
+  },
+  {
+    "id": 93240007,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "21 AV.DE STALINGRAD - COURS ST L",
+    "sens": "Double sens (Sortie)",
+    "adresse": "21 AV.DE STALINGRAD - COURS ST L",
+    "ville": "STAINS",
+    "cp": "93240",
+    "departement": "93",
+    "lat": 48.94875,
+    "lon": 2.37988,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.25,
+      "e10": 1.99,
+      "sp98": 1.99
+    },
+    "ruptures": [],
+    "services": [
+      "Toilettes publiques",
+      "Boutique alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Lavage automatique",
+      "Services réparation / entretien",
+      "Vente de gaz domestique (Butane, Propane)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 13011025,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "171-173 Boulevard de Saint-Loup",
+    "sens": "Double sens (Sortie)",
+    "adresse": "171-173 Boulevard de Saint-Loup",
+    "ville": "Marseille",
+    "cp": "13011",
+    "departement": "13",
+    "lat": 43.28492,
+    "lon": 5.4378,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.409,
+      "e85": 0.949,
+      "e10": 2.229,
+      "sp98": 2.329
+    },
+    "ruptures": [],
+    "services": [
+      "Toilettes publiques",
+      "Boutique alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Vente de gaz domestique (Butane, Propane)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 21:00:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 30320004,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "92 Allée de la picholine",
+    "sens": "Double sens (Sortie)",
+    "adresse": "92 Allée de la picholine",
+    "ville": "Marguerittes",
+    "cp": "30320",
+    "departement": "30",
+    "lat": 43.859,
+    "lon": 4.433,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.27,
+      "gplc": 1.06,
+      "e10": 2.119,
+      "sp98": 2.239
+    },
+    "ruptures": [
+      "SP95",
+      "E85"
+    ],
+    "services": [
+      "Laverie",
+      "Boutique alimentaire",
+      "Restauration à emporter",
+      "Station de gonflage",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Vente d'additifs carburants",
+      "Wifi",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 15:13:42",
+    "is_exit_station": true
+  },
+  {
+    "id": 56800006,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ROUTE NATIONALE 24 - AIRE SUD DE BROCÉLIANDE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ROUTE NATIONALE 24 - AIRE SUD DE BROCÉLIANDE",
+    "ville": "PLOERMEL",
+    "cp": "56800",
+    "departement": "56",
+    "lat": 47.91899,
+    "lon": -2.36376,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.25,
+      "e85": 1.059,
+      "e10": 1.99,
+      "sp98": 1.99
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Douches",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Restauration sur place",
+      "Bar",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Espace bébé"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 31390003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Le Village",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Le Village",
+    "ville": "Peyssies",
+    "cp": "31390",
+    "departement": "31",
+    "lat": 43.261,
+    "lon": 1.116,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.389,
+      "e10": 2.149,
+      "sp98": 2.224
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "GPLc"
+    ],
+    "services": [
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-26 11:13:20",
+    "is_exit_station": true
+  },
+  {
+    "id": 31000001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "328 Route de Saint-Simon",
+    "sens": "Double sens (Sortie)",
+    "adresse": "328 Route de Saint-Simon",
+    "ville": "Toulouse",
+    "cp": "31100",
+    "departement": "31",
+    "lat": 43.588,
+    "lon": 1.41,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.25,
+      "sp95": 1.99
+    },
+    "ruptures": [
+      "GPLc",
+      "E85",
+      "E10",
+      "SP98"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Services réparation / entretien",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 12:37:12",
+    "is_exit_station": true
+  },
+  {
+    "id": 33700020,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "127 AV. DE L YSER",
+    "sens": "Double sens (Sortie)",
+    "adresse": "127 AV. DE L YSER",
+    "ville": "MERIGNAC",
+    "cp": "33700",
+    "departement": "33",
+    "lat": 44.842,
+    "lon": -0.666,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.25,
+      "gplc": 1.039,
+      "e10": 1.99
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "SP98"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Relais colis",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Vente d'additifs carburants",
+      "Wifi"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 14:50:22",
+    "is_exit_station": true
+  },
+  {
+    "id": 84700005,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "2232 AV. D'ORANGE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "2232 AV. D'ORANGE",
+    "ville": "SORGUES",
+    "cp": "84700",
+    "departement": "84",
+    "lat": 44.027,
+    "lon": 4.874,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.15,
+      "e10": 1.99
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP95",
+      "SP98"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Wifi",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 11:39:54",
+    "is_exit_station": true
+  },
+  {
+    "id": 4700003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "RN 96 CENTRE COMMERCIAL LE PLAN",
+    "sens": "Double sens (Sortie)",
+    "adresse": "RN 96 CENTRE COMMERCIAL LE PLAN",
+    "ville": "LA BRILLANNE",
+    "cp": "04700",
+    "departement": "04",
+    "lat": 43.92768,
+    "lon": 5.89091,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.389,
+      "sp95": 2.159,
+      "e85": 0.929,
+      "sp98": 2.279
+    },
+    "ruptures": [
+      "E10"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Laverie",
+      "Relais colis",
+      "Restauration à emporter",
+      "Restauration sur place",
+      "Bar",
+      "Vente de pétrole lampant",
+      "Station de gonflage",
+      "Aire de camping-cars",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-29 09:03:10",
+    "is_exit_station": true
+  },
+  {
+    "id": 77181002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ROUTE DE CHELLES",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ROUTE DE CHELLES",
+    "ville": "LE PIN",
+    "cp": "77181",
+    "departement": "77",
+    "lat": 48.906,
+    "lon": 2.619,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.15,
+      "e85": 0.905,
+      "e10": 1.99
+    },
+    "ruptures": [
+      "GPLc",
+      "SP95",
+      "SP98"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 13011018,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "15 BOULEVARD DE LA CARTONNERIE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "15 BOULEVARD DE LA CARTONNERIE",
+    "ville": "MARSEILLE",
+    "cp": "13011",
+    "departement": "13",
+    "lat": 43.292,
+    "lon": 5.459,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.171,
+      "e85": 0.869,
+      "e10": 2.102,
+      "sp98": 2.212
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Restauration à emporter",
+      "Station de gonflage"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:37:07",
+    "is_exit_station": true
+  },
+  {
+    "id": 59174003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "960 avenue Jean Jaurès",
+    "sens": "Double sens (Sortie)",
+    "adresse": "960 avenue Jean Jaurès",
+    "ville": "La Sentinelle",
+    "cp": "59174",
+    "departement": "59",
+    "lat": 50.346,
+    "lon": 3.48,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.14,
+      "e85": 0.869,
+      "e10": 1.996,
+      "sp98": 2.17
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Laverie",
+      "Location de véhicule",
+      "Piste poids lourds",
+      "Bornes électriques",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 07:00:53",
+    "is_exit_station": true
+  },
+  {
+    "id": 94550002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "14 AV DU GENERAL DE GAULLE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "14 AV DU GENERAL DE GAULLE",
+    "ville": "Chevilly-Larue",
+    "cp": "94550",
+    "departement": "94",
+    "lat": 48.77313,
+    "lon": 2.3378,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.25
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc",
+      "E85",
+      "SP98",
+      "E10"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 91250012,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "C.C La Croix Verte, place de l'Europe",
+    "sens": "Double sens (Sortie)",
+    "adresse": "C.C La Croix Verte, place de l'Europe",
+    "ville": "Saint-Germain-lès-Corbeil",
+    "cp": "91250",
+    "departement": "91",
+    "lat": 48.62,
+    "lon": 2.493,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.185,
+      "sp95": 2.095,
+      "e10": 2.035,
+      "sp98": 2.155
+    },
+    "ruptures": [
+      "E85",
+      "GPLc"
+    ],
+    "services": [
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:00:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 21200009,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "A6 AIRE DE BEAUNE TAILLY",
+    "sens": "Double sens (Sortie)",
+    "adresse": "A6 AIRE DE BEAUNE TAILLY",
+    "ville": "BLIGNY LES BEAUNE",
+    "cp": "21200",
+    "departement": "21",
+    "lat": 46.96505,
+    "lon": 4.83621,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.25
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "GPLc",
+      "SP98",
+      "E10"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 84550003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Route d'orange",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Route d'orange",
+    "ville": "Mornas",
+    "cp": "84550",
+    "departement": "84",
+    "lat": 44.197,
+    "lon": 4.737,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.419,
+      "e10": 2.139
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "GPLc",
+      "SP98"
+    ],
+    "services": [
+      "Laverie",
+      "Relais colis",
+      "Boutique alimentaire",
+      "Restauration à emporter",
+      "Restauration sur place",
+      "Station de gonflage",
+      "Location de véhicule",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Wifi",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-24 10:11:35",
+    "is_exit_station": true
+  },
+  {
+    "id": 94594003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "RUE DU VIADUC",
+    "sens": "Double sens (Sortie)",
+    "adresse": "RUE DU VIADUC",
+    "ville": "RUNGIS CEDEX",
+    "cp": "94594",
+    "departement": "94",
+    "lat": 48.76047,
+    "lon": 2.34866,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.359,
+      "sp98": 2.349
+    },
+    "ruptures": [
+      "E10",
+      "SP95"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Vente de fioul domestique",
+      "Station de gonflage",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 18:52:03",
+    "is_exit_station": true
+  },
+  {
+    "id": 38550002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Route Nationale 7",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Route Nationale 7",
+    "ville": "Auberives sur Vareze",
+    "cp": "38550",
+    "departement": "38",
+    "lat": 45.421,
+    "lon": 4.817,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.263,
+      "e10": 2.106,
+      "sp98": 2.211
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "GPLc"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Relais colis",
+      "Boutique alimentaire",
+      "Location de véhicule",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Vente d'additifs carburants",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 06:46:49",
+    "is_exit_station": true
+  },
+  {
+    "id": 80380001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "21 RUE DES TAVERNES",
+    "sens": "Double sens (Sortie)",
+    "adresse": "21 RUE DES TAVERNES",
+    "ville": "VILLERS-BRETONNEUX",
+    "cp": "80800",
+    "departement": "80",
+    "lat": 49.871,
+    "lon": 2.512,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.25,
+      "e10": 1.99
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "GPLc",
+      "SP98"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Vente de fioul domestique",
+      "Vente de pétrole lampant",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Wifi"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 07:57:22",
+    "is_exit_station": true
+  },
+  {
+    "id": 95220005,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "421 Route de Conflans",
+    "sens": "Double sens (Sortie)",
+    "adresse": "421 Route de Conflans",
+    "ville": "Herblay",
+    "cp": "95220",
+    "departement": "95",
+    "lat": 49.00469,
+    "lon": 2.12666,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.209,
+      "e10": 2.029,
+      "sp98": 2.119
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "GPLc"
+    ],
+    "services": [
+      "Boutique alimentaire"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 13:42:51",
+    "is_exit_station": true
+  },
+  {
+    "id": 59113006,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ZI de l'Epinette",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ZI de l'Epinette",
+    "ville": "Seclin",
+    "cp": "59113",
+    "departement": "59",
+    "lat": 50.55,
+    "lon": 3.053,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.189,
+      "e85": 0.995,
+      "e10": 2.074,
+      "sp98": 2.198
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Piste poids lourds",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 10:21:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 33700029,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Avenue des Frères Robinson",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Avenue des Frères Robinson",
+    "ville": "Mérignac",
+    "cp": "33700",
+    "departement": "33",
+    "lat": 44.85136,
+    "lon": -0.65624,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.172,
+      "e10": 2.05,
+      "sp98": 2.259
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "GPLc"
+    ],
+    "services": [
+      "Vente de gaz domestique (Butane, Propane)",
+      "Wifi",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 14:48:41",
+    "is_exit_station": true
+  },
+  {
+    "id": 23300008,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "77 rue de la croix de monjous",
+    "sens": "Double sens (Sortie)",
+    "adresse": "77 rue de la croix de monjous",
+    "ville": "Gradignan",
+    "cp": "33170",
+    "departement": "33",
+    "lat": 44.776,
+    "lon": -0.595,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.329,
+      "e85": 0.885,
+      "e10": 2.179,
+      "sp98": 2.319
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Laverie",
+      "Relais colis",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Restauration sur place",
+      "Station de gonflage",
+      "Lavage automatique",
+      "Services réparation / entretien",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Bornes électriques",
+      "Vente d'additifs carburants",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 08:53:13",
+    "is_exit_station": true
+  },
+  {
+    "id": 67540001,
+    "enseigne": "E.Leclerc",
+    "autoroute": "",
+    "nom": "54 Rue du Général Leclerc",
+    "sens": "Double sens (Sortie)",
+    "adresse": "54 Rue du Général Leclerc",
+    "ville": "Ostwald",
+    "cp": "67540",
+    "departement": "67",
+    "lat": 48.549,
+    "lon": 7.71,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.606,
+      "sp95": 2.269
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "E10",
+      "SP98"
+    ],
+    "services": [
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-30 09:16:10",
+    "is_exit_station": true
+  },
+  {
+    "id": 54204001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "POLE COMMERCIAL JEANNE D'ARC",
+    "sens": "Double sens (Sortie)",
+    "adresse": "POLE COMMERCIAL JEANNE D'ARC",
+    "ville": "DOMMARTIN-LèS-TOUL",
+    "cp": "54200",
+    "departement": "54",
+    "lat": 48.674,
+    "lon": 5.925,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.259,
+      "sp95": 2.239,
+      "e85": 0.89,
+      "e10": 2.199,
+      "sp98": 2.269
+    },
+    "ruptures": [
+      "GPLc",
+      "GPLc"
+    ],
+    "services": [
+      "Laverie",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Location de véhicule",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Bornes électriques",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 10:36:57",
+    "is_exit_station": true
+  },
+  {
+    "id": 74570004,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "81 ROUTE DU PLOT",
+    "sens": "Double sens (Sortie)",
+    "adresse": "81 ROUTE DU PLOT",
+    "ville": "GROISY",
+    "cp": "74570",
+    "departement": "74",
+    "lat": 46.006,
+    "lon": 6.187,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.259,
+      "sp95": 2.165,
+      "sp98": 2.23
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "E10"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-02 10:00:51",
+    "is_exit_station": true
+  },
+  {
+    "id": 80800008,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Rue de Démuin",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Rue de Démuin",
+    "ville": "Villers bretonneux",
+    "cp": "80800",
+    "departement": "80",
+    "lat": 49.85685,
+    "lon": 2.52516,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.208,
+      "e85": 0.878,
+      "e10": 2.03,
+      "sp98": 2.189
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Vente de gaz domestique (Butane, Propane)",
+      "Wifi"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 10:13:23",
+    "is_exit_station": true
+  },
+  {
+    "id": 13011003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ROUTE DES TROIS LUCS- LA VALENTINE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ROUTE DES TROIS LUCS- LA VALENTINE",
+    "ville": "MARSEILLE",
+    "cp": "13011",
+    "departement": "13",
+    "lat": 43.303,
+    "lon": 5.475,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.299,
+      "gplc": 1.099,
+      "e10": 2.179,
+      "sp98": 2.269
+    },
+    "ruptures": [
+      "E85",
+      "SP95"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Restauration sur place",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 20:50:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 58200003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "CHEMIN DU GRAND CHAMP",
+    "sens": "Double sens (Sortie)",
+    "adresse": "CHEMIN DU GRAND CHAMP",
+    "ville": "COSNE-COURS-SUR-LOIRE",
+    "cp": "58200",
+    "departement": "58",
+    "lat": 47.386,
+    "lon": 2.921,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.359,
+      "e85": 0.899,
+      "e10": 2.249,
+      "sp98": 2.349
+    },
+    "ruptures": [
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 00:00:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 67400001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "6 Avenue de Strasbourg",
+    "sens": "Double sens (Sortie)",
+    "adresse": "6 Avenue de Strasbourg",
+    "ville": "ILLKIRCH-GRAFFENSTADEN",
+    "cp": "67400",
+    "departement": "67",
+    "lat": 48.544,
+    "lon": 7.737,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.356,
+      "e85": 0.921,
+      "gplc": 0.995,
+      "e10": 2.195
+    },
+    "ruptures": [
+      "SP95",
+      "SP98"
+    ],
+    "services": [
+      "Laverie",
+      "Carburant additivé",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Bornes électriques",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 10:26:44",
+    "is_exit_station": true
+  },
+  {
+    "id": 13741001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "R.N. 113",
+    "sens": "Double sens (Sortie)",
+    "adresse": "R.N. 113",
+    "ville": "VITROLLES",
+    "cp": "13127",
+    "departement": "13",
+    "lat": 43.433,
+    "lon": 5.259,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.25,
+      "sp95": 2.098,
+      "gplc": 1.038,
+      "e10": 2.055,
+      "sp98": 2.149
+    },
+    "ruptures": [
+      "E85",
+      "E85"
+    ],
+    "services": [
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 10:14:07",
+    "is_exit_station": true
+  },
+  {
+    "id": 54710001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Chemin du Bon Curé",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Chemin du Bon Curé",
+    "ville": "LUDRES",
+    "cp": "54710",
+    "departement": "54",
+    "lat": 48.61647,
+    "lon": 6.1753,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.245,
+      "sp95": 2.299,
+      "e85": 0.869,
+      "sp98": 2.358
+    },
+    "ruptures": [
+      "GPLc",
+      "E10"
+    ],
+    "services": [
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 08:19:54",
+    "is_exit_station": true
+  },
+  {
+    "id": 33240007,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "17 Rue de la Fontaine",
+    "sens": "Double sens (Sortie)",
+    "adresse": "17 Rue de la Fontaine",
+    "ville": "SAINT-ANDRé-DE-CUBZAC",
+    "cp": "33240",
+    "departement": "33",
+    "lat": 44.996,
+    "lon": -0.44,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.169,
+      "e10": 2.059,
+      "sp98": 2.189
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Laverie",
+      "Restauration sur place",
+      "Vente de pétrole lampant",
+      "Piste poids lourds",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 08:03:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 1120004,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Cours de la Portelle",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Cours de la Portelle",
+    "ville": "MONTLUEL",
+    "cp": "01120",
+    "departement": "01",
+    "lat": 45.853,
+    "lon": 5.059,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.339,
+      "e85": 0.869,
+      "e10": 2.047,
+      "sp98": 2.149
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Restauration à emporter",
+      "Carburant additivé",
+      "Location de véhicule",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-30 10:27:03",
+    "is_exit_station": true
+  },
+  {
+    "id": 13320010,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "687Avenue de Violèsi",
+    "sens": "Double sens (Sortie)",
+    "adresse": "687Avenue de Violèsi",
+    "ville": "Bouc Bel Air",
+    "cp": "13320",
+    "departement": "13",
+    "lat": 43.441,
+    "lon": 5.398,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.263,
+      "e85": 0.859,
+      "e10": 2.049,
+      "sp98": 2.169
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc",
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Bornes électriques",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:05:13",
+    "is_exit_station": true
+  },
+  {
+    "id": 40530003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "AVENUE CHARLES DE GAULLE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "AVENUE CHARLES DE GAULLE",
+    "ville": "Labenne",
+    "cp": "40530",
+    "departement": "40",
+    "lat": 43.588,
+    "lon": -1.429,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.209,
+      "sp95": 2.149,
+      "e10": 2.109
+    },
+    "ruptures": [
+      "GPLc",
+      "SP98",
+      "E85"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Laverie",
+      "Relais colis",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Restauration sur place",
+      "Bar",
+      "Vente de pétrole lampant",
+      "Station de gonflage",
+      "Location de véhicule",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Services réparation / entretien",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Vente d'additifs carburants",
+      "Wifi",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 07:44:03",
+    "is_exit_station": true
+  },
+  {
+    "id": 69360010,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "2 AVENUE DU DAUPHINE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "2 AVENUE DU DAUPHINE",
+    "ville": "SEREZIN DU RHONE",
+    "cp": "69360",
+    "departement": "69",
+    "lat": 45.629,
+    "lon": 4.825,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.409,
+      "e10": 2.099,
+      "sp98": 2.199
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-30 10:23:36",
+    "is_exit_station": true
+  },
+  {
+    "id": 67400004,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "25 rue des vignes",
+    "sens": "Double sens (Sortie)",
+    "adresse": "25 rue des vignes",
+    "ville": "ILLKIRCH-GRAFFENSTADEN",
+    "cp": "67400",
+    "departement": "67",
+    "lat": 48.52176,
+    "lon": 7.72033,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.414,
+      "e10": 2.166,
+      "sp98": 2.294
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Vente de gaz domestique (Butane, Propane)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 06:52:19",
+    "is_exit_station": true
+  },
+  {
+    "id": 72460002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ZAC DE L'EPINE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ZAC DE L'EPINE",
+    "ville": "Savigné-l'Évêque",
+    "cp": "72460",
+    "departement": "72",
+    "lat": 48.064,
+    "lon": 0.279,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.379,
+      "e85": 0.879,
+      "e10": 2.179
+    },
+    "ruptures": [
+      "SP95",
+      "SP98",
+      "GPLc"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Piste poids lourds",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-23 10:44:45",
+    "is_exit_station": true
+  },
+  {
+    "id": 67170006,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "186 Avenue de Strasbourg",
+    "sens": "Double sens (Sortie)",
+    "adresse": "186 Avenue de Strasbourg",
+    "ville": "BRUMATH",
+    "cp": "67170",
+    "departement": "67",
+    "lat": 48.70928,
+    "lon": 7.70777,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.249,
+      "e85": 0.869,
+      "e10": 2.199,
+      "sp98": 2.319
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Vente de fioul domestique",
+      "Piste poids lourds",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 17:38:35",
+    "is_exit_station": true
+  },
+  {
+    "id": 85260005,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "1 ZA LA COLONNE 1",
+    "sens": "Double sens (Sortie)",
+    "adresse": "1 ZA LA COLONNE 1",
+    "ville": "LES BROUZILS",
+    "cp": "85260",
+    "departement": "85",
+    "lat": 46.883,
+    "lon": -1.314,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.49,
+      "sp95": 2.29
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "E10",
+      "SP98"
+    ],
+    "services": [
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Lavage manuel"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-26 09:26:46",
+    "is_exit_station": true
+  },
+  {
+    "id": 73240001,
+    "enseigne": "Eni",
+    "autoroute": "",
+    "nom": "Lieu dit Contin",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Lieu dit Contin",
+    "ville": "Saint-Genix-sur-Guiers",
+    "cp": "73240",
+    "departement": "73",
+    "lat": 45.595,
+    "lon": 5.636,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.249,
+      "sp95": 2.299,
+      "e85": 0.869,
+      "sp98": 2.099
+    },
+    "ruptures": [
+      "GPLc",
+      "E10"
+    ],
+    "services": [
+      "Laverie",
+      "Relais colis",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Location de véhicule",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Vente d'additifs carburants",
+      "Wifi",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 08:18:15",
+    "is_exit_station": true
+  },
+  {
+    "id": 74130017,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "403 AVENUE DES GLIERES",
+    "sens": "Double sens (Sortie)",
+    "adresse": "403 AVENUE DES GLIERES",
+    "ville": "BONNEVILLE",
+    "cp": "74130",
+    "departement": "74",
+    "lat": 46.07158,
+    "lon": 6.40321,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.369,
+      "e10": 2.259
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "GPLc",
+      "SP98"
+    ],
+    "services": [
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 69390005,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "641 route de Givors",
+    "sens": "Double sens (Sortie)",
+    "adresse": "641 route de Givors",
+    "ville": "Vernaison",
+    "cp": "69390",
+    "departement": "69",
+    "lat": 45.642,
+    "lon": 4.81,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.409,
+      "e85": 0.899,
+      "e10": 2.099,
+      "sp98": 2.199
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-30 10:24:32",
+    "is_exit_station": true
+  },
+  {
+    "id": 73250001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ZI DU CAROUGE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ZI DU CAROUGE",
+    "ville": "Saint-Pierre-d'Albigny",
+    "cp": "73250",
+    "departement": "73",
+    "lat": 45.55458,
+    "lon": 6.16274,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.199,
+      "sp95": 2.179,
+      "e10": 2.099,
+      "sp98": 2.249
+    },
+    "ruptures": [
+      "E85",
+      "GPLc"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Piste poids lourds",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 08:18:31",
+    "is_exit_station": true
+  },
+  {
+    "id": 4200003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "route de Sisteron",
+    "sens": "Double sens (Sortie)",
+    "adresse": "route de Sisteron",
+    "ville": "PEIPIN",
+    "cp": "04200",
+    "departement": "04",
+    "lat": 44.14295,
+    "lon": 5.95926,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.389,
+      "e85": 0.879,
+      "e10": 2.129,
+      "sp98": 2.249
+    },
+    "ruptures": [
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-30 08:58:04",
+    "is_exit_station": true
+  },
+  {
+    "id": 12150007,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "37 AVENUE DE PARIS",
+    "sens": "Double sens (Sortie)",
+    "adresse": "37 AVENUE DE PARIS",
+    "ville": "Sévérac d'Aveyron",
+    "cp": "12150",
+    "departement": "12",
+    "lat": 44.329,
+    "lon": 3.069,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.389,
+      "sp95": 2.198,
+      "sp98": 2.298
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "E10"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-22 10:02:19",
+    "is_exit_station": true
+  },
+  {
+    "id": 62860002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ROUTE DEPARTEMENTAL CD 939",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ROUTE DEPARTEMENTAL CD 939",
+    "ville": "MARQUION",
+    "cp": "62860",
+    "departement": "62",
+    "lat": 50.215,
+    "lon": 3.067,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.441,
+      "sp95": 2.194,
+      "sp98": 2.37
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "E10"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Lavage manuel",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-30 13:33:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 62590001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "38 Rue Émile Zola",
+    "sens": "Double sens (Sortie)",
+    "adresse": "38 Rue Émile Zola",
+    "ville": "Oignies",
+    "cp": "62590",
+    "departement": "62",
+    "lat": 50.47,
+    "lon": 2.996,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.389,
+      "e10": 2.099,
+      "sp98": 2.174
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Laverie",
+      "Relais colis",
+      "Boutique alimentaire",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Wifi",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 11:20:53",
+    "is_exit_station": true
+  },
+  {
+    "id": 74600017,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "AVENUE D AIX LES BAINS",
+    "sens": "Double sens (Sortie)",
+    "adresse": "AVENUE D AIX LES BAINS",
+    "ville": "SEYNOD",
+    "cp": "74600",
+    "departement": "74",
+    "lat": 45.877,
+    "lon": 6.089,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.191,
+      "gplc": 0.979,
+      "e10": 2.073,
+      "sp98": 2.179
+    },
+    "ruptures": [
+      "SP95",
+      "E85"
+    ],
+    "services": [
+      "Carburant additivé",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 11:10:41",
+    "is_exit_station": true
+  },
+  {
+    "id": 34690011,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "44 rue Francis Bergèse, parking LIDL",
+    "sens": "Double sens (Sortie)",
+    "adresse": "44 rue Francis Bergèse, parking LIDL",
+    "ville": "FABREGUES",
+    "cp": "34690",
+    "departement": "34",
+    "lat": 43.561,
+    "lon": 3.797,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.248,
+      "e85": 1.056,
+      "e10": 2.108,
+      "sp98": 2.208
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Carburant additivé",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 12:41:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 38080003,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "25 Rue des Sayes",
+    "sens": "Double sens (Sortie)",
+    "adresse": "25 Rue des Sayes",
+    "ville": "L'ISLE-D'ABEAU",
+    "cp": "38080",
+    "departement": "38",
+    "lat": 45.61432,
+    "lon": 5.2251,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.179,
+      "sp95": 2.129,
+      "e85": 0.869,
+      "gplc": 0.999,
+      "e10": 2.079,
+      "sp98": 2.219
+    },
+    "ruptures": [],
+    "services": [
+      "Relais colis",
+      "Station de gonflage",
+      "Location de véhicule",
+      "Piste poids lourds",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:28:55",
+    "is_exit_station": true
+  },
+  {
+    "id": 59494002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "RN45",
+    "sens": "Double sens (Sortie)",
+    "adresse": "RN45",
+    "ville": "Petite-Forêt",
+    "cp": "59494",
+    "departement": "59",
+    "lat": 50.376,
+    "lon": 3.474,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.198,
+      "e85": 0.859,
+      "gplc": 1.105,
+      "e10": 2.135,
+      "sp98": 2.144
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 10:30:58",
+    "is_exit_station": true
+  },
+  {
+    "id": 59300025,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Z.A.C d'Aulnoy lez Valenciennes",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Z.A.C d'Aulnoy lez Valenciennes",
+    "ville": "Aulnoy-lez-Valenciennes",
+    "cp": "59300",
+    "departement": "59",
+    "lat": 50.33438,
+    "lon": 3.51663,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.188,
+      "e85": 0.852,
+      "gplc": 1.076,
+      "e10": 2.026,
+      "sp98": 2.177
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [
+      "Laverie",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 00:49:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 26270006,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "AVENUE DU DAUPHINE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "AVENUE DU DAUPHINE",
+    "ville": "Saulce-sur-Rhône",
+    "cp": "26270",
+    "departement": "26",
+    "lat": 44.706,
+    "lon": 4.8,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.134,
+      "sp95": 2.099,
+      "e85": 0.869,
+      "e10": 2.059
+    },
+    "ruptures": [
+      "GPLc",
+      "SP98"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Piste poids lourds",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:48:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 93240001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "80 BOULEVARD MAXIME GORKI",
+    "sens": "Double sens (Sortie)",
+    "adresse": "80 BOULEVARD MAXIME GORKI",
+    "ville": "STAINS",
+    "cp": "93240",
+    "departement": "93",
+    "lat": 48.949,
+    "lon": 2.385,
+    "pk_text": null,
+    "prix": {
+      "sp95": 2.129,
+      "e85": 0.924,
+      "sp98": 2.159
+    },
+    "ruptures": [
+      "GPLc",
+      "GPLc",
+      "Gazole",
+      "E10"
+    ],
+    "services": [
+      "Relais colis",
+      "Restauration à emporter",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 08:01:45",
+    "is_exit_station": true
+  },
+  {
+    "id": 74800002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "3515 Avenue du Mont-Blanc",
+    "sens": "Double sens (Sortie)",
+    "adresse": "3515 Avenue du Mont-Blanc",
+    "ville": "Saint-Pierre-en-Faucigny",
+    "cp": "74800",
+    "departement": "74",
+    "lat": 46.073,
+    "lon": 6.392,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.294,
+      "e85": 1.024,
+      "e10": 2.128,
+      "sp98": 2.228
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-11-02 11:05:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 84700004,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "1238 ROUTE D'ORANGE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "1238 ROUTE D'ORANGE",
+    "ville": "Sorgues",
+    "cp": "84700",
+    "departement": "84",
+    "lat": 44.009,
+    "lon": 4.873,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.26,
+      "e85": 0.869,
+      "e10": 2.139,
+      "sp98": 2.322
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Laverie",
+      "Vente de pétrole lampant",
+      "Station de gonflage",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 10:44:30",
+    "is_exit_station": true
+  },
+  {
+    "id": 13011026,
+    "enseigne": "BP",
+    "autoroute": "",
+    "nom": "ROUTE DE LA SABLIERE BP 49",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ROUTE DE LA SABLIERE BP 49",
+    "ville": "MARSEILLE VALENTINE",
+    "cp": "13011",
+    "departement": "13",
+    "lat": 43.295,
+    "lon": 5.48,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.159,
+      "e85": 0.869,
+      "gplc": 1.052,
+      "e10": 2.102,
+      "sp98": 2.212
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Carburant additivé",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Wifi"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 11:23:31",
+    "is_exit_station": true
+  },
+  {
+    "id": 66300017,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "1 RUE DE LA COMMANDERIE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "1 RUE DE LA COMMANDERIE",
+    "ville": "VILLEMOLAQUE",
+    "cp": "66300",
+    "departement": "66",
+    "lat": 42.59142,
+    "lon": 2.84252,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.349,
+      "e10": 2.189
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "GPLc",
+      "SP98"
+    ],
+    "services": [],
+    "pays": "FR",
+    "maj": "2026-10-20 09:08:04",
+    "is_exit_station": true
+  },
+  {
+    "id": 33400009,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "7 Rue Pierre Corneille",
+    "sens": "Double sens (Sortie)",
+    "adresse": "7 Rue Pierre Corneille",
+    "ville": "TALENCE",
+    "cp": "33400",
+    "departement": "33",
+    "lat": 44.789,
+    "lon": -0.587,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.259,
+      "e10": 2.139,
+      "sp98": 2.309
+    },
+    "ruptures": [],
+    "services": [
+      "Relais colis",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-01 12:04:24",
+    "is_exit_station": true
+  },
+  {
+    "id": 13012029,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "CENTRE ALPES URBAIN DES CAILLOLS - 81 AVENUE WILLIAM BOOTH",
+    "sens": "Double sens (Sortie)",
+    "adresse": "CENTRE ALPES URBAIN DES CAILLOLS - 81 AVENUE WILLIAM BOOTH",
+    "ville": "MARSEILLE",
+    "cp": "13012",
+    "departement": "13",
+    "lat": 43.29499,
+    "lon": 5.44221,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.169,
+      "e10": 2.099,
+      "sp98": 2.21
+    },
+    "ruptures": [],
+    "services": [
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 10:52:51",
+    "is_exit_station": true
+  },
+  {
+    "id": 38340015,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "129 avenue Simone Veil - avenue du 11 novembre",
+    "sens": "Double sens (Sortie)",
+    "adresse": "129 avenue Simone Veil - avenue du 11 novembre",
+    "ville": "Voreppe",
+    "cp": "38340",
+    "departement": "38",
+    "lat": 45.289,
+    "lon": 5.639,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.39,
+      "e85": 0.934,
+      "e10": 2.079
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc",
+      "SP98"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Bornes électriques",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 12:27:40",
+    "is_exit_station": true
+  },
+  {
+    "id": 38690006,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "PARC D ACTIVITE BIEVRE DAUPHINE - 250 Route de Rives",
+    "sens": "Double sens (Sortie)",
+    "adresse": "PARC D ACTIVITE BIEVRE DAUPHINE - 250 Route de Rives",
+    "ville": "COLOMBE",
+    "cp": "38690",
+    "departement": "38",
+    "lat": 45.39758,
+    "lon": 5.46675,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.129,
+      "sp95": 2.089,
+      "e10": 2.009,
+      "sp98": 2.129
+    },
+    "ruptures": [],
+    "services": [
+      "Laverie",
+      "Relais colis",
+      "Boutique alimentaire",
+      "Location de véhicule",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Bornes électriques",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 14:43:30",
+    "is_exit_station": true
+  },
+  {
+    "id": 34690004,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "RD 613",
+    "sens": "Double sens (Sortie)",
+    "adresse": "RD 613",
+    "ville": "FABREGUES",
+    "cp": "34690",
+    "departement": "34",
+    "lat": 43.549,
+    "lon": 3.782,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.219,
+      "e85": 0.869,
+      "gplc": 1.109,
+      "e10": 2.099,
+      "sp98": 2.199
+    },
+    "ruptures": [
+      "SP95"
+    ],
+    "services": [
+      "Laverie",
+      "Piste poids lourds",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Vente d'additifs carburants"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 07:55:49",
+    "is_exit_station": true
+  },
+  {
+    "id": 26140004,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "ZA LA TULANDIERE 26 route de la Maison Blanche",
+    "sens": "Double sens (Sortie)",
+    "adresse": "ZA LA TULANDIERE 26 route de la Maison Blanche",
+    "ville": "Saint-Rambert-d'Albon",
+    "cp": "26140",
+    "departement": "26",
+    "lat": 45.287,
+    "lon": 4.815,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.183,
+      "e85": 0.869,
+      "e10": 2.074,
+      "sp98": 2.19
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Piste poids lourds",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:46:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 26800009,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "PLACE DU 8 MAI 1945",
+    "sens": "Double sens (Sortie)",
+    "adresse": "PLACE DU 8 MAI 1945",
+    "ville": "PORTES LES VALENCES",
+    "cp": "26800",
+    "departement": "26",
+    "lat": 44.875,
+    "lon": 4.879,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.179,
+      "e85": 0.869
+    },
+    "ruptures": [
+      "GPLc",
+      "SP98",
+      "SP95",
+      "E10"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Wifi",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 17:06:10",
+    "is_exit_station": true
+  },
+  {
+    "id": 74520010,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "37 chemin des artisans",
+    "sens": "Double sens (Sortie)",
+    "adresse": "37 chemin des artisans",
+    "ville": "Valleiry",
+    "cp": "74520",
+    "departement": "74",
+    "lat": 46.108,
+    "lon": 5.969,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.247,
+      "e10": 2.157,
+      "sp98": 2.317
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Laverie",
+      "Vente de pétrole lampant",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Vente d'additifs carburants",
+      "Wifi",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:58:20",
+    "is_exit_station": true
+  },
+  {
+    "id": 42152001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "38 TER AVENUE PASTEUR",
+    "sens": "Double sens (Sortie)",
+    "adresse": "38 TER AVENUE PASTEUR",
+    "ville": "L'HORME",
+    "cp": "42152",
+    "departement": "42",
+    "lat": 45.485,
+    "lon": 4.54,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.389,
+      "e85": 0.909,
+      "e10": 2.139,
+      "sp98": 2.279
+    },
+    "ruptures": [
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Laverie",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Location de véhicule",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Vente d'additifs carburants",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-29 07:48:32",
+    "is_exit_station": true
+  },
+  {
+    "id": 67700011,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "39 ROUTE DE PARIS RN4",
+    "sens": "Double sens (Sortie)",
+    "adresse": "39 ROUTE DE PARIS RN4",
+    "ville": "SAVERNE",
+    "cp": "67700",
+    "departement": "67",
+    "lat": 48.742,
+    "lon": 7.357,
+    "pk_text": null,
+    "prix": {
+      "e85": 0.909
+    },
+    "ruptures": [
+      "GPLc",
+      "SP98",
+      "Gazole",
+      "E10"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Vente d'additifs carburants",
+      "Wifi",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 30320001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "58 Avenue Clément Ader",
+    "sens": "Double sens (Sortie)",
+    "adresse": "58 Avenue Clément Ader",
+    "ville": "Marguerittes",
+    "cp": "30320",
+    "departement": "30",
+    "lat": 43.867,
+    "lon": 4.444,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.399,
+      "sp95": 2.149,
+      "e85": 0.879,
+      "e10": 2.079,
+      "sp98": 2.199
+    },
+    "ruptures": [
+      "GPLc"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Laverie",
+      "Relais colis",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Restauration sur place",
+      "Vente de fioul domestique",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Aire de camping-cars",
+      "Location de véhicule",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Espace bébé",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Bornes électriques",
+      "Vente d'additifs carburants",
+      "Wifi",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:26:23",
+    "is_exit_station": true
+  },
+  {
+    "id": 33170005,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "6 avenue Favard",
+    "sens": "Double sens (Sortie)",
+    "adresse": "6 avenue Favard",
+    "ville": "GRADIGNAN",
+    "cp": "33170",
+    "departement": "33",
+    "lat": 44.78586,
+    "lon": -0.60342,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.187,
+      "sp98": 2.179
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "SP95",
+      "E10"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Laverie",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Restauration sur place",
+      "Bar",
+      "Vente de fioul domestique",
+      "Location de véhicule",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 08:38:09",
+    "is_exit_station": true
+  },
+  {
+    "id": 26600014,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "RN7",
+    "sens": "Double sens (Sortie)",
+    "adresse": "RN7",
+    "ville": "Pont-de-l'Isère",
+    "cp": "26600",
+    "departement": "26",
+    "lat": 45.008,
+    "lon": 4.87,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.15,
+      "e85": 0.912,
+      "e10": 1.99
+    },
+    "ruptures": [
+      "GPLc",
+      "SP95",
+      "SP98"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Vente d'additifs carburants",
+      "Wifi",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 14:13:19",
+    "is_exit_station": true
+  },
+  {
+    "id": 33170008,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "62 COURS DU GENERAL DE GAULLE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "62 COURS DU GENERAL DE GAULLE",
+    "ville": "GRADIGNAN",
+    "cp": "33170",
+    "departement": "33",
+    "lat": 44.777,
+    "lon": -0.61,
+    "pk_text": null,
+    "prix": {
+      "e85": 0.889
+    },
+    "ruptures": [
+      "GPLc",
+      "SP95",
+      "SP98"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Restauration à emporter",
+      "Restauration sur place",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 59113009,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "1 Route d'Avelin",
+    "sens": "Double sens (Sortie)",
+    "adresse": "1 Route d'Avelin",
+    "ville": "SECLIN",
+    "cp": "59113",
+    "departement": "59",
+    "lat": 50.546,
+    "lon": 3.05,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.15
+    },
+    "ruptures": [
+      "SP95",
+      "SP98",
+      "GPLc",
+      "E85"
+    ],
+    "services": [
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 49480001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "LA MAISON BLANCHE",
+    "sens": "Double sens (Sortie)",
+    "adresse": "LA MAISON BLANCHE",
+    "ville": "Saint-Sylvain-d'Anjou",
+    "cp": "49480",
+    "departement": "49",
+    "lat": 47.514,
+    "lon": -0.473,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.259,
+      "e10": 2.059,
+      "sp98": 2.169
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "GPLc"
+    ],
+    "services": [
+      "Laverie",
+      "Station de gonflage",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente d'additifs carburants"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 08:39:38",
+    "is_exit_station": true
+  },
+  {
+    "id": 31410008,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Route de Toulouse",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Route de Toulouse",
+    "ville": "Noé",
+    "cp": "31410",
+    "departement": "31",
+    "lat": 43.3455,
+    "lon": 1.26412,
+    "pk_text": null,
+    "prix": {
+      "sp98": 2.199
+    },
+    "ruptures": [
+      "GPLc",
+      "SP95",
+      "Gazole",
+      "E85",
+      "E10"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Laverie",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Restauration sur place",
+      "Vente de pétrole lampant",
+      "Station de gonflage",
+      "Location de véhicule",
+      "Piste poids lourds",
+      "Lavage automatique",
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-10-25 07:21:18",
+    "is_exit_station": true
+  },
+  {
+    "id": 94012001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "119 Avenue du Général de Gaulle",
+    "sens": "Double sens (Sortie)",
+    "adresse": "119 Avenue du Général de Gaulle",
+    "ville": "Créteil",
+    "cp": "94000",
+    "departement": "94",
+    "lat": 48.78187,
+    "lon": 2.45789,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.412,
+      "sp95": 2.163,
+      "e10": 2.041,
+      "sp98": 2.237
+    },
+    "ruptures": [
+      "E85",
+      "GPLc",
+      "E85",
+      "GPLc"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Carburant additivé",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 00:49:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 74130001,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "61 rue des Grebes Huppés",
+    "sens": "Double sens (Sortie)",
+    "adresse": "61 rue des Grebes Huppés",
+    "ville": "Bonneville",
+    "cp": "74130",
+    "departement": "74",
+    "lat": 46.073,
+    "lon": 6.419,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.215,
+      "gplc": 1.102,
+      "e10": 2.07,
+      "sp98": 2.169
+    },
+    "ruptures": [
+      "E85",
+      "SP95"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Laverie",
+      "Relais colis",
+      "Station de gonflage",
+      "Location de véhicule",
+      "Wifi",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 07:31:05",
+    "is_exit_station": true
+  },
+  {
+    "id": 62143002,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "Route de Souchez",
+    "sens": "Double sens (Sortie)",
+    "adresse": "Route de Souchez",
+    "ville": "ANGRES",
+    "cp": "62143",
+    "departement": "62",
+    "lat": 50.405,
+    "lon": 2.756,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.15,
+      "e10": 2.024,
+      "sp98": 2.127
+    },
+    "ruptures": [
+      "SP95",
+      "E85",
+      "GPLc"
+    ],
+    "services": [
+      "Lavage manuel",
+      "Vente de gaz domestique (Butane, Propane)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:30:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 91570004,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "RN118",
+    "sens": "Double sens (Sortie)",
+    "adresse": "RN118",
+    "ville": "Bièvres",
+    "cp": "91570",
+    "departement": "91",
+    "lat": 48.746,
+    "lon": 2.197,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.15,
+      "e85": 0.947,
+      "e10": 1.99,
+      "sp98": 1.99
+    },
+    "ruptures": [
+      "SP95",
+      "GPLc"
+    ],
+    "services": [
+      "Toilettes publiques",
+      "Boutique alimentaire",
+      "Boutique non alimentaire",
+      "Restauration à emporter",
+      "Station de gonflage",
+      "Carburant additivé",
+      "Piste poids lourds",
+      "Espace bébé",
+      "Vente d'additifs carburants",
+      "Wifi",
+      "Automate CB 24/24"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 00:01:00",
+    "is_exit_station": true
+  },
+  {
+    "id": 33700012,
+    "enseigne": "Station",
+    "autoroute": "",
+    "nom": "78 Avenue de Magudas",
+    "sens": "Double sens (Sortie)",
+    "adresse": "78 Avenue de Magudas",
+    "ville": "Mérignac",
+    "cp": "33700",
+    "departement": "33",
+    "lat": 44.856,
+    "lon": -0.654,
+    "pk_text": null,
+    "prix": {
+      "gazole": 2.172,
+      "e85": 0.869,
+      "e10": 2.049,
+      "sp98": 2.159
+    },
+    "ruptures": [
+      "GPLc",
+      "SP95"
+    ],
+    "services": [
+      "Station de gonflage",
+      "Lavage automatique",
+      "Vente de gaz domestique (Butane, Propane)",
+      "Bornes électriques",
+      "Automate CB 24/24",
+      "DAB (Distributeur automatique de billets)"
+    ],
+    "pays": "FR",
+    "maj": "2026-11-02 09:47:02",
+    "is_exit_station": true
   }
 ]

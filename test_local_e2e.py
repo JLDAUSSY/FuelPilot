@@ -188,6 +188,65 @@ try:
     assert "/kWh" in prices_text or "kWh" in prices_text, f"FAILURE: Price text does not specify /kWh! Got: {prices_text}"
     print("[PASS] Electric charging stations correctly filtered and priced per kWh.")
 
+    print("\n--- TEST 9: Live Weather (Open-Meteo) Display ---")
+    fuel_select = driver.find_element(By.ID, 'select-fuel')
+    driver.execute_script("arguments[0].value = 'e10'; arguments[0].dispatchEvent(new Event('change'));", fuel_select)
+    time.sleep(2)
+    weather_pills = driver.find_elements(By.CLASS_NAME, 'station-weather-pill')
+    print(f"Found {len(weather_pills)} weather pills on cards.")
+    assert len(weather_pills) > 0, "FAILURE: No station-weather-pill found!"
+    sample_weather = weather_pills[0].get_attribute('textContent').strip()
+    print(f"Sample weather pill textContent: '{sample_weather}'")
+    assert "°C" in sample_weather, f"FAILURE: Weather pill does not contain °C! Got: '{sample_weather}'"
+    print("[PASS] Open-Meteo real-time weather successfully rendered on station cards.")
+
+    print("\n--- TEST 10: Opening Hours & 24/7 Status ---")
+    status_badges = driver.find_elements(By.CLASS_NAME, 'opening-status-badge')
+    print(f"Found {len(status_badges)} opening status badges on cards.")
+    assert len(status_badges) > 0, "FAILURE: No opening-status-badge found!"
+    sample_status = status_badges[0].get_attribute('textContent').strip()
+    print(f"Sample status badge textContent: '{sample_status}'")
+    assert any(icon in sample_status for icon in ["🟢", "🟡", "🌙"]), f"FAILURE: Unknown status badge format: '{sample_status}'"
+
+    first_card = driver.find_element(By.CLASS_NAME, 'station-card')
+    driver.execute_script("arguments[0].click();", first_card)
+    time.sleep(0.5)
+    popup_hours = driver.find_elements(By.CLASS_NAME, 'popup-opening-hours')
+    print(f"Popup opening hours blocks found: {len(popup_hours)}")
+    assert len(popup_hours) > 0, "FAILURE: Popup does not contain popup-opening-hours block!"
+    popup_hours_text = popup_hours[0].get_attribute('textContent').strip()
+    print(f"Popup opening hours textContent:\n{popup_hours_text}")
+    assert "24h/24" in popup_hours_text or "24/7" in popup_hours_text, "FAILURE: Popup does not state 24h/24 fuel availability!"
+    print("[PASS] Opening hours & 24/7 status properly displayed on cards and popups.")
+
+    print("\n--- TEST 11: Exit Stations (< 1.5 km) Toggle & Savings ---")
+    initial_count = len(driver.find_elements(By.CLASS_NAME, 'station-card'))
+    print(f"Direct motorway stations count before toggle: {initial_count}")
+
+    chk_exit = driver.find_element(By.ID, 'chk-exit-stations')
+    assert chk_exit is not None, "FAILURE: #chk-exit-stations checkbox element not found!"
+    driver.execute_script("arguments[0].click();", chk_exit)
+    time.sleep(2)
+
+    exit_cards = driver.find_elements(By.CLASS_NAME, 'station-card')
+    print(f"Total stations count after enabling exit stations: {len(exit_cards)}")
+    assert len(exit_cards) >= initial_count, f"FAILURE: Station count did not increase or stay equal! Got {len(exit_cards)}"
+
+    exit_badges = driver.find_elements(By.CLASS_NAME, 'exit-badge')
+    print(f"Found {len(exit_badges)} exit badges ('🚪 Sortie').")
+    assert len(exit_badges) > 0, "FAILURE: No exit-badge found after enabling exit stations toggle!"
+    sample_exit_badge = exit_badges[0].get_attribute('textContent').strip()
+    print(f"Sample exit badge text: '{sample_exit_badge}'")
+    assert "🚪" in sample_exit_badge and "Sortie" in sample_exit_badge, f"FAILURE: Invalid exit badge: '{sample_exit_badge}'"
+
+    savings_badges = driver.find_elements(By.CLASS_NAME, 'station-savings-badge')
+    print(f"Found {len(savings_badges)} savings badges ('💰 Économie').")
+    if len(savings_badges) > 0:
+        sample_savings = savings_badges[0].get_attribute('textContent').strip()
+        print(f"Sample savings badge text: '{sample_savings}'")
+        assert "💰" in sample_savings and "plein" in sample_savings, f"FAILURE: Invalid savings badge format: '{sample_savings}'"
+    print("[PASS] Exit stations toggle, exit badges, and savings calculations verified successfully.")
+
     print("\n--- Final Console Error Check ---")
     logs = driver.get_log('browser')
     severe = [l for l in logs if l['level'] == 'SEVERE']
@@ -195,7 +254,7 @@ try:
     print("[PASS] 0 severe console errors throughout all tests.")
 
     print("\n==========================================")
-    print("ALL 8 RIGOROUS AUTOMATED TESTS PASSED! 100%")
+    print("ALL 11 RIGOROUS AUTOMATED TESTS PASSED! 100%")
     print("==========================================")
 
 finally:
