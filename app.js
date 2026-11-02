@@ -285,7 +285,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '7.8';
+const APP_VERSION = '7.9';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -1206,11 +1206,24 @@ function ensureMobileNavBarVisible() {
 
 async function checkAndAutoUpdateApp() {
   try {
+    // Protection absolue contre toute boucle infinie de rechargement
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('_v')) {
+      try {
+        const cleanUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
+      } catch (e) {}
+      return;
+    }
+
     const res = await fetch(`index.html?_t=${Date.now()}`, { cache: 'no-store' });
     if (!res.ok) return;
     const html = await res.text();
     const m = html.match(/app\.js\?v=([0-9.]+)/);
     if (m && m[1] && m[1] !== APP_VERSION) {
+      const sessionKey = 'fuelpilot_reloaded_ver_' + m[1];
+      if (sessionStorage.getItem(sessionKey)) return;
+      sessionStorage.setItem(sessionKey, '1');
       window.location.replace(`index.html?_v=${m[1]}_${Date.now()}`);
     }
   } catch (e) {}
@@ -3835,7 +3848,8 @@ function initPermanentGpsTracking() {
   };
 
   const handleErr = (err) => {
-    console.warn("GPS tracking error:", err);
+    if (err && err.code === 1) return; // Permission non accordée par défaut, pas d'erreur
+    console.warn("GPS tracking info:", err && err.message);
   };
 
   // Immediate acquisition without waiting (fast cache first)
