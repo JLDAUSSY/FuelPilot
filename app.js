@@ -285,7 +285,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '8.1';
+const APP_VERSION = '8.2';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -3743,35 +3743,47 @@ function requestUserGeolocation(onSuccess, onError) {
     return;
   }
 
-  // 1. High-accuracy GPS first
+  let resolved = false;
+
+  const handleSuccess = (pos) => {
+    if (!pos || !pos.coords) return;
+    const { latitude, longitude, heading, speed } = pos.coords;
+    userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
+    updateUserGpsMarker(latitude, longitude);
+    if (!resolved) {
+      resolved = true;
+      if (onSuccess) onSuccess(pos);
+    }
+  };
+
+  // 1. Instant response first: query cached or network (WiFi / Cell) position (< 500ms)
   navigator.geolocation.getCurrentPosition(
     (pos) => {
-      const { latitude, longitude, heading, speed } = pos.coords;
-      userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
-      updateUserGpsMarker(latitude, longitude);
-      if (onSuccess) onSuccess(pos);
-    },
-    (errHigh) => {
-      // If permission is denied at browser level (code 1), do NOT retry silently, report immediately
-      if (errHigh && errHigh.code === 1) {
-        if (onError) onError(errHigh);
-        return;
-      }
-      // If code 2 (unavailable) or 3 (timeout on satellite fix), fallback to network-assisted browser location (Fused Location / WiFi)
+      handleSuccess(pos);
+      // 2. Refine in background with satellite high accuracy without blocking UI
       navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const { latitude, longitude, heading, speed } = pos.coords;
-          userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
-          updateUserGpsMarker(latitude, longitude);
-          if (onSuccess) onSuccess(pos);
-        },
-        (errLow) => {
-          if (onError) onError(errHigh || errLow);
-        },
-        { enableHighAccuracy: false, timeout: 20000, maximumAge: 300000 }
+        handleSuccess,
+        () => {}, // background silent refinement
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
       );
     },
-    { enableHighAccuracy: true, timeout: 20000, maximumAge: 60000 }
+    (errFast) => {
+      if (errFast && errFast.code === 1) { // User denied permission
+        if (onError) onError(errFast);
+        return;
+      }
+      // 2. If no network position available, fallback to high accuracy GPS
+      navigator.geolocation.getCurrentPosition(
+        handleSuccess,
+        (errGps) => {
+          if (!resolved && onError) {
+            onError(errGps || errFast);
+          }
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 }
+      );
+    },
+    { enableHighAccuracy: false, timeout: 6000, maximumAge: 300000 }
   );
 }
 
@@ -3822,7 +3834,7 @@ function initPermanentGpsTracking() {
   };
 
   const handleErr = (err) => {
-    console.warn("GPS tracking error:", err);
+    console.warn("GPS tracking warning (non-fatal):", err && err.message);
   };
 
   // Immediate acquisition without waiting (fast cache first)
@@ -3832,7 +3844,7 @@ function initPermanentGpsTracking() {
       navigator.geolocation.getCurrentPosition(
         handlePos,
         handleErr,
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 60000 }
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 }
       );
     },
     { enableHighAccuracy: false, timeout: 5000, maximumAge: 300000 }
@@ -3842,20 +3854,11 @@ function initPermanentGpsTracking() {
   try {
     permanentGpsWatchId = navigator.geolocation.watchPosition(
       handlePos,
-      (err) => {
-        if (err && err.code !== 1 && permanentGpsWatchId !== null) {
-          navigator.geolocation.clearWatch(permanentGpsWatchId);
-          permanentGpsWatchId = navigator.geolocation.watchPosition(
-            handlePos,
-            handleErr,
-            { enableHighAccuracy: false, maximumAge: 5000, timeout: 20000 }
-          );
-        }
-      },
+      handleErr,
       {
         enableHighAccuracy: true,
-        maximumAge: 2000,
-        timeout: 20000
+        maximumAge: 5000,
+        timeout: 30000
       }
     );
   } catch (e) {
