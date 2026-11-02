@@ -756,6 +756,104 @@ function getAmenityBadgeIcon(name, fallbackEmoji) {
   return `<span class="amenity-emoji">${fallbackEmoji || '⭐'}</span>`;
 }
 
+const AMENITY_TRANSLATIONS = {
+  de: {
+    'douches chaudes': 'Warme Duschen',
+    'espace bébé': 'Wickelraum',
+    'gonflage pneus': 'Reifendruck',
+    'wi-fi gratuit': 'Kostenloses WLAN',
+    'distributeur dab': 'Geldautomat',
+    'aire camping-cars': 'Wohnmobil-Stellplatz',
+    'parking pl': 'Lkw-Parkplatz',
+    'sanitaires 24/7': 'WCs 24/7',
+    'toilettes publiques': 'Öffentliche WCs',
+    'boutique alimentaire': 'Lebensmittelshop',
+    'boutique non alimentaire': 'Shop',
+    'restauration sur place': 'Restaurant',
+    'restauration à emporter': 'Takeaway',
+    'lavage automatique': 'Waschanlage',
+    'lavage haute pression': 'SB-Waschbox',
+    'lavage manuel': 'SB-Waschbox',
+    'bornes électriques': 'E-Ladesäulen',
+    'automate cb 24/24': 'Kartenautomat 24/7',
+    'bar': 'Café / Bar',
+    'relais colis': 'Paketstation'
+  },
+  en: {
+    'douches chaudes': 'Hot showers',
+    'espace bébé': 'Baby care',
+    'gonflage pneus': 'Tyre pressure',
+    'wi-fi gratuit': 'Free Wi-Fi',
+    'distributeur dab': 'ATM / Cash machine',
+    'aire camping-cars': 'Motorhome area',
+    'parking pl': 'HGV parking',
+    'sanitaires 24/7': 'Toilets 24/7',
+    'toilettes publiques': 'Public toilets',
+    'boutique alimentaire': 'Convenience store',
+    'boutique non alimentaire': 'Shop',
+    'restauration sur place': 'Restaurant',
+    'restauration à emporter': 'Takeaway food',
+    'lavage automatique': 'Car wash',
+    'lavage haute pression': 'Jet wash',
+    'lavage manuel': 'Jet wash',
+    'bornes électriques': 'EV Charging',
+    'automate cb 24/24': '24/7 Card Payment',
+    'bar': 'Coffee / Bar',
+    'relais colis': 'Parcel pickup'
+  },
+  it: {
+    'douches chaudes': 'Docce calde',
+    'espace bébé': 'Fasciatoio bebè',
+    'gonflage pneus': 'Gonfiaggio pneumatici',
+    'wi-fi gratuit': 'Wi-Fi gratis',
+    'distributeur dab': 'Bancomat ATM',
+    'aire camping-cars': 'Area camper',
+    'parking pl': 'Parcheggio camion',
+    'sanitaires 24/7': 'Servizi igienici 24/7',
+    'toilettes publiques': 'Servizi igienici',
+    'boutique alimentaire': 'Negozio alimentari',
+    'boutique non alimentaire': 'Negozio',
+    'restauration sur place': 'Ristorazione',
+    'restauration à emporter': 'Ristorazione da asporto',
+    'lavage automatique': 'Autolavaggio',
+    'lavage haute pression': 'Lavaggio a pressione',
+    'lavage manuel': 'Lavaggio manuale',
+    'bornes électriques': 'Ricarica elettrica',
+    'automate cb 24/24': 'Self-service 24h',
+    'bar': 'Bar / Caffetteria',
+    'relais colis': 'Ritiro pacchi'
+  },
+  es: {
+    'douches chaudes': 'Duchas calientes',
+    'espace bébé': 'Cambiador bebé',
+    'gonflage pneus': 'Presión neumáticos',
+    'wi-fi gratuit': 'Wi-Fi gratis',
+    'distributeur dab': 'Cajero automático',
+    'aire camping-cars': 'Área autocaravanas',
+    'parking pl': 'Parking camiones',
+    'sanitaires 24/7': 'Aseos 24/7',
+    'toilettes publiques': 'Baños públicos',
+    'boutique alimentaire': 'Tienda alimentación',
+    'boutique non alimentaire': 'Tienda',
+    'restauration sur place': 'Restaurante',
+    'restauration à emporter': 'Comida para llevar',
+    'lavage automatique': 'Túnel de lavado',
+    'lavage haute pression': 'Lavado a presión',
+    'lavage manuel': 'Lavado manual',
+    'bornes électriques': 'Punto de recarga',
+    'automate cb 24/24': 'Surtidor 24h',
+    'bar': 'Bar / Cafetería',
+    'relais colis': 'Punto de paquetería'
+  }
+};
+
+function translateAmenityName(name) {
+  if (!name || currentLang === 'fr') return name;
+  const low = String(name).trim().toLowerCase();
+  const dict = AMENITY_TRANSLATIONS[currentLang];
+  if (dict && dict[low]) return dict[low];
+  return name;
+}
 function renderStationAmenitiesPills(st) {
   const allItems = getStationBrandsAndServices(st);
   const brandItems = allItems.filter(i => i.isBrand);
@@ -770,7 +868,9 @@ function renderStationAmenitiesPills(st) {
     html += `<span class="amenity-pill ${item.type}" title="${item.name}">${iconHtml}<span>${item.name}</span></span>`;
   });
   if (remaining > 0) {
-    html += `<span class="amenity-pill-more">+${remaining} enseignes</span>`;
+    const tr = t();
+    const moreText = (tr.moreBrands && typeof tr.moreBrands === 'function') ? tr.moreBrands(remaining) : `+${remaining}`;
+    html += `<span class="amenity-pill-more">${moreText}</span>`;
   }
   html += '</div>';
   return html;
@@ -782,19 +882,23 @@ function renderPopupAmenitiesBlock(st) {
 
   const brands = allItems.filter(i => i.isBrand);
   const services = allItems.filter(i => !i.isBrand);
+  const tr = t();
 
   let html = `
     <div class="popup-amenities-block">
-      <div class="popup-amenities-title">☕ Enseignes & Restauration</div>
+      <div class="popup-amenities-title">${tr.amenitiesBrandsTitle || '☕ Enseignes & Restauration'}</div>
       <div class="popup-amenities-grid" style="margin-bottom:6px;">
         ${brands.map(b => `<span class="amenity-pill ${b.type}">${getAmenityBadgeIcon(b.name, b.icon)}<span>${b.name}</span></span>`).join('')}
       </div>
   `;
   if (services.length > 0) {
     html += `
-      <div class="popup-amenities-title" style="margin-top:4px;">🛠️ Services de l'aire</div>
+      <div class="popup-amenities-title" style="margin-top:4px;">${tr.amenitiesServicesTitle || '🛠️ Services de l\'aire'}</div>
       <div class="popup-amenities-grid">
-        ${services.map(s => `<span class="amenity-pill ${s.type}">${getAmenityBadgeIcon(s.name, s.icon)}<span>${s.name}</span></span>`).join('')}
+        ${services.map(s => {
+          const transName = translateAmenityName(s.name);
+          return `<span class="amenity-pill ${s.type}">${getAmenityBadgeIcon(s.name, s.icon)}<span>${transName}</span></span>`;
+        }).join('')}
       </div>
     `;
   }
@@ -808,24 +912,59 @@ function renderPopupAmenitiesBlock(st) {
 const weatherCache = new Map();
 
 function getWeatherInfo(code, isDay = 1) {
+  const lang = currentLang || 'fr';
+  const descMap = {
+    fr: {
+      clearDay: 'Ensoleillé', clearNight: 'Nuit claire',
+      partlyDay: 'Éclaircies', partlyNight: 'Partiellement nuageux',
+      overcast: 'Couvert', fog: 'Brouillard', drizzle: 'Bruine',
+      rain: 'Pluie', snow: 'Neige', storm: 'Orages'
+    },
+    de: {
+      clearDay: 'Sonnig', clearNight: 'Klare Nacht',
+      partlyDay: 'Heiter', partlyNight: 'Teilweise bewölkt',
+      overcast: 'Bedeckt', fog: 'Nebel', drizzle: 'Nieselregen',
+      rain: 'Regen', snow: 'Schnee', storm: 'Gewitter'
+    },
+    en: {
+      clearDay: 'Sunny', clearNight: 'Clear night',
+      partlyDay: 'Partly cloudy', partlyNight: 'Partly cloudy',
+      overcast: 'Overcast', fog: 'Fog', drizzle: 'Drizzle',
+      rain: 'Rain', snow: 'Snow', storm: 'Thunderstorm'
+    },
+    it: {
+      clearDay: 'Soleggiato', clearNight: 'Notte serena',
+      partlyDay: 'Schiarite', partlyNight: 'Poco nuvoloso',
+      overcast: 'Coperto', fog: 'Nebbia', drizzle: 'Pioggerella',
+      rain: 'Pioggia', snow: 'Neve', storm: 'Temporale'
+    },
+    es: {
+      clearDay: 'Soleado', clearNight: 'Noche despejada',
+      partlyDay: 'Intervalos nubosos', partlyNight: 'Parcialmente nublado',
+      overcast: 'Cubierto', fog: 'Niebla', drizzle: 'Llovizna',
+      rain: 'Lluvia', snow: 'Nieve', storm: 'Tormentas'
+    }
+  };
+  const d = descMap[lang] || descMap.fr;
+
   if (code === 0) {
-    return isDay ? { icon: '☀️', desc: 'Ensoleillé' } : { icon: '🌙', desc: 'Nuit claire' };
+    return isDay ? { icon: '☀️', desc: d.clearDay } : { icon: '🌙', desc: d.clearNight };
   } else if (code === 1 || code === 2) {
-    return isDay ? { icon: '🌤️', desc: 'Éclaircies' } : { icon: '☁️', desc: 'Partiellement nuageux' };
+    return isDay ? { icon: '🌤️', desc: d.partlyDay } : { icon: '☁️', desc: d.partlyNight };
   } else if (code === 3) {
-    return { icon: '☁️', desc: 'Couvert' };
+    return { icon: '☁️', desc: d.overcast };
   } else if (code === 45 || code === 48) {
-    return { icon: '🌫️', desc: 'Brouillard' };
+    return { icon: '🌫️', desc: d.fog };
   } else if (code >= 51 && code <= 57) {
-    return { icon: '🌦️', desc: 'Bruine' };
+    return { icon: '🌦️', desc: d.drizzle };
   } else if ((code >= 61 && code <= 67) || (code >= 80 && code <= 82)) {
-    return { icon: '🌧️', desc: 'Pluie' };
+    return { icon: '🌧️', desc: d.rain };
   } else if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) {
-    return { icon: '❄️', desc: 'Neige' };
+    return { icon: '❄️', desc: d.snow };
   } else if (code >= 95) {
-    return { icon: '⛈️', desc: 'Orage' };
+    return { icon: '⛈️', desc: d.storm };
   }
-  return isDay ? { icon: '☀️', desc: 'Beau temps' } : { icon: '🌙', desc: 'Ciel dégagé' };
+  return isDay ? { icon: '☀️', desc: d.clearDay } : { icon: '🌙', desc: d.clearNight };
 }
 
 function getCachedWeather(lat, lon) {
@@ -915,28 +1054,28 @@ function getStationOpeningStatus(st) {
     return {
       statusClass: 'status-open',
       cardBadge: tr.statusOpen || '🟢 Restauration ouverte',
-      popupSchedule: `${tr.statusOpen || 'Restauration ouverte'} (06h30 - 21h30)`,
+      popupSchedule: tr.statusScheduleOpen || '🟢 Restauration ouverte (06h30 - 21h30)',
       fuelSchedule: tr.pumps247 || 'Pompes & bornes CB : 24h/24'
     };
   } else if (isClosingSoon) {
     return {
       statusClass: 'status-closing',
       cardBadge: tr.statusClosing || '🟡 Restauration : fermeture proche',
-      popupSchedule: `${tr.statusClosing || 'Fermeture resto proche'} (fermeture 22h00)`,
+      popupSchedule: tr.statusScheduleClosing || '🟡 Fermeture resto proche (fermeture 22h00)',
       fuelSchedule: tr.pumps247 || 'Pompes & bornes CB : 24h/24'
     };
   } else {
     return {
       statusClass: 'status-night',
       cardBadge: tr.statusNight || '🌙 Carburant 24/7 · Resto fermé',
-      popupSchedule: `${tr.statusNight || 'Restauration fermée'} (réouverture 06h30)`,
+      popupSchedule: tr.statusScheduleNight || '🌙 Restauration fermée (réouverture 06h30)',
       fuelSchedule: tr.pumps247 || 'Pompes & bornes CB : 24h/24'
     };
   }
 }
 
 // Initialize Application
-const APP_VERSION = '8.6';
+const APP_VERSION = '8.7';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -1106,7 +1245,23 @@ const I18N_DICT = {
     statusOpen: "🟢 Restauration ouverte",
     statusClosing: "🟡 Restauration : fermeture proche",
     statusNight: "🌙 Carburant 24/7 · Resto fermé",
-    pumps247: "Pompes & Automate CB : 24h/24, 7j/7"
+    statusScheduleOpen: "🟢 Restauration ouverte (06h30 - 21h30)",
+    statusScheduleClosing: "🟡 Fermeture resto proche (fermeture 22h00)",
+    statusScheduleNight: "🌙 Restauration fermée (réouverture 06h30)",
+    pumps247: "Pompes & Automate CB : 24h/24, 7j/7",
+    foodLabel: "Restauration :",
+    amenitiesBrandsTitle: "☕ Enseignes & Restauration",
+    amenitiesServicesTitle: "🛠️ Services de l'aire",
+    moreBrands: (n) => `+${n} enseignes`,
+    hoursTitle: "🕒 HORAIRES D'OUVERTURE",
+    offMotorwayBadge: (d) => `Hors autoroute (sortie à ${d} m)`,
+    offMotorwayPopupTitle: "Station hors autoroute",
+    offMotorwayPopupDesc: (d) => `Accessible à la sortie d'autoroute / péage (~${d} m)`,
+    offMotorwayTooltip: "Station située hors autoroute, à la sortie immédiate",
+    savingsBadge: (amt, cur, diff, unit) => `💰 Économie : ~${amt} ${cur} sur le plein (-${diff} ${cur}/${unit})`,
+    savingsTooltip: "Économie estimée par rapport au prix moyen sur l'autoroute",
+    defaultHighway: "Autoroute",
+    weatherLoading: "Météo en direct"
   },
   de: {
     pageTitle: "FuelPilot • Autobahn-Tankstellen & Kraftstoffpreise",
@@ -1212,7 +1367,23 @@ const I18N_DICT = {
     statusOpen: "🟢 Gastronomie geöffnet",
     statusClosing: "🟡 Gastronomie schließt bald",
     statusNight: "🌙 Kraftstoff 24/7 · Gastro zu",
-    pumps247: "Zapfsäulen & Automat: 24/7"
+    statusScheduleOpen: "🟢 Gastronomie geöffnet (06:30 - 21:30)",
+    statusScheduleClosing: "🟡 Schließt bald (Schließung 22:00)",
+    statusScheduleNight: "🌙 Gastronomie geschlossen (Öffnung 06:30)",
+    pumps247: "Zapfsäulen & Kartenautomat: 24/7",
+    foodLabel: "Gastronomie:",
+    amenitiesBrandsTitle: "☕ Marken & Gastronomie",
+    amenitiesServicesTitle: "🛠️ Raststätten-Services",
+    moreBrands: (n) => `+${n} Marken`,
+    hoursTitle: "🕒 ÖFFNUNGSZEITEN",
+    offMotorwayBadge: (d) => `Außerhalb Autobahn (Ausfahrt ${d} m)`,
+    offMotorwayPopupTitle: "Station außerhalb der Autobahn",
+    offMotorwayPopupDesc: (d) => `An der Autobahnausfahrt / Mautstelle (~${d} m)`,
+    offMotorwayTooltip: "Tankstelle außerhalb der Autobahn, direkt an der Ausfahrt",
+    savingsBadge: (amt, cur, diff, unit) => `💰 Ersparnis: ~${amt} ${cur} pro Tankfüllung (-${diff} ${cur}/${unit})`,
+    savingsTooltip: "Geschätzte Ersparnis im Vergleich zum Autobahn-Durchschnitt",
+    defaultHighway: "Autobahn",
+    weatherLoading: "Live-Wetter"
   },
   en: {
     pageTitle: "FuelPilot • Motorway Fuel Prices & Service Areas",
@@ -1318,7 +1489,23 @@ const I18N_DICT = {
     statusOpen: "🟢 Dining & shops open",
     statusClosing: "🟡 Dining closing soon",
     statusNight: "🌙 Fuel 24/7 · Dining closed",
-    pumps247: "Pumps & Card pay: 24/7"
+    statusScheduleOpen: "🟢 Dining open (06:30 - 21:30)",
+    statusScheduleClosing: "🟡 Dining closing soon (closes at 22:00)",
+    statusScheduleNight: "🌙 Dining closed (reopens at 06:30)",
+    pumps247: "Fuel & charging: 24/7 (Card pay)",
+    foodLabel: "Dining & shops:",
+    amenitiesBrandsTitle: "☕ Brands & Dining",
+    amenitiesServicesTitle: "🛠️ Service area amenities",
+    moreBrands: (n) => `+${n} brands`,
+    hoursTitle: "🕒 OPENING HOURS",
+    offMotorwayBadge: (d) => `Off-motorway (exit ${d} m)`,
+    offMotorwayPopupTitle: "Off-motorway station",
+    offMotorwayPopupDesc: (d) => `Accessible at motorway exit / toll (~${d} m)`,
+    offMotorwayTooltip: "Station located off the motorway, right at the exit",
+    savingsBadge: (amt, cur, diff, unit) => `💰 Savings: ~${cur}${amt} on a full tank (-${cur}${diff}/${unit})`,
+    savingsTooltip: "Estimated savings compared to motorway service area average",
+    defaultHighway: "Motorway",
+    weatherLoading: "Live weather"
   },
   it: {
     pageTitle: "FuelPilot • Prezzi Carburante e Aree Autostradali",
@@ -1424,7 +1611,23 @@ const I18N_DICT = {
     statusOpen: "🟢 Ristorazione aperta",
     statusClosing: "🟡 Chiusura ristoro a breve",
     statusNight: "🌙 Carburante 24/7 · Ristoro chiuso",
-    pumps247: "Pompe & self-service: 24h/24"
+    statusScheduleOpen: "🟢 Ristorazione aperta (06:30 - 21:30)",
+    statusScheduleClosing: "🟡 Chiusura ristoro a breve (ore 22:00)",
+    statusScheduleNight: "🌙 Ristorazione chiusa (riapertura ore 06:30)",
+    pumps247: "Pompe & colonnine: 24h/24 (Self-service)",
+    foodLabel: "Ristorazione:",
+    amenitiesBrandsTitle: "☕ Marchi & Ristorazione",
+    amenitiesServicesTitle: "🛠️ Servizi dell'area",
+    moreBrands: (n) => `+${n} marchi`,
+    hoursTitle: "🕒 ORARI DI APERTURA",
+    offMotorwayBadge: (d) => `Fuori autostrada (uscita a ${d} m)`,
+    offMotorwayPopupTitle: "Stazione fuori autostrada",
+    offMotorwayPopupDesc: (d) => `Raggiungibile all'uscita autostradale / casello (~${d} m)`,
+    offMotorwayTooltip: "Stazione situata fuori autostrada, subito all'uscita",
+    savingsBadge: (amt, cur, diff, unit) => `💰 Risparmio: ~${amt} ${cur} sul pieno (-${diff} ${cur}/${unit})`,
+    savingsTooltip: "Risparmio stimato rispetto alla media delle aree autostradali",
+    defaultHighway: "Autostrada",
+    weatherLoading: "Meteo in tempo reale"
   },
   es: {
     pageTitle: "FuelPilot • Precios Carburante y Áreas de Autopista",
@@ -1530,7 +1733,23 @@ const I18N_DICT = {
     statusOpen: "🟢 Restauración abierta",
     statusClosing: "🟡 Cierre rest. próximo",
     statusNight: "🌙 Carburante 24/7 · Rest. cerrada",
-    pumps247: "Surtidores & tarjeta: 24h/24"
+    statusScheduleOpen: "🟢 Restauración abierta (06:30 - 21:30)",
+    statusScheduleClosing: "🟡 Cierre próximo (cierre a las 22:00)",
+    statusScheduleNight: "🌙 Restauración cerrada (apertura 06:30)",
+    pumps247: "Surtidores & recarga: 24h/24 (Tarjeta)",
+    foodLabel: "Restauración:",
+    amenitiesBrandsTitle: "☕ Marcas & Restauración",
+    amenitiesServicesTitle: "🛠️ Servicios del área",
+    moreBrands: (n) => `+${n} marcas`,
+    hoursTitle: "🕒 HORARIOS DE APERTURA",
+    offMotorwayBadge: (d) => `Fuera autopista (salida a ${d} m)`,
+    offMotorwayPopupTitle: "Estación fuera de autopista",
+    offMotorwayPopupDesc: (d) => `Accesible en la salida de autopista / peaje (~${d} m)`,
+    offMotorwayTooltip: "Estación fuera de autopista, justo en la salida",
+    savingsBadge: (amt, cur, diff, unit) => `💰 Ahorro: ~${amt} ${cur} en depósito (-${diff} ${cur}/${unit})`,
+    savingsTooltip: "Ahorro estimado respecto a la media en autopista",
+    defaultHighway: "Autopista",
+    weatherLoading: "Tiempo en vivo"
   }
 };
 
@@ -2519,10 +2738,11 @@ async function searchLocationsBilingual(q) {
 
   const euroBbox = '-11.0,35.0,19.5,61.0';
   const queriesToRun = [
-    fetchWithTimeout(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(q)}&limit=5`, {}, 1800),
-    fetchWithTimeout(`https://photon.komoot.io/api/?q=${encodeURIComponent(qNormalizedVariant)}&bbox=${euroBbox}&limit=7`, {}, 2200)
+    fetchWithTimeout(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(q)}&limit=5`, {}, 2000),
+    fetchWithTimeout(`https://photon.komoot.io/api/?q=${encodeURIComponent(qNormalizedVariant)}&bbox=${euroBbox}&limit=7`, {}, 3500),
+    fetchWithTimeout(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(qNormalizedVariant)}&countrycodes=it,fr,de,es,gb,be,ch,lu,nl,at&limit=6`, {}, 3500)
   ];
-  const [banRes, photonDefaultRes] = await Promise.allSettled(queriesToRun);
+  const [banRes, photonDefaultRes, nominatimRes] = await Promise.allSettled(queriesToRun);
 
   const getCountryFlag = (cc, countryStr) => {
     const code = (cc || '').toUpperCase();
@@ -2574,7 +2794,7 @@ async function searchLocationsBilingual(q) {
       const isStreetOrHouse = ['street', 'house', 'residential', 'secondary', 'primary', 'tertiary', 'living_street', 'pedestrian', 'postcode'].includes(p.osm_value || p.type);
       const poiIcon = (!isCity && !isStreetOrHouse) ? getPoiIcon(p.osm_key, p.osm_value || p.type) : '';
       const isLandmark = Boolean(poiIcon);
-      const isCoveredCountry = ['🇬🇧', '🇫🇷', '🇪🇸', '🇮🇹', '🇮🇪', '🇧🇪', '🇨🇭'].includes(flag);
+      const isCoveredCountry = ['🇬🇧', '🇫🇷', '🇪🇸', '🇮🇹', '🇮🇪', '🇧🇪', '🇨🇭', '🇩🇪'].includes(flag);
 
       // Build rich city/district/postcode context for street-level & landmark searches
       const rawCity = p.city || p.town || p.village || p.county || '';
@@ -2617,6 +2837,27 @@ async function searchLocationsBilingual(q) {
 
   if (photonDefaultRes.status === 'fulfilled' && photonDefaultRes.value) {
     parsePhotonFeatures(photonDefaultRes.value.features);
+  }
+
+  if (nominatimRes && nominatimRes.status === 'fulfilled' && Array.isArray(nominatimRes.value)) {
+    nominatimRes.value.forEach(it => {
+      if (!it.lat || !it.lon) return;
+      const lat = parseFloat(it.lat);
+      const lon = parseFloat(it.lon);
+      const disp = it.display_name || '';
+      const flag = getCountryFlag('', disp);
+      const name = it.name || disp.split(',')[0].trim();
+      const parts = disp.split(',').map(s => s.trim()).filter(Boolean);
+      const shortParts = parts.length > 3 ? [parts[0], parts[1], parts[parts.length - 1]] : parts;
+      const label = `${flag} ${shortParts.join(', ')}`;
+      const cleanName = [name, parts.length > 1 ? parts[1] : null].filter(Boolean).join(', ');
+      addResultIfUnique({
+        label,
+        cleanName,
+        coords: [lon, lat],
+        priority: 70
+      });
+    });
   }
 
   if (banRes.status === 'fulfilled' && banRes.value && banRes.value.features) {
@@ -3845,11 +4086,12 @@ function renderCurrentRouteStations() {
     const marker = L.marker([st.lat, st.lon], { icon: customIcon }).addTo(map);
 
     // Opening status & weather
+    const tr = t();
     const openingStatus = getStationOpeningStatus(st);
     const cachedWeather = getCachedWeather(st.lat, st.lon);
     const weatherPopupHtml = cachedWeather
       ? `<span class="popup-weather-icon">${cachedWeather.icon}</span> <strong>${cachedWeather.temp}°C</strong> · ${cachedWeather.desc}`
-      : `<span>🌤️ Météo en cours...</span>`;
+      : `<span>🌤️ ${tr.weatherLoading || 'Météo en direct'}</span>`;
 
     // Exit savings calculation vs average motorway service area
     let exitSavingsHtml = '';
@@ -3861,14 +4103,17 @@ function renderCurrentRouteStations() {
       const cur = isUK ? '£' : '€';
       const unitLbl = isElec ? 'kWh' : 'L';
       if (totalSaved >= 0.5) {
+        const savingsText = (tr.savingsBadge && typeof tr.savingsBadge === 'function')
+          ? tr.savingsBadge(totalSaved.toFixed(1), cur, diffUnit.toFixed(3), unitLbl)
+          : `💰 Économie : ~${totalSaved.toFixed(1)} ${cur} sur le plein (-${diffUnit.toFixed(3)} ${cur}/${unitLbl})`;
         cardSavingsHtml = `
-          <div class="station-savings-badge" title="Économie estimée par rapport au prix moyen sur l'autoroute">
-            💰 Économie : ~${totalSaved.toFixed(1)} ${cur} sur le plein (-${diffUnit.toFixed(3)} ${cur}/${unitLbl})
+          <div class="station-savings-badge" title="${tr.savingsTooltip || ''}">
+            ${savingsText}
           </div>
         `;
         exitSavingsHtml = `
           <div class="popup-savings-banner">
-            💰 Économie estimée : ~<strong>${totalSaved.toFixed(1)} ${cur}</strong> sur le plein (-${diffUnit.toFixed(3)} ${cur}/${unitLbl})
+            ${savingsText}
           </div>
         `;
       }
@@ -3880,11 +4125,12 @@ function renderCurrentRouteStations() {
     const villeFormatted = isNativeCase ? st.ville : formatProperName(st.ville);
     const sensFormatted = st.sens ? translateSens(st.sens, isNativeCase) : '';
     const cleanPk = String(st.displayedPk || '').replace(/^km\s*/i, '').trim();
+    const defaultHw = tr.defaultHighway || (currentLang === 'de' ? 'Autobahn' : (currentLang === 'it' ? 'Autostrada' : (currentLang === 'es' ? 'Autopista' : (currentLang === 'en' ? 'Motorway' : 'Autoroute'))));
     const pkBadgeLabel = cleanPk
-      ? (isUK ? `${st.autoroute || 'Motorway'} • J${cleanPk}` : t().kmMarker(st.autoroute, cleanPk))
-      : (st.autoroute ? `${st.autoroute}` : 'Autoroute');
+      ? (isUK ? `${st.autoroute || defaultHw} • J${cleanPk}` : tr.kmMarker(st.autoroute || defaultHw, cleanPk))
+      : (st.autoroute ? `${st.autoroute}` : defaultHw);
     const remainingKm = Math.max(0, (st.distOnRoute - userProgressionKmOnRoute)).toFixed(1);
-    const distCountdownText = t().fromCurrentPos(remainingKm);
+    const distCountdownText = tr.fromCurrentPos(remainingKm);
 
     const wazeUrl = `https://waze.com/ul?ll=${st.lat},${st.lon}&navigate=yes`;
     const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${st.lat},${st.lon}&travelmode=driving`;
@@ -3892,13 +4138,26 @@ function renderCurrentRouteStations() {
     const wazeSvg = `<svg class="nav-btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.5 10.5c0-4.4-3.8-8-8.5-8S2.5 6.1 2.5 10.5c0 1.9.7 3.6 1.8 5-.5 1.2-1.4 2.1-2.3 2.5-.4.2-.5.7-.2 1 .3.3.9.5 1.8.5 1.3 0 2.6-.4 3.6-.9 1.2.5 2.5.8 3.8.8 4.7 0 8.5-3.6 8.5-8.9zm-11 0c-.8 0-1.5-.7-1.5-1.5S7.7 7.5 8.5 7.5 10 8.2 10 9s-.7 1.5-1.5 1.5zm6 0c-.8 0-1.5-.7-1.5-1.5S13.7 7.5 14.5 7.5 16 8.2 16 9s-.7 1.5-1.5 1.5zm-3 5.2c-1.9 0-3.5-1-4.2-2.5-.2-.4 0-.8.4-1 .4-.2.8 0 1 .4.5 1 1.6 1.6 2.8 1.6s2.3-.6 2.8-1.6c.2-.4.6-.6 1-.4.4.2.6.6.4 1-.7 1.5-2.3 2.5-4.2 2.5z"/></svg>`;
     const gmapsSvg = `<svg class="nav-btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`;
 
+    const offMotorwayBadgeText = (tr.offMotorwayBadge && typeof tr.offMotorwayBadge === 'function')
+      ? tr.offMotorwayBadge(st.exitDistanceM || 800)
+      : `Hors autoroute (sortie à ${st.exitDistanceM || 800} m)`;
+
+    const popupExitBannerHtml = st.isExitStation ? `
+      <div class="popup-exit-banner popup-off-motorway-banner">
+        ⚠️ <strong>${tr.offMotorwayPopupTitle || 'Station hors autoroute'}</strong>
+        <div style="font-size:0.75rem; margin-top:2px;">${(tr.offMotorwayPopupDesc && typeof tr.offMotorwayPopupDesc === 'function') ? tr.offMotorwayPopupDesc(st.exitDistanceM || 800) : `Accessible à la sortie (~${st.exitDistanceM || 800} m)`}</div>
+      </div>
+    ` : '';
+
     const popupContent = `
       <div class="station-popup">
         <div class="popup-title"><span class="flag-icon">${flag}</span> ${st.enseigne} - ${nomFormatted}</div>
-        <div class="popup-pk">📍 🛣️ ${pkBadgeLabel} ${st.isExitStation ? `<span class="popup-exit-badge" style="margin-left:4px;">🚪 Sortie (${st.exitDistanceM || 800}m)</span>` : ''}</div>
+        <div class="popup-pk">📍 🛣️ ${pkBadgeLabel} ${st.isExitStation ? `<span class="popup-exit-badge" style="margin-left:4px;">🚪 ${offMotorwayBadgeText}</span>` : ''}</div>
         <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:4px;">${isNativeCase ? st.adresse : formatProperName(st.adresse)} (${villeFormatted})</div>
-        <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:6px;">${t().popupDirDist(sensFormatted || t().sensDirect, remainingKm)}</div>
+        <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:6px;">${tr.popupDirDist(sensFormatted || tr.sensDirect, remainingKm)}</div>
         
+        ${popupExitBannerHtml}
+
         <div class="popup-weather-row" id="weather-popup-${st.id}">
           ${weatherPopupHtml}
         </div>
@@ -3910,23 +4169,31 @@ function renderCurrentRouteStations() {
         </div>
 
         <div class="popup-opening-hours">
-          <div class="popup-hours-title">🕒 HORAIRES D'OUVERTURE</div>
-          <div class="popup-hours-line">⛽ <strong>Pompes & bornes :</strong> 24h/24 (Automate CB)</div>
-          <div class="popup-hours-line">☕ <strong>Restauration :</strong> ${openingStatus.popupSchedule}</div>
+          <div class="popup-hours-title">${tr.hoursTitle || '🕒 HORAIRES D\'OUVERTURE'}</div>
+          <div class="popup-hours-line">⛽ <strong>${tr.pumps247 || 'Pompes & bornes : 24h/24'}</strong></div>
+          <div class="popup-hours-line">☕ <strong>${tr.foodLabel || 'Restauration :'}</strong> ${openingStatus.popupSchedule}</div>
         </div>
 
         ${renderPopupAmenitiesBlock(st)}
         <div class="station-nav-actions popup-nav-actions">
-          <a href="${wazeUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-waze" title="${t().wazeTitle}">
+          <a href="${wazeUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-waze" title="${tr.wazeTitle}">
             ${wazeSvg} <span>Waze</span>
           </a>
-          <a href="${gmapsUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-gmaps" title="${t().gmapsTitle}">
+          <a href="${gmapsUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-gmaps" title="${tr.gmapsTitle}">
             ${gmapsSvg} <span>Maps</span>
           </a>
         </div>
       </div>
     `;
-    marker.bindPopup(popupContent);
+    marker.bindPopup(popupContent, {
+      autoPan: true,
+      autoPanPadding: [20, 20],
+      autoPanPaddingTopLeft: [25, 80],
+      autoPanPaddingBottomRight: [25, 60],
+      keepInView: true,
+      maxHeight: 380,
+      offset: [0, -10]
+    });
     stationMarkers.push(marker);
 
     // Create Sidebar Card
@@ -3941,7 +4208,7 @@ function renderCurrentRouteStations() {
           <span class="station-rank">#${idx + 1}</span>
           <span class="flag-icon">${flag}</span>
           <span class="brand-badge ${brandClass}">${st.enseigne}</span>
-          ${st.isExitStation ? `<span class="station-type-badge exit-badge" title="Station située à la sortie de l'autoroute">🚪 Sortie (${st.exitDistanceM || 800}m)</span>` : ''}
+          ${st.isExitStation ? `<span class="station-type-badge exit-badge" title="${tr.offMotorwayTooltip || ''}">🚪 ${offMotorwayBadgeText}</span>` : ''}
           <span class="opening-status-badge ${openingStatus.statusClass}" title="${openingStatus.popupSchedule}">${openingStatus.cardBadge}</span>
         </div>
         <div class="card-top-right">
@@ -3989,18 +4256,29 @@ function renderCurrentRouteStations() {
       })()}
     `;
 
-    // Click card to zoom map to station
+    // Click card to zoom map to station and center the popup within the visible screen
     card.addEventListener('click', () => {
       document.querySelectorAll('.station-card').forEach(c => c.classList.remove('highlighted'));
       card.classList.add('highlighted');
       
-      // On mobile, switch back to map view automatically
-      if (window.innerWidth <= 900) {
+      const isMobile = window.innerWidth <= 900;
+      if (isMobile) {
         setMobileView('map');
       }
 
-      map.setView([st.lat, st.lon], 14, { animate: true });
-      marker.openPopup();
+      setTimeout(() => {
+        if (map) {
+          map.invalidateSize();
+          marker.openPopup();
+          // The popup is positioned vertically ABOVE the marker icon.
+          // Centering directly on [st.lat, st.lon] can cut off the top of the popup.
+          // By offsetting slightly, the entire popup is vertically centered on screen.
+          const pt = map.project([st.lat, st.lon], 14);
+          const yOffset = isMobile ? 120 : 90;
+          const targetPoint = map.unproject([pt.x, pt.y - yOffset], 14);
+          map.setView(targetPoint, 14, { animate: true });
+        }
+      }, isMobile ? 180 : 30);
     });
 
     listContainer.appendChild(card);
@@ -4593,16 +4871,28 @@ function requestUserGeolocation(onSuccess, onError) {
     }
   };
 
-  // Launch IP fallback in parallel after 2.2 seconds if GPS satellite hasn't replied yet
+  // Pre-fill from localStorage if available (instant start in standalone PWA mode)
+  try {
+    const cachedGps = localStorage.getItem('fuelpilot_last_known_gps');
+    if (cachedGps) {
+      const parsedGps = JSON.parse(cachedGps);
+      if (parsedGps && parsedGps.lat && parsedGps.lon && (Date.now() - (parsedGps.time || 0) < 12 * 3600 * 1000)) {
+        userGpsPosition = { lat: parsedGps.lat, lon: parsedGps.lon, isHighAccuracy: false };
+        updateUserGpsMarker(parsedGps.lat, parsedGps.lon);
+      }
+    }
+  } catch (e) {}
+
+  // Generous 8s timer before network IP fallback so hardware GPS can lock satellites in standalone app mode
   const ipFallbackTimer = setTimeout(async () => {
     if (!resolved) {
       const ipLoc = await fetchIpGeolocation();
       if (!resolved && ipLoc) {
-        console.log("GPS satellite delay: using instant network location fallback", ipLoc);
+        console.log("GPS satellite delay: using network location fallback", ipLoc);
         handleSuccess(ipLoc, false);
       }
     }
-  }, 2200);
+  }, 8000);
 
   if (!navigator.geolocation) {
     fetchIpGeolocation().then(ipLoc => {
@@ -4613,44 +4903,45 @@ function requestUserGeolocation(onSuccess, onError) {
     return;
   }
 
-  // 1. Instant response: check device cached position (maximumAge: Infinity for immediate return)
+  // 1. Direct high-accuracy attempt with generous timeout
   navigator.geolocation.getCurrentPosition(
     (pos) => {
       clearTimeout(ipFallbackTimer);
-      handleSuccess(pos, false);
-      // Background refinement with high accuracy GPS
-      navigator.geolocation.getCurrentPosition(
-        (highPos) => handleSuccess(highPos, true),
-        () => {},
-        { enableHighAccuracy: true, timeout: 25000, maximumAge: 0 }
-      );
+      try {
+        localStorage.setItem('fuelpilot_last_known_gps', JSON.stringify({
+          lat: pos.coords.latitude,
+          lon: pos.coords.longitude,
+          time: Date.now()
+        }));
+      } catch (e) {}
+      handleSuccess(pos, true);
     },
-    (errFast) => {
-      if (errFast && errFast.code === 1) { // User explicitly denied permission in browser
+    (errHigh) => {
+      if (errHigh && errHigh.code === 1) { // User explicitly denied permission
         clearTimeout(ipFallbackTimer);
-        if (onError) onError(errFast);
+        if (onError) onError(errHigh);
         return;
       }
-      // 2. High-accuracy GPS with generous satellite timeout
+      // 2. Fallback to cellular/wifi triangulation (enableHighAccuracy: false)
       navigator.geolocation.getCurrentPosition(
-        (pos) => {
+        (posLow) => {
           clearTimeout(ipFallbackTimer);
-          handleSuccess(pos, true);
+          handleSuccess(posLow, false);
         },
-        async (errGps) => {
+        async (errLow) => {
           clearTimeout(ipFallbackTimer);
           if (resolved) return;
           const ipLoc = await fetchIpGeolocation();
           if (ipLoc) {
             handleSuccess(ipLoc, false);
           } else if (onError) {
-            onError(errGps || errFast);
+            onError(errLow || errHigh);
           }
         },
-        { enableHighAccuracy: true, timeout: 25000, maximumAge: 60000 }
+        { enableHighAccuracy: false, timeout: 8000, maximumAge: 300000 }
       );
     },
-    { enableHighAccuracy: false, timeout: 3500, maximumAge: Infinity }
+    { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 }
   );
 }
 

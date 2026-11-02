@@ -1,300 +1,600 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>FuelPilot • Carburant Autoroute & Bornes PK</title>
-
-  <!-- PWA & Mobile App Icons -->
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="apple-touch-icon" href="icon-192.png">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0f172a">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css?v=8.6">
-</head>
-<body class="mobile-view-list">
-
-  <!-- Top Header -->
-  <header>
-    <div class="brand-title">
-      <img src="icon.png" alt="FuelPilot Logo" class="brand-logo-img">
-      <div>
-        <h1>Fuel<span>Pilot</span></h1>
-        <div class="brand-tagline" id="i18n-tagline">Prix carburant & aires d'autoroute</div>
-      </div>
-    </div>
-
-    <div class="header-status">
-      <button type="button" class="btn-fuel-info" id="btn-fuel-info" title="Correspondance des carburants par pays" aria-label="Correspondance des carburants par pays">i</button>
-      <div class="header-badges-group">
-        <div class="badge-jld">JLDApps 2026</div>
-        <div class="header-links-subgroup">
-          <a href="guide.html" class="badge-guide" id="i18n-guide" title="Mode d'emploi & Guide">Guide</a>
-          <a href="privacy.html" class="badge-privacy" id="i18n-privacy" title="Politique de Confidentialité">Confidentialité</a>
-        </div>
-      </div>
-      <div class="badge-live">
-        <span class="pulse-dot"></span>
-        <span class="live-text" id="i18n-live-text">Prix en direct</span>
-      </div>
-    </div>
-  </header>
-
-  <!-- Language Selection Bar (5 Country Flags: FR / DE / IT / ES / EN) -->
-  <div class="lang-bar" id="lang-bar" role="navigation" aria-label="Choix de la langue">
-    <button type="button" class="lang-flag-btn active" data-lang="fr" title="Français">
-      <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
-        <rect width="20" height="36" fill="#002395"/>
-        <rect x="20" width="20" height="36" fill="#ffffff"/>
-        <rect x="40" width="20" height="36" fill="#ED2939"/>
-      </svg>
-    </button>
-    <button type="button" class="lang-flag-btn" data-lang="de" title="Deutsch">
-      <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
-        <rect width="60" height="12" fill="#000000"/>
-        <rect y="12" width="60" height="12" fill="#DD0000"/>
-        <rect y="24" width="60" height="12" fill="#FFCE00"/>
-      </svg>
-    </button>
-    <button type="button" class="lang-flag-btn" data-lang="it" title="Italiano">
-      <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
-        <rect width="20" height="36" fill="#009246"/>
-        <rect x="20" width="20" height="36" fill="#ffffff"/>
-        <rect x="40" width="20" height="36" fill="#CE2B37"/>
-      </svg>
-    </button>
-    <button type="button" class="lang-flag-btn" data-lang="es" title="Español">
-      <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
-        <rect width="60" height="9" fill="#AA151B"/>
-        <rect y="9" width="60" height="18" fill="#F1BF00"/>
-        <rect y="27" width="60" height="9" fill="#AA151B"/>
-      </svg>
-    </button>
-    <button type="button" class="lang-flag-btn" data-lang="en" title="English (UK)">
-      <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
-        <rect width="60" height="36" rx="4" fill="#012169"/>
-        <path d="M0,0 L60,36 M60,0 L0,36" stroke="#ffffff" stroke-width="7"/>
-        <path d="M0,0 L60,36 M60,0 L0,36" stroke="#C8102E" stroke-width="4"/>
-        <path d="M30,0 V36 M0,18 H60" stroke="#ffffff" stroke-width="11"/>
-        <path d="M30,0 V36 M0,18 H60" stroke="#C8102E" stroke-width="6.5"/>
-      </svg>
-    </button>
-  </div>
-
-  <!-- Main Container -->
-  <div class="app-container">
-    
-    <!-- Left Sidebar -->
-    <div class="sidebar">
-      
-      <!-- Itinerary Search Section -->
-      <div class="sidebar-section compact-section" id="section-itinerary">
-        <!-- Collapsed Summary Row (Mobile Auto-compact) -->
-        <div class="itinerary-summary-bar" id="itinerary-summary-bar" style="display: none;">
-          <div class="summary-route-info">
-            <span class="summary-point start" id="sum-start-label">Paris</span>
-            <span class="summary-arrow">➔</span>
-            <span class="summary-point end" id="sum-end-label">Lyon</span>
-            <span class="summary-meta" id="sum-route-meta"></span>
-          </div>
-          <div style="display: flex; gap: 6px; align-items: center;">
-            <button type="button" class="btn-edit-route btn-sum-nav" id="btn-sum-nav" title="Démarrer le suivi GPS" style="background: rgba(16, 185, 129, 0.2); border-color: #10b981; color: #6ee7b7; font-weight: 800;">
-              <span>🟢</span> Démarrer
-            </button>
-            <button type="button" class="btn-edit-route" id="btn-toggle-route-edit" title="Modifier le trajet">
-              <span>✏️</span> Modifier
-            </button>
-          </div>
-        </div>
-
-        <!-- Full Input Form -->
-        <div class="itinerary-full-form" id="itinerary-full-form">
-          <div class="section-title">
-            <span>1. Choix de l'itinéraire</span>
-          </div>
-
-          <!-- Start & Destination Side-by-Side -->
-          <div class="row-2col">
-            <div class="input-group" style="margin-bottom:0;">
-              <span class="input-icon">🟢</span>
-              <input type="text" class="address-input" id="input-start" placeholder="Ville de départ..." autocomplete="off">
-              <div class="autocomplete-dropdown" id="dropdown-start"></div>
-            </div>
-
-            <div class="input-group" style="margin-bottom:0;">
-              <span class="input-icon">🏁</span>
-              <input type="text" class="address-input" id="input-end" placeholder="Ville d'arrivée..." autocomplete="off">
-              <div class="autocomplete-dropdown" id="dropdown-end"></div>
-            </div>
-          </div>
-
-          <!-- Dynamic Waypoints Container -->
-          <div id="waypoints-container"></div>
-
-          <!-- Actions Row: Add Step & Calculate -->
-          <div class="row-actions">
-            <button type="button" class="btn-add-step" id="btn-add-waypoint">
-              + Étape
-            </button>
-            <button type="button" class="btn-calculate" id="btn-calculate">
-              <span>🚀</span> Calculer l'itinéraire
-            </button>
-          </div>
-          <!-- Live GPS Drive Mode Button (shown once route is calculated) -->
-          <button type="button" class="btn-start-nav" id="btn-start-nav" style="display: none;">
-            <span class="nav-pulse-dot"></span> <span class="nav-btn-text">Démarrer</span>
-          </button>
-        </div>
-
-        <!-- Alternative Routes Selector (like Waze) -->
-        <div id="routes-container" class="routes-container" style="display: none;"></div>
-
-        <!-- Ulys Télépéage Partner Banner -->
-        <div id="partner-ulys-card" class="partner-card partner-ulys" style="display: none;">
-          <div class="partner-badge ulys-badge-alert">🔥 BON PLAN PÉAGE • 0€ FRAIS DE GESTION</div>
-          <div class="partner-content">
-            <div class="partner-text">
-              <div class="partner-title">Badge Télépéage Ulys (Vinci)</div>
-              <div class="partner-desc">Zéro attente aux barrières de péage en France, Espagne & Italie. Offre sans engagement.</div>
-            </div>
-            <a href="https://ulys.vinci-autoroutes.com/" target="_blank" rel="noopener noreferrer" class="btn-partner-cta btn-ulys-cta" id="link-partner-ulys">
-              Profiter de l'offre ➔
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Filters: Brand and Fuel Dropdowns Side-by-Side -->
-      <div class="sidebar-section compact-section" style="padding: 6px 10px; margin-bottom: 4px;">
-        <div class="row-2col filters-row-2col" style="margin-bottom:0;">
-          <div>
-            <select id="select-brand" class="select-filter" style="width: 100%;" title="Filtrer par Enseigne">
-              <option value="all">🏢 Toutes les enseignes</option>
-            </select>
-          </div>
-
-          <div>
-            <select id="select-fuel" class="select-filter" style="width: 100%;" title="Filtrer par Carburant">
-              <option value="e10" selected>⛽ SP95-E10</option>
-              <option value="gazole">⛽ Gazole (B7)</option>
-              <option value="sp98">⛽ SP98 (E5)</option>
-              <option value="sp95">⛽ SP95 (E5)</option>
-              <option value="e85">⛽ Superéthanol E85</option>
-              <option value="gplc">⛽ GPLc</option>
-              <option value="elec">⚡ Électrique (kWh)</option>
-              <option value="all">⛽ Tous carburants</option>
-            </select>
-          </div>
-        </div>
-        <div class="filter-toggles-row">
-          <label class="filter-toggle-label" for="chk-exit-stations" title="Inclure les stations à prix discount situées aux sorties immédiates de l'autoroute (< 1,5 km)">
-            <input type="checkbox" id="chk-exit-stations">
-            <span class="toggle-checkbox-custom"></span>
-            <span class="toggle-label-text" id="i18n-toggle-exit">🚪 Stations à la sortie (&lt; 1,5 km)</span>
-          </label>
-        </div>
-      </div>
-
-      <!-- Stations List Section (Zone 3 - Agrandie) -->
-      <div class="stations-section">
-        <div class="stations-header">
-          <div>
-            <div class="section-title" style="margin-bottom:2px;">
-              <span>3. Stations d'autoroute</span>
-            </div>
-            <span class="stations-count" id="stations-count-label">0 station</span>
-          </div>
-
-          <!-- Sort dropdown compact -->
-          <div>
-            <select id="select-sort" class="select-filter select-sort-compact" title="Ordre de tri">
-              <option value="route">Tri : Ordre du trajet</option>
-              <option value="price">Tri : Moins cher d'abord</option>
-              <option value="dist">Tri : Distance</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Scrollable stations cards -->
-        <div class="stations-scroll" id="stations-list">
-          <div style="text-align:center; padding: 40px 20px; color: var(--text-muted);">
-            <p style="font-size: 2rem; margin-bottom: 8px;">🛣️</p>
-            <p>Sélectionnez un départ et une arrivée pour afficher les stations d'autoroute et leurs bornes kilométriques.</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Right Map Container -->
-    <div class="map-container">
-      <div id="map"></div>
-      <!-- Floating Locate Me Button on Map -->
-      <button type="button" class="btn-locate-me" id="btn-locate-me" title="Centrer sur ma position" aria-label="Centrer sur ma position">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
-          <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
-        </svg>
-      </button>
-      <!-- Floating Map Coverage Indicator Badge -->
-      <div class="map-coverage-badge" id="map-coverage-badge">
-        <span class="coverage-dot"></span>
-        <span class="coverage-text">Réseau couvert : 🇫🇷 France • 🇩🇪 Allemagne • 🇧🇪 Belgique • 🇮🇹 Italie • 🇪🇸 Espagne • 🇬🇧 Royaume-Uni</span>
-      </div>
-      <!-- Floating Map Route Alternatives Bar (Waze / Google Maps style) -->
-      <div id="map-routes-bar" class="map-routes-bar" style="display: none;"></div>
-    </div>
-
-  </div>
-
-  <!-- Mobile Floating Tab Switcher (Mode Carte / Mode Liste) -->
-  <div class="mobile-nav-bar" id="mobile-nav-bar">
-    <button type="button" class="mobile-tab-btn" id="btn-tab-map">
-      <span class="tab-icon">🗺️</span>
-      <span class="tab-label">Carte</span>
-    </button>
-    <button type="button" class="mobile-tab-btn active" id="btn-tab-list">
-      <span class="tab-icon">📋</span>
-      <span class="tab-label">Liste & Filtres</span>
-      <span class="tab-badge" id="mobile-badge-count">0</span>
-    </button>
-  </div>
-
-  <!-- Fuel Nomenclature Correspondence Modal -->
-  <div class="fuel-info-overlay" id="fuel-info-modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="fuel-info-title">
-    <div class="fuel-info-dialog">
-      <div class="fuel-info-header">
-        <div>
-          <h3 id="fuel-info-title">⛽ Guide des carburants par pays</h3>
-          <p id="fuel-info-subtitle" class="fuel-info-sub">Correspondance officielle aux pompes (Norme européenne EN 16942)</p>
-        </div>
-        <button type="button" class="btn-close-fuel-info" id="btn-close-fuel-info" aria-label="Fermer">✖</button>
-      </div>
-      <div class="fuel-table-scroll-wrapper">
-        <div class="fuel-scroll-top-bar" id="fuel-scroll-top-bar">
-          <button type="button" class="fuel-scroll-arrow fuel-scroll-left" id="fuel-scroll-left" aria-label="Défiler à gauche" style="visibility: hidden;">◀</button>
-          <button type="button" class="fuel-scroll-arrow fuel-scroll-right" id="fuel-scroll-right" aria-label="Défiler à droite" style="visibility: hidden;">▶</button>
-        </div>
-        <div class="fuel-info-body" id="fuel-info-body"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="app.js?v=8.6"></script>
-</body>
-</html>
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+  <title>FuelPilot • Carburant Autoroute & Bornes PK</title>
+
+
+
+  <!-- PWA & Mobile App Icons -->
+
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <link rel="apple-touch-icon" href="icon-192.png">
+
+  <link rel="manifest" href="manifest.json">
+
+  <meta name="theme-color" content="#0f172a">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+
+  <meta http-equiv="Pragma" content="no-cache">
+
+  <meta http-equiv="Expires" content="0">
+
+
+
+  <!-- Leaflet CSS -->
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+
+
+  <!-- Google Fonts -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+
+  <link rel="stylesheet" href="style.css?v=8.7">
+
+</head>
+
+<body class="mobile-view-list">
+
+
+
+  <!-- Top Header -->
+
+  <header>
+
+    <div class="brand-title">
+
+      <img src="icon.png" alt="FuelPilot Logo" class="brand-logo-img">
+
+      <div>
+
+        <h1>Fuel<span>Pilot</span></h1>
+
+        <div class="brand-tagline" id="i18n-tagline">Prix carburant & aires d'autoroute</div>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="header-status">
+
+      <button type="button" class="btn-fuel-info" id="btn-fuel-info" title="Correspondance des carburants par pays" aria-label="Correspondance des carburants par pays">i</button>
+
+      <div class="header-badges-group">
+
+        <div class="badge-jld">JLDApps 2026</div>
+
+        <div class="header-links-subgroup">
+
+          <a href="guide.html" class="badge-guide" id="i18n-guide" title="Mode d'emploi & Guide">Guide</a>
+
+          <a href="privacy.html" class="badge-privacy" id="i18n-privacy" title="Politique de Confidentialité">Confidentialité</a>
+
+        </div>
+
+      </div>
+
+      <div class="badge-live">
+
+        <span class="pulse-dot"></span>
+
+        <span class="live-text" id="i18n-live-text">Prix en direct</span>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- Language Selection Bar (5 Country Flags: FR / DE / IT / ES / EN) -->
+
+  <div class="lang-bar" id="lang-bar" role="navigation" aria-label="Choix de la langue">
+
+    <button type="button" class="lang-flag-btn active" data-lang="fr" title="Français">
+
+      <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+
+        <rect width="20" height="36" fill="#002395"/>
+
+        <rect x="20" width="20" height="36" fill="#ffffff"/>
+
+        <rect x="40" width="20" height="36" fill="#ED2939"/>
+
+      </svg>
+
+    </button>
+
+    <button type="button" class="lang-flag-btn" data-lang="de" title="Deutsch">
+
+      <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+
+        <rect width="60" height="12" fill="#000000"/>
+
+        <rect y="12" width="60" height="12" fill="#DD0000"/>
+
+        <rect y="24" width="60" height="12" fill="#FFCE00"/>
+
+      </svg>
+
+    </button>
+
+    <button type="button" class="lang-flag-btn" data-lang="it" title="Italiano">
+
+      <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+
+        <rect width="20" height="36" fill="#009246"/>
+
+        <rect x="20" width="20" height="36" fill="#ffffff"/>
+
+        <rect x="40" width="20" height="36" fill="#CE2B37"/>
+
+      </svg>
+
+    </button>
+
+    <button type="button" class="lang-flag-btn" data-lang="es" title="Español">
+
+      <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+
+        <rect width="60" height="9" fill="#AA151B"/>
+
+        <rect y="9" width="60" height="18" fill="#F1BF00"/>
+
+        <rect y="27" width="60" height="9" fill="#AA151B"/>
+
+      </svg>
+
+    </button>
+
+    <button type="button" class="lang-flag-btn" data-lang="en" title="English (UK)">
+
+      <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+
+        <rect width="60" height="36" rx="4" fill="#012169"/>
+
+        <path d="M0,0 L60,36 M60,0 L0,36" stroke="#ffffff" stroke-width="7"/>
+
+        <path d="M0,0 L60,36 M60,0 L0,36" stroke="#C8102E" stroke-width="4"/>
+
+        <path d="M30,0 V36 M0,18 H60" stroke="#ffffff" stroke-width="11"/>
+
+        <path d="M30,0 V36 M0,18 H60" stroke="#C8102E" stroke-width="6.5"/>
+
+      </svg>
+
+    </button>
+
+  </div>
+
+
+
+  <!-- Main Container -->
+
+  <div class="app-container">
+
+    
+
+    <!-- Left Sidebar -->
+
+    <div class="sidebar">
+
+      
+
+      <!-- Itinerary Search Section -->
+
+      <div class="sidebar-section compact-section" id="section-itinerary">
+
+        <!-- Collapsed Summary Row (Mobile Auto-compact) -->
+
+        <div class="itinerary-summary-bar" id="itinerary-summary-bar" style="display: none;">
+
+          <div class="summary-route-info">
+
+            <span class="summary-point start" id="sum-start-label">Paris</span>
+
+            <span class="summary-arrow">➔</span>
+
+            <span class="summary-point end" id="sum-end-label">Lyon</span>
+
+            <span class="summary-meta" id="sum-route-meta"></span>
+
+          </div>
+
+          <div style="display: flex; gap: 6px; align-items: center;">
+
+            <button type="button" class="btn-edit-route btn-sum-nav" id="btn-sum-nav" title="Démarrer le suivi GPS" style="background: rgba(16, 185, 129, 0.2); border-color: #10b981; color: #6ee7b7; font-weight: 800;">
+
+              <span>🟢</span> Démarrer
+
+            </button>
+
+            <button type="button" class="btn-edit-route" id="btn-toggle-route-edit" title="Modifier le trajet">
+
+              <span>✏️</span> Modifier
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Full Input Form -->
+
+        <div class="itinerary-full-form" id="itinerary-full-form">
+
+          <div class="section-title">
+
+            <span>1. Choix de l'itinéraire</span>
+
+          </div>
+
+
+
+          <!-- Start & Destination Side-by-Side -->
+
+          <div class="row-2col">
+
+            <div class="input-group" style="margin-bottom:0;">
+
+              <span class="input-icon">🟢</span>
+
+              <input type="text" class="address-input" id="input-start" placeholder="Ville de départ..." autocomplete="off">
+
+              <div class="autocomplete-dropdown" id="dropdown-start"></div>
+
+            </div>
+
+
+
+            <div class="input-group" style="margin-bottom:0;">
+
+              <span class="input-icon">🏁</span>
+
+              <input type="text" class="address-input" id="input-end" placeholder="Ville d'arrivée..." autocomplete="off">
+
+              <div class="autocomplete-dropdown" id="dropdown-end"></div>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Dynamic Waypoints Container -->
+
+          <div id="waypoints-container"></div>
+
+
+
+          <!-- Actions Row: Add Step & Calculate -->
+
+          <div class="row-actions">
+
+            <button type="button" class="btn-add-step" id="btn-add-waypoint">
+
+              + Étape
+
+            </button>
+
+            <button type="button" class="btn-calculate" id="btn-calculate">
+
+              <span>🚀</span> Calculer l'itinéraire
+
+            </button>
+
+          </div>
+
+          <!-- Live GPS Drive Mode Button (shown once route is calculated) -->
+
+          <button type="button" class="btn-start-nav" id="btn-start-nav" style="display: none;">
+
+            <span class="nav-pulse-dot"></span> <span class="nav-btn-text">Démarrer</span>
+
+          </button>
+
+        </div>
+
+
+
+        <!-- Alternative Routes Selector (like Waze) -->
+
+        <div id="routes-container" class="routes-container" style="display: none;"></div>
+
+
+
+        <!-- Ulys Télépéage Partner Banner -->
+
+        <div id="partner-ulys-card" class="partner-card partner-ulys" style="display: none;">
+
+          <div class="partner-badge ulys-badge-alert">🔥 BON PLAN PÉAGE • 0€ FRAIS DE GESTION</div>
+
+          <div class="partner-content">
+
+            <div class="partner-text">
+
+              <div class="partner-title">Badge Télépéage Ulys (Vinci)</div>
+
+              <div class="partner-desc">Zéro attente aux barrières de péage en France, Espagne & Italie. Offre sans engagement.</div>
+
+            </div>
+
+            <a href="https://ulys.vinci-autoroutes.com/" target="_blank" rel="noopener noreferrer" class="btn-partner-cta btn-ulys-cta" id="link-partner-ulys">
+
+              Profiter de l'offre ➔
+
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- Filters: Brand and Fuel Dropdowns Side-by-Side -->
+
+      <div class="sidebar-section compact-section" style="padding: 6px 10px; margin-bottom: 4px;">
+
+        <div class="row-2col filters-row-2col" style="margin-bottom:0;">
+
+          <div>
+
+            <select id="select-brand" class="select-filter" style="width: 100%;" title="Filtrer par Enseigne">
+
+              <option value="all">🏢 Toutes les enseignes</option>
+
+            </select>
+
+          </div>
+
+
+
+          <div>
+
+            <select id="select-fuel" class="select-filter" style="width: 100%;" title="Filtrer par Carburant">
+
+              <option value="e10" selected>⛽ SP95-E10</option>
+
+              <option value="gazole">⛽ Gazole (B7)</option>
+
+              <option value="sp98">⛽ SP98 (E5)</option>
+
+              <option value="sp95">⛽ SP95 (E5)</option>
+
+              <option value="e85">⛽ Superéthanol E85</option>
+
+              <option value="gplc">⛽ GPLc</option>
+
+              <option value="elec">⚡ Électrique (kWh)</option>
+
+              <option value="all">⛽ Tous carburants</option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+        <div class="filter-toggles-row">
+
+          <label class="filter-toggle-label" for="chk-exit-stations" title="Inclure les stations à prix discount situées aux sorties immédiates de l'autoroute (< 1,5 km)">
+
+            <input type="checkbox" id="chk-exit-stations">
+
+            <span class="toggle-checkbox-custom"></span>
+
+            <span class="toggle-label-text" id="i18n-toggle-exit">🚪 Stations à la sortie (&lt; 1,5 km)</span>
+
+          </label>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- Stations List Section (Zone 3 - Agrandie) -->
+
+      <div class="stations-section">
+
+        <div class="stations-header">
+
+          <div>
+
+            <div class="section-title" style="margin-bottom:2px;">
+
+              <span>3. Stations d'autoroute</span>
+
+            </div>
+
+            <span class="stations-count" id="stations-count-label">0 station</span>
+
+          </div>
+
+
+
+          <!-- Sort dropdown compact -->
+
+          <div>
+
+            <select id="select-sort" class="select-filter select-sort-compact" title="Ordre de tri">
+
+              <option value="route">Tri : Ordre du trajet</option>
+
+              <option value="price">Tri : Moins cher d'abord</option>
+
+              <option value="dist">Tri : Distance</option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Scrollable stations cards -->
+
+        <div class="stations-scroll" id="stations-list">
+
+          <div style="text-align:center; padding: 40px 20px; color: var(--text-muted);">
+
+            <p style="font-size: 2rem; margin-bottom: 8px;">🛣️</p>
+
+            <p>Sélectionnez un départ et une arrivée pour afficher les stations d'autoroute et leurs bornes kilométriques.</p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+    </div>
+
+
+
+    <!-- Right Map Container -->
+
+    <div class="map-container">
+
+      <div id="map"></div>
+
+      <!-- Floating Locate Me Button on Map -->
+
+      <button type="button" class="btn-locate-me" id="btn-locate-me" title="Centrer sur ma position" aria-label="Centrer sur ma position">
+
+        <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+
+          <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
+
+        </svg>
+
+      </button>
+
+      <!-- Floating Map Coverage Indicator Badge -->
+
+      <div class="map-coverage-badge" id="map-coverage-badge">
+
+        <span class="coverage-dot"></span>
+
+        <span class="coverage-text">Réseau couvert : 🇫🇷 France • 🇩🇪 Allemagne • 🇧🇪 Belgique • 🇮🇹 Italie • 🇪🇸 Espagne • 🇬🇧 Royaume-Uni</span>
+
+      </div>
+
+      <!-- Floating Map Route Alternatives Bar (Waze / Google Maps style) -->
+
+      <div id="map-routes-bar" class="map-routes-bar" style="display: none;"></div>
+
+    </div>
+
+
+
+  </div>
+
+
+
+  <!-- Mobile Floating Tab Switcher (Mode Carte / Mode Liste) -->
+
+  <div class="mobile-nav-bar" id="mobile-nav-bar">
+
+    <button type="button" class="mobile-tab-btn" id="btn-tab-map">
+
+      <span class="tab-icon">🗺️</span>
+
+      <span class="tab-label">Carte</span>
+
+    </button>
+
+    <button type="button" class="mobile-tab-btn active" id="btn-tab-list">
+
+      <span class="tab-icon">📋</span>
+
+      <span class="tab-label">Liste & Filtres</span>
+
+      <span class="tab-badge" id="mobile-badge-count">0</span>
+
+    </button>
+
+  </div>
+
+
+
+  <!-- Fuel Nomenclature Correspondence Modal -->
+
+  <div class="fuel-info-overlay" id="fuel-info-modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="fuel-info-title">
+
+    <div class="fuel-info-dialog">
+
+      <div class="fuel-info-header">
+
+        <div>
+
+          <h3 id="fuel-info-title">⛽ Guide des carburants par pays</h3>
+
+          <p id="fuel-info-subtitle" class="fuel-info-sub">Correspondance officielle aux pompes (Norme européenne EN 16942)</p>
+
+        </div>
+
+        <button type="button" class="btn-close-fuel-info" id="btn-close-fuel-info" aria-label="Fermer">✖</button>
+
+      </div>
+
+      <div class="fuel-table-scroll-wrapper">
+
+        <div class="fuel-scroll-top-bar" id="fuel-scroll-top-bar">
+
+          <button type="button" class="fuel-scroll-arrow fuel-scroll-left" id="fuel-scroll-left" aria-label="Défiler à gauche" style="visibility: hidden;">◀</button>
+
+          <button type="button" class="fuel-scroll-arrow fuel-scroll-right" id="fuel-scroll-right" aria-label="Défiler à droite" style="visibility: hidden;">▶</button>
+
+        </div>
+
+        <div class="fuel-info-body" id="fuel-info-body"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- Leaflet JS -->
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <script src="app.js?v=8.7"></script>
+
+</body>
+
+</html>
+
