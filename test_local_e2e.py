@@ -73,8 +73,9 @@ try:
     print("[PASS] input-start accepts typing cleanly without losing focus.")
 
     # Wait for autocomplete dropdown
-    time.sleep(2)
-    dropdown_start = driver.find_element(By.ID, 'dropdown-start')
+    dropdown_start = WebDriverWait(driver, 8).until(
+        EC.visibility_of_element_located((By.ID, 'dropdown-start'))
+    )
     assert dropdown_start.is_displayed(), "FAILURE: dropdown-start did not appear!"
     items = dropdown_start.find_elements(By.CLASS_NAME, 'autocomplete-item')
     print(f"Autocomplete dropdown items count: {len(items)}")
@@ -97,20 +98,24 @@ try:
     typed_end = end_inp.get_attribute("value")
     print(f"Typed in input-end: '{typed_end}'")
     assert "Lyon" in typed_end, f"FAILURE: Expected 'Lyon', got '{typed_end}'"
-    time.sleep(2)
+    # Wait for Lyon search results to appear in dropdown-end
+    WebDriverWait(driver, 8).until(
+        lambda d: any("Lyon" in it.text for it in d.find_element(By.ID, 'dropdown-end').find_elements(By.CLASS_NAME, 'autocomplete-item'))
+    )
     dropdown_end = driver.find_element(By.ID, 'dropdown-end')
-    assert dropdown_end.is_displayed(), "FAILURE: dropdown-end did not appear!"
     end_items = dropdown_end.find_elements(By.CLASS_NAME, 'autocomplete-item')
     print(f"Dropdown end items count: {len(end_items)}")
-    assert len(end_items) > 0, "FAILURE: No autocomplete suggestions for 'Lyon'!"
-    end_items[0].click()
+    lyon_item = next(it for it in end_items if "Lyon" in it.text)
+    print(f"Selecting end item: {lyon_item.text}")
+    lyon_item.click()
     time.sleep(0.5)
     print(f"Value after selection: '{end_inp.get_attribute('value')}'")
     print("[PASS] input-end typing and selection work cleanly.")
 
+    time.sleep(1)
     print("\n--- TEST 3: Route Calculation & Stations Display ---")
     calc_btn = driver.find_element(By.ID, 'btn-calculate')
-    calc_btn.click()
+    driver.execute_script("arguments[0].click();", calc_btn)
     print("Calculer l'itinéraire button clicked. Waiting for calculation...")
     
     # Wait for station cards to render

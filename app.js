@@ -285,7 +285,7 @@ function getDistinctCountryFuels(pays) {
 }
 
 // Initialize Application
-const APP_VERSION = '8.2';
+const APP_VERSION = '8.3';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -1793,10 +1793,9 @@ async function searchLocationsBilingual(q) {
   const euroBbox = '-11.0,35.0,19.5,61.0';
   const queriesToRun = [
     fetchWithTimeout(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(q)}&limit=5`, {}, 1800),
-    fetchWithTimeout(`https://photon.komoot.io/api/?q=${encodeURIComponent(qNormalizedVariant)}&bbox=${euroBbox}&limit=7`, {}, 2200),
-    fetchWithTimeout(`https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=6&viewbox=-11.0,61.0,19.5,35.0&bounded=1&q=${encodeURIComponent(qNormalizedVariant)}`, { headers: { 'Accept-Language': `${currentLang},en` } }, 2200)
+    fetchWithTimeout(`https://photon.komoot.io/api/?q=${encodeURIComponent(qNormalizedVariant)}&bbox=${euroBbox}&limit=7`, {}, 2200)
   ];
-  const [banRes, photonDefaultRes, nominatimRes] = await Promise.allSettled(queriesToRun);
+  const [banRes, photonDefaultRes] = await Promise.allSettled(queriesToRun);
 
   const getCountryFlag = (cc, countryStr) => {
     const code = (cc || '').toUpperCase();
@@ -1891,47 +1890,6 @@ async function searchLocationsBilingual(q) {
 
   if (photonDefaultRes.status === 'fulfilled' && photonDefaultRes.value) {
     parsePhotonFeatures(photonDefaultRes.value.features);
-  }
-
-  // Parse Nominatim OpenStreetMap results (handles exact UK/ES/IT/FR streets, postcodes, house numbers & famous landmarks/POIs)
-  if (nominatimRes.status === 'fulfilled' && Array.isArray(nominatimRes.value)) {
-    nominatimRes.value.forEach(n => {
-      const addr = n.address || {};
-      const flag = getCountryFlag(addr.country_code, addr.country);
-      const isCoveredCountry = ['🇬🇧', '🇫🇷', '🇪🇸', '🇮🇹', '🇮🇪', '🇧🇪', '🇨🇭'].includes(flag);
-      const coords = [ parseFloat(n.lon), parseFloat(n.lat) ];
-      if (isNaN(coords[0]) || isNaN(coords[1])) return;
-
-      const poiIcon = getPoiIcon(n.category, n.type);
-      const isLandmark = Boolean(poiIcon) || (n.name && ['tourism', 'aeroway', 'railway', 'historic', 'amenity', 'leisure', 'man_made', 'building'].includes(n.category));
-      const road = addr.road || addr.pedestrian || addr.suburb || '';
-      const house = addr.house_number ? `${addr.house_number} ` : '';
-      const rawCity = addr.city || addr.town || addr.village || addr.municipality || addr.city_district || addr.county || '';
-      const shortCity = rawCity.replace(/^London Borough of\s+/i, 'London — ').replace(/^Greater London$/i, 'London');
-      const suburb = (addr.suburb || addr.city_district || '').replace(/^London Borough of\s+/i, '');
-      const postcode = addr.postcode || '';
-
-      // If it's a landmark/POI (e.g. "Tour Eiffel", "Heathrow Airport", "Sagrada Família"), use n.name as primary label instead of the adjacent street
-      const primary = (isLandmark && n.name) ? n.name : ((house + road).trim() || n.name || shortCity || (n.display_name || '').split(',')[0]);
-      const parts = [primary, suburb && suburb !== primary ? suburb : null, shortCity && shortCity !== primary ? shortCity : null, isLandmark ? null : postcode, addr.country].filter(Boolean);
-      const uniqueParts = parts.filter((part, idx) => idx === 0 || part.toLowerCase() !== parts[idx - 1].toLowerCase());
-      const label = `${flag} ${poiIcon}${uniqueParts.join(', ')}`;
-      const cleanName = isLandmark
-        ? [primary, shortCity && shortCity !== primary ? shortCity : null].filter(Boolean).join(', ')
-        : [primary, shortCity && shortCity !== primary ? shortCity : null, postcode].filter(Boolean).join(', ');
-
-      const fullTextNorm = uniqueParts.join(' ').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-      const queryTokens = qNorm.split(/\s+/).filter(t => t.length >= 2);
-      const allTokensMatched = queryTokens.length > 0 && queryTokens.every(tok => fullTextNorm.includes(tok) || (tok === 'londres' && fullTextNorm.includes('london')));
-
-      const priority = (isLandmark ? 65 : 58) + (isCoveredCountry ? 20 : 0) + (allTokensMatched ? 30 : 0);
-      addResultIfUnique({
-        label,
-        cleanName,
-        coords,
-        priority
-      });
-    });
   }
 
   if (banRes.status === 'fulfilled' && banRes.value && banRes.value.features) {
@@ -2158,7 +2116,7 @@ function useCurrentGpsLocationAsStart() {
   }
 
   if (userGpsPosition) {
-    applyGpsAsStartPoint(userGpsPosition.lat, userGpsPosition.lon);
+    applyGpsAsStartPoint(userGpsPosition.lat, userGpsPosition.lon, userGpsPosition.city);
     updateUserGpsMarker(userGpsPosition.lat, userGpsPosition.lon);
     return;
   }
@@ -2166,43 +2124,52 @@ function useCurrentGpsLocationAsStart() {
   requestUserGeolocation(
     (pos) => {
       const { latitude, longitude } = pos.coords;
-      applyGpsAsStartPoint(latitude, longitude);
+      const city = pos.city || (userGpsPosition && userGpsPosition.city);
+      applyGpsAsStartPoint(latitude, longitude, city);
     },
     (err) => {
       console.warn('Erreur acquisition GPS départ:', err);
-      alert(formatGeolocationErrorMessage(err));
-      if (startInput) startInput.value = '';
+      if (err && err.code === 1) {
+        alert(formatGeolocationErrorMessage(err));
+      }
+      if (startInput && !startPoint) startInput.value = '';
     }
   );
 }
 
-async function applyGpsAsStartPoint(lat, lon) {
+async function applyGpsAsStartPoint(lat, lon, knownCity) {
   const startInput = document.getElementById('input-start');
   let displayName = t().currentPos ? t().currentPos.replace('📍 ', '') : 'Ma position actuelle';
   
+  if (knownCity) {
+    displayName = `${displayName} (${knownCity})`;
+  }
+
   startPoint = { coords: [lon, lat], label: displayName };
   if (startInput) {
     startInput.value = displayName;
     startInput.classList.remove('input-attention-pulse');
   }
 
-  // Reverse geocode in background to refine city name
-  try {
-    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}&zoom=14`, {
-      headers: { 'Accept': 'application/json' }
-    });
-    if (res.ok) {
-      const data = await res.json();
-      const addr = data.address || {};
-      const locality = addr.city || addr.town || addr.village || addr.municipality || addr.road;
-      if (locality) {
-        displayName = `${displayName} (${locality})`;
-        startPoint.label = displayName;
-        if (startInput) startInput.value = displayName;
+  // Reverse geocode in background to refine city name if not already provided
+  if (!knownCity) {
+    try {
+      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}&zoom=14`, {
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        const addr = data.address || {};
+        const locality = addr.city || addr.town || addr.village || addr.municipality || addr.road;
+        if (locality) {
+          displayName = `${displayName} (${locality})`;
+          startPoint.label = displayName;
+          if (startInput) startInput.value = displayName;
+        }
       }
+    } catch (e) {
+      // Keep fallback label
     }
-  } catch (e) {
-    // Keep fallback label
   }
 }
 
@@ -3731,6 +3698,38 @@ function formatGeolocationErrorMessage(err) {
   return (t().locationError || "Impossible d'obtenir votre position GPS.") + msg;
 }
 
+// Cached IP location fallback (useful when GPS satellites are slow or indoors)
+let ipLocationCache = null;
+
+async function fetchIpGeolocation() {
+  if (ipLocationCache) return ipLocationCache;
+  try {
+    const ctrl = new AbortController();
+    const tId = setTimeout(() => ctrl.abort(), 3500);
+    const res = await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client', { signal: ctrl.signal });
+    clearTimeout(tId);
+    if (res.ok) {
+      const data = await res.json();
+      if (data && typeof data.latitude === 'number' && typeof data.longitude === 'number') {
+        const city = data.city || data.locality || data.principalSubdivision || '';
+        ipLocationCache = {
+          coords: {
+            latitude: data.latitude,
+            longitude: data.longitude,
+            accuracy: 3000,
+            isIpFallback: true
+          },
+          city: city,
+          countryCode: data.countryCode
+        };
+        return ipLocationCache;
+      }
+    }
+  } catch (e) {}
+
+  return null;
+}
+
 // Unified GPS requester for user actions (departure point, center map, start navigation)
 function requestUserGeolocation(onSuccess, onError) {
   if (userGpsPosition && userGpsPosition.lat && userGpsPosition.lon) {
@@ -3738,17 +3737,12 @@ function requestUserGeolocation(onSuccess, onError) {
     return;
   }
 
-  if (!navigator.geolocation) {
-    if (onError) onError({ code: 2, message: "Géolocalisation indisponible sur cet appareil." });
-    return;
-  }
-
   let resolved = false;
 
-  const handleSuccess = (pos) => {
+  const handleSuccess = (pos, isHighAccuracy = false) => {
     if (!pos || !pos.coords) return;
     const { latitude, longitude, heading, speed } = pos.coords;
-    userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
+    userGpsPosition = { lat: latitude, lon: longitude, heading, speed, isHighAccuracy };
     updateUserGpsMarker(latitude, longitude);
     if (!resolved) {
       resolved = true;
@@ -3756,34 +3750,64 @@ function requestUserGeolocation(onSuccess, onError) {
     }
   };
 
-  // 1. Instant response first: query cached or network (WiFi / Cell) position (< 500ms)
+  // Launch IP fallback in parallel after 2.2 seconds if GPS satellite hasn't replied yet
+  const ipFallbackTimer = setTimeout(async () => {
+    if (!resolved) {
+      const ipLoc = await fetchIpGeolocation();
+      if (!resolved && ipLoc) {
+        console.log("GPS satellite delay: using instant network location fallback", ipLoc);
+        handleSuccess(ipLoc, false);
+      }
+    }
+  }, 2200);
+
+  if (!navigator.geolocation) {
+    fetchIpGeolocation().then(ipLoc => {
+      clearTimeout(ipFallbackTimer);
+      if (ipLoc) handleSuccess(ipLoc, false);
+      else if (onError) onError({ code: 2, message: "Géolocalisation indisponible." });
+    });
+    return;
+  }
+
+  // 1. Instant response: check device cached position (maximumAge: Infinity for immediate return)
   navigator.geolocation.getCurrentPosition(
     (pos) => {
-      handleSuccess(pos);
-      // 2. Refine in background with satellite high accuracy without blocking UI
+      clearTimeout(ipFallbackTimer);
+      handleSuccess(pos, false);
+      // Background refinement with high accuracy GPS
       navigator.geolocation.getCurrentPosition(
-        handleSuccess,
-        () => {}, // background silent refinement
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+        (highPos) => handleSuccess(highPos, true),
+        () => {},
+        { enableHighAccuracy: true, timeout: 25000, maximumAge: 0 }
       );
     },
     (errFast) => {
-      if (errFast && errFast.code === 1) { // User denied permission
+      if (errFast && errFast.code === 1) { // User explicitly denied permission in browser
+        clearTimeout(ipFallbackTimer);
         if (onError) onError(errFast);
         return;
       }
-      // 2. If no network position available, fallback to high accuracy GPS
+      // 2. High-accuracy GPS with generous satellite timeout
       navigator.geolocation.getCurrentPosition(
-        handleSuccess,
-        (errGps) => {
-          if (!resolved && onError) {
+        (pos) => {
+          clearTimeout(ipFallbackTimer);
+          handleSuccess(pos, true);
+        },
+        async (errGps) => {
+          clearTimeout(ipFallbackTimer);
+          if (resolved) return;
+          const ipLoc = await fetchIpGeolocation();
+          if (ipLoc) {
+            handleSuccess(ipLoc, false);
+          } else if (onError) {
             onError(errGps || errFast);
           }
         },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 }
+        { enableHighAccuracy: true, timeout: 25000, maximumAge: 60000 }
       );
     },
-    { enableHighAccuracy: false, timeout: 6000, maximumAge: 300000 }
+    { enableHighAccuracy: false, timeout: 3500, maximumAge: Infinity }
   );
 }
 
@@ -3813,7 +3837,9 @@ function centerMapOnUser() {
     (err) => {
       if (btnLocate) btnLocate.classList.remove('locating');
       console.warn('Center on user error:', err);
-      alert(formatGeolocationErrorMessage(err));
+      if (err && err.code === 1) {
+        alert(formatGeolocationErrorMessage(err));
+      }
     }
   );
 }
@@ -3890,7 +3916,9 @@ function startGpsNavigation() {
       },
       (err) => {
         console.warn("Erreur GPS Navigation démarrage:", err);
-        alert(formatGeolocationErrorMessage(err));
+        if (err && err.code === 1) {
+          alert(formatGeolocationErrorMessage(err));
+        }
       }
     );
   }
