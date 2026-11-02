@@ -82,9 +82,13 @@ def update_france(stations):
 
             new_prix = dict(st.get('prix') or {})
             found_any = False
+            latest_maj = None
             for p in pdv.findall('prix'):
                 nom = p.attrib.get('nom')
                 val = p.attrib.get('valeur')
+                maj_val = p.attrib.get('maj')
+                if maj_val and (latest_maj is None or maj_val > latest_maj):
+                    latest_maj = maj_val
                 if nom in fuel_map and val:
                     p_flt = safe_float(val)
                     if p_flt:
@@ -101,6 +105,8 @@ def update_france(stations):
             if found_any:
                 st['prix'] = new_prix
                 st['ruptures'] = sorted(list(new_ruptures))
+                if latest_maj:
+                    st['maj'] = latest_maj
                 updated += 1
 
         print(f"France : {updated}/{total_fr} stations actualisées avec succès.")
@@ -146,6 +152,18 @@ def update_spain(stations):
         eess_list = data.get('ListaEESSPrecio', [])
         print(f"Espagne : flux national téléchargé ({len(eess_list)} stations au total).")
 
+        fecha_feed = str(data.get('Fecha', '')).strip()
+        fecha_iso = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        if fecha_feed and '/' in fecha_feed:
+            try:
+                parts = fecha_feed.split(' ')
+                dp = parts[0].split('/')
+                if len(dp) == 3:
+                    time_part = parts[1] if len(parts) > 1 else '00:00:00'
+                    fecha_iso = f"{dp[2]}-{dp[1]}-{dp[0]} {time_part}".strip()
+            except Exception:
+                pass
+
         updated = 0
         for item in eess_list:
             ideess = str(item.get('IDEESS', ''))
@@ -170,6 +188,7 @@ def update_spain(stations):
 
             if p_gazole or p_sp95 or p_sp98:
                 st['prix'] = new_prix
+                st['maj'] = fecha_iso
                 updated += 1
 
         print(f"Espagne : {updated}/{total_es} stations d'autoroute actualisées avec succès.")
@@ -200,6 +219,7 @@ def update_italy(stations):
 
         reader = csv.DictReader(io.StringIO(content))
         st_prices = {}
+        st_maj = {}
 
         for row in reader:
             id_imp = row.get('id_impianto')
@@ -208,6 +228,12 @@ def update_italy(stations):
             sid = f"IT-{id_imp}"
             if sid not in it_map:
                 continue
+
+            up_at = row.get('updated_at')
+            if up_at and len(up_at) >= 16:
+                clean_up = up_at[:19].replace('T', ' ')
+                if sid not in st_maj or clean_up > st_maj[sid]:
+                    st_maj[sid] = clean_up
 
             fuel_type = (row.get('fuel_type') or '').lower().strip()
             price_flt = safe_float(row.get('price'))
@@ -234,6 +260,8 @@ def update_italy(stations):
                 current_p = dict(st.get('prix') or {})
                 current_p.update(p_dict)
                 st['prix'] = current_p
+                if sid in st_maj:
+                    st['maj'] = st_maj[sid]
                 updated += 1
 
         print(f"Italie : {updated}/{total_it} stations d'autoroute actualisees avec succes.")
@@ -274,6 +302,12 @@ def main():
             if req_field not in s or s[req_field] is None:
                 print(f"[ERREUR SECURITE] Champ obligatoire '{req_field}' manquant pour {s.get('id')} ! Annulation.")
                 sys.exit(1)
+
+    # 3. Attribuer une date de verification par defaut aux stations qui n'en ont pas
+    now_default = datetime.now().strftime('%Y-%m-%d %H:%M')
+    for s in stations:
+        if not s.get('maj'):
+            s['maj'] = now_default
 
     # Sauvegarde securisee
     print(f"\n[SUCCES] Toutes les verifications de securite ont reussi.")

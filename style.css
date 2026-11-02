@@ -1036,6 +1036,33 @@ header {
 .single-fuel-price {
   display: flex;
   align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.price-maj-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #7dd3fc;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  padding: 2px 7px;
+  border-radius: 6px;
+  white-space: nowrap;
+  letter-spacing: 0.1px;
+}
+
+.prices-grid-maj {
+  grid-column: 1 / -1;
+  font-size: 0.72rem;
+  color: #7dd3fc;
+  margin-top: 4px;
+  text-align: right;
+  font-weight: 500;
 }
 
 .price-val-large {

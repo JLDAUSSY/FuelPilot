@@ -446,7 +446,11 @@ const I18N_DICT = {
     fuelCatDiesel: "Gazole / Diesel",
     fuelCatLpg: "GPL / Autogas",
     fuelCatE85: "Bioéthanol / Gaz",
-    defaultCountry: "FR"
+    defaultCountry: "FR",
+    today: "Aujourd'hui",
+    yesterday: "Hier",
+    atTime: "à",
+    verifiedAt: "Relevé :"
   },
   de: {
     pageTitle: "FuelPilot • Autobahn-Tankstellen & Kraftstoffpreise",
@@ -543,7 +547,11 @@ const I18N_DICT = {
     fuelCatDiesel: "Diesel",
     fuelCatLpg: "Autogas (LPG)",
     fuelCatE85: "Bioethanol / Erdgas",
-    defaultCountry: "DE"
+    defaultCountry: "DE",
+    today: "Heute",
+    yesterday: "Gestern",
+    atTime: "um",
+    verifiedAt: "Stand:"
   },
   en: {
     pageTitle: "FuelPilot • Motorway Fuel Prices & Service Areas",
@@ -640,7 +648,11 @@ const I18N_DICT = {
     fuelCatDiesel: "Diesel",
     fuelCatLpg: "LPG Autogas",
     fuelCatE85: "Bioethanol / CNG",
-    defaultCountry: "GB"
+    defaultCountry: "GB",
+    today: "Today",
+    yesterday: "Yesterday",
+    atTime: "at",
+    verifiedAt: "Updated:"
   },
   it: {
     pageTitle: "FuelPilot • Prezzi Carburante e Aree Autostradali",
@@ -737,7 +749,11 @@ const I18N_DICT = {
     fuelCatDiesel: "Gasolio / Diesel",
     fuelCatLpg: "GPL",
     fuelCatE85: "Bioetanolo / Metano",
-    defaultCountry: "IT"
+    defaultCountry: "IT",
+    today: "Oggi",
+    yesterday: "Ieri",
+    atTime: "alle",
+    verifiedAt: "Rilevato:"
   },
   es: {
     pageTitle: "FuelPilot • Precios Carburante y Áreas de Autopista",
@@ -834,7 +850,11 @@ const I18N_DICT = {
     fuelCatDiesel: "Gasóleo / Diésel",
     fuelCatLpg: "GLP (Autogás)",
     fuelCatE85: "Bioetanol / GNC",
-    defaultCountry: "ES"
+    defaultCountry: "ES",
+    today: "Hoy",
+    yesterday: "Ayer",
+    atTime: "a las",
+    verifiedAt: "Actualizado:"
   }
 };
 
@@ -3097,7 +3117,7 @@ function renderCurrentRouteStations() {
         <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:6px;">${isNativeCase ? st.adresse : formatProperName(st.adresse)} (${villeFormatted})</div>
         <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:8px;">${t().popupDirDist(sensFormatted || t().sensDirect, remainingKm)}</div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; font-size:0.8rem; margin-bottom:10px;">
-          ${renderPopupPrices(st.prix, selectedFuel, st.pays)}
+          ${renderPopupPrices(st.prix, selectedFuel, st.pays, st.maj)}
         </div>
         <div class="station-nav-actions popup-nav-actions">
           <a href="${wazeUrl}" target="_blank" rel="noopener noreferrer" class="btn-gps-nav btn-waze" title="${t().wazeTitle}">
@@ -3153,7 +3173,7 @@ function renderCurrentRouteStations() {
       </div>
 
       <div class="prices-container">
-        ${renderCardPrices(st.prix, selectedFuel, isCheapest, st.pays)}
+        ${renderCardPrices(st.prix, selectedFuel, isCheapest, st.pays, st.maj)}
       </div>
       ${(st.pays === 'BE' || (st.pays === 'DE' && !st.live)) ? `<div style="font-size:0.68rem; color:#94a3b8; margin-top:3px;">${t().estimatedPrice}</div>` : ''}
       ${(st.pays === 'DE' && st.live) ? `<div style="font-size:0.66rem; color:#94a3b8; margin-top:3px;">MTS-K · <a href="https://www.tankerkoenig.de" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" style="color:#7dd3fc;">Tankerkönig</a> (CC BY 4.0)</div>` : ''}
@@ -3194,10 +3214,55 @@ function renderCurrentRouteStations() {
   }
 }
 
+// Helper to format official price verification date/time (e.g. "Aujourd'hui à 08h15", "Hier à 18h24", "01/11 à 09h30")
+function formatPriceMaj(majStr) {
+  if (!majStr) return '';
+  try {
+    const normalized = String(majStr).trim().replace('T', ' ');
+    const parts = normalized.split(' ');
+    const datePart = parts[0];
+    const timePart = parts[1] || '';
+    const dateSegments = datePart.split('-');
+    if (dateSegments.length < 3) return '';
+    const year = parseInt(dateSegments[0], 10);
+    const month = parseInt(dateSegments[1], 10);
+    const day = parseInt(dateSegments[2], 10);
+    if (!year || !month || !day) return '';
+
+    const timeSegments = timePart.split(':');
+    const hours = timeSegments[0] ? timeSegments[0].padStart(2, '0') : '';
+    const minutes = timeSegments[1] ? timeSegments[1].padStart(2, '0') : '';
+    const timeFmt = (hours && minutes) ? `${hours}h${minutes}` : '';
+
+    const now = new Date();
+    const todayY = now.getFullYear();
+    const todayM = now.getMonth() + 1;
+    const todayD = now.getDate();
+
+    const targetDate = new Date(year, month - 1, day);
+    const todayDate = new Date(todayY, todayM - 1, todayD);
+    const diffDays = Math.round((todayDate - targetDate) / (1000 * 60 * 60 * 24));
+
+    const tr = t();
+    if (diffDays === 0) {
+      return timeFmt ? `${tr.today} ${tr.atTime} ${timeFmt}` : tr.today;
+    } else if (diffDays === 1) {
+      return timeFmt ? `${tr.yesterday} ${tr.atTime} ${timeFmt}` : tr.yesterday;
+    } else {
+      const dd = String(day).padStart(2, '0');
+      const mm = String(month).padStart(2, '0');
+      return timeFmt ? `${dd}/${mm} ${tr.atTime} ${timeFmt}` : `${dd}/${mm}`;
+    }
+  } catch (e) {
+    return '';
+  }
+}
+
 // Render fuel prices inside card
-function renderCardPrices(prices, featuredFuel, isCheapest, pays) {
+function renderCardPrices(prices, featuredFuel, isCheapest, pays, maj) {
   const isUK = pays === 'GB';
   const formatPrice = (val) => isUK ? `£${val.toFixed(3)}` : `${val.toFixed(3)} €`;
+  const majFormatted = formatPriceMaj(maj);
 
   if (!prices || Object.keys(prices).length === 0) {
     return `
@@ -3222,6 +3287,7 @@ function renderCardPrices(prices, featuredFuel, isCheapest, pays) {
           </div>
           <div class="single-fuel-price">
             <span class="price-val-large ${isCheapest ? 'cheapest' : ''}">${formatPrice(p)}</span>
+            ${majFormatted ? `<span class="price-maj-time" title="${t().verifiedAt} ${maj}">🕒 ${majFormatted}</span>` : ''}
           </div>
         </div>
       `;
@@ -3253,14 +3319,18 @@ function renderCardPrices(prices, featuredFuel, isCheapest, pays) {
       `;
     }
   });
+  if (majFormatted) {
+    html += `<div class="prices-grid-maj">🕒 ${t().verifiedAt} ${majFormatted}</div>`;
+  }
   html += '</div>';
   return html;
 }
 
 // Render prices in marker popup
-function renderPopupPrices(prices, featuredFuel, pays) {
+function renderPopupPrices(prices, featuredFuel, pays, maj) {
   const isUK = pays === 'GB';
   const formatPrice = (val) => isUK ? `£${val.toFixed(3)}` : `${val.toFixed(3)} €`;
+  const majFormatted = formatPriceMaj(maj);
 
   if (!prices) return `<span>${t().noPrice}</span>`;
   if (featuredFuel && featuredFuel !== 'all') {
@@ -3268,9 +3338,12 @@ function renderPopupPrices(prices, featuredFuel, pays) {
     const fuelName = getServedFuelLabel(prices, featuredFuel, pays);
     if (p && p > 0) {
       return `
-        <div style="grid-column: span 2; background: rgba(16, 185, 129, 0.15); border: 1.5px solid #10b981; padding: 6px 12px; border-radius: 8px; display:flex; justify-content:space-between; align-items:center;">
+        <div style="grid-column: span 2; background: rgba(16, 185, 129, 0.15); border: 1.5px solid #10b981; padding: 6px 12px; border-radius: 8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
           <span style="color: #a7f3d0; font-size: 0.85rem; font-weight: 700;">⛽ ${fuelName}</span>
-          <b style="color: #ffffff; font-size: 1.15rem; font-family: monospace;">${formatPrice(p)}</b>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <b style="color: #ffffff; font-size: 1.15rem; font-family: monospace;">${formatPrice(p)}</b>
+            ${majFormatted ? `<span class="price-maj-time" style="font-size:0.7rem;" title="${t().verifiedAt} ${maj}">🕒 ${majFormatted}</span>` : ''}
+          </div>
         </div>
       `;
     } else {
@@ -3282,12 +3355,16 @@ function renderPopupPrices(prices, featuredFuel, pays) {
     }
   }
   const fuels = getDistinctCountryFuels(pays).filter(f => prices[f]);
-  return fuels.map(f => `
+  let html = fuels.map(f => `
     <div style="background:rgba(255,255,255,0.06); padding:3px 6px; border-radius:4px;">
       <span style="color:#94a3b8; font-size:0.7rem;">${getFuelLabel(f, pays)}:</span>
       <b style="color:#fff;">${formatPrice(prices[f])}</b>
     </div>
   `).join('');
+  if (majFormatted) {
+    html += `<div style="grid-column: span 2; font-size:0.72rem; color:#7dd3fc; text-align:right; margin-top:4px;">🕒 ${t().verifiedAt} ${majFormatted}</div>`;
+  }
+  return html;
 }
 
 // Helper for brand badge CSS class
@@ -3653,35 +3730,61 @@ function requestUserGeolocation(onSuccess, onError) {
     return;
   }
 
-  // 1. High-accuracy GPS first
+  let hasResponded = false;
+
+  // Étape 1 : Obtention quasi-instantanée (<150ms) via le cache OS ou Fused Location
   navigator.geolocation.getCurrentPosition(
-    (pos) => {
-      const { latitude, longitude, heading, speed } = pos.coords;
+    (fastPos) => {
+      const { latitude, longitude, heading, speed } = fastPos.coords;
       userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
       updateUserGpsMarker(latitude, longitude);
-      if (onSuccess) onSuccess(pos);
-    },
-    (errHigh) => {
-      // If permission is denied at browser level (code 1), do NOT retry silently, report immediately
-      if (errHigh && errHigh.code === 1) {
-        if (onError) onError(errHigh);
-        return;
+      if (!hasResponded) {
+        hasResponded = true;
+        if (onSuccess) onSuccess(fastPos);
       }
-      // If code 2 (unavailable) or 3 (timeout on satellite fix), fallback to network-assisted browser location (Fused Location / WiFi)
+
+      // Étape 2 en arrière-plan : Affinage haute précision GPS par satellite
       navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const { latitude, longitude, heading, speed } = pos.coords;
-          userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
-          updateUserGpsMarker(latitude, longitude);
-          if (onSuccess) onSuccess(pos);
+        (precisePos) => {
+          const coords = precisePos.coords;
+          userGpsPosition = { lat: coords.latitude, lon: coords.longitude, heading: coords.heading, speed: coords.speed };
+          updateUserGpsMarker(coords.latitude, coords.longitude);
         },
-        (errLow) => {
-          if (onError) onError(errHigh || errLow);
-        },
-        { enableHighAccuracy: false, timeout: 20000, maximumAge: 300000 }
+        () => {},
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
       );
     },
-    { enableHighAccuracy: true, timeout: 20000, maximumAge: 60000 }
+    (fastErr) => {
+      // Si l'utilisateur a refusé explicitement la permission (code 1 = PERMISSION_DENIED)
+      if (fastErr && fastErr.code === 1) {
+        if (!hasResponded) {
+          hasResponded = true;
+          if (onError) onError(fastErr);
+        }
+        return;
+      }
+
+      // Si le fix rapide échoue ou expire, tenter la haute précision
+      navigator.geolocation.getCurrentPosition(
+        (precisePos) => {
+          const { latitude, longitude, heading, speed } = precisePos.coords;
+          userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
+          updateUserGpsMarker(latitude, longitude);
+          if (!hasResponded) {
+            hasResponded = true;
+            if (onSuccess) onSuccess(precisePos);
+          }
+        },
+        (err) => {
+          if (!hasResponded) {
+            hasResponded = true;
+            if (onError) onError(err);
+          }
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 }
+      );
+    },
+    { enableHighAccuracy: false, timeout: 3500, maximumAge: 300000 }
   );
 }
 
