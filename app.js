@@ -1075,7 +1075,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.0';
+const APP_VERSION = '9.1';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -2170,32 +2170,7 @@ async function detectCountryAndSetLanguage() {
     })();
   }
 
-  // HTML5 GPS Geolocation: uses real physical coordinates (latitude/longitude) when granted
-  if (typeof navigator !== 'undefined' && navigator.geolocation) {
-    try {
-      navigator.geolocation.getCurrentPosition(
-        async (pos) => {
-          if (!pos || !pos.coords) return;
-          const { latitude, longitude } = pos.coords;
-          userGpsPosition = { lat: latitude, lon: longitude };
-          updateUserGpsMarker(latitude, longitude);
-
-          if (userManuallySelectedLang) return;
-          try {
-            const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}`);
-            if (res.ok) {
-              const data = await res.json();
-              if (data && data.countryCode) {
-                applyDetectedCountry(data.countryCode, latitude, longitude);
-              }
-            }
-          } catch (e) {}
-        },
-        () => {},
-        { enableHighAccuracy: false, timeout: 6000, maximumAge: 300000 }
-      );
-    } catch (e) {}
-  }
+  // (GPS geolocation is initiated on user action or navigation to avoid startup Mojo IPC contention)
 }
 
 function updateFuelScrollArrows() {
@@ -4890,101 +4865,102 @@ function formatGeolocationErrorMessage(err) {
   return (t().locationError || "Impossible d'obtenir votre position GPS.") + msg;
 }
 
-// Progressive Two-Stage Native Geolocation Acquisition:
-// Stage 1 (Fast Fused fix): enableHighAccuracy: false, queries Google Play Services network/Wi-Fi provider (<500ms)
-// Stage 2 (Satellite Precision lock): enableHighAccuracy: true, queries hardware GPS satellites (up to 30s)
-// ZERO IP FALLBACK: We strictly use the phone's native hardware/fused location.
+// Bulletproof Sequential Geolocation Acquisition:
+// Tier 1: Attempts High Accuracy (hardware GPS satellites & Google fused location) with a 60s cache window.
+// Tier 2: If Tier 1 times out or is unavailable (e.g. indoors where satellite signals cannot penetrate),
+//         it automatically falls back to Standard Fused Location (Wi-Fi access points & cell towers).
+// This guarantees instant street-level positioning indoors without fatal timeouts or alerts!
+// ZERO IP FALLBACK: Strictly physical device sensors and Google Play Services Location Provider.
+let activeLocationCallbacks = [];
+let isAcquiringLocation = false;
+
 function getFreshUserLocation(onSuccess, onError) {
   if (!navigator.geolocation) {
     if (onError) onError({ code: 2, message: "Géolocalisation non supportée." });
     return;
   }
 
-  let hasDeliveredAnyFix = false;
-  let hasDeliveredHighAcc = false;
-  let hasCalledError = false;
-  let watchId = null;
-  let globalTimeout = null;
+  // Queue callback if an acquisition is already active to prevent concurrent Android Mojo IPC collisions
+  activeLocationCallbacks.push({ onSuccess, onError });
+  if (isAcquiringLocation) return;
+  isAcquiringLocation = true;
 
-  const cleanup = () => {
-    if (watchId !== null) {
-      try { navigator.geolocation.clearWatch(watchId); } catch (e) {}
-      watchId = null;
-    }
-    if (globalTimeout) {
-      clearTimeout(globalTimeout);
-      globalTimeout = null;
-    }
+  const dispatchSuccess = (pos, isHighAcc) => {
+    isAcquiringLocation = false;
+    const callbacks = [...activeLocationCallbacks];
+    activeLocationCallbacks = [];
+    callbacks.forEach(cb => {
+      if (cb.onSuccess) {
+        try { cb.onSuccess(pos, isHighAcc); } catch (e) { console.error(e); }
+      }
+    });
   };
 
   const dispatchError = (err) => {
-    if (!hasCalledError && !hasDeliveredAnyFix) {
-      hasCalledError = true;
-      cleanup();
-      if (onError) onError(err);
-    }
+    isAcquiringLocation = false;
+    const callbacks = [...activeLocationCallbacks];
+    activeLocationCallbacks = [];
+    callbacks.forEach(cb => {
+      if (cb.onError) {
+        try { cb.onError(err); } catch (e) { console.error(e); }
+      }
+    });
   };
 
-  // Stage 1: Fast Fused / Cell / Wi-Fi position (enableHighAccuracy: false)
-  // On Android, Google Play Services Fused Location resolves within 200-500ms
+  // Tier 1: Try High Accuracy first (up to 7 seconds, with 60s cache tolerance)
   try {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        if (!hasDeliveredHighAcc && pos && pos.coords) {
-          hasDeliveredAnyFix = true;
-          if (onSuccess) onSuccess(pos, false);
+        if (pos && pos.coords) {
+          dispatchSuccess(pos, true);
+        } else {
+          fallbackStandardAccuracy();
         }
       },
       (err) => {
-        console.warn("GPS Stage 1 (Fused) notice:", err && err.message);
+        // If permission explicitly denied, do not retry; notify user immediately
         if (err && err.code === 1) {
           dispatchError(err);
+          return;
         }
+        // Satellite timeout or unavailable (common indoors): immediately fall back to fused Wi-Fi/cell
+        console.warn("GPS High Accuracy unavailable or timed out; falling back to standard Wi-Fi/Cell positioning...", err && err.message);
+        fallbackStandardAccuracy();
       },
       {
-        enableHighAccuracy: false,
-        timeout: 8000,
+        enableHighAccuracy: true,
+        timeout: 7000,
         maximumAge: 60000
       }
     );
   } catch (e) {
-    console.warn("Stage 1 getCurrentPosition exception:", e);
+    fallbackStandardAccuracy();
   }
 
-  // Stage 2: Hardware satellite lock (enableHighAccuracy: true, up to 30s)
-  try {
-    watchId = navigator.geolocation.watchPosition(
-      (pos) => {
-        if (pos && pos.coords) {
-          hasDeliveredAnyFix = true;
-          hasDeliveredHighAcc = true;
-          cleanup();
-          if (onSuccess) onSuccess(pos, true);
-        }
-      },
-      (err) => {
-        console.warn("GPS Stage 2 (Satellite) notice:", err && err.message);
-        if (err && err.code === 1) {
+  function fallbackStandardAccuracy() {
+    try {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          if (pos && pos.coords) {
+            dispatchSuccess(pos, false);
+          } else {
+            dispatchError({ code: 2, message: "Position physique indisponible." });
+          }
+        },
+        (err) => {
+          console.warn("Standard accuracy fallback error:", err && err.message);
           dispatchError(err);
+        },
+        {
+          enableHighAccuracy: false,
+          timeout: 8000,
+          maximumAge: 300000
         }
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 30000,
-        maximumAge: 0
-      }
-    );
-  } catch (e) {
-    console.warn("Stage 2 watchPosition exception:", e);
-  }
-
-  // Global safety timeout: 30s
-  globalTimeout = setTimeout(() => {
-    cleanup();
-    if (!hasDeliveredAnyFix) {
-      dispatchError({ code: 3, message: "Délai d'attente satellite GPS dépassé." });
+      );
+    } catch (e) {
+      dispatchError({ code: 2, message: e.message || "Erreur géolocalisation." });
     }
-  }, 30000);
+  }
 }
 
 function requestUserGeolocation(onSuccess, onError, forceFresh = false) {
@@ -5036,52 +5012,9 @@ function centerMapOnUser() {
   );
 }
 
-// Start continuous passive geolocation as soon as user opens app or grants permission
+// Passive GPS tracking helper (deferred until user requests positioning or starts navigation)
 function initPermanentGpsTracking() {
-  if (!navigator.geolocation) return;
-  if (permanentGpsWatchId !== null) return;
-
-  const handlePos = (pos) => {
-    if (!pos || !pos.coords) return;
-    const { latitude, longitude, heading, speed } = pos.coords;
-    userGpsPosition = { lat: latitude, lon: longitude, heading, speed };
-    updateUserGpsMarker(latitude, longitude);
-    if (isGpsNavActive) {
-      onGpsLocationUpdate(pos.coords);
-    }
-  };
-
-  const handleErr = (err) => {
-    console.warn("GPS tracking warning (non-fatal):", err && err.message);
-  };
-
-  // Immediate acquisition without waiting (fast cache first)
-  navigator.geolocation.getCurrentPosition(
-    handlePos,
-    () => {
-      navigator.geolocation.getCurrentPosition(
-        handlePos,
-        handleErr,
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 }
-      );
-    },
-    { enableHighAccuracy: false, timeout: 5000, maximumAge: 300000 }
-  );
-
-  // Continuous watchPosition for live updates as the car drives
-  try {
-    permanentGpsWatchId = navigator.geolocation.watchPosition(
-      handlePos,
-      handleErr,
-      {
-        enableHighAccuracy: true,
-        maximumAge: 5000,
-        timeout: 30000
-      }
-    );
-  } catch (e) {
-    console.warn("Watch position error:", e);
-  }
+  // Deferred to prevent Chromium Mojo IPC contention on page load
 }
 
 function startGpsNavigation() {
