@@ -59,6 +59,16 @@ try:
     assert "_v=" not in current_url, "FAILURE: Page entered an auto-reload loop!"
     print("[PASS] Page is completely stable. Zero reload loops detected.")
 
+    print("\n--- TEST 1B: App Name (FueCoPilot) & Large Logo (+50%) Check ---")
+    brand_h1 = driver.find_element(By.CSS_SELECTOR, '.brand-title h1').text
+    print(f"App Brand Title: '{brand_h1}'")
+    assert "FueCoPilot" in brand_h1, f"FAILURE: Expected FueCoPilot in header, got '{brand_h1}'"
+    logo_img = driver.find_element(By.CLASS_NAME, 'brand-logo-img')
+    logo_width = logo_img.size['width']
+    print(f"Brand logo icon width: {logo_width}px")
+    assert logo_width >= 60, f"FAILURE: Logo width expected >= 60px (+50% increase), got {logo_width}px"
+    print("[PASS] FueCoPilot branding and enlarged 68px/87px icon verified.")
+
     print("\n--- TEST 2: Input & Typing Responsiveness ---")
     start_inp = driver.find_element(By.ID, 'input-start')
     assert start_inp.is_displayed(), "FAILURE: input-start is not displayed!"
@@ -179,11 +189,10 @@ try:
         print("No blocking alert, smooth handling.")
     print("[PASS] Locate button clicked cleanly.")
 
-    print("\n--- TEST 7: Commercial Brands (Starbucks, Paul, etc.) & Amenities ---")
-    amenity_pills = driver.find_elements(By.CLASS_NAME, 'amenity-pill')
-    print(f"Found {len(amenity_pills)} commercial brand/amenity pills on cards.")
-    assert len(amenity_pills) > 0, "FAILURE: No amenity pills found on cards!"
-    print(f"Sample amenity pill text: '{amenity_pills[0].text}'")
+    print("\n--- TEST 7: Commercial Brands (Removed from list cards, present in popup) ---")
+    card_amenities = driver.find_elements(By.CSS_SELECTOR, '.station-card .amenity-pill')
+    print(f"Amenity pills on station cards in the list: {len(card_amenities)}")
+    assert len(card_amenities) == 0, f"FAILURE: Amenity pills must NOT appear on list cards! Found {len(card_amenities)}"
 
     # Click on the first card to open popup and verify popup amenities block
     first_card = driver.find_element(By.CLASS_NAME, 'station-card')
@@ -194,7 +203,7 @@ try:
     assert len(popup_blocks) > 0, "FAILURE: Popup does not contain popup-amenities-block!"
     popup_text = popup_blocks[0].text
     print(f"Popup amenities content:\n{popup_text}")
-    print("[PASS] Commercial brands and motorway amenities render on both cards and popup.")
+    print("[PASS] Commercial brands are suppressed from list cards and strictly displayed in the popup window.")
 
     print("\n--- TEST 8: Electric (kWh) Fuel Selection & Pricing ---")
     fuel_select = driver.find_element(By.ID, 'select-fuel')
@@ -223,13 +232,10 @@ try:
     assert "°C" in sample_weather, f"FAILURE: Weather pill does not contain °C! Got: '{sample_weather}'"
     print("[PASS] Open-Meteo real-time weather successfully rendered on station cards.")
 
-    print("\n--- TEST 10: Opening Hours & 24/7 Status ---")
-    status_badges = driver.find_elements(By.CLASS_NAME, 'opening-status-badge')
-    print(f"Found {len(status_badges)} opening status badges on cards.")
-    assert len(status_badges) > 0, "FAILURE: No opening-status-badge found!"
-    sample_status = status_badges[0].get_attribute('textContent').strip()
-    print(f"Sample status badge textContent: '{sample_status}'")
-    assert any(icon in sample_status for icon in ["🟢", "🟡", "🌙"]), f"FAILURE: Unknown status badge format: '{sample_status}'"
+    print("\n--- TEST 10: Opening Hours & Status (Removed from list cards, present in popup) ---")
+    card_status_badges = driver.find_elements(By.CSS_SELECTOR, '.station-card .opening-status-badge')
+    print(f"Opening status badges on list cards: {len(card_status_badges)}")
+    assert len(card_status_badges) == 0, f"FAILURE: Opening status badge must NOT appear on list cards! Found {len(card_status_badges)}"
 
     first_card = driver.find_element(By.CLASS_NAME, 'station-card')
     driver.execute_script("arguments[0].click();", first_card)
@@ -240,7 +246,8 @@ try:
     popup_hours_text = popup_hours[0].get_attribute('textContent').strip()
     print(f"Popup opening hours textContent:\n{popup_hours_text}")
     assert "24h/24" in popup_hours_text or "24/7" in popup_hours_text, "FAILURE: Popup does not state 24h/24 fuel availability!"
-    print("[PASS] Opening hours & 24/7 status properly displayed on cards and popups.")
+    assert any(icon in popup_hours_text for icon in ["🟢", "🟡", "🌙"]), f"FAILURE: Popup missing opening status: {popup_hours_text}"
+    print("[PASS] Opening hours & status properly displayed in popup window and removed from list cards.")
 
     print("\n--- TEST 11: Exit Stations (< 1.5 km) Toggle & Savings ---")
     initial_count = len(driver.find_elements(By.CLASS_NAME, 'station-card'))

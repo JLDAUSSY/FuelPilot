@@ -88,7 +88,9 @@ header {
 
   z-index: 1000;
 
-  height: 70px;
+  min-height: 95px;
+
+  height: auto;
 
 }
 
@@ -108,17 +110,19 @@ header {
 
 .brand-logo-img {
 
-  width: 58px;
+  width: 87px;
 
-  height: 58px;
+  height: 87px;
 
-  border-radius: 14px;
+  border-radius: 20px;
 
-  box-shadow: 0 0 20px rgba(14, 165, 233, 0.5), 0 4px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 24px rgba(14, 165, 233, 0.55), 0 4px 12px rgba(0, 0, 0, 0.55);
 
-  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border: 2px solid rgba(255, 255, 255, 0.4);
 
   object-fit: cover;
+
+  flex-shrink: 0;
 
 }
 
@@ -2852,7 +2856,9 @@ header {
 
     padding: 6px 14px;
 
-    height: 56px;
+    min-height: 78px;
+
+    height: auto;
 
     gap: 8px;
 
@@ -2862,15 +2868,17 @@ header {
 
   .brand-logo-img {
 
-    width: 45px;
+    width: 68px;
 
-    height: 45px;
+    height: 68px;
 
-    border-radius: 11px;
+    border-radius: 16px;
 
-    box-shadow: 0 0 16px rgba(14, 165, 233, 0.5);
+    box-shadow: 0 0 18px rgba(14, 165, 233, 0.55);
 
-    border: 1.5px solid rgba(255, 255, 255, 0.35);
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+
+    flex-shrink: 0;
 
   }
 

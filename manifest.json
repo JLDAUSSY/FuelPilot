@@ -1,6 +1,6 @@
 {
-  "name": "FuelPilot",
-  "short_name": "FuelPilot",
+  "name": "FueCoPilot",
+  "short_name": "FueCoPilot",
   "description": "Carburant sur autoroute : bornes kilométriques, enseignes et prix en direct",
   "start_url": "./",
   "display": "standalone",

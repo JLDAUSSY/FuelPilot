@@ -1075,7 +1075,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.1';
+const APP_VERSION = '9.2';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -1155,7 +1155,7 @@ const I18N_DICT = {
     guide: "Guide",
     guideTitle: "Mode d'emploi & Guide d'utilisation",
     live: "Prix en direct",
-    refreshTitle: "Actualiser FuelPilot",
+    refreshTitle: "Actualiser FueCoPilot",
     sec1: "1. Choix de l'itinéraire",
     startPlaceholder: "Ville ou lieu de départ...",
     endPlaceholder: "Ville ou lieu d'arrivée...",
@@ -1278,7 +1278,7 @@ const I18N_DICT = {
     guide: "Hilfe",
     guideTitle: "Bedienungsanleitung & Leitfaden",
     live: "Live-Preise",
-    refreshTitle: "FuelPilot aktualisieren",
+    refreshTitle: "FueCoPilot aktualisieren",
     sec1: "1. Routenwahl",
     startPlaceholder: "Startort oder Adresse...",
     endPlaceholder: "Zielort oder Adresse...",
@@ -1400,7 +1400,7 @@ const I18N_DICT = {
     guide: "Guide",
     guideTitle: "User Guide & Manual",
     live: "Live prices",
-    refreshTitle: "Refresh FuelPilot",
+    refreshTitle: "Refresh FueCoPilot",
     sec1: "1. Route planner",
     startPlaceholder: "Departure city or place...",
     endPlaceholder: "Arrival city or place...",
@@ -1522,7 +1522,7 @@ const I18N_DICT = {
     guide: "Guida",
     guideTitle: "Guida all'uso",
     live: "Prezzi live",
-    refreshTitle: "Aggiorna FuelPilot",
+    refreshTitle: "Aggiorna FueCoPilot",
     sec1: "1. Scelta dell'itinerario",
     startPlaceholder: "Città o luogo di partenza...",
     endPlaceholder: "Città o luogo di arrivo...",
@@ -1644,7 +1644,7 @@ const I18N_DICT = {
     guide: "Guía",
     guideTitle: "Guía de uso",
     live: "Precios en vivo",
-    refreshTitle: "Actualizar FuelPilot",
+    refreshTitle: "Actualizar FueCoPilot",
     sec1: "1. Elección de ruta",
     startPlaceholder: "Ciudad o lugar de salida...",
     endPlaceholder: "Ciudad o lugar de llegada...",
@@ -4237,7 +4237,6 @@ function renderCurrentRouteStations() {
           <span class="flag-icon">${flag}</span>
           <span class="brand-badge ${brandClass}">${st.enseigne}</span>
           ${st.isExitStation ? `<span class="station-type-badge exit-badge" title="${tr.offMotorwayTooltip || ''}">🚪 ${offMotorwayBadgeText}</span>` : ''}
-          <span class="opening-status-badge ${openingStatus.statusClass}" title="${openingStatus.popupSchedule}">${openingStatus.cardBadge}</span>
         </div>
         <div class="card-top-right">
           <span class="station-weather-pill" id="weather-card-${st.id}" title="${cachedWeather ? cachedWeather.desc : 'Météo en direct'}">
@@ -4273,7 +4272,6 @@ function renderCurrentRouteStations() {
         ${renderCardPrices(st.prix, selectedFuel, isCheapest, st.pays, st.maj)}
       </div>
       ${cardSavingsHtml}
-      ${renderStationAmenitiesPills(st)}
       ${(st.pays === 'BE' || (st.pays === 'DE' && !st.live)) ? `<div style="font-size:0.68rem; color:#94a3b8; margin-top:3px;">${t().estimatedPrice}</div>` : ''}
       ${(st.pays === 'DE' && st.live) ? `<div style="font-size:0.66rem; color:#94a3b8; margin-top:3px;">MTS-K · <a href="https://www.tankerkoenig.de" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" style="color:#7dd3fc;">Tankerkönig</a> (CC BY 4.0)</div>` : ''}
 
@@ -4842,13 +4840,13 @@ function formatGeolocationErrorMessage(err) {
   if (code === 1) { // PERMISSION_DENIED
     if (isStandalonePwaMode()) {
       return "📍 Autorisation GPS requise dans l'application :\n\n" +
-        "Sur Android, l'application FuelPilot sur votre écran d'accueil nécessite l'autorisation de localisation :\n\n" +
+        "Sur Android, l'application FueCoPilot sur votre écran d'accueil nécessite l'autorisation de localisation :\n\n" +
         "👉 Pour l'activer en 5 secondes :\n" +
         "1. Ouvrez les Paramètres de votre téléphone Android ⚙️\n" +
-        "2. Allez dans 'Applications' > 'FuelPilot'\n" +
+        "2. Allez dans 'Applications' > 'FueCoPilot'\n" +
         "3. Touchez 'Autorisations' > 'Position' (ou Localisation)\n" +
         "4. Cochez 'Autoriser seulement si l'appli est en cours d'utilisation'\n" +
-        "5. Revenez dans FuelPilot : votre position GPS fonctionnera instantanément !";
+        "5. Revenez dans FueCoPilot : votre position GPS fonctionnera instantanément !";
     }
     return "📍 Autorisation GPS refusée dans le navigateur Chrome :\n\n" +
       "Vos applications natives (Google Maps, Waze) utilisent l'autorisation directe Android, mais Google Chrome a actuellement l'accès bloqué pour jldaussy.github.io.\n\n" +
