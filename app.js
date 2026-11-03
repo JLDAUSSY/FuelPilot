@@ -1139,6 +1139,13 @@ function getInitialDefaultLang() {
 
 let currentLang = getInitialDefaultLang();
 
+
+function formatExitDistKm(distM) {
+  const m = Number(distM) || 800;
+  const km = m / 1000;
+  return km.toFixed(1) + ' km';
+}
+
 const I18N_DICT = {
   fr: {
     pageTitle: "FuelPilot • Carburant Autoroute & Bornes PK",
@@ -1254,9 +1261,9 @@ const I18N_DICT = {
     amenitiesServicesTitle: "🛠️ Services de l'aire",
     moreBrands: (n) => `+${n} enseignes`,
     hoursTitle: "🕒 HORAIRES D'OUVERTURE",
-    offMotorwayBadge: (d) => `Hors autoroute (sortie à ${d} m)`,
+    offMotorwayBadge: (d) => `Hors autoroute (sortie à ${d})`,
     offMotorwayPopupTitle: "Station hors autoroute",
-    offMotorwayPopupDesc: (d) => `Accessible à la sortie d'autoroute / péage (~${d} m)`,
+    offMotorwayPopupDesc: (d) => `Accessible à la sortie d'autoroute / péage (~${d})`,
     offMotorwayTooltip: "Station située hors autoroute, à la sortie immédiate",
     savingsBadge: (amt, cur, diff, unit) => `💰 Économie : ~${amt} ${cur} sur le plein (-${diff} ${cur}/${unit})`,
     savingsTooltip: "Économie estimée par rapport au prix moyen sur l'autoroute",
@@ -1376,9 +1383,9 @@ const I18N_DICT = {
     amenitiesServicesTitle: "🛠️ Raststätten-Services",
     moreBrands: (n) => `+${n} Marken`,
     hoursTitle: "🕒 ÖFFNUNGSZEITEN",
-    offMotorwayBadge: (d) => `Außerhalb Autobahn (Ausfahrt ${d} m)`,
+    offMotorwayBadge: (d) => `Außerhalb Autobahn (Ausfahrt ${d})`,
     offMotorwayPopupTitle: "Station außerhalb der Autobahn",
-    offMotorwayPopupDesc: (d) => `An der Autobahnausfahrt / Mautstelle (~${d} m)`,
+    offMotorwayPopupDesc: (d) => `An der Autobahnausfahrt / Mautstelle (~${d})`,
     offMotorwayTooltip: "Tankstelle außerhalb der Autobahn, direkt an der Ausfahrt",
     savingsBadge: (amt, cur, diff, unit) => `💰 Ersparnis: ~${amt} ${cur} pro Tankfüllung (-${diff} ${cur}/${unit})`,
     savingsTooltip: "Geschätzte Ersparnis im Vergleich zum Autobahn-Durchschnitt",
@@ -1498,9 +1505,9 @@ const I18N_DICT = {
     amenitiesServicesTitle: "🛠️ Service area amenities",
     moreBrands: (n) => `+${n} brands`,
     hoursTitle: "🕒 OPENING HOURS",
-    offMotorwayBadge: (d) => `Off-motorway (exit ${d} m)`,
+    offMotorwayBadge: (d) => `Off-motorway (exit ${d})`,
     offMotorwayPopupTitle: "Off-motorway station",
-    offMotorwayPopupDesc: (d) => `Accessible at motorway exit / toll (~${d} m)`,
+    offMotorwayPopupDesc: (d) => `Accessible at motorway exit / toll (~${d})`,
     offMotorwayTooltip: "Station located off the motorway, right at the exit",
     savingsBadge: (amt, cur, diff, unit) => `💰 Savings: ~${cur}${amt} on a full tank (-${cur}${diff}/${unit})`,
     savingsTooltip: "Estimated savings compared to motorway service area average",
@@ -1620,9 +1627,9 @@ const I18N_DICT = {
     amenitiesServicesTitle: "🛠️ Servizi dell'area",
     moreBrands: (n) => `+${n} marchi`,
     hoursTitle: "🕒 ORARI DI APERTURA",
-    offMotorwayBadge: (d) => `Fuori autostrada (uscita a ${d} m)`,
+    offMotorwayBadge: (d) => `Fuori autostrada (uscita a ${d})`,
     offMotorwayPopupTitle: "Stazione fuori autostrada",
-    offMotorwayPopupDesc: (d) => `Raggiungibile all'uscita autostradale / casello (~${d} m)`,
+    offMotorwayPopupDesc: (d) => `Raggiungibile all'uscita autostradale / casello (~${d})`,
     offMotorwayTooltip: "Stazione situata fuori autostrada, subito all'uscita",
     savingsBadge: (amt, cur, diff, unit) => `💰 Risparmio: ~${amt} ${cur} sul pieno (-${diff} ${cur}/${unit})`,
     savingsTooltip: "Risparmio stimato rispetto alla media delle aree autostradali",
@@ -1742,9 +1749,9 @@ const I18N_DICT = {
     amenitiesServicesTitle: "🛠️ Servicios del área",
     moreBrands: (n) => `+${n} marcas`,
     hoursTitle: "🕒 HORARIOS DE APERTURA",
-    offMotorwayBadge: (d) => `Fuera autopista (salida a ${d} m)`,
+    offMotorwayBadge: (d) => `Fuera autopista (salida a ${d})`,
     offMotorwayPopupTitle: "Estación fuera de autopista",
-    offMotorwayPopupDesc: (d) => `Accesible en la salida de autopista / peaje (~${d} m)`,
+    offMotorwayPopupDesc: (d) => `Accesible en la salida de autopista / peaje (~${d})`,
     offMotorwayTooltip: "Estación fuera de autopista, justo en la salida",
     savingsBadge: (amt, cur, diff, unit) => `💰 Ahorro: ~${amt} ${cur} en depósito (-${diff} ${cur}/${unit})`,
     savingsTooltip: "Ahorro estimado respecto a la media en autopista",
@@ -2952,6 +2959,35 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
   const dropdown = document.getElementById(dropdownId);
   let debounceTimer;
 
+  // Clear button ('x') handler
+  const clearBtn = input.parentElement ? input.parentElement.querySelector('.btn-clear-input') : null;
+  function updateClearBtnVisibility() {
+    if (clearBtn) {
+      clearBtn.style.display = input.value.trim().length > 0 ? 'flex' : 'none';
+    }
+  }
+
+  if (clearBtn) {
+    clearBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      input.value = '';
+      updateClearBtnVisibility();
+      input.focus();
+      if (inputId === 'input-start') {
+        startPoint = null;
+      } else if (inputId === 'input-end') {
+        endPoint = null;
+      }
+      onSelect(null, '');
+      showRecentIfAvailable();
+    });
+  }
+
+  input.addEventListener('input', updateClearBtnVisibility);
+  input.addEventListener('change', updateClearBtnVisibility);
+  input.addEventListener('blur', () => setTimeout(updateClearBtnVisibility, 200));
+
   function renderDropdownItems(items, isRecentHeader = false) {
     if (!items || items.length === 0) {
       dropdown.style.display = 'none';
@@ -2990,6 +3026,7 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
       item.addEventListener('click', () => {
         const formattedName = itemData.cleanName;
         input.value = formattedName;
+        if (typeof updateClearBtnVisibility === 'function') updateClearBtnVisibility();
         dropdown.style.display = 'none';
         saveRecentLocation(formattedName, itemData.coords, itemData.label);
         onSelect(itemData.coords, formattedName);
@@ -3083,7 +3120,7 @@ function useCurrentGpsLocationAsStart() {
     startInput.classList.remove('input-attention-pulse');
   }
 
-  if (userGpsPosition) {
+  if (userGpsPosition && (Date.now() - (userGpsPosition.timestamp || 0) < 120000)) {
     applyGpsAsStartPoint(userGpsPosition.lat, userGpsPosition.lon, userGpsPosition.city);
     updateUserGpsMarker(userGpsPosition.lat, userGpsPosition.lon);
     return;
@@ -3132,7 +3169,7 @@ async function applyGpsAsStartPoint(lat, lon, knownCity) {
         if (locality) {
           displayName = `${displayName} (${locality})`;
           startPoint.label = displayName;
-          if (startInput) startInput.value = displayName;
+          if (startInput) { startInput.value = displayName; if (typeof updateAllClearButtons === 'function') updateAllClearButtons(); }
         }
       }
     } catch (e) {
@@ -3255,7 +3292,7 @@ function applyPreset(startLabel, startCoords, endLabel, endCoords) {
   const formattedEnd = formatProperName(endLabel);
   const inStart = document.getElementById('input-depart') || document.getElementById('input-start');
   if (inStart) {
-    inStart.value = formattedStart;
+    inStart.value = formattedStart; if (typeof updateAllClearButtons === 'function') updateAllClearButtons();
     inStart.classList.remove('input-attention-pulse');
   }
   startPoint = { coords: startCoords, label: formattedStart };
@@ -3290,6 +3327,7 @@ function addWaypointInput() {
     <div class="input-group" style="flex:1; margin-bottom:0;">
       <span class="input-icon">📍</span>
       <input type="text" class="address-input" id="input-${wpId}" placeholder="${t().stepPlaceholder(index + 1)}" />
+      <button type="button" class="btn-clear-input" id="btn-clear-${wpId}" title="Effacer la saisie" aria-label="Effacer" tabindex="-1">✕</button>
       <div class="autocomplete-dropdown" id="dropdown-${wpId}"></div>
     </div>
     <button class="btn-remove-step" title="${t().removeStepTitle}">✕</button>
@@ -4138,21 +4176,24 @@ function renderCurrentRouteStations() {
     const wazeSvg = `<svg class="nav-btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.5 10.5c0-4.4-3.8-8-8.5-8S2.5 6.1 2.5 10.5c0 1.9.7 3.6 1.8 5-.5 1.2-1.4 2.1-2.3 2.5-.4.2-.5.7-.2 1 .3.3.9.5 1.8.5 1.3 0 2.6-.4 3.6-.9 1.2.5 2.5.8 3.8.8 4.7 0 8.5-3.6 8.5-8.9zm-11 0c-.8 0-1.5-.7-1.5-1.5S7.7 7.5 8.5 7.5 10 8.2 10 9s-.7 1.5-1.5 1.5zm6 0c-.8 0-1.5-.7-1.5-1.5S13.7 7.5 14.5 7.5 16 8.2 16 9s-.7 1.5-1.5 1.5zm-3 5.2c-1.9 0-3.5-1-4.2-2.5-.2-.4 0-.8.4-1 .4-.2.8 0 1 .4.5 1 1.6 1.6 2.8 1.6s2.3-.6 2.8-1.6c.2-.4.6-.6 1-.4.4.2.6.6.4 1-.7 1.5-2.3 2.5-4.2 2.5z"/></svg>`;
     const gmapsSvg = `<svg class="nav-btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`;
 
+    const formattedExitDist = formatExitDistKm(st.exitDistanceM || 800);
     const offMotorwayBadgeText = (tr.offMotorwayBadge && typeof tr.offMotorwayBadge === 'function')
-      ? tr.offMotorwayBadge(st.exitDistanceM || 800)
-      : `Hors autoroute (sortie à ${st.exitDistanceM || 800} m)`;
+      ? tr.offMotorwayBadge(formattedExitDist)
+      : `Hors autoroute (sortie à ${formattedExitDist})`;
 
     const popupExitBannerHtml = st.isExitStation ? `
       <div class="popup-exit-banner popup-off-motorway-banner">
         ⚠️ <strong>${tr.offMotorwayPopupTitle || 'Station hors autoroute'}</strong>
-        <div style="font-size:0.75rem; margin-top:2px;">${(tr.offMotorwayPopupDesc && typeof tr.offMotorwayPopupDesc === 'function') ? tr.offMotorwayPopupDesc(st.exitDistanceM || 800) : `Accessible à la sortie (~${st.exitDistanceM || 800} m)`}</div>
+        <div style="font-size:0.75rem; margin-top:2px;">${(tr.offMotorwayPopupDesc && typeof tr.offMotorwayPopupDesc === 'function') ? tr.offMotorwayPopupDesc(formattedExitDist) : `Accessible à la sortie d'autoroute / péage (~${formattedExitDist})`}</div>
       </div>
     ` : '';
 
+    const popupPkHtml = (!st.isExitStation && pkBadgeLabel) ? `
+        <div class="popup-pk">📍 🛣️ ${pkBadgeLabel}</div>` : '';
+
     const popupContent = `
       <div class="station-popup">
-        <div class="popup-title"><span class="flag-icon">${flag}</span> ${st.enseigne} - ${nomFormatted}</div>
-        <div class="popup-pk">📍 🛣️ ${pkBadgeLabel} ${st.isExitStation ? `<span class="popup-exit-badge" style="margin-left:4px;">🚪 ${offMotorwayBadgeText}</span>` : ''}</div>
+        <div class="popup-title"><span class="flag-icon">${flag}</span> ${st.enseigne} - ${nomFormatted}</div>${popupPkHtml}
         <div style="font-size:0.8rem; color:#cbd5e1; margin-bottom:4px;">${isNativeCase ? st.adresse : formatProperName(st.adresse)} (${villeFormatted})</div>
         <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:6px;">${tr.popupDirDist(sensFormatted || tr.sensDirect, remainingKm)}</div>
         
@@ -4198,7 +4239,8 @@ function renderCurrentRouteStations() {
 
     // Create Sidebar Card
     const card = document.createElement('div');
-    card.className = `station-card ${isCheapest ? 'highlighted' : ''}`;
+    const exitCardClass = st.isExitStation ? 'exit-station-card' : '';
+    card.className = `station-card ${exitCardClass} ${isCheapest ? 'highlighted' : ''}`;
     card.id = `card-${st.id}`;
 
     card.innerHTML = `
@@ -4799,22 +4841,40 @@ function updateUserGpsMarker(latitude, longitude) {
   }
 }
 
+function isStandalonePwaMode() {
+  return (
+    (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
+    (typeof navigator !== 'undefined' && navigator.standalone === true) ||
+    (typeof document !== 'undefined' && document.referrer && document.referrer.includes('android-app://'))
+  );
+}
+
 function formatGeolocationErrorMessage(err) {
   const code = err && err.code;
   const msg = (err && err.message) ? ` (${err.message})` : '';
 
   if (code === 1) { // PERMISSION_DENIED
+    if (isStandalonePwaMode()) {
+      return "📍 Autorisation GPS requise dans l'application :\n\n" +
+        "Sur Android, l'application FuelPilot sur votre écran d'accueil nécessite l'autorisation de localisation :\n\n" +
+        "👉 Pour l'activer en 5 secondes :\n" +
+        "1. Ouvrez les Paramètres de votre téléphone Android ⚙️\n" +
+        "2. Allez dans 'Applications' > 'FuelPilot'\n" +
+        "3. Touchez 'Autorisations' > 'Position' (ou Localisation)\n" +
+        "4. Cochez 'Autoriser seulement si l'appli est en cours d'utilisation'\n" +
+        "5. Revenez dans FuelPilot : votre position GPS fonctionnera instantanément !";
+    }
     return "📍 Autorisation GPS refusée dans le navigateur Chrome :\n\n" +
       "Vos applications natives (Google Maps, Waze) utilisent l'autorisation directe Android, mais Google Chrome a actuellement l'accès bloqué pour jldaussy.github.io.\n\n" +
       "👉 Pour activer en 5 secondes :\n" +
-      "1. Tout en haut à gauche, appuyez sur le cadenas 🔒 (à gauche de jldaussy.github.io dans la barre d'adresse).\n" +
+      "1. Tout en haut à gauche, appuyez sur le cadenas 🔒 (à gauche de l'adresse).\n" +
       "2. Appuyez sur 'Autorisations' ou 'Paramètres du site'.\n" +
-      "3. Activez 'Localisation' sur AUTORISER (ou réinitialisez les autorisations).\n" +
-      "4. Rechargez la page : votre position GPS exacte s'affichera à Sanary-sur-Mer !";
+      "3. Activez 'Localisation' sur AUTORISER.\n" +
+      "4. Rechargez la page : votre position GPS exacte s'affichera instantanément !";
   } else if (code === 2) { // POSITION_UNAVAILABLE
-    return "⚠️ Signal GPS introuvable" + msg + " :\n\nVérifiez que le GPS (Position) est bien activé dans le volet déroulant supérieur de votre smartphone et que vous n'êtes pas en mode avion.";
+    return "⚠️ Signal GPS introuvable" + msg + " :\n\nVérifiez que la 'Position' (GPS) est bien activée dans le volet déroulant supérieur de votre smartphone.";
   } else if (code === 3) { // TIMEOUT
-    return "⏱️ Délai satellite GPS dépassé" + msg + " :\n\nLe capteur GPS de votre appareil prend du temps à capter les satellites. Veuillez réappuyer sur le bouton dans quelques instants.";
+    return "⏳ Délai satellite GPS dépassé" + msg + " :\n\nLe capteur GPS de votre téléphone prend du temps à capter les satellites. Veuillez réappuyer sur le bouton dans quelques instants.";
   }
   return (t().locationError || "Impossible d'obtenir votre position GPS.") + msg;
 }
@@ -4851,9 +4911,12 @@ async function fetchIpGeolocation() {
   return null;
 }
 
-// Unified GPS requester for user actions (departure point, center map, start navigation)
-function requestUserGeolocation(onSuccess, onError) {
-  if (userGpsPosition && userGpsPosition.lat && userGpsPosition.lon) {
+// Unified GPS requester with fast dual-phase acquisition:
+// 1. Instant Fused/Network fix (<300ms) with enableHighAccuracy: false to immediately unblock the UI
+// 2. Concurrent High-Accuracy Satellite refinement to give exact meter precision as soon as locked
+function requestUserGeolocation(onSuccess, onError, forceFresh = false) {
+  // If recent GPS position exists (< 2 minutes old) and no force refresh requested, use immediately
+  if (!forceFresh && userGpsPosition && userGpsPosition.lat && userGpsPosition.lon && (Date.now() - (userGpsPosition.timestamp || 0) < 120000)) {
     if (onSuccess) onSuccess({ coords: { latitude: userGpsPosition.lat, longitude: userGpsPosition.lon, heading: userGpsPosition.heading, speed: userGpsPosition.speed } });
     return;
   }
@@ -4863,102 +4926,116 @@ function requestUserGeolocation(onSuccess, onError) {
   const handleSuccess = (pos, isHighAccuracy = false) => {
     if (!pos || !pos.coords) return;
     const { latitude, longitude, heading, speed } = pos.coords;
-    userGpsPosition = { lat: latitude, lon: longitude, heading, speed, isHighAccuracy };
+    userGpsPosition = { lat: latitude, lon: longitude, heading, speed, isHighAccuracy, timestamp: Date.now() };
     updateUserGpsMarker(latitude, longitude);
+    try {
+      localStorage.setItem('fuelpilot_last_known_gps', JSON.stringify({
+        lat: latitude,
+        lon: longitude,
+        time: Date.now()
+      }));
+    } catch (e) {}
     if (!resolved) {
       resolved = true;
       if (onSuccess) onSuccess(pos);
     }
   };
 
-  // Pre-fill from localStorage if available (instant start in standalone PWA mode)
+  // Pre-fill from localStorage if available (fast initial display)
   try {
     const cachedGps = localStorage.getItem('fuelpilot_last_known_gps');
     if (cachedGps) {
       const parsedGps = JSON.parse(cachedGps);
-      if (parsedGps && parsedGps.lat && parsedGps.lon && (Date.now() - (parsedGps.time || 0) < 12 * 3600 * 1000)) {
-        userGpsPosition = { lat: parsedGps.lat, lon: parsedGps.lon, isHighAccuracy: false };
+      if (parsedGps && parsedGps.lat && parsedGps.lon && (Date.now() - (parsedGps.time || 0) < 2 * 3600 * 1000)) {
+        userGpsPosition = { lat: parsedGps.lat, lon: parsedGps.lon, isHighAccuracy: false, timestamp: parsedGps.time };
         updateUserGpsMarker(parsedGps.lat, parsedGps.lon);
       }
     }
   } catch (e) {}
 
-  // Generous 8s timer before network IP fallback so hardware GPS can lock satellites in standalone app mode
-  const ipFallbackTimer = setTimeout(async () => {
-    if (!resolved) {
-      const ipLoc = await fetchIpGeolocation();
-      if (!resolved && ipLoc) {
-        console.log("GPS satellite delay: using network location fallback", ipLoc);
-        handleSuccess(ipLoc, false);
-      }
-    }
-  }, 8000);
-
   if (!navigator.geolocation) {
     fetchIpGeolocation().then(ipLoc => {
-      clearTimeout(ipFallbackTimer);
       if (ipLoc) handleSuccess(ipLoc, false);
       else if (onError) onError({ code: 2, message: "Géolocalisation indisponible." });
     });
     return;
   }
 
-  // 1. Direct high-accuracy attempt with generous timeout
+  // Backup IP fallback timer (7s) in case GPS is completely turned off in Android OS
+  const ipFallbackTimer = setTimeout(async () => {
+    if (!resolved) {
+      const ipLoc = await fetchIpGeolocation();
+      if (!resolved && ipLoc) {
+        console.log("GPS delay: using network location fallback", ipLoc);
+        handleSuccess(ipLoc, false);
+      }
+    }
+  }, 7000);
+
+  // STEP 1: Fast acquisition (enableHighAccuracy: false) -> resolves immediately via fused location
   navigator.geolocation.getCurrentPosition(
-    (pos) => {
+    (posLow) => {
       clearTimeout(ipFallbackTimer);
-      try {
-        localStorage.setItem('fuelpilot_last_known_gps', JSON.stringify({
-          lat: pos.coords.latitude,
-          lon: pos.coords.longitude,
-          time: Date.now()
-        }));
-      } catch (e) {}
-      handleSuccess(pos, true);
+      handleSuccess(posLow, false);
+
+      // STEP 2: Concurrently request satellite high-accuracy fix to refine coordinates
+      navigator.geolocation.getCurrentPosition(
+        (posHigh) => {
+          handleSuccess(posHigh, true);
+        },
+        (errHigh) => {
+          console.warn("High-accuracy satellite refinement error (non-fatal):", errHigh);
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+      );
     },
-    (errHigh) => {
-      if (errHigh && errHigh.code === 1) { // User explicitly denied permission
+    (errLow) => {
+      if (errLow && errLow.code === 1) { // User explicitly denied permission
         clearTimeout(ipFallbackTimer);
-        if (onError) onError(errHigh);
+        if (onError) onError(errLow);
         return;
       }
-      // 2. Fallback to cellular/wifi triangulation (enableHighAccuracy: false)
+
+      // If low-accuracy failed, try high-accuracy directly
       navigator.geolocation.getCurrentPosition(
-        (posLow) => {
+        (posHigh) => {
           clearTimeout(ipFallbackTimer);
-          handleSuccess(posLow, false);
+          handleSuccess(posHigh, true);
         },
-        async (errLow) => {
+        async (errHigh) => {
           clearTimeout(ipFallbackTimer);
           if (resolved) return;
+          if (errHigh && errHigh.code === 1) {
+            if (onError) onError(errHigh);
+            return;
+          }
           const ipLoc = await fetchIpGeolocation();
           if (ipLoc) {
             handleSuccess(ipLoc, false);
           } else if (onError) {
-            onError(errLow || errHigh);
+            onError(errHigh || errLow);
           }
         },
-        { enableHighAccuracy: false, timeout: 8000, maximumAge: 300000 }
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       );
     },
-    { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 }
+    { enableHighAccuracy: false, timeout: 4000, maximumAge: 30000 }
   );
 }
 
-// Center map on user position smoothly
+// Center map on user position smoothly (always fetches latest live location)
 function centerMapOnUser() {
   const btnLocate = document.getElementById('btn-locate-me');
-  if (userGpsPosition && userGpsPosition.lat && userGpsPosition.lon) {
-    if (map) {
-      map.setView([userGpsPosition.lat, userGpsPosition.lon], 15, { animate: true });
-      updateUserGpsMarker(userGpsPosition.lat, userGpsPosition.lon);
-      if (userGpsMarker) userGpsMarker.openTooltip();
-    }
-    return;
-  }
-
   if (btnLocate) btnLocate.classList.add('locating');
 
+  // If we already have a position, pan to it immediately for instant responsiveness
+  if (userGpsPosition && userGpsPosition.lat && userGpsPosition.lon && map) {
+    map.setView([userGpsPosition.lat, userGpsPosition.lon], 15, { animate: true });
+    updateUserGpsMarker(userGpsPosition.lat, userGpsPosition.lon);
+    if (userGpsMarker) userGpsMarker.openTooltip();
+  }
+
+  // Always request fresh GPS in background or as primary
   requestUserGeolocation(
     (pos) => {
       if (btnLocate) btnLocate.classList.remove('locating');
@@ -4974,7 +5051,8 @@ function centerMapOnUser() {
       if (err && err.code === 1) {
         alert(formatGeolocationErrorMessage(err));
       }
-    }
+    },
+    true // force fresh GPS fix
   );
 }
 
@@ -5134,4 +5212,14 @@ function onGpsLocationUpdate(coords) {
 
   // 3. Re-render stations list and update pins
   renderCurrentRouteStations();
+}
+
+function updateAllClearButtons() {
+  document.querySelectorAll('.input-group').forEach(group => {
+    const inp = group.querySelector('.address-input');
+    const btn = group.querySelector('.btn-clear-input');
+    if (inp && btn) {
+      btn.style.display = inp.value.trim().length > 0 ? 'flex' : 'none';
+    }
+  });
 }

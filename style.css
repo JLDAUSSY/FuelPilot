@@ -2509,23 +2509,15 @@ header {
 
 
 .popup-pk {
-
-  background: #f1f5f9;
-
-  color: #0f172a;
-
-  padding: 2px 6px;
-
-  border-radius: 4px;
-
+  background: rgba(30, 41, 59, 0.9);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 3px 8px;
+  border-radius: 5px;
   font-weight: 700;
-
   font-size: 0.75rem;
-
   display: inline-block;
-
   margin-bottom: 8px;
-
 }
 
 
@@ -5996,4 +5988,61 @@ header {
   color: #fbbf24;
   margin-bottom: 8px;
   line-height: 1.35;
+}
+
+/* ------------------------------------------------------------- */
+/* v8.8: Clear button on address inputs ('x')                    */
+/* ------------------------------------------------------------- */
+.btn-clear-input {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(148, 163, 184, 0.22);
+  border: none;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.15s ease;
+  padding: 0;
+  touch-action: manipulation;
+}
+
+.btn-clear-input:hover {
+  background: rgba(239, 68, 68, 0.3);
+  color: #f87171;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.address-input {
+  padding-right: 34px !important;
+}
+
+/* ------------------------------------------------------------- */
+/* v8.8: Off-motorway station cards (fond gris foncé contrasté)  */
+/* ------------------------------------------------------------- */
+.station-card.exit-station-card {
+  background: #242d3d !important; /* Gris foncé distinct contrasté par rapport au noir */
+  border: 1px solid #3d4a5e !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+}
+
+.station-card.exit-station-card:hover {
+  background: #2b3648 !important;
+  border-color: #60a5fa !important;
+}
+
+.station-card.exit-station-card.highlighted {
+  background: #263852 !important;
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.35) !important;
 }

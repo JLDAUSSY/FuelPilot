@@ -112,6 +112,28 @@ try:
     print(f"Value after selection: '{end_inp.get_attribute('value')}'")
     print("[PASS] input-end typing and selection work cleanly.")
 
+    print("\n--- TEST 2B: Clear Button ('✕') on Address Inputs ---")
+    btn_clear_end = driver.find_element(By.ID, 'btn-clear-end')
+    assert btn_clear_end.is_displayed(), "FAILURE: btn-clear-end is not displayed when input has value!"
+    driver.execute_script("arguments[0].click();", btn_clear_end)
+    time.sleep(0.5)
+    cleared_val = end_inp.get_attribute("value")
+    print(f"Value in input-end after clicking '✕': '{cleared_val}'")
+    assert cleared_val == "", f"FAILURE: Expected empty input after clicking '✕', got '{cleared_val}'"
+    assert not btn_clear_end.is_displayed(), "FAILURE: btn-clear-end should be hidden when input is empty!"
+    
+    # Re-type and select Lyon for remaining tests
+    end_inp.send_keys("Lyon")
+    driver.execute_script("arguments[0].dispatchEvent(new Event('input', { bubbles: true }));", end_inp)
+    WebDriverWait(driver, 8).until(
+        lambda d: any("Lyon" in it.text for it in d.find_element(By.ID, 'dropdown-end').find_elements(By.CLASS_NAME, 'autocomplete-item'))
+    )
+    dropdown_end = driver.find_element(By.ID, 'dropdown-end')
+    lyon_item = next(it for it in dropdown_end.find_elements(By.CLASS_NAME, 'autocomplete-item') if "Lyon" in it.text)
+    lyon_item.click()
+    time.sleep(0.5)
+    print("[PASS] Clear button ('✕') successfully resets address input cleanly.")
+
     time.sleep(1)
     print("\n--- TEST 3: Route Calculation & Stations Display ---")
     calc_btn = driver.find_element(By.ID, 'btn-calculate')
@@ -238,6 +260,18 @@ try:
     sample_exit_badge = exit_badges[0].get_attribute('textContent').strip()
     print(f"Sample exit badge text: '{sample_exit_badge}'")
     assert "🚪" in sample_exit_badge and ("Hors autoroute" in sample_exit_badge or "Sortie" in sample_exit_badge), f"FAILURE: Invalid exit badge: '{sample_exit_badge}'"
+    assert "km" in sample_exit_badge, f"FAILURE: Exit badge distance must be formatted in km with 1 decimal! Got: '{sample_exit_badge}'"
+    import re
+    assert re.search(r'\d+\.\d+\s*km', sample_exit_badge), f"FAILURE: Exit badge distance does not contain 1-decimal km: '{sample_exit_badge}'"
+    print(f"[PASS] Exit badge distance correctly formatted in decimal km: '{sample_exit_badge}'")
+
+    # Check that exit station cards have exit-station-card class and distinct dark grey background
+    exit_cards_styled = [c for c in exit_cards if 'exit-station-card' in c.get_attribute('className')]
+    assert len(exit_cards_styled) > 0, "FAILURE: No cards have exit-station-card class!"
+    bg_color = driver.execute_script("return window.getComputedStyle(arguments[0]).backgroundColor;", exit_cards_styled[0])
+    print(f"Exit station card background color: {bg_color}")
+    assert bg_color != 'rgb(15, 23, 42)', "FAILURE: Exit card still has default black background!"
+    print("[PASS] Exit station cards have distinct dark grey background styling.")
 
     savings_badges = driver.find_elements(By.CLASS_NAME, 'station-savings-badge')
     print(f"Found {len(savings_badges)} savings badges ('💰 Économie').")
@@ -263,7 +297,15 @@ try:
     banner_text = off_banner[0].get_attribute('textContent').strip()
     print(f"Banner text: '{banner_text}'")
     assert 'hors autoroute' in banner_text.lower(), f"FAILURE: Banner does not mention 'Hors autoroute': '{banner_text}'"
-    print("[PASS] Exit station brand and explicit off-highway notice successfully verified.")
+    assert "km" in banner_text, f"FAILURE: Banner does not contain km distance: '{banner_text}'"
+    assert re.search(r'\d+\.\d+\s*km', banner_text), f"FAILURE: Banner does not contain decimal km distance: '{banner_text}'"
+
+    # Verify that popup-pk (white strip / 'Autoroute') is COMPLETELY REMOVED for off-motorway stations
+    popup_pk_elements = driver.find_elements(By.CSS_SELECTOR, '.leaflet-popup-content .popup-pk')
+    print(f"Found {len(popup_pk_elements)} popup-pk elements in off-motorway popup.")
+    assert len(popup_pk_elements) == 0, f"FAILURE: Off-motorway popup must not display popup-pk ('Autoroute' white strip)! Found {len(popup_pk_elements)}"
+    print("[PASS] Off-motorway popup correctly suppresses popup-pk (white strip / 'Autoroute').")
+    print("[PASS] Exit station brand, decimal km distance and explicit off-highway notice successfully verified.")
 
     print("\n--- TEST 13: Popup Centering and Screen Containment ---")
     popup_wrapper = driver.find_element(By.CLASS_NAME, 'leaflet-popup-content-wrapper')
@@ -334,6 +376,15 @@ try:
     besnate_match = next(it for it in besnate_items if "Besnate" in it.text)
     print(f"[PASS] Successfully resolved municipality: '{besnate_match.text}'")
 
+    
+    print("\n--- TEST 16: PWA Standalone Geolocation Permission Guidance ---")
+    geo_msg_standalone = driver.execute_script('''
+        return formatGeolocationErrorMessage({ code: 1 });
+    ''')
+    print(f"Geolocation Error Message preview:\n{geo_msg_standalone[:180]}...")
+    assert "Autorisation GPS" in geo_msg_standalone, "FAILURE: Missing GPS authorization title in error message!"
+    print("[PASS] Geolocation error formatting provides crystal-clear guidance.")
+
     print("\n--- Final Console Error Check ---")
     logs = driver.get_log('browser')
     severe = [l for l in logs if l['level'] == 'SEVERE']
@@ -341,7 +392,7 @@ try:
     print("[PASS] 0 severe console errors throughout all tests.")
 
     print("\n==========================================")
-    print("ALL 15 RIGOROUS AUTOMATED TESTS PASSED! 100%")
+    print("ALL 16 RIGOROUS AUTOMATED TESTS PASSED! 100%")
     print("==========================================")
 
 finally:
