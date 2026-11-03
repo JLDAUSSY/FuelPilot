@@ -4850,7 +4850,17 @@ function isStandalonePwaMode() {
 function formatGeolocationErrorMessage(err) {
   const code = err && err.code;
   let rawMsg = (err && err.message) ? String(err.message) : '';
-  if (rawMsg.toLowerCase().includes('notwa')) rawMsg = '';
+  const isNoTwa = rawMsg.toLowerCase().includes('notwa');
+
+  if (isNoTwa) {
+    return "📱 Mise à jour de l'application Android requise :\n\n" +
+      "L'application actuellement installée sur votre smartphone est une ancienne version sans passerelle de délégation GPS native.\n\n" +
+      "👉 Pour activer le GPS natif (comme sur WaterMetrics) :\n" +
+      "Installez la mise à jour v1.0.3 disponible ici :\n" +
+      "https://jldaussy.github.io/FuelPilot/apk/FuelCoPilot.apk\n\n" +
+      "💡 En attendant l'installation, le GPS fonctionne immédiatement en ouvrant le site dans Google Chrome !";
+  }
+
   const msg = rawMsg ? ` (${rawMsg})` : '';
 
   if (code === 1) { // PERMISSION_DENIED
@@ -4994,10 +5004,23 @@ function getFreshUserLocation(onSuccess, onError) {
           return;
         }
 
-        // Si Android TWA signale NoTwaFound lors de l'accroche, maintenir l'écoute
+        // Si Android TWA signale NoTwaFound (ancienne version APK sans DelegationService)
         const isNoTwa = err && err.message && String(err.message).toLowerCase().includes('notwa');
         if (isNoTwa) {
-          console.warn("[GPS WaterMetrics] Détection NoTwaFound: maintien de la liaison IPC Android...");
+          console.warn("[GPS WaterMetrics] Détection NoTwaFound: tentative de repli immédiat sans blocage...");
+          if (!resolved && !bestCoords) {
+            try {
+              navigator.geolocation.getCurrentPosition(
+                (pos) => finish(pos, null),
+                (err2) => {
+                  if (!resolved && !bestCoords) finish(null, err);
+                },
+                { enableHighAccuracy: false, timeout: 4000, maximumAge: 300000 }
+              );
+            } catch(eCur) {
+              if (!resolved && !bestCoords) finish(null, err);
+            }
+          }
           return;
         }
 
