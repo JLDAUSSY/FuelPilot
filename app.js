@@ -1075,7 +1075,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.3';
+const APP_VERSION = '9.4';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -1145,6 +1145,19 @@ function formatExitDistKm(distM) {
   const m = Number(distM) || 800;
   const km = m / 1000;
   return km.toFixed(1) + ' km';
+}
+
+function extractExitNumber(st) {
+  if (!st) return null;
+  const candidates = [st.nom, st.adresse, st.displayedPk, st.pk_text, st.sens];
+  for (const str of candidates) {
+    if (!str) continue;
+    const m = String(str).match(/(?:sortie|ausfahrt|uscita|salida|junction)\s*(?:n[°o.]?\s*|#\s*)?([0-9]+[a-zA-Z]?)/i);
+    if (m && m[1]) return m[1].toUpperCase();
+    const mJ = String(str).match(/\bJ\s*([0-9]+[a-zA-Z]?)\b/i);
+    if (mJ && mJ[1]) return mJ[1].toUpperCase();
+  }
+  return null;
 }
 
 const I18N_DICT = {
@@ -1262,9 +1275,9 @@ const I18N_DICT = {
     amenitiesServicesTitle: "🛠️ Services de l'aire",
     moreBrands: (n) => `+${n} enseignes`,
     hoursTitle: "🕒 HORAIRES D'OUVERTURE",
-    offMotorwayBadge: (d) => `Hors autoroute (sortie à ${d})`,
+    offMotorwayBadge: (d, exitNum) => exitNum ? `À ${d} de la sortie n° ${exitNum}` : `À ${d} de la sortie d'autoroute`,
     offMotorwayPopupTitle: "Station hors autoroute",
-    offMotorwayPopupDesc: (d) => `Accessible à la sortie d'autoroute / péage (~${d})`,
+    offMotorwayPopupDesc: (d, exitNum) => exitNum ? `Accessible à la sortie n° ${exitNum} (~${d})` : `Accessible à la sortie d'autoroute / péage (~${d})`,
     offMotorwayTooltip: "Station située hors autoroute, à la sortie immédiate",
     savingsBadge: (amt, cur, diff, unit) => `💰 Économie : ~${amt} ${cur} sur le plein (-${diff} ${cur}/${unit})`,
     savingsTooltip: "Économie estimée par rapport au prix moyen sur l'autoroute",
@@ -1384,9 +1397,9 @@ const I18N_DICT = {
     amenitiesServicesTitle: "🛠️ Raststätten-Services",
     moreBrands: (n) => `+${n} Marken`,
     hoursTitle: "🕒 ÖFFNUNGSZEITEN",
-    offMotorwayBadge: (d) => `Außerhalb Autobahn (Ausfahrt ${d})`,
+    offMotorwayBadge: (d, exitNum) => exitNum ? `${d} von Ausfahrt ${exitNum}` : `${d} von der Autobahnausfahrt`,
     offMotorwayPopupTitle: "Station außerhalb der Autobahn",
-    offMotorwayPopupDesc: (d) => `An der Autobahnausfahrt / Mautstelle (~${d})`,
+    offMotorwayPopupDesc: (d, exitNum) => exitNum ? `Erreichbar an Ausfahrt ${exitNum} (~${d})` : `An der Autobahnausfahrt / Mautstelle (~${d})`,
     offMotorwayTooltip: "Tankstelle außerhalb der Autobahn, direkt an der Ausfahrt",
     savingsBadge: (amt, cur, diff, unit) => `💰 Ersparnis: ~${amt} ${cur} pro Tankfüllung (-${diff} ${cur}/${unit})`,
     savingsTooltip: "Geschätzte Ersparnis im Vergleich zum Autobahn-Durchschnitt",
@@ -1506,9 +1519,9 @@ const I18N_DICT = {
     amenitiesServicesTitle: "🛠️ Service area amenities",
     moreBrands: (n) => `+${n} brands`,
     hoursTitle: "🕒 OPENING HOURS",
-    offMotorwayBadge: (d) => `Off-motorway (exit ${d})`,
+    offMotorwayBadge: (d, exitNum) => exitNum ? `${d} from exit ${exitNum}` : `${d} from motorway exit`,
     offMotorwayPopupTitle: "Off-motorway station",
-    offMotorwayPopupDesc: (d) => `Accessible at motorway exit / toll (~${d})`,
+    offMotorwayPopupDesc: (d, exitNum) => exitNum ? `Accessible from exit ${exitNum} (~${d})` : `Accessible from motorway exit / toll (~${d})`,
     offMotorwayTooltip: "Station located off the motorway, right at the exit",
     savingsBadge: (amt, cur, diff, unit) => `💰 Savings: ~${cur}${amt} on a full tank (-${cur}${diff}/${unit})`,
     savingsTooltip: "Estimated savings compared to motorway service area average",
@@ -1628,9 +1641,9 @@ const I18N_DICT = {
     amenitiesServicesTitle: "🛠️ Servizi dell'area",
     moreBrands: (n) => `+${n} marchi`,
     hoursTitle: "🕒 ORARI DI APERTURA",
-    offMotorwayBadge: (d) => `Fuori autostrada (uscita a ${d})`,
+    offMotorwayBadge: (d, exitNum) => exitNum ? `A ${d} dall'uscita n. ${exitNum}` : `A ${d} dall'uscita autostradale`,
     offMotorwayPopupTitle: "Stazione fuori autostrada",
-    offMotorwayPopupDesc: (d) => `Raggiungibile all'uscita autostradale / casello (~${d})`,
+    offMotorwayPopupDesc: (d, exitNum) => exitNum ? `Raggiungibile all'uscita n. ${exitNum} (~${d})` : `All'uscita autostradale / casello (~${d})`,
     offMotorwayTooltip: "Stazione situata fuori autostrada, subito all'uscita",
     savingsBadge: (amt, cur, diff, unit) => `💰 Risparmio: ~${amt} ${cur} sul pieno (-${diff} ${cur}/${unit})`,
     savingsTooltip: "Risparmio stimato rispetto alla media delle aree autostradali",
@@ -1750,9 +1763,9 @@ const I18N_DICT = {
     amenitiesServicesTitle: "🛠️ Servicios del área",
     moreBrands: (n) => `+${n} marcas`,
     hoursTitle: "🕒 HORARIOS DE APERTURA",
-    offMotorwayBadge: (d) => `Fuera autopista (salida a ${d})`,
+    offMotorwayBadge: (d, exitNum) => exitNum ? `A ${d} de la salida n.º ${exitNum}` : `A ${d} de la salida de autopista`,
     offMotorwayPopupTitle: "Estación fuera de autopista",
-    offMotorwayPopupDesc: (d) => `Accesible en la salida de autopista / peaje (~${d})`,
+    offMotorwayPopupDesc: (d, exitNum) => exitNum ? `Accesible en la salida n.º ${exitNum} (~${d})` : `En la salida de la autopista / peaje (~${d})`,
     offMotorwayTooltip: "Estación fuera de autopista, justo en la salida",
     savingsBadge: (amt, cur, diff, unit) => `💰 Ahorro: ~${amt} ${cur} en depósito (-${diff} ${cur}/${unit})`,
     savingsTooltip: "Ahorro estimado respecto a la media en autopista",
@@ -4156,15 +4169,16 @@ function renderCurrentRouteStations() {
     const wazeSvg = `<svg class="nav-btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.5 10.5c0-4.4-3.8-8-8.5-8S2.5 6.1 2.5 10.5c0 1.9.7 3.6 1.8 5-.5 1.2-1.4 2.1-2.3 2.5-.4.2-.5.7-.2 1 .3.3.9.5 1.8.5 1.3 0 2.6-.4 3.6-.9 1.2.5 2.5.8 3.8.8 4.7 0 8.5-3.6 8.5-8.9zm-11 0c-.8 0-1.5-.7-1.5-1.5S7.7 7.5 8.5 7.5 10 8.2 10 9s-.7 1.5-1.5 1.5zm6 0c-.8 0-1.5-.7-1.5-1.5S13.7 7.5 14.5 7.5 16 8.2 16 9s-.7 1.5-1.5 1.5zm-3 5.2c-1.9 0-3.5-1-4.2-2.5-.2-.4 0-.8.4-1 .4-.2.8 0 1 .4.5 1 1.6 1.6 2.8 1.6s2.3-.6 2.8-1.6c.2-.4.6-.6 1-.4.4.2.6.6.4 1-.7 1.5-2.3 2.5-4.2 2.5z"/></svg>`;
     const gmapsSvg = `<svg class="nav-btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`;
 
+    const exitNum = extractExitNumber(st);
     const formattedExitDist = formatExitDistKm(st.exitDistanceM || 800);
     const offMotorwayBadgeText = (tr.offMotorwayBadge && typeof tr.offMotorwayBadge === 'function')
-      ? tr.offMotorwayBadge(formattedExitDist)
-      : `Hors autoroute (sortie à ${formattedExitDist})`;
+      ? tr.offMotorwayBadge(formattedExitDist, exitNum)
+      : (exitNum ? `À ${formattedExitDist} de la sortie n° ${exitNum}` : `À ${formattedExitDist} de la sortie d'autoroute`);
 
     const popupExitBannerHtml = st.isExitStation ? `
       <div class="popup-exit-banner popup-off-motorway-banner">
         ⚠️ <strong>${tr.offMotorwayPopupTitle || 'Station hors autoroute'}</strong>
-        <div style="font-size:0.75rem; margin-top:2px;">${(tr.offMotorwayPopupDesc && typeof tr.offMotorwayPopupDesc === 'function') ? tr.offMotorwayPopupDesc(formattedExitDist) : `Accessible à la sortie d'autoroute / péage (~${formattedExitDist})`}</div>
+        <div style="font-size:0.75rem; margin-top:2px;">${(tr.offMotorwayPopupDesc && typeof tr.offMotorwayPopupDesc === 'function') ? tr.offMotorwayPopupDesc(formattedExitDist, exitNum) : (exitNum ? `Accessible à la sortie n° ${exitNum} (~${formattedExitDist})` : `Accessible à la sortie d'autoroute / péage (~${formattedExitDist})`)}</div>
       </div>
     ` : '';
 
@@ -4228,7 +4242,7 @@ function renderCurrentRouteStations() {
       ${st.isExitStation ? `
         <div class="exit-card-banner">
           <span class="exit-card-banner-icon">🚪</span>
-          <span class="exit-card-banner-text">${offMotorwayBadgeText.toUpperCase()}</span>
+          <span class="exit-card-banner-text">${(tr.offMotorwayPopupTitle || 'STATION HORS AUTOROUTE').toUpperCase()} · ${offMotorwayBadgeText.toUpperCase()}</span>
         </div>
       ` : ''}
       <div class="card-top">

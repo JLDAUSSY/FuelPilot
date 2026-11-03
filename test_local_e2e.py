@@ -267,7 +267,7 @@ try:
     assert len(exit_badges) > 0, "FAILURE: No exit-badge found after enabling exit stations toggle!"
     sample_exit_badge = exit_badges[0].get_attribute('textContent').strip()
     print(f"Sample exit badge text: '{sample_exit_badge}'")
-    assert "🚪" in sample_exit_badge and ("Hors autoroute" in sample_exit_badge or "Sortie" in sample_exit_badge), f"FAILURE: Invalid exit badge: '{sample_exit_badge}'"
+    assert "🚪" in sample_exit_badge and ("hors autoroute" in sample_exit_badge.lower() or "sortie" in sample_exit_badge.lower()), f"FAILURE: Invalid exit badge: '{sample_exit_badge}'"
     assert "km" in sample_exit_badge, f"FAILURE: Exit badge distance must be formatted in km with 1 decimal! Got: '{sample_exit_badge}'"
     import re
     assert re.search(r'\d+\.\d+\s*km', sample_exit_badge), f"FAILURE: Exit badge distance does not contain 1-decimal km: '{sample_exit_badge}'"
@@ -355,7 +355,7 @@ try:
     assert len(it_exit_badges) > 0
     it_badge_text = it_exit_badges[0].get_attribute('textContent').strip()
     print(f"Italian exit badge text: '{it_badge_text}'")
-    assert "fuori autostrada" in it_badge_text.lower(), f"FAILURE: Expected Italian 'Fuori autostrada', got '{it_badge_text}'"
+    assert "uscita" in it_badge_text.lower(), f"FAILURE: Expected Italian 'uscita', got '{it_badge_text}'"
 
     exit_cards_it = driver.find_elements(By.CLASS_NAME, 'station-card')
     exit_card_it = next(c for c in exit_cards_it if len(c.find_elements(By.CLASS_NAME, 'exit-badge')) > 0)
