@@ -4940,6 +4940,7 @@ function getFreshUserLocation(onSuccess, onError) {
   let bestCoords = null;
   let bestAccuracy = Infinity;
   let safetyTimer = null;
+  let lowAccuracyTimer = null;
 
   const clearWatchSafely = () => {
     if (watchId !== null) {
@@ -4953,6 +4954,7 @@ function getFreshUserLocation(onSuccess, onError) {
     resolved = true;
     clearWatchSafely();
     if (safetyTimer) { clearTimeout(safetyTimer); safetyTimer = null; }
+    if (lowAccuracyTimer) { clearTimeout(lowAccuracyTimer); lowAccuracyTimer = null; }
     isAcquiringLocation = false;
 
     // Check if error is Android TWA IPC disconnect (NoTwaFound) and retry if attempts remain
@@ -4993,6 +4995,31 @@ function getFreshUserLocation(onSuccess, onError) {
       finish(null, { code: 3, message: 'Délai GPS dépassé' });
     }
   }, 14000);
+
+  // Repli automatique basse precision (Wi-Fi / Cellulaire) au bout de 4 secondes si satellites lents ou interieur
+  lowAccuracyTimer = setTimeout(() => {
+    if (!resolved && !bestCoords) {
+      console.log('[GPS WaterMetrics] Detection satellite en cours, requete parallele basse precision (Wi-Fi/Cellulaire)...');
+      try {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            if (!resolved && pos && pos.coords) {
+              const acc = Math.round(pos.coords.accuracy || 100);
+              console.log(`[GPS WaterMetrics] Position Wi-Fi/Cellulaire recue: lat=${pos.coords.latitude.toFixed(5)}, lng=${pos.coords.longitude.toFixed(5)}, precision=+/-${acc}m`);
+              if (acc < bestAccuracy) {
+                bestAccuracy = acc;
+                bestCoords = pos;
+              }
+            }
+          },
+          (errLow) => {
+            console.warn('[GPS WaterMetrics] Requete basse precision:', errLow && errLow.message);
+          },
+          { enableHighAccuracy: false, timeout: 6000, maximumAge: 300000 }
+        );
+      } catch (eLow) {}
+    }
+  }, 4000);
 
   const geoOptions = {
     enableHighAccuracy: true,
