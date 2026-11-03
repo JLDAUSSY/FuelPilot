@@ -1075,7 +1075,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.2';
+const APP_VERSION = '9.3';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -1155,7 +1155,7 @@ const I18N_DICT = {
     guide: "Guide",
     guideTitle: "Mode d'emploi & Guide d'utilisation",
     live: "Prix en direct",
-    refreshTitle: "Actualiser FueCoPilot",
+    refreshTitle: "Actualiser FuelCoPilot",
     sec1: "1. Choix de l'itinéraire",
     startPlaceholder: "Ville ou lieu de départ...",
     endPlaceholder: "Ville ou lieu d'arrivée...",
@@ -1278,7 +1278,7 @@ const I18N_DICT = {
     guide: "Hilfe",
     guideTitle: "Bedienungsanleitung & Leitfaden",
     live: "Live-Preise",
-    refreshTitle: "FueCoPilot aktualisieren",
+    refreshTitle: "FuelCoPilot aktualisieren",
     sec1: "1. Routenwahl",
     startPlaceholder: "Startort oder Adresse...",
     endPlaceholder: "Zielort oder Adresse...",
@@ -1400,7 +1400,7 @@ const I18N_DICT = {
     guide: "Guide",
     guideTitle: "User Guide & Manual",
     live: "Live prices",
-    refreshTitle: "Refresh FueCoPilot",
+    refreshTitle: "Refresh FuelCoPilot",
     sec1: "1. Route planner",
     startPlaceholder: "Departure city or place...",
     endPlaceholder: "Arrival city or place...",
@@ -1522,7 +1522,7 @@ const I18N_DICT = {
     guide: "Guida",
     guideTitle: "Guida all'uso",
     live: "Prezzi live",
-    refreshTitle: "Aggiorna FueCoPilot",
+    refreshTitle: "Aggiorna FuelCoPilot",
     sec1: "1. Scelta dell'itinerario",
     startPlaceholder: "Città o luogo di partenza...",
     endPlaceholder: "Città o luogo di arrivo...",
@@ -1644,7 +1644,7 @@ const I18N_DICT = {
     guide: "Guía",
     guideTitle: "Guía de uso",
     live: "Precios en vivo",
-    refreshTitle: "Actualizar FueCoPilot",
+    refreshTitle: "Actualizar FuelCoPilot",
     sec1: "1. Elección de ruta",
     startPlaceholder: "Ciudad o lugar de salida...",
     endPlaceholder: "Ciudad o lugar de llegada...",
@@ -4835,18 +4835,20 @@ function isStandalonePwaMode() {
 
 function formatGeolocationErrorMessage(err) {
   const code = err && err.code;
-  const msg = (err && err.message) ? ` (${err.message})` : '';
+  let rawMsg = (err && err.message) ? String(err.message) : '';
+  if (rawMsg.toLowerCase().includes('notwa')) rawMsg = '';
+  const msg = rawMsg ? ` (${rawMsg})` : '';
 
   if (code === 1) { // PERMISSION_DENIED
     if (isStandalonePwaMode()) {
       return "📍 Autorisation GPS requise dans l'application :\n\n" +
-        "Sur Android, l'application FueCoPilot sur votre écran d'accueil nécessite l'autorisation de localisation :\n\n" +
+        "Sur Android, l'application FuelCoPilot sur votre écran d'accueil nécessite l'autorisation de localisation :\n\n" +
         "👉 Pour l'activer en 5 secondes :\n" +
         "1. Ouvrez les Paramètres de votre téléphone Android ⚙️\n" +
-        "2. Allez dans 'Applications' > 'FueCoPilot'\n" +
+        "2. Allez dans 'Applications' > 'FuelCoPilot'\n" +
         "3. Touchez 'Autorisations' > 'Position' (ou Localisation)\n" +
         "4. Cochez 'Autoriser seulement si l'appli est en cours d'utilisation'\n" +
-        "5. Revenez dans FueCoPilot : votre position GPS fonctionnera instantanément !";
+        "5. Revenez dans FuelCoPilot : votre position GPS fonctionnera instantanément !";
     }
     return "📍 Autorisation GPS refusée dans le navigateur Chrome :\n\n" +
       "Vos applications natives (Google Maps, Waze) utilisent l'autorisation directe Android, mais Google Chrome a actuellement l'accès bloqué pour jldaussy.github.io.\n\n" +
@@ -4863,14 +4865,15 @@ function formatGeolocationErrorMessage(err) {
   return (t().locationError || "Impossible d'obtenir votre position GPS.") + msg;
 }
 
-// Bulletproof Sequential Geolocation Acquisition:
-// Tier 1: Attempts High Accuracy (hardware GPS satellites & Google fused location) with a 60s cache window.
-// Tier 2: If Tier 1 times out or is unavailable (e.g. indoors where satellite signals cannot penetrate),
-//         it automatically falls back to Standard Fused Location (Wi-Fi access points & cell towers).
-// This guarantees instant street-level positioning indoors without fatal timeouts or alerts!
-// ZERO IP FALLBACK: Strictly physical device sensors and Google Play Services Location Provider.
+// Proven WaterMetrics Geolocation Architecture + Android TWA NoTwaFound Auto-Recovery:
+// 1. Uses navigator.geolocation.watchPosition streaming (immune to transient TWA IPC disconnects).
+// 2. Tracks bestCoords and accuracy; validates immediately when accuracy <= 2500m.
+// 3. Catches NoTwaFound and keeps listening until Android TWA bridge reconnects.
+// 4. Fallback to fused standard accuracy if satellites are obscured indoors.
+// 5. Global safety timer (14s) ensures graceful resolution without UI freezes.
 let activeLocationCallbacks = [];
 let isAcquiringLocation = false;
+let twaRetryCounter = 0;
 
 function getFreshUserLocation(onSuccess, onError) {
   if (!navigator.geolocation) {
@@ -4878,85 +4881,145 @@ function getFreshUserLocation(onSuccess, onError) {
     return;
   }
 
-  // Queue callback if an acquisition is already active to prevent concurrent Android Mojo IPC collisions
-  activeLocationCallbacks.push({ onSuccess, onError });
+  if (onSuccess || onError) {
+    activeLocationCallbacks.push({ onSuccess, onError });
+  }
+
   if (isAcquiringLocation) return;
   isAcquiringLocation = true;
 
-  const dispatchSuccess = (pos, isHighAcc) => {
+  let watchId = null;
+  let resolved = false;
+  let bestCoords = null;
+  let bestAccuracy = Infinity;
+  let safetyTimer = null;
+
+  const clearWatchSafely = () => {
+    if (watchId !== null) {
+      try { navigator.geolocation.clearWatch(watchId); } catch(e) {}
+      watchId = null;
+    }
+  };
+
+  const finish = (finalPos, finalErr) => {
+    if (resolved) return;
+    resolved = true;
+    clearWatchSafely();
+    if (safetyTimer) { clearTimeout(safetyTimer); safetyTimer = null; }
     isAcquiringLocation = false;
+
+    // Check if error is Android TWA IPC disconnect (NoTwaFound) and retry if attempts remain
+    const isNoTwa = finalErr && (
+      (finalErr.message && String(finalErr.message).toLowerCase().includes('notwa')) ||
+      (finalErr.code === 2 && twaRetryCounter < 2)
+    );
+
+    if (isNoTwa && twaRetryCounter < 2) {
+      twaRetryCounter++;
+      console.warn(`[GPS WaterMetrics] Android TWA bridge reconnection needed (attempt ${twaRetryCounter}/2). Retrying in 1200ms...`);
+      setTimeout(() => {
+        getFreshUserLocation(null, null);
+      }, 1200);
+      return;
+    }
+
+    twaRetryCounter = 0;
     const callbacks = [...activeLocationCallbacks];
     activeLocationCallbacks = [];
     callbacks.forEach(cb => {
-      if (cb.onSuccess) {
-        try { cb.onSuccess(pos, isHighAcc); } catch (e) { console.error(e); }
+      if (finalPos && cb.onSuccess) {
+        try { cb.onSuccess(finalPos, bestAccuracy < 150); } catch (e) { console.error(e); }
+      } else if (!finalPos && cb.onError) {
+        try { cb.onError(finalErr); } catch (e) { console.error(e); }
       }
     });
   };
 
-  const dispatchError = (err) => {
-    isAcquiringLocation = false;
-    const callbacks = [...activeLocationCallbacks];
-    activeLocationCallbacks = [];
-    callbacks.forEach(cb => {
-      if (cb.onError) {
-        try { cb.onError(err); } catch (e) { console.error(e); }
-      }
-    });
+  // Safety timer: 14 secondes (permet au GPS mobile d'accrocher ses satellites sans timeout prématuré)
+  safetyTimer = setTimeout(() => {
+    if (resolved) return;
+    if (bestCoords) {
+      console.log(`[GPS WaterMetrics] Fin délai sécurité, validation du meilleur relevé (±${bestAccuracy}m)`);
+      finish(bestCoords, null);
+    } else {
+      console.warn('[GPS WaterMetrics] Délai sécurité dépassé sans position exploitable.');
+      finish(null, { code: 3, message: 'Délai GPS dépassé' });
+    }
+  }, 14000);
+
+  const geoOptions = {
+    enableHighAccuracy: true,
+    timeout: 12000,
+    maximumAge: 30000
   };
 
-  // Tier 1: Try High Accuracy first (up to 7 seconds, with 60s cache tolerance)
   try {
-    navigator.geolocation.getCurrentPosition(
+    watchId = navigator.geolocation.watchPosition(
       (pos) => {
-        if (pos && pos.coords) {
-          dispatchSuccess(pos, true);
-        } else {
-          fallbackStandardAccuracy();
+        if (resolved) return;
+        const acc = (pos && pos.coords && typeof pos.coords.accuracy === 'number')
+          ? Math.round(pos.coords.accuracy)
+          : 9999;
+
+        console.log(`[GPS WaterMetrics] Signal reçu: lat=${pos.coords.latitude.toFixed(5)}, lng=${pos.coords.longitude.toFixed(5)}, précision=±${acc}m`);
+
+        if (acc < bestAccuracy) {
+          bestAccuracy = acc;
+          bestCoords = pos;
+        }
+
+        // Dès qu'on obtient une précision satellite fiable (<= 2500m), valider immédiatement !
+        if (acc <= 2500) {
+          finish(pos, null);
         }
       },
       (err) => {
-        // If permission explicitly denied, do not retry; notify user immediately
-        if (err && err.code === 1) {
-          dispatchError(err);
+        console.warn('[GPS WaterMetrics] watchPosition callback notice:', err && err.message);
+        if (err && err.code === 1) { // PERMISSION_DENIED
+          finish(null, err);
           return;
         }
-        // Satellite timeout or unavailable (common indoors): immediately fall back to fused Wi-Fi/cell
-        console.warn("GPS High Accuracy unavailable or timed out; falling back to standard Wi-Fi/Cell positioning...", err && err.message);
-        fallbackStandardAccuracy();
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 7000,
-        maximumAge: 60000
-      }
-    );
-  } catch (e) {
-    fallbackStandardAccuracy();
-  }
 
-  function fallbackStandardAccuracy() {
+        // Si Android TWA signale NoTwaFound lors de l'accroche, maintenir l'écoute
+        const isNoTwa = err && err.message && String(err.message).toLowerCase().includes('notwa');
+        if (isNoTwa) {
+          console.warn("[GPS WaterMetrics] Détection NoTwaFound: maintien de la liaison IPC Android...");
+          return;
+        }
+
+        // Si on a déjà un relevé capté, l'utiliser immédiatement
+        if (bestCoords && !resolved) {
+          finish(bestCoords, null);
+          return;
+        }
+
+        // Repli de secours sur getCurrentPosition en basse précision (Wi-Fi/Cell)
+        if (!bestCoords && !resolved) {
+          try {
+            navigator.geolocation.getCurrentPosition(
+              (pos) => finish(pos, null),
+              (err2) => {
+                if (!resolved && !bestCoords) finish(null, err2 || err);
+              },
+              { enableHighAccuracy: false, timeout: 8000, maximumAge: 300000 }
+            );
+          } catch(eCur) {
+            if (!resolved && !bestCoords) finish(null, err);
+          }
+        }
+      },
+      geoOptions
+    );
+  } catch(eWatch) {
+    console.warn('[GPS WaterMetrics] watchPosition non disponible, repli sur getCurrentPosition:', eWatch);
     try {
       navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          if (pos && pos.coords) {
-            dispatchSuccess(pos, false);
-          } else {
-            dispatchError({ code: 2, message: "Position physique indisponible." });
-          }
-        },
-        (err) => {
-          console.warn("Standard accuracy fallback error:", err && err.message);
-          dispatchError(err);
-        },
-        {
-          enableHighAccuracy: false,
-          timeout: 8000,
-          maximumAge: 300000
-        }
+        (pos) => finish(pos, null),
+        (err) => finish(null, err),
+        { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
       );
-    } catch (e) {
-      dispatchError({ code: 2, message: e.message || "Erreur géolocalisation." });
+    } catch(eCur2) {
+      finish(null, { code: 2, message: eCur2.message || "Erreur géolocalisation" });
     }
   }
 }

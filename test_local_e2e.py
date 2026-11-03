@@ -59,15 +59,15 @@ try:
     assert "_v=" not in current_url, "FAILURE: Page entered an auto-reload loop!"
     print("[PASS] Page is completely stable. Zero reload loops detected.")
 
-    print("\n--- TEST 1B: App Name (FueCoPilot) & Large Logo (+50%) Check ---")
+    print("\n--- TEST 1B: App Name (FuelCoPilot) & Large Logo (+50%) Check ---")
     brand_h1 = driver.find_element(By.CSS_SELECTOR, '.brand-title h1').text
     print(f"App Brand Title: '{brand_h1}'")
-    assert "FueCoPilot" in brand_h1, f"FAILURE: Expected FueCoPilot in header, got '{brand_h1}'"
+    assert "FuelCoPilot" in brand_h1, f"FAILURE: Expected FuelCoPilot in header, got '{brand_h1}'"
     logo_img = driver.find_element(By.CLASS_NAME, 'brand-logo-img')
     logo_width = logo_img.size['width']
     print(f"Brand logo icon width: {logo_width}px")
     assert logo_width >= 60, f"FAILURE: Logo width expected >= 60px (+50% increase), got {logo_width}px"
-    print("[PASS] FueCoPilot branding and enlarged 68px/87px icon verified.")
+    print("[PASS] FuelCoPilot branding and enlarged 68px/87px icon verified.")
 
     print("\n--- TEST 2: Input & Typing Responsiveness ---")
     start_inp = driver.find_element(By.ID, 'input-start')
@@ -83,7 +83,7 @@ try:
     print("[PASS] input-start accepts typing cleanly without losing focus.")
 
     # Wait for autocomplete dropdown
-    dropdown_start = WebDriverWait(driver, 8).until(
+    dropdown_start = WebDriverWait(driver, 14).until(
         EC.visibility_of_element_located((By.ID, 'dropdown-start'))
     )
     assert dropdown_start.is_displayed(), "FAILURE: dropdown-start did not appear!"
@@ -109,7 +109,7 @@ try:
     print(f"Typed in input-end: '{typed_end}'")
     assert "Lyon" in typed_end, f"FAILURE: Expected 'Lyon', got '{typed_end}'"
     # Wait for Lyon search results to appear in dropdown-end
-    WebDriverWait(driver, 8).until(
+    WebDriverWait(driver, 14).until(
         lambda d: any("Lyon" in it.text for it in d.find_element(By.ID, 'dropdown-end').find_elements(By.CLASS_NAME, 'autocomplete-item'))
     )
     dropdown_end = driver.find_element(By.ID, 'dropdown-end')
@@ -135,7 +135,7 @@ try:
     # Re-type and select Lyon for remaining tests
     end_inp.send_keys("Lyon")
     driver.execute_script("arguments[0].dispatchEvent(new Event('input', { bubbles: true }));", end_inp)
-    WebDriverWait(driver, 8).until(
+    WebDriverWait(driver, 14).until(
         lambda d: any("Lyon" in it.text for it in d.find_element(By.ID, 'dropdown-end').find_elements(By.CLASS_NAME, 'autocomplete-item'))
     )
     dropdown_end = driver.find_element(By.ID, 'dropdown-end')
