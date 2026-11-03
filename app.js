@@ -1075,7 +1075,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '8.7';
+const APP_VERSION = '8.9';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -3116,28 +3116,32 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
 function useCurrentGpsLocationAsStart() {
   const startInput = document.getElementById('input-start');
   if (startInput) {
-    startInput.value = t().locating || 'Recherche de votre position...';
+    startInput.value = '📍 ' + (t().locating || 'Recherche de votre position...');
     startInput.classList.remove('input-attention-pulse');
   }
 
-  if (userGpsPosition && (Date.now() - (userGpsPosition.timestamp || 0) < 120000)) {
+  // If recent position exists (< 1 min), apply immediately
+  if (userGpsPosition && userGpsPosition.lat && userGpsPosition.lon && (Date.now() - (userGpsPosition.timestamp || 0) < 60000)) {
     applyGpsAsStartPoint(userGpsPosition.lat, userGpsPosition.lon, userGpsPosition.city);
     updateUserGpsMarker(userGpsPosition.lat, userGpsPosition.lon);
+    if (typeof updateAllClearButtons === 'function') updateAllClearButtons();
     return;
   }
 
-  requestUserGeolocation(
-    (pos) => {
+  getFreshUserLocation(
+    (pos, isHighAcc) => {
       const { latitude, longitude } = pos.coords;
       const city = pos.city || (userGpsPosition && userGpsPosition.city);
+      userGpsPosition = { lat: latitude, lon: longitude, isHighAccuracy: isHighAcc, timestamp: Date.now(), city };
+      updateUserGpsMarker(latitude, longitude);
       applyGpsAsStartPoint(latitude, longitude, city);
+      if (typeof updateAllClearButtons === 'function') updateAllClearButtons();
     },
     (err) => {
       console.warn('Erreur acquisition GPS départ:', err);
-      if (err && err.code === 1) {
-        alert(formatGeolocationErrorMessage(err));
-      }
+      alert(formatGeolocationErrorMessage(err));
       if (startInput && !startPoint) startInput.value = '';
+      if (typeof updateAllClearButtons === 'function') updateAllClearButtons();
     }
   );
 }
@@ -4911,115 +4915,103 @@ async function fetchIpGeolocation() {
   return null;
 }
 
-// Unified GPS requester with fast dual-phase acquisition:
-// 1. Instant Fused/Network fix (<300ms) with enableHighAccuracy: false to immediately unblock the UI
-// 2. Concurrent High-Accuracy Satellite refinement to give exact meter precision as soon as locked
-function requestUserGeolocation(onSuccess, onError, forceFresh = false) {
-  // If recent GPS position exists (< 2 minutes old) and no force refresh requested, use immediately
-  if (!forceFresh && userGpsPosition && userGpsPosition.lat && userGpsPosition.lon && (Date.now() - (userGpsPosition.timestamp || 0) < 120000)) {
-    if (onSuccess) onSuccess({ coords: { latitude: userGpsPosition.lat, longitude: userGpsPosition.lon, heading: userGpsPosition.heading, speed: userGpsPosition.speed } });
+// Rock-solid single-listener watchPosition acquisition
+// Avoids Chromium WebAPK single-request IPC deadlock bug on Android
+function getFreshUserLocation(onSuccess, onError) {
+  if (!navigator.geolocation) {
+    if (onError) onError({ code: 2, message: "Géolocalisation non supportée." });
     return;
   }
 
-  let resolved = false;
+  let finished = false;
+  let watchId = null;
 
-  const handleSuccess = (pos, isHighAccuracy = false) => {
-    if (!pos || !pos.coords) return;
-    const { latitude, longitude, heading, speed } = pos.coords;
-    userGpsPosition = { lat: latitude, lon: longitude, heading, speed, isHighAccuracy, timestamp: Date.now() };
-    updateUserGpsMarker(latitude, longitude);
-    try {
-      localStorage.setItem('fuelpilot_last_known_gps', JSON.stringify({
-        lat: latitude,
-        lon: longitude,
-        time: Date.now()
-      }));
-    } catch (e) {}
-    if (!resolved) {
-      resolved = true;
-      if (onSuccess) onSuccess(pos);
+  const cleanup = () => {
+    if (watchId !== null) {
+      try { navigator.geolocation.clearWatch(watchId); } catch (e) {}
+      watchId = null;
     }
   };
 
-  // Pre-fill from localStorage if available (fast initial display)
-  try {
-    const cachedGps = localStorage.getItem('fuelpilot_last_known_gps');
-    if (cachedGps) {
-      const parsedGps = JSON.parse(cachedGps);
-      if (parsedGps && parsedGps.lat && parsedGps.lon && (Date.now() - (parsedGps.time || 0) < 2 * 3600 * 1000)) {
-        userGpsPosition = { lat: parsedGps.lat, lon: parsedGps.lon, isHighAccuracy: false, timestamp: parsedGps.time };
-        updateUserGpsMarker(parsedGps.lat, parsedGps.lon);
-      }
-    }
-  } catch (e) {}
-
-  if (!navigator.geolocation) {
-    fetchIpGeolocation().then(ipLoc => {
-      if (ipLoc) handleSuccess(ipLoc, false);
-      else if (onError) onError({ code: 2, message: "Géolocalisation indisponible." });
-    });
-    return;
-  }
-
-  // Backup IP fallback timer (7s) in case GPS is completely turned off in Android OS
-  const ipFallbackTimer = setTimeout(async () => {
-    if (!resolved) {
+  // 1. Safety fallback timer (6s)
+  const safetyTimer = setTimeout(async () => {
+    if (!finished) {
+      finished = true;
+      cleanup();
+      console.warn("GPS satellite delay: trying IP geolocation fallback...");
       const ipLoc = await fetchIpGeolocation();
-      if (!resolved && ipLoc) {
-        console.log("GPS delay: using network location fallback", ipLoc);
-        handleSuccess(ipLoc, false);
+      if (ipLoc) {
+        onSuccess(ipLoc, false);
+      } else if (onError) {
+        onError({ code: 3, message: "Délai GPS dépassé. Veuillez vérifier que la Position est activée dans Android." });
       }
     }
-  }, 7000);
+  }, 6000);
 
-  // STEP 1: Fast acquisition (enableHighAccuracy: false) -> resolves immediately via fused location
-  navigator.geolocation.getCurrentPosition(
-    (posLow) => {
-      clearTimeout(ipFallbackTimer);
-      handleSuccess(posLow, false);
-
-      // STEP 2: Concurrently request satellite high-accuracy fix to refine coordinates
-      navigator.geolocation.getCurrentPosition(
-        (posHigh) => {
-          handleSuccess(posHigh, true);
-        },
-        (errHigh) => {
-          console.warn("High-accuracy satellite refinement error (non-fatal):", errHigh);
-        },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
-      );
-    },
-    (errLow) => {
-      if (errLow && errLow.code === 1) { // User explicitly denied permission
-        clearTimeout(ipFallbackTimer);
-        if (onError) onError(errLow);
-        return;
-      }
-
-      // If low-accuracy failed, try high-accuracy directly
-      navigator.geolocation.getCurrentPosition(
-        (posHigh) => {
-          clearTimeout(ipFallbackTimer);
-          handleSuccess(posHigh, true);
-        },
-        async (errHigh) => {
-          clearTimeout(ipFallbackTimer);
-          if (resolved) return;
-          if (errHigh && errHigh.code === 1) {
-            if (onError) onError(errHigh);
+  // 2. Single watchPosition listener (bypasses Android WebAPK getCurrentPosition deadlock)
+  try {
+    watchId = navigator.geolocation.watchPosition(
+      (pos) => {
+        if (!finished && pos && pos.coords) {
+          finished = true;
+          clearTimeout(safetyTimer);
+          cleanup();
+          onSuccess(pos, true);
+        }
+      },
+      async (err) => {
+        if (!finished) {
+          finished = true;
+          clearTimeout(safetyTimer);
+          cleanup();
+          if (err && err.code === 1) {
+            if (onError) onError(err);
             return;
           }
           const ipLoc = await fetchIpGeolocation();
           if (ipLoc) {
-            handleSuccess(ipLoc, false);
+            onSuccess(ipLoc, false);
           } else if (onError) {
-            onError(errHigh || errLow);
+            onError(err);
           }
-        },
-        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-      );
+        }
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 8000,
+        maximumAge: 30000
+      }
+    );
+  } catch (e) {
+    clearTimeout(safetyTimer);
+    cleanup();
+    if (onError) onError({ code: 2, message: e.message });
+  }
+}
+
+function requestUserGeolocation(onSuccess, onError, forceFresh = false) {
+  if (!forceFresh && userGpsPosition && userGpsPosition.lat && userGpsPosition.lon && (Date.now() - (userGpsPosition.timestamp || 0) < 60000)) {
+    if (onSuccess) onSuccess({ coords: { latitude: userGpsPosition.lat, longitude: userGpsPosition.lon, heading: userGpsPosition.heading, speed: userGpsPosition.speed } });
+    return;
+  }
+
+  getFreshUserLocation(
+    (pos, isHighAcc) => {
+      const { latitude, longitude, heading, speed } = pos.coords;
+      userGpsPosition = { lat: latitude, lon: longitude, heading, speed, isHighAccuracy: isHighAcc, timestamp: Date.now() };
+      updateUserGpsMarker(latitude, longitude);
+      try {
+        localStorage.setItem('fuelpilot_last_known_gps', JSON.stringify({
+          lat: latitude,
+          lon: longitude,
+          time: Date.now()
+        }));
+      } catch (e) {}
+      if (onSuccess) onSuccess(pos);
     },
-    { enableHighAccuracy: false, timeout: 4000, maximumAge: 30000 }
+    (err) => {
+      if (onError) onError(err);
+    }
   );
 }
 
@@ -5028,31 +5020,28 @@ function centerMapOnUser() {
   const btnLocate = document.getElementById('btn-locate-me');
   if (btnLocate) btnLocate.classList.add('locating');
 
-  // If we already have a position, pan to it immediately for instant responsiveness
   if (userGpsPosition && userGpsPosition.lat && userGpsPosition.lon && map) {
     map.setView([userGpsPosition.lat, userGpsPosition.lon], 15, { animate: true });
     updateUserGpsMarker(userGpsPosition.lat, userGpsPosition.lon);
     if (userGpsMarker) userGpsMarker.openTooltip();
   }
 
-  // Always request fresh GPS in background or as primary
-  requestUserGeolocation(
-    (pos) => {
+  getFreshUserLocation(
+    (pos, isHighAcc) => {
       if (btnLocate) btnLocate.classList.remove('locating');
       const { latitude, longitude } = pos.coords;
+      userGpsPosition = { lat: latitude, lon: longitude, isHighAccuracy: isHighAcc, timestamp: Date.now() };
       if (map) {
         map.setView([latitude, longitude], 15, { animate: true });
+        updateUserGpsMarker(latitude, longitude);
         if (userGpsMarker) userGpsMarker.openTooltip();
       }
     },
     (err) => {
       if (btnLocate) btnLocate.classList.remove('locating');
       console.warn('Center on user error:', err);
-      if (err && err.code === 1) {
-        alert(formatGeolocationErrorMessage(err));
-      }
-    },
-    true // force fresh GPS fix
+      alert(formatGeolocationErrorMessage(err));
+    }
   );
 }
 

@@ -6031,9 +6031,10 @@ header {
 /* v8.8: Off-motorway station cards (fond gris foncé contrasté)  */
 /* ------------------------------------------------------------- */
 .station-card.exit-station-card {
-  background: #242d3d !important; /* Gris foncé distinct contrasté par rapport au noir */
-  border: 1px solid #3d4a5e !important;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+  background: #334155 !important; /* Gris fonce/moyen Slate-700 nettement contraste avec le noir #0f172a */
+  border: 1.5px solid #64748b !important;
+  border-left: 5px solid #f59e0b !important; /* Barre d'accentuation sortie autoroute orange vive */
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
 }
 
 .station-card.exit-station-card:hover {
@@ -6045,4 +6046,15 @@ header {
   background: #263852 !important;
   border-color: #38bdf8 !important;
   box-shadow: 0 0 16px rgba(56, 189, 248, 0.35) !important;
+}
+
+.badge-app-version {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  margin-left: 4px;
 }
