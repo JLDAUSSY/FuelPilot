@@ -1075,7 +1075,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.4';
+const APP_VERSION = '9.5';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
@@ -1149,6 +1149,7 @@ function formatExitDistKm(distM) {
 
 function extractExitNumber(st) {
   if (!st) return null;
+  if (st.exit_number) return String(st.exit_number).toUpperCase();
   const candidates = [st.nom, st.adresse, st.displayedPk, st.pk_text, st.sens];
   for (const str of candidates) {
     if (!str) continue;
@@ -1282,7 +1283,8 @@ const I18N_DICT = {
     savingsBadge: (amt, cur, diff, unit) => `💰 Économie : ~${amt} ${cur} sur le plein (-${diff} ${cur}/${unit})`,
     savingsTooltip: "Économie estimée par rapport au prix moyen sur l'autoroute",
     defaultHighway: "Autoroute",
-    weatherLoading: "Météo en direct"
+    weatherLoading: "Météo en direct",
+    fuelUnavailable: "Indispo"
   },
   de: {
     pageTitle: "FuelPilot • Autobahn-Tankstellen & Kraftstoffpreise",
@@ -1404,7 +1406,8 @@ const I18N_DICT = {
     savingsBadge: (amt, cur, diff, unit) => `💰 Ersparnis: ~${amt} ${cur} pro Tankfüllung (-${diff} ${cur}/${unit})`,
     savingsTooltip: "Geschätzte Ersparnis im Vergleich zum Autobahn-Durchschnitt",
     defaultHighway: "Autobahn",
-    weatherLoading: "Live-Wetter"
+    weatherLoading: "Live-Wetter",
+    fuelUnavailable: "Nicht verf."
   },
   en: {
     pageTitle: "FuelPilot • Motorway Fuel Prices & Service Areas",
@@ -1526,7 +1529,8 @@ const I18N_DICT = {
     savingsBadge: (amt, cur, diff, unit) => `💰 Savings: ~${cur}${amt} on a full tank (-${cur}${diff}/${unit})`,
     savingsTooltip: "Estimated savings compared to motorway service area average",
     defaultHighway: "Motorway",
-    weatherLoading: "Live weather"
+    weatherLoading: "Live weather",
+    fuelUnavailable: "Unavailable"
   },
   it: {
     pageTitle: "FuelPilot • Prezzi Carburante e Aree Autostradali",
@@ -1648,7 +1652,8 @@ const I18N_DICT = {
     savingsBadge: (amt, cur, diff, unit) => `💰 Risparmio: ~${amt} ${cur} sul pieno (-${diff} ${cur}/${unit})`,
     savingsTooltip: "Risparmio stimato rispetto alla media delle aree autostradali",
     defaultHighway: "Autostrada",
-    weatherLoading: "Meteo in tempo reale"
+    weatherLoading: "Meteo in tempo reale",
+    fuelUnavailable: "Non disp."
   },
   es: {
     pageTitle: "FuelPilot • Precios Carburante y Áreas de Autopista",
@@ -1770,7 +1775,8 @@ const I18N_DICT = {
     savingsBadge: (amt, cur, diff, unit) => `💰 Ahorro: ~${amt} ${cur} en depósito (-${diff} ${cur}/${unit})`,
     savingsTooltip: "Ahorro estimado respecto a la media en autopista",
     defaultHighway: "Autopista",
-    weatherLoading: "Tiempo en vivo"
+    weatherLoading: "Tiempo en vivo",
+    fuelUnavailable: "No disp."
   }
 };
 
@@ -3394,10 +3400,24 @@ async function calculateItinerary() {
     const coordsStr = points.map(p => `${p[0]},${p[1]}`).join(';');
     const url = `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&alternatives=3&steps=true`;
 
-    const res = await fetch(url);
-    const data = await res.json();
+    let data = null;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        const res = await fetch(url);
+        if (res.ok) {
+          const json = await res.json();
+          if (json && json.routes && json.routes.length > 0) {
+            data = json;
+            break;
+          }
+        }
+      } catch (eFetch) {
+        console.warn(`[OSRM Router] Tentative ${attempt + 1}/3 échouée:`, eFetch);
+      }
+      if (attempt < 2) await new Promise(r => setTimeout(r, 700));
+    }
 
-    if (!data.routes || data.routes.length === 0) {
+    if (!data || !data.routes || data.routes.length === 0) {
       alert(t().alertNoRoute);
       return;
     }
@@ -4084,17 +4104,19 @@ function renderCurrentRouteStations() {
 
   // Render cards and map markers
   filtered.forEach((st, idx) => {
+    const tr = t();
     const isUK = st.pays === 'GB';
     const isNativeCase = st.pays === 'GB' || st.pays === 'DE';
     const isElec = selectedFuel === 'elec';
     const fuelPrice = (selectedFuel !== 'all') ? getFuelPrice(st.prix, selectedFuel) : (st.prix ? Object.values(st.prix)[0] : null);
     const isCheapest = fuelPrice && fuelPrice === lowestPrice;
     const brandClass = getBrandClass(st.enseigne);
+    const unavailText = tr.fuelUnavailable || 'Indispo';
     const pinPriceDisplay = fuelPrice 
       ? (isElec 
           ? `${fuelPrice.toFixed(3)}${isUK ? '£' : '€'}/kWh` 
           : (isUK ? `£${fuelPrice.toFixed(3)}` : `${fuelPrice.toFixed(3)}€`)) 
-      : 'N/A';
+      : unavailText;
 
     const exitPinClass = st.isExitStation ? 'exit-pin' : '';
     const exitPinIcon = st.isExitStation ? '🚪 ' : '';
@@ -4117,7 +4139,6 @@ function renderCurrentRouteStations() {
     const marker = L.marker([st.lat, st.lon], { icon: customIcon }).addTo(map);
 
     // Opening status & weather
-    const tr = t();
     const openingStatus = getStationOpeningStatus(st);
     const cachedWeather = getCachedWeather(st.lat, st.lon);
     const weatherPopupHtml = cachedWeather
@@ -4242,7 +4263,7 @@ function renderCurrentRouteStations() {
       ${st.isExitStation ? `
         <div class="exit-card-banner">
           <span class="exit-card-banner-icon">🚪</span>
-          <span class="exit-card-banner-text">${(tr.offMotorwayPopupTitle || 'STATION HORS AUTOROUTE').toUpperCase()} · ${offMotorwayBadgeText.toUpperCase()}</span>
+          <span class="exit-card-banner-text">${(tr.offMotorwayPopupTitle || 'STATION HORS AUTOROUTE').toUpperCase()}</span>
         </div>
       ` : ''}
       <div class="card-top">
@@ -4259,9 +4280,11 @@ function renderCurrentRouteStations() {
           <div class="station-logo-badge" title="${st.enseigne}">
             ${getBrandLogoSvg(st.enseigne)}
           </div>
-          <span class="pk-marker-badge">
-            🛣️ ${pkBadgeLabel}
-          </span>
+          ${!st.isExitStation && pkBadgeLabel ? `
+            <span class="pk-marker-badge">
+              🛣️ ${pkBadgeLabel}
+            </span>
+          ` : ''}
         </div>
       </div>
 

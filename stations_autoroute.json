@@ -67463,7 +67463,7 @@
   {
     "id": 6110002,
     "enseigne": "Avia",
-    "autoroute": "",
+    "autoroute": "A8",
     "nom": "Boulevard Carnot",
     "sens": "Double sens (Sortie)",
     "adresse": "Boulevard Carnot",
@@ -67495,12 +67495,14 @@
     ],
     "pays": "FR",
     "maj": "2026-10-31 01:32:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "42",
+    "exit_name": "Cannes-Centre / Le Cannet"
   },
   {
     "id": 78140010,
     "enseigne": "Esso",
-    "autoroute": "",
+    "autoroute": "A86",
     "nom": "27,RUE LOUIS BREGUET",
     "sens": "Double sens (Sortie)",
     "adresse": "27,RUE LOUIS BREGUET",
@@ -67528,12 +67530,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 18:52:26",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "3",
+    "exit_name": "Vélizy"
   },
   {
     "id": 91100019,
     "enseigne": "Esso",
-    "autoroute": "",
+    "autoroute": "A6",
     "nom": "46 avenue du 8 mai 1945",
     "sens": "Double sens (Sortie)",
     "adresse": "46 avenue du 8 mai 1945",
@@ -67558,12 +67562,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 07:31:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "9",
+    "exit_name": "Corbeil / Villabé"
   },
   {
     "id": 73420001,
     "enseigne": "E.Leclerc",
-    "autoroute": "",
+    "autoroute": "A41",
     "nom": "214 Chemin de la Boisière",
     "sens": "Double sens (Sortie)",
     "adresse": "214 Chemin de la Boisière",
@@ -67594,12 +67600,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 08:00:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "13",
+    "exit_name": "Aix-les-Bains-Sud / Drumettaz"
   },
   {
     "id": 59760001,
     "enseigne": "Auchan",
-    "autoroute": "",
+    "autoroute": "A16",
     "nom": "Avenue de l'Ancien Village",
     "sens": "Double sens (Sortie)",
     "adresse": "Avenue de l'Ancien Village",
@@ -67631,12 +67639,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 10:04:24",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "56",
+    "exit_name": "Grande-Synthe"
   },
   {
     "id": 94000004,
     "enseigne": "Esso Express",
-    "autoroute": "",
+    "autoroute": "A86",
     "nom": "22 Avenue Pierre Brossolette",
     "sens": "Double sens (Sortie)",
     "adresse": "22 Avenue Pierre Brossolette",
@@ -67658,12 +67668,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-03 07:31:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "22",
+    "exit_name": "Créteil"
   },
   {
     "id": 95220003,
     "enseigne": "Esso Express",
-    "autoroute": "",
+    "autoroute": "A15",
     "nom": "61 Boulevard DU HAVRE",
     "sens": "Double sens (Sortie)",
     "adresse": "61 Boulevard DU HAVRE",
@@ -67686,12 +67698,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-03 06:41:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "5",
+    "exit_name": "Herblay"
   },
   {
     "id": 95570007,
     "enseigne": "Esso Express",
-    "autoroute": "",
+    "autoroute": "N104",
     "nom": "RN1",
     "sens": "Double sens (Sortie)",
     "adresse": "RN1",
@@ -67718,12 +67732,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 06:41:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "9",
+    "exit_name": "Moisselles"
   },
   {
     "id": 93300001,
     "enseigne": "Esso",
-    "autoroute": "",
+    "autoroute": "A86",
     "nom": "43 Avenue du Président Roosevelt",
     "sens": "Double sens (Sortie)",
     "adresse": "43 Avenue du Président Roosevelt",
@@ -67746,12 +67762,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-01 12:08:11",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "10",
+    "exit_name": "Aubervilliers"
   },
   {
     "id": 91460013,
     "enseigne": "Esso",
-    "autoroute": "",
+    "autoroute": "N104",
     "nom": "N104 LIEUDIT BEAUVERT",
     "sens": "Double sens (Sortie)",
     "adresse": "N104 LIEUDIT BEAUVERT",
@@ -67782,12 +67800,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-01 12:03:53",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "10",
+    "exit_name": "Marcoussis"
   },
   {
     "id": 1120005,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A42",
     "nom": "Route de Thil",
     "sens": "Double sens (Sortie)",
     "adresse": "Route de Thil",
@@ -67816,12 +67836,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 05:12:19",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "6",
+    "exit_name": "La Boisse"
   },
   {
     "id": 94000006,
     "enseigne": "Esso",
-    "autoroute": "",
+    "autoroute": "A86",
     "nom": "69 Avenue Pierre Brossolette",
     "sens": "Double sens (Sortie)",
     "adresse": "69 Avenue Pierre Brossolette",
@@ -67844,12 +67866,14 @@
     ],
     "pays": "FR",
     "maj": "2026-10-30 07:01:20",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "22",
+    "exit_name": "Créteil"
   },
   {
     "id": 48200007,
     "enseigne": "Esso",
-    "autoroute": "",
+    "autoroute": "A57",
     "nom": "D809 Aire de la Garde",
     "sens": "Double sens (Sortie)",
     "adresse": "D809 Aire de la Garde",
@@ -67873,12 +67897,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-01 12:04:49",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "6",
+    "exit_name": "La Garde"
   },
   {
     "id": 74130006,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A40",
     "nom": "516 Avenue de Genève",
     "sens": "Double sens (Sortie)",
     "adresse": "516 Avenue de Genève",
@@ -67908,12 +67934,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 06:16:39",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "16",
+    "exit_name": "Bonneville"
   },
   {
     "id": 54200007,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A620",
     "nom": "678 Avenue du Général Bigeard",
     "sens": "Double sens (Sortie)",
     "adresse": "678 Avenue du Général Bigeard",
@@ -67947,12 +67975,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 10:41:50",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "29",
+    "exit_name": "Toulouse Purpan"
   },
   {
     "id": 13112003,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A52",
     "nom": "Chemin des Matelots",
     "sens": "Double sens (Sortie)",
     "adresse": "Chemin des Matelots",
@@ -67979,12 +68009,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 08:04:04",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "33",
+    "exit_name": "La Destrousse"
   },
   {
     "id": 11700001,
     "enseigne": "Dyneff",
-    "autoroute": "",
+    "autoroute": "A61",
     "nom": "RN113",
     "sens": "Double sens (Sortie)",
     "adresse": "RN113",
@@ -68009,12 +68041,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 14:00:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "24",
+    "exit_name": "Capendu"
   },
   {
     "id": 93300003,
     "enseigne": "Esso",
-    "autoroute": "",
+    "autoroute": "A86",
     "nom": "100 RUE CHARLES TILLON",
     "sens": "Double sens (Sortie)",
     "adresse": "100 RUE CHARLES TILLON",
@@ -68040,12 +68074,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 18:50:25",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "10",
+    "exit_name": "Aubervilliers"
   },
   {
     "id": 86130011,
     "enseigne": "Super U",
-    "autoroute": "",
+    "autoroute": "A10",
     "nom": "ZAC DES GRANDS CHAMPS",
     "sens": "Double sens (Sortie)",
     "adresse": "ZAC DES GRANDS CHAMPS",
@@ -68068,12 +68104,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-03 09:10:49",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "28",
+    "exit_name": "Futuroscope"
   },
   {
     "id": 11700009,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A61",
     "nom": "LIEU DIT \"ROC DEL DIE\"",
     "sens": "Double sens (Sortie)",
     "adresse": "LIEU DIT \"ROC DEL DIE\"",
@@ -68096,12 +68134,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-02 09:17:20",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "24",
+    "exit_name": "Capendu"
   },
   {
     "id": 94000012,
     "enseigne": "Esso",
-    "autoroute": "",
+    "autoroute": "A86",
     "nom": "ROUTE DE CHOISY - RN186",
     "sens": "Double sens (Sortie)",
     "adresse": "ROUTE DE CHOISY - RN186",
@@ -68125,12 +68165,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-01 12:06:23",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "22",
+    "exit_name": "Créteil"
   },
   {
     "id": 93200008,
     "enseigne": "BP",
-    "autoroute": "",
+    "autoroute": "A1",
     "nom": "112 AV P. VAILLANT COUTURIER",
     "sens": "Double sens (Sortie)",
     "adresse": "112 AV P. VAILLANT COUTURIER",
@@ -68158,12 +68200,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 18:52:05",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "3",
+    "exit_name": "Saint-Denis"
   },
   {
     "id": 46600003,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A20",
     "nom": "Le Bourg - RN 20",
     "sens": "Double sens (Sortie)",
     "adresse": "Le Bourg - RN 20",
@@ -68190,12 +68234,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 10:31:59",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "53",
+    "exit_name": "Cressensac"
   },
   {
     "id": 54380011,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A31",
     "nom": "1 Avenue du Général De Gaulle",
     "sens": "Double sens (Sortie)",
     "adresse": "1 Avenue du Général De Gaulle",
@@ -68220,12 +68266,14 @@
     ],
     "pays": "FR",
     "maj": "2026-10-26 16:54:42",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "26",
+    "exit_name": "Dieulouard"
   },
   {
     "id": 13680010,
     "enseigne": "Carrefour Contact",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "1 AV DE LA 1ERE ARMEE FRANCAISE, CARREFOUR CONTACT",
     "sens": "Double sens (Sortie)",
     "adresse": "1 AV DE LA 1ERE ARMEE FRANCAISE, CARREFOUR CONTACT",
@@ -68256,12 +68304,14 @@
     ],
     "pays": "FR",
     "maj": "2026-10-23 09:23:12",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "14",
+    "exit_name": "Lançon-de-Provence"
   },
   {
     "id": 54200012,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A620",
     "nom": "RUE PAUL KELLER",
     "sens": "Double sens (Sortie)",
     "adresse": "RUE PAUL KELLER",
@@ -68296,12 +68346,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "29",
+    "exit_name": "Toulouse Purpan"
   },
   {
     "id": 84310002,
     "enseigne": "E.Leclerc",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "28 Chemin du Clos Neuf",
     "sens": "Double sens (Sortie)",
     "adresse": "28 Chemin du Clos Neuf",
@@ -68329,12 +68381,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 09:03:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "23",
+    "exit_name": "Avignon-Nord"
   },
   {
     "id": 19800004,
     "enseigne": "Pro-Tech Auto",
-    "autoroute": "",
+    "autoroute": "A89",
     "nom": "15 ROUTE NATIONALE",
     "sens": "Double sens (Sortie)",
     "adresse": "15 ROUTE NATIONALE",
@@ -68362,12 +68416,14 @@
     ],
     "pays": "FR",
     "maj": "2026-09-22 10:21:52",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "22",
+    "exit_name": "Égletons"
   },
   {
     "id": 89190006,
     "enseigne": "Carrefour Contact",
-    "autoroute": "",
+    "autoroute": "A19",
     "nom": "Avenue de la gare",
     "sens": "Double sens (Sortie)",
     "adresse": "Avenue de la gare",
@@ -68401,12 +68457,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 12:34:22",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "2",
+    "exit_name": "Villeneuve-l'Archevêque"
   },
   {
     "id": 83550004,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A8",
     "nom": "Boulevard des Vallons",
     "sens": "Double sens (Sortie)",
     "adresse": "Boulevard des Vallons",
@@ -68440,12 +68498,14 @@
     ],
     "pays": "FR",
     "maj": "2026-10-26 09:54:43",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "36",
+    "exit_name": "Le Muy / Vidauban"
   },
   {
     "id": 3400005,
     "enseigne": "Shell",
-    "autoroute": "",
+    "autoroute": "A31",
     "nom": "ZONE ARTISANALE DU LARRY",
     "sens": "Double sens (Sortie)",
     "adresse": "ZONE ARTISANALE DU LARRY",
@@ -68465,12 +68525,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 00:00:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "13",
+    "exit_name": "Toul"
   },
   {
     "id": 6110008,
     "enseigne": "Independent",
-    "autoroute": "",
+    "autoroute": "A8",
     "nom": "14 Chemin des Campelières",
     "sens": "Double sens (Sortie)",
     "adresse": "14 Chemin des Campelières",
@@ -68502,12 +68564,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-01 08:22:31",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "42",
+    "exit_name": "Cannes-Centre / Le Cannet"
   },
   {
     "id": 91090001,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A6",
     "nom": "Rue de Corbeil",
     "sens": "Double sens (Sortie)",
     "adresse": "Rue de Corbeil",
@@ -68533,12 +68597,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 08:58:55",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "9",
+    "exit_name": "Lisses"
   },
   {
     "id": 38670003,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "1515 AVENUE MISTRAL",
     "sens": "Double sens (Sortie)",
     "adresse": "1515 AVENUE MISTRAL",
@@ -68570,12 +68636,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 08:30:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "8",
+    "exit_name": "Chasse-sur-Rhône"
   },
   {
     "id": 31076001,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A620",
     "nom": "36 route de bayonne",
     "sens": "Double sens (Sortie)",
     "adresse": "36 route de bayonne",
@@ -68608,12 +68676,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 00:47:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "29",
+    "exit_name": "Toulouse Purpan"
   },
   {
     "id": 38140005,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A48",
     "nom": "Parc d'activités Bièvre Dauphine, 305 Rue du Grand-Champ",
     "sens": "Double sens (Sortie)",
     "adresse": "Parc d'activités Bièvre Dauphine, 305 Rue du Grand-Champ",
@@ -68642,12 +68712,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 08:56:16",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "9",
+    "exit_name": "Apprieu"
   },
   {
     "id": 94651002,
     "enseigne": "Esso",
-    "autoroute": "",
+    "autoroute": "A86",
     "nom": "334 THAIS SUD C.C Belle Epine",
     "sens": "Double sens (Sortie)",
     "adresse": "334 THAIS SUD C.C Belle Epine",
@@ -68679,12 +68751,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 18:49:48",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "25",
+    "exit_name": "Thiais"
   },
   {
     "id": 54300005,
     "enseigne": "Esso",
-    "autoroute": "",
+    "autoroute": "A33",
     "nom": "RN 333",
     "sens": "Double sens (Sortie)",
     "adresse": "RN 333",
@@ -68716,12 +68790,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 06:41:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "10",
+    "exit_name": "Lunéville"
   },
   {
     "id": 94150009,
     "enseigne": "Esso",
-    "autoroute": "",
+    "autoroute": "A6",
     "nom": "ROUTE NATIONALE 186",
     "sens": "Double sens (Sortie)",
     "adresse": "ROUTE NATIONALE 186",
@@ -68750,12 +68826,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-01 12:04:16",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "3",
+    "exit_name": "Rungis"
   },
   {
     "id": 12150003,
     "enseigne": "Augade",
-    "autoroute": "",
+    "autoroute": "A75",
     "nom": "Rue du General de Gaulle",
     "sens": "Double sens (Sortie)",
     "adresse": "Rue du General de Gaulle",
@@ -68782,12 +68860,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 10:41:22",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "42",
+    "exit_name": "Sévérac-le-Château"
   },
   {
     "id": 46240001,
     "enseigne": "Station U",
-    "autoroute": "",
+    "autoroute": "A20",
     "nom": "Route de Gramat",
     "sens": "Double sens (Sortie)",
     "adresse": "Route de Gramat",
@@ -68819,12 +68899,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 11:06:13",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "56",
+    "exit_name": "Labastide-Murat"
   },
   {
     "id": 94150008,
     "enseigne": "Esso",
-    "autoroute": "",
+    "autoroute": "A6",
     "nom": "ROUTE NATIONALE 186",
     "sens": "Double sens (Sortie)",
     "adresse": "ROUTE NATIONALE 186",
@@ -68854,12 +68936,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-01 12:07:48",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "3",
+    "exit_name": "Rungis"
   },
   {
     "id": 91814001,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A6",
     "nom": "ROUTE DE VILLOISON",
     "sens": "Double sens (Sortie)",
     "adresse": "ROUTE DE VILLOISON",
@@ -68888,12 +68972,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 13:11:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "9",
+    "exit_name": "Villabé"
   },
   {
     "id": 33140009,
     "enseigne": "Esso Express",
-    "autoroute": "",
+    "autoroute": "A630",
     "nom": "21 Route de Léognan",
     "sens": "Double sens (Sortie)",
     "adresse": "21 Route de Léognan",
@@ -68918,12 +69004,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-01 12:03:25",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "17",
+    "exit_name": "Villenave-d'Ornon"
   },
   {
     "id": 25640008,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A36",
     "nom": "RUE DE LA GRAPPE",
     "sens": "Double sens (Sortie)",
     "adresse": "RUE DE LA GRAPPE",
@@ -68948,12 +69036,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 13:55:10",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "4.1",
+    "exit_name": "Marchaux"
   },
   {
     "id": 38113001,
     "enseigne": "Esso",
-    "autoroute": "",
+    "autoroute": "A48",
     "nom": "Route de Valence",
     "sens": "Double sens (Sortie)",
     "adresse": "Route de Valence",
@@ -68979,12 +69069,14 @@
     ],
     "pays": "FR",
     "maj": "2026-10-16 16:06:35",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "12",
+    "exit_name": "Voreppe / Veurey"
   },
   {
     "id": 13127012,
     "enseigne": "Esso",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "BD VICTOR GELU",
     "sens": "Double sens (Sortie)",
     "adresse": "BD VICTOR GELU",
@@ -69010,12 +69102,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-01 12:04:25",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "11",
+    "exit_name": "Vitrolles"
   },
   {
     "id": 91100021,
     "enseigne": "Euro Pétrol",
-    "autoroute": "",
+    "autoroute": "A6",
     "nom": "18 Boulevard Jean jaures",
     "sens": "Double sens (Sortie)",
     "adresse": "18 Boulevard Jean jaures",
@@ -69041,12 +69135,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-01 00:00:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "9",
+    "exit_name": "Corbeil / Villabé"
   },
   {
     "id": 56800001,
     "enseigne": "Station U",
-    "autoroute": "",
+    "autoroute": "N24",
     "nom": "Z.A. ST DENIS",
     "sens": "Double sens (Sortie)",
     "adresse": "Z.A. ST DENIS",
@@ -69081,12 +69177,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 08:49:47",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "1",
+    "exit_name": "Ploërmel"
   },
   {
     "id": 83130003,
     "enseigne": "K9",
-    "autoroute": "",
+    "autoroute": "A57",
     "nom": "1394 Avenue de Draguignan",
     "sens": "Double sens (Sortie)",
     "adresse": "1394 Avenue de Draguignan",
@@ -69125,12 +69223,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 09:25:58",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "6",
+    "exit_name": "La Garde"
   },
   {
     "id": 83160001,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A57",
     "nom": "ROUTE DE L'UNIVERSITE",
     "sens": "Double sens (Sortie)",
     "adresse": "ROUTE DE L'UNIVERSITE",
@@ -69161,12 +69261,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-01 22:36:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "5",
+    "exit_name": "La Valette"
   },
   {
     "id": 33240011,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A10",
     "nom": "4 RUE NATIONALE",
     "sens": "Double sens (Sortie)",
     "adresse": "4 RUE NATIONALE",
@@ -69200,12 +69302,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "39a",
+    "exit_name": "Saint-André-de-Cubzac"
   },
   {
     "id": 63960005,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A75",
     "nom": "16 CHEMIN DU CHARDONNET",
     "sens": "Double sens (Sortie)",
     "adresse": "16 CHEMIN DU CHARDONNET",
@@ -69235,12 +69339,14 @@
     ],
     "pays": "FR",
     "maj": "2026-10-30 10:54:22",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "5",
+    "exit_name": "Veyre-Monton"
   },
   {
     "id": 77140011,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A6",
     "nom": "10 AVENUE DU GENERAL DE GAULLE",
     "sens": "Double sens (Sortie)",
     "adresse": "10 AVENUE DU GENERAL DE GAULLE",
@@ -69262,12 +69368,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "16",
+    "exit_name": "Nemours"
   },
   {
     "id": 59125003,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A2",
     "nom": "2 Rue de la Concorde",
     "sens": "Double sens (Sortie)",
     "adresse": "2 Rue de la Concorde",
@@ -69301,12 +69409,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 14:06:17",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "20",
+    "exit_name": "Trith-Saint-Léger"
   },
   {
     "id": 6220006,
     "enseigne": "E.Leclerc",
-    "autoroute": "",
+    "autoroute": "A8",
     "nom": "1750 CHEMIN SAINT BERNARD",
     "sens": "Double sens (Sortie)",
     "adresse": "1750 CHEMIN SAINT BERNARD",
@@ -69335,12 +69445,14 @@
     ],
     "pays": "FR",
     "maj": "2026-10-31 08:47:07",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "44",
+    "exit_name": "Antibes / Vallauris"
   },
   {
     "id": 77140006,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A6",
     "nom": "1 rue JM JACQUARD",
     "sens": "Double sens (Sortie)",
     "adresse": "1 rue JM JACQUARD",
@@ -69370,12 +69482,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 08:47:36",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "16",
+    "exit_name": "Nemours"
   },
   {
     "id": 62710002,
     "enseigne": "Netto",
-    "autoroute": "",
+    "autoroute": "A21",
     "nom": "Rue Roger Salengro",
     "sens": "Double sens (Sortie)",
     "adresse": "Rue Roger Salengro",
@@ -69400,12 +69514,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 11:36:50",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "17",
+    "exit_name": "Courrières"
   },
   {
     "id": 26270007,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "1287 RN 7 - LES BLACHES",
     "sens": "Double sens (Sortie)",
     "adresse": "1287 RN 7 - LES BLACHES",
@@ -69434,12 +69550,14 @@
     ],
     "pays": "FR",
     "maj": "2026-10-19 16:18:59",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "16",
+    "exit_name": "Loriol"
   },
   {
     "id": 83130004,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A57",
     "nom": "119 rue Pierre Revelli",
     "sens": "Double sens (Sortie)",
     "adresse": "119 rue Pierre Revelli",
@@ -69464,12 +69582,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 10:16:18",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "6",
+    "exit_name": "La Garde"
   },
   {
     "id": 6110004,
     "enseigne": "Esso Express",
-    "autoroute": "",
+    "autoroute": "A8",
     "nom": "150 AVENUE DU CAMPON",
     "sens": "Double sens (Sortie)",
     "adresse": "150 AVENUE DU CAMPON",
@@ -69491,12 +69611,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-03 07:31:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "42",
+    "exit_name": "Cannes-Centre / Le Cannet"
   },
   {
     "id": 83130005,
     "enseigne": "Netto",
-    "autoroute": "",
+    "autoroute": "A57",
     "nom": "46 PLACE CLAUDE CHIAPPE",
     "sens": "Double sens (Sortie)",
     "adresse": "46 PLACE CLAUDE CHIAPPE",
@@ -69522,12 +69644,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 10:15:18",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "6",
+    "exit_name": "La Garde"
   },
   {
     "id": 59300006,
     "enseigne": "Auchan",
-    "autoroute": "",
+    "autoroute": "A2",
     "nom": "Chemin des Bourgeois",
     "sens": "Double sens (Sortie)",
     "adresse": "Chemin des Bourgeois",
@@ -69565,12 +69689,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 16:24:55",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "21",
+    "exit_name": "Valenciennes"
   },
   {
     "id": 61000002,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A28",
     "nom": "174 avenue Quakenbruck",
     "sens": "Double sens (Sortie)",
     "adresse": "174 avenue Quakenbruck",
@@ -69598,12 +69724,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 09:03:20",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "19",
+    "exit_name": "Alençon-Nord"
   },
   {
     "id": 61200007,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A88",
     "nom": "Avenue de la 2ème D.B.",
     "sens": "Double sens (Sortie)",
     "adresse": "Avenue de la 2ème D.B.",
@@ -69636,12 +69764,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 09:23:35",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "13",
+    "exit_name": "Argentan"
   },
   {
     "id": 60110002,
     "enseigne": "Auchan",
-    "autoroute": "",
+    "autoroute": "A16",
     "nom": "Cc Les Marquises, Rue Marcel Coquet",
     "sens": "Double sens (Sortie)",
     "adresse": "Cc Les Marquises, Rue Marcel Coquet",
@@ -69669,12 +69799,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 09:10:04",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "13",
+    "exit_name": "Méru"
   },
   {
     "id": 83160003,
     "enseigne": "Total Access",
-    "autoroute": "",
+    "autoroute": "A57",
     "nom": "AV.DE L'UNIVERSITE",
     "sens": "Double sens (Sortie)",
     "adresse": "AV.DE L'UNIVERSITE",
@@ -69707,12 +69839,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 08:53:29",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "5",
+    "exit_name": "La Valette"
   },
   {
     "id": 59760005,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A16",
     "nom": "1 AV DE PETITE SYNTHE",
     "sens": "Double sens (Sortie)",
     "adresse": "1 AV DE PETITE SYNTHE",
@@ -69743,12 +69877,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "56",
+    "exit_name": "Grande-Synthe"
   },
   {
     "id": 83210003,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A57",
     "nom": "Avenue Charles de Gaulle rn 97",
     "sens": "Double sens (Sortie)",
     "adresse": "Avenue Charles de Gaulle rn 97",
@@ -69781,12 +69917,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 12:31:47",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "7",
+    "exit_name": "La Farlède"
   },
   {
     "id": 26800005,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "Les Basseaux",
     "sens": "Double sens (Sortie)",
     "adresse": "Les Basseaux",
@@ -69823,12 +69961,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 12:26:50",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "15",
+    "exit_name": "Valence-Sud"
   },
   {
     "id": 59710007,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A1",
     "nom": "81 RUE DE SECLIN",
     "sens": "Double sens (Sortie)",
     "adresse": "81 RUE DE SECLIN",
@@ -69851,12 +69991,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "19",
+    "exit_name": "Seclin"
   },
   {
     "id": 33600010,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A630",
     "nom": "741 COURS DE LA LIBERATION",
     "sens": "Double sens (Sortie)",
     "adresse": "741 COURS DE LA LIBERATION",
@@ -69879,12 +70021,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "14",
+    "exit_name": "Pessac"
   },
   {
     "id": 33402001,
     "enseigne": "E.Leclerc",
-    "autoroute": "",
+    "autoroute": "A630",
     "nom": "Rue Pacaris BP 109",
     "sens": "Double sens (Sortie)",
     "adresse": "Rue Pacaris BP 109",
@@ -69911,12 +70055,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 08:44:35",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "16",
+    "exit_name": "Talence"
   },
   {
     "id": 83260003,
     "enseigne": "Avia",
-    "autoroute": "",
+    "autoroute": "A57",
     "nom": "1400 Chemin Long",
     "sens": "Double sens (Sortie)",
     "adresse": "1400 Chemin Long",
@@ -69947,12 +70093,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 12:53:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "7",
+    "exit_name": "La Farlède"
   },
   {
     "id": 91100016,
     "enseigne": "Total Access",
-    "autoroute": "",
+    "autoroute": "A6",
     "nom": "RUE SIGMUND FREUD",
     "sens": "Double sens (Sortie)",
     "adresse": "RUE SIGMUND FREUD",
@@ -69984,12 +70132,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 10:23:43",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "9",
+    "exit_name": "Corbeil / Villabé"
   },
   {
     "id": 13011027,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A50",
     "nom": "73 Boulevard de Saint Marcel",
     "sens": "Double sens (Sortie)",
     "adresse": "73 Boulevard de Saint Marcel",
@@ -70021,12 +70171,14 @@
     ],
     "pays": "FR",
     "maj": "2026-10-19 17:04:09",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "5",
+    "exit_name": "Saint-Marcel"
   },
   {
     "id": 94594002,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A6",
     "nom": "103 Boulevard Circulaire E Fruileg",
     "sens": "Double sens (Sortie)",
     "adresse": "103 Boulevard Circulaire E Fruileg",
@@ -70060,12 +70212,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "3",
+    "exit_name": "Rungis"
   },
   {
     "id": 74520004,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A40",
     "nom": "50 chemin des Grands Chavannoux",
     "sens": "Double sens (Sortie)",
     "adresse": "50 chemin des Grands Chavannoux",
@@ -70096,12 +70250,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 09:26:40",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "11",
+    "exit_name": "Vulbens"
   },
   {
     "id": 95570003,
     "enseigne": "E.Leclerc",
-    "autoroute": "",
+    "autoroute": "N104",
     "nom": "Route Nationale 1",
     "sens": "Double sens (Sortie)",
     "adresse": "Route Nationale 1",
@@ -70126,12 +70282,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 11:38:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "9",
+    "exit_name": "Moisselles"
   },
   {
     "id": 1700003,
     "enseigne": "Esso",
-    "autoroute": "",
+    "autoroute": "A42",
     "nom": "RN 83",
     "sens": "Double sens (Sortie)",
     "adresse": "RN 83",
@@ -70152,12 +70310,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-03 07:31:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "4",
+    "exit_name": "Miribel"
   },
   {
     "id": 33080001,
     "enseigne": "Auchan",
-    "autoroute": "",
+    "autoroute": "A630",
     "nom": "avenue des 40 journaux",
     "sens": "Double sens (Sortie)",
     "adresse": "avenue des 40 journaux",
@@ -70186,12 +70346,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 10:55:33",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "4",
+    "exit_name": "Bordeaux-Lac"
   },
   {
     "id": 74520011,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A40",
     "nom": "ACQUIT EST",
     "sens": "Double sens (Sortie)",
     "adresse": "ACQUIT EST",
@@ -70220,12 +70382,14 @@
     ],
     "pays": "FR",
     "maj": "2026-10-29 07:15:58",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "11",
+    "exit_name": "Valleiry"
   },
   {
     "id": 58200002,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A77",
     "nom": "RN7 COSNE SUD",
     "sens": "Double sens (Sortie)",
     "adresse": "RN7 COSNE SUD",
@@ -70254,12 +70418,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 12:23:21",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "22",
+    "exit_name": "Cosne-Sud"
   },
   {
     "id": 54200005,
     "enseigne": "Avia",
-    "autoroute": "",
+    "autoroute": "A620",
     "nom": "2 Rue Paul Keller",
     "sens": "Double sens (Sortie)",
     "adresse": "2 Rue Paul Keller",
@@ -70290,12 +70456,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-01 00:07:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "29",
+    "exit_name": "Toulouse Purpan"
   },
   {
     "id": 42152007,
     "enseigne": "Eni",
-    "autoroute": "",
+    "autoroute": "A47",
     "nom": "19 Bis avenue Berthelot",
     "sens": "Double sens (Sortie)",
     "adresse": "19 Bis avenue Berthelot",
@@ -70328,12 +70496,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 20:00:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "15",
+    "exit_name": "Saint-Chamond"
   },
   {
     "id": 31300007,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A620",
     "nom": "104 AV GDE BRETAGNE",
     "sens": "Double sens (Sortie)",
     "adresse": "104 AV GDE BRETAGNE",
@@ -70364,12 +70534,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "29",
+    "exit_name": "Toulouse Purpan"
   },
   {
     "id": 19600003,
     "enseigne": "Total Access",
-    "autoroute": "",
+    "autoroute": "A20",
     "nom": "Lieu-dit La Croix-Blanche",
     "sens": "Double sens (Sortie)",
     "adresse": "Lieu-dit La Croix-Blanche",
@@ -70409,12 +70581,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 07:14:21",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "53",
+    "exit_name": "Brive-Sud / Nespouls"
   },
   {
     "id": 11540001,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A9",
     "nom": "ROUTE NATIONALE 9",
     "sens": "Double sens (Sortie)",
     "adresse": "ROUTE NATIONALE 9",
@@ -70452,12 +70626,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 15:11:22",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "39",
+    "exit_name": "Sigean"
   },
   {
     "id": 6240004,
     "enseigne": "Independent",
-    "autoroute": "",
+    "autoroute": "A8",
     "nom": "96 avenue Prince Rainier III",
     "sens": "Double sens (Sortie)",
     "adresse": "96 avenue Prince Rainier III",
@@ -70493,12 +70669,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 04:49:38",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "58",
+    "exit_name": "Monaco / Beausoleil"
   },
   {
     "id": 84470001,
     "enseigne": "Esso",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "778 Route d'Avignon",
     "sens": "Double sens (Sortie)",
     "adresse": "778 Route d'Avignon",
@@ -70526,12 +70704,14 @@
     ],
     "pays": "FR",
     "maj": "2026-09-30 11:35:10",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "23",
+    "exit_name": "Avignon-Nord"
   },
   {
     "id": 13320004,
     "enseigne": "Esso Express",
-    "autoroute": "",
+    "autoroute": "A51",
     "nom": "LE COLLET ROUGE R.N.8",
     "sens": "Double sens (Sortie)",
     "adresse": "LE COLLET ROUGE R.N.8",
@@ -70553,12 +70733,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-03 13:11:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "2",
+    "exit_name": "Bouc-Bel-Air"
   },
   {
     "id": 26800008,
     "enseigne": "Eni",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "15 AVE JEAN JAURES",
     "sens": "Double sens (Sortie)",
     "adresse": "15 AVE JEAN JAURES",
@@ -70585,12 +70767,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 21:00:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "15",
+    "exit_name": "Valence-Sud"
   },
   {
     "id": 24330003,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A89",
     "nom": "RN 89 - NIVERSAC",
     "sens": "Double sens (Sortie)",
     "adresse": "RN 89 - NIVERSAC",
@@ -70625,12 +70809,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 07:20:14",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "16",
+    "exit_name": "Périgueux-Est"
   },
   {
     "id": 83480005,
     "enseigne": "E.Leclerc",
-    "autoroute": "",
+    "autoroute": "A8",
     "nom": "RN 7 Quartier le GABRON",
     "sens": "Double sens (Sortie)",
     "adresse": "RN 7 Quartier le GABRON",
@@ -70657,12 +70843,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 07:19:34",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "37",
+    "exit_name": "Fréjus-Ouest / Puget"
   },
   {
     "id": 69410006,
     "enseigne": "Eni",
-    "autoroute": "",
+    "autoroute": "A6",
     "nom": "3 AVE GENERAL DE GAULLE",
     "sens": "Double sens (Sortie)",
     "adresse": "3 AVE GENERAL DE GAULLE",
@@ -70691,12 +70879,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 06:00:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "34",
+    "exit_name": "Limonest / Champagne"
   },
   {
     "id": 69570002,
     "enseigne": "Esso Express",
-    "autoroute": "",
+    "autoroute": "A6",
     "nom": "AIRE PORTE DE LYON",
     "sens": "Double sens (Sortie)",
     "adresse": "AIRE PORTE DE LYON",
@@ -70719,12 +70909,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-03 07:31:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "34",
+    "exit_name": "Limonest / Dardilly"
   },
   {
     "id": 84310003,
     "enseigne": "Doulmet",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "502 Avenue Jean Monnet",
     "sens": "Double sens (Sortie)",
     "adresse": "502 Avenue Jean Monnet",
@@ -70754,12 +70946,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 08:01:32",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "23",
+    "exit_name": "Avignon-Nord"
   },
   {
     "id": 78000005,
     "enseigne": "Esso Express",
-    "autoroute": "",
+    "autoroute": "A86",
     "nom": "50 Rue du Pont Colbert",
     "sens": "Double sens (Sortie)",
     "adresse": "50 Rue du Pont Colbert",
@@ -70781,12 +70975,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-03 07:31:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "2",
+    "exit_name": "Versailles-Château"
   },
   {
     "id": 84700002,
     "enseigne": "Esso Express",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "ROUTE NATIONALE 7",
     "sens": "Double sens (Sortie)",
     "adresse": "ROUTE NATIONALE 7",
@@ -70807,12 +71003,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-03 06:41:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "23",
+    "exit_name": "Avignon-Nord"
   },
   {
     "id": 11480008,
     "enseigne": "Avia",
-    "autoroute": "",
+    "autoroute": "A9",
     "nom": "route départementale 6009",
     "sens": "Double sens (Sortie)",
     "adresse": "route départementale 6009",
@@ -70841,12 +71039,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 09:15:39",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "39",
+    "exit_name": "Sigean / La Palme"
   },
   {
     "id": 13012024,
     "enseigne": "Auchan",
-    "autoroute": "",
+    "autoroute": "A50",
     "nom": "120 rue saint jean du desert",
     "sens": "Double sens (Sortie)",
     "adresse": "120 rue saint jean du desert",
@@ -70873,12 +71073,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 09:11:22",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "5",
+    "exit_name": "Saint-Marcel"
   },
   {
     "id": 13180002,
     "enseigne": "Carrefour Market",
-    "autoroute": "",
+    "autoroute": "A55",
     "nom": "rue du 19 mars 1962",
     "sens": "Double sens (Sortie)",
     "adresse": "rue du 19 mars 1962",
@@ -70901,12 +71103,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-03 08:33:51",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "8",
+    "exit_name": "Gignac / Marignane"
   },
   {
     "id": 42400007,
     "enseigne": "Total Access",
-    "autoroute": "",
+    "autoroute": "A47",
     "nom": "14 QUAI DE LA RIVE RN88",
     "sens": "Double sens (Sortie)",
     "adresse": "14 QUAI DE LA RIVE RN88",
@@ -70931,12 +71135,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 07:33:53",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "15",
+    "exit_name": "Saint-Chamond"
   },
   {
     "id": 57140006,
     "enseigne": "E.Leclerc",
-    "autoroute": "",
+    "autoroute": "A31",
     "nom": "1 AVENUE DES 2 FONTAINES",
     "sens": "Double sens (Sortie)",
     "adresse": "1 AVENUE DES 2 FONTAINES",
@@ -70961,12 +71167,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 11:02:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "34",
+    "exit_name": "Woippy"
   },
   {
     "id": 12150004,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A75",
     "nom": "Avenue Marie Curie",
     "sens": "Double sens (Sortie)",
     "adresse": "Avenue Marie Curie",
@@ -70991,12 +71199,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 08:50:07",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "42",
+    "exit_name": "Sévérac-le-Château"
   },
   {
     "id": 51320003,
     "enseigne": "Total Access",
-    "autoroute": "",
+    "autoroute": "A26",
     "nom": "ROUTE NATIONALE 4",
     "sens": "Double sens (Sortie)",
     "adresse": "ROUTE NATIONALE 4",
@@ -71019,12 +71229,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "19",
+    "exit_name": "Sommesous"
   },
   {
     "id": 59133002,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A1",
     "nom": "47 rue Jean Baptiste Lebas",
     "sens": "Double sens (Sortie)",
     "adresse": "47 rue Jean Baptiste Lebas",
@@ -71052,12 +71264,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 08:38:59",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "18",
+    "exit_name": "Phalempin / Seclin"
   },
   {
     "id": 6250010,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A8",
     "nom": "492 ROUTE DU CANNET",
     "sens": "Double sens (Sortie)",
     "adresse": "492 ROUTE DU CANNET",
@@ -71080,12 +71294,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-02 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "42",
+    "exit_name": "Mougins / Cannes"
   },
   {
     "id": 14125001,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A13",
     "nom": "ZAC DE L'ETOILE",
     "sens": "Double sens (Sortie)",
     "adresse": "ZAC DE L'ETOILE",
@@ -71112,12 +71328,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 00:47:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "1",
+    "exit_name": "Mondeville"
   },
   {
     "id": 73140001,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A43",
     "nom": "4 PLACE DE LA VANOISE",
     "sens": "Double sens (Sortie)",
     "adresse": "4 PLACE DE LA VANOISE",
@@ -71143,12 +71361,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 11:29:22",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "29",
+    "exit_name": "Saint-Michel-de-Maurienne"
   },
   {
     "id": 6320004,
     "enseigne": "TNT",
-    "autoroute": "",
+    "autoroute": "A8",
     "nom": "Quartier le Prat",
     "sens": "Double sens (Sortie)",
     "adresse": "Quartier le Prat",
@@ -71187,12 +71407,14 @@
     ],
     "pays": "FR",
     "maj": "2026-10-20 17:42:26",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "57",
+    "exit_name": "La Turbie"
   },
   {
     "id": 94000009,
     "enseigne": "Total Access",
-    "autoroute": "",
+    "autoroute": "A86",
     "nom": "63 Avenue du Général de Gaulle",
     "sens": "Double sens (Sortie)",
     "adresse": "63 Avenue du Général de Gaulle",
@@ -71223,12 +71445,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "22",
+    "exit_name": "Créteil"
   },
   {
     "id": 13700010,
     "enseigne": "Total Access",
-    "autoroute": "",
+    "autoroute": "A55",
     "nom": "92 AEROPORT BP 36",
     "sens": "Double sens (Sortie)",
     "adresse": "92 AEROPORT BP 36",
@@ -71250,12 +71474,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "8",
+    "exit_name": "Marignane"
   },
   {
     "id": 67120005,
     "enseigne": "E.Leclerc",
-    "autoroute": "",
+    "autoroute": "A352",
     "nom": "15 rue de la Gare",
     "sens": "Double sens (Sortie)",
     "adresse": "15 rue de la Gare",
@@ -71280,12 +71506,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 09:55:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "11",
+    "exit_name": "Duttlenheim"
   },
   {
     "id": 33610001,
     "enseigne": "Super U",
-    "autoroute": "",
+    "autoroute": "A63",
     "nom": "Centre Commercial Le Bourg",
     "sens": "Double sens (Sortie)",
     "adresse": "Centre Commercial Le Bourg",
@@ -71316,12 +71544,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 08:54:33",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "25",
+    "exit_name": "Cestas"
   },
   {
     "id": 59113001,
     "enseigne": "Carrefour Market",
-    "autoroute": "",
+    "autoroute": "A1",
     "nom": "impasse roger bouvry",
     "sens": "Double sens (Sortie)",
     "adresse": "impasse roger bouvry",
@@ -71353,12 +71583,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 09:59:26",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "19",
+    "exit_name": "Seclin"
   },
   {
     "id": 93240007,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A1",
     "nom": "21 AV.DE STALINGRAD - COURS ST L",
     "sens": "Double sens (Sortie)",
     "adresse": "21 AV.DE STALINGRAD - COURS ST L",
@@ -71385,12 +71617,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "4",
+    "exit_name": "Stains"
   },
   {
     "id": 13011025,
     "enseigne": "Eni",
-    "autoroute": "",
+    "autoroute": "A50",
     "nom": "171-173 Boulevard de Saint-Loup",
     "sens": "Double sens (Sortie)",
     "adresse": "171-173 Boulevard de Saint-Loup",
@@ -71416,12 +71650,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 21:00:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "5",
+    "exit_name": "Saint-Marcel"
   },
   {
     "id": 30320004,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A9",
     "nom": "92 Allée de la picholine",
     "sens": "Double sens (Sortie)",
     "adresse": "92 Allée de la picholine",
@@ -71457,12 +71693,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 15:13:42",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "24",
+    "exit_name": "Nîmes-Est"
   },
   {
     "id": 56800006,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "N24",
     "nom": "ROUTE NATIONALE 24 - AIRE SUD DE BROCÉLIANDE",
     "sens": "Double sens (Sortie)",
     "adresse": "ROUTE NATIONALE 24 - AIRE SUD DE BROCÉLIANDE",
@@ -71497,12 +71735,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "1",
+    "exit_name": "Ploërmel"
   },
   {
     "id": 31390003,
     "enseigne": "Peyssies - SARL Fontenergie",
-    "autoroute": "",
+    "autoroute": "A64",
     "nom": "Le Village",
     "sens": "Double sens (Sortie)",
     "adresse": "Le Village",
@@ -71527,12 +71767,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 10:40:57",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "26",
+    "exit_name": "Lafitte-Vigordane / Peyssies"
   },
   {
     "id": 31000001,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A620",
     "nom": "328 Route de Saint-Simon",
     "sens": "Double sens (Sortie)",
     "adresse": "328 Route de Saint-Simon",
@@ -71565,12 +71807,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 12:37:12",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "29",
+    "exit_name": "Toulouse Purpan"
   },
   {
     "id": 33700020,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A630",
     "nom": "127 AV. DE L YSER",
     "sens": "Double sens (Sortie)",
     "adresse": "127 AV. DE L YSER",
@@ -71603,12 +71847,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 12:28:54",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "9",
+    "exit_name": "Mérignac-Aéroport"
   },
   {
     "id": 84700005,
     "enseigne": "Total Access",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "2232 AV. D'ORANGE",
     "sens": "Double sens (Sortie)",
     "adresse": "2232 AV. D'ORANGE",
@@ -71641,12 +71887,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "23",
+    "exit_name": "Avignon-Nord"
   },
   {
     "id": 4700003,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A51",
     "nom": "RN 96 CENTRE COMMERCIAL LE PLAN",
     "sens": "Double sens (Sortie)",
     "adresse": "RN 96 CENTRE COMMERCIAL LE PLAN",
@@ -71683,12 +71931,14 @@
     ],
     "pays": "FR",
     "maj": "2026-10-29 09:03:10",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "21",
+    "exit_name": "Forcalquier / Oraison"
   },
   {
     "id": 77181002,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A104",
     "nom": "ROUTE DE CHELLES",
     "sens": "Double sens (Sortie)",
     "adresse": "ROUTE DE CHELLES",
@@ -71711,12 +71961,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "6b",
+    "exit_name": "Chelles / Le Pin"
   },
   {
     "id": 13011018,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A50",
     "nom": "15 BOULEVARD DE LA CARTONNERIE",
     "sens": "Double sens (Sortie)",
     "adresse": "15 BOULEVARD DE LA CARTONNERIE",
@@ -71743,12 +71995,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 09:37:07",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "5",
+    "exit_name": "Saint-Marcel"
   },
   {
     "id": 59174003,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A2",
     "nom": "960 avenue Jean Jaurès",
     "sens": "Double sens (Sortie)",
     "adresse": "960 avenue Jean Jaurès",
@@ -71778,12 +72032,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 07:00:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "21",
+    "exit_name": "Valenciennes-Ouest"
   },
   {
     "id": 94550002,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A86",
     "nom": "14 AV DU GENERAL DE GAULLE",
     "sens": "Double sens (Sortie)",
     "adresse": "14 AV DU GENERAL DE GAULLE",
@@ -71814,12 +72070,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "25",
+    "exit_name": "Fresnes / Rungis"
   },
   {
     "id": 91250012,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "N104",
     "nom": "C.C La Croix Verte, place de l'Europe",
     "sens": "Double sens (Sortie)",
     "adresse": "C.C La Croix Verte, place de l'Europe",
@@ -71844,12 +72102,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 09:00:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "27",
+    "exit_name": "Corbeil-Essonnes"
   },
   {
     "id": 21200009,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A6",
     "nom": "A6 AIRE DE BEAUNE TAILLY",
     "sens": "Double sens (Sortie)",
     "adresse": "A6 AIRE DE BEAUNE TAILLY",
@@ -71872,12 +72132,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "24",
+    "exit_name": "Beaune"
   },
   {
     "id": 84550003,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "Route d'orange",
     "sens": "Double sens (Sortie)",
     "adresse": "Route d'orange",
@@ -71913,12 +72175,14 @@
     ],
     "pays": "FR",
     "maj": "2026-10-24 10:11:35",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "20",
+    "exit_name": "Orange-Nord / Mornas"
   },
   {
     "id": 94594003,
     "enseigne": "BP",
-    "autoroute": "",
+    "autoroute": "A6",
     "nom": "RUE DU VIADUC",
     "sens": "Double sens (Sortie)",
     "adresse": "RUE DU VIADUC",
@@ -71949,12 +72213,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 18:52:03",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "3",
+    "exit_name": "Rungis"
   },
   {
     "id": 38550002,
     "enseigne": "Système U",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "Route Nationale 7",
     "sens": "Double sens (Sortie)",
     "adresse": "Route Nationale 7",
@@ -71986,12 +72252,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 06:46:49",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "12",
+    "exit_name": "Chanas / Auberives"
   },
   {
     "id": 80380001,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A29",
     "nom": "21 RUE DES TAVERNES",
     "sens": "Double sens (Sortie)",
     "adresse": "21 RUE DES TAVERNES",
@@ -72022,12 +72290,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 07:57:22",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "52",
+    "exit_name": "Villers-Bretonneux"
   },
   {
     "id": 95220005,
     "enseigne": "U",
-    "autoroute": "",
+    "autoroute": "A15",
     "nom": "421 Route de Conflans",
     "sens": "Double sens (Sortie)",
     "adresse": "421 Route de Conflans",
@@ -72052,12 +72322,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 13:42:51",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "5",
+    "exit_name": "Herblay"
   },
   {
     "id": 59113006,
     "enseigne": "E.Leclerc",
-    "autoroute": "",
+    "autoroute": "A1",
     "nom": "ZI de l'Epinette",
     "sens": "Double sens (Sortie)",
     "adresse": "ZI de l'Epinette",
@@ -72083,12 +72355,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 11:38:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "19",
+    "exit_name": "Seclin"
   },
   {
     "id": 33700029,
     "enseigne": "Auchan",
-    "autoroute": "",
+    "autoroute": "A630",
     "nom": "Avenue des Frères Robinson",
     "sens": "Double sens (Sortie)",
     "adresse": "Avenue des Frères Robinson",
@@ -72115,12 +72389,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 14:48:41",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "9",
+    "exit_name": "Mérignac-Aéroport"
   },
   {
     "id": 23300008,
     "enseigne": "Avia",
-    "autoroute": "",
+    "autoroute": "A63",
     "nom": "77 rue de la croix de monjous",
     "sens": "Double sens (Sortie)",
     "adresse": "77 rue de la croix de monjous",
@@ -72157,12 +72433,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 10:08:37",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "26",
+    "exit_name": "Gradignan"
   },
   {
     "id": 67540001,
     "enseigne": "Auchan",
-    "autoroute": "",
+    "autoroute": "A35",
     "nom": "54 Rue du Général Leclerc",
     "sens": "Double sens (Sortie)",
     "adresse": "54 Rue du Général Leclerc",
@@ -72188,12 +72466,14 @@
     ],
     "pays": "FR",
     "maj": "2026-10-30 09:16:10",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "7",
+    "exit_name": "Ostwald"
   },
   {
     "id": 54204001,
     "enseigne": "E.Leclerc",
-    "autoroute": "",
+    "autoroute": "A31",
     "nom": "POLE COMMERCIAL JEANNE D'ARC",
     "sens": "Double sens (Sortie)",
     "adresse": "POLE COMMERCIAL JEANNE D'ARC",
@@ -72228,12 +72508,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 10:36:57",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "13",
+    "exit_name": "Toul"
   },
   {
     "id": 74570004,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A41",
     "nom": "81 ROUTE DU PLOT",
     "sens": "Double sens (Sortie)",
     "adresse": "81 ROUTE DU PLOT",
@@ -72256,12 +72538,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-02 10:00:51",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "18",
+    "exit_name": "Cruseilles / Groisy"
   },
   {
     "id": 80800008,
     "enseigne": "Auchan",
-    "autoroute": "",
+    "autoroute": "A29",
     "nom": "Rue de Démuin",
     "sens": "Double sens (Sortie)",
     "adresse": "Rue de Démuin",
@@ -72287,12 +72571,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 10:13:23",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "52",
+    "exit_name": "Villers-Bretonneux"
   },
   {
     "id": 13011003,
     "enseigne": "Shell",
-    "autoroute": "",
+    "autoroute": "A50",
     "nom": "ROUTE DES TROIS LUCS- LA VALENTINE",
     "sens": "Double sens (Sortie)",
     "adresse": "ROUTE DES TROIS LUCS- LA VALENTINE",
@@ -72327,12 +72613,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-01 20:50:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "5",
+    "exit_name": "Saint-Marcel"
   },
   {
     "id": 58200003,
     "enseigne": "Avia",
-    "autoroute": "",
+    "autoroute": "A77",
     "nom": "CHEMIN DU GRAND CHAMP",
     "sens": "Double sens (Sortie)",
     "adresse": "CHEMIN DU GRAND CHAMP",
@@ -72357,12 +72645,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-01 00:00:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "22",
+    "exit_name": "Cosne-Sud"
   },
   {
     "id": 67400001,
     "enseigne": "Auchan",
-    "autoroute": "",
+    "autoroute": "A35",
     "nom": "6 Avenue de Strasbourg",
     "sens": "Double sens (Sortie)",
     "adresse": "6 Avenue de Strasbourg",
@@ -72392,12 +72682,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 11:29:08",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "5",
+    "exit_name": "Illkirch-Nord"
   },
   {
     "id": 13741001,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "R.N. 113",
     "sens": "Double sens (Sortie)",
     "adresse": "R.N. 113",
@@ -72424,12 +72716,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 10:14:07",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "11",
+    "exit_name": "Vitrolles"
   },
   {
     "id": 54710001,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A330",
     "nom": "Chemin du Bon Curé",
     "sens": "Double sens (Sortie)",
     "adresse": "Chemin du Bon Curé",
@@ -72456,12 +72750,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 11:24:58",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "6",
+    "exit_name": "Ludres"
   },
   {
     "id": 33240007,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A10",
     "nom": "17 Rue de la Fontaine",
     "sens": "Double sens (Sortie)",
     "adresse": "17 Rue de la Fontaine",
@@ -72492,12 +72788,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 08:03:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "39a",
+    "exit_name": "Saint-André-de-Cubzac"
   },
   {
     "id": 1120004,
     "enseigne": "Super U",
-    "autoroute": "",
+    "autoroute": "A42",
     "nom": "Cours de la Portelle",
     "sens": "Double sens (Sortie)",
     "adresse": "Cours de la Portelle",
@@ -72528,12 +72826,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 10:46:01",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "6",
+    "exit_name": "Montluel"
   },
   {
     "id": 13320010,
     "enseigne": "Système U",
-    "autoroute": "",
+    "autoroute": "A51",
     "nom": "687Avenue de Violèsi",
     "sens": "Double sens (Sortie)",
     "adresse": "687Avenue de Violèsi",
@@ -72562,12 +72862,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 07:47:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "2",
+    "exit_name": "Bouc-Bel-Air"
   },
   {
     "id": 40530003,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A63",
     "nom": "AVENUE CHARLES DE GAULLE",
     "sens": "Double sens (Sortie)",
     "adresse": "AVENUE CHARLES DE GAULLE",
@@ -72610,12 +72912,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 07:44:03",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "8",
+    "exit_name": "Capbreton / Labenne"
   },
   {
     "id": 69360010,
     "enseigne": "Système U",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "2 AVENUE DU DAUPHINE",
     "sens": "Double sens (Sortie)",
     "adresse": "2 AVENUE DU DAUPHINE",
@@ -72640,12 +72944,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 07:42:48",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "7",
+    "exit_name": "Solaize / Sérézin"
   },
   {
     "id": 67400004,
     "enseigne": "E.Leclerc",
-    "autoroute": "",
+    "autoroute": "A35",
     "nom": "25 rue des vignes",
     "sens": "Double sens (Sortie)",
     "adresse": "25 rue des vignes",
@@ -72670,12 +72976,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 06:52:19",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "5",
+    "exit_name": "Illkirch-Nord"
   },
   {
     "id": 72460002,
     "enseigne": "Carrefour Market",
-    "autoroute": "",
+    "autoroute": "A28",
     "nom": "ZAC DE L'EPINE",
     "sens": "Double sens (Sortie)",
     "adresse": "ZAC DE L'EPINE",
@@ -72703,12 +73011,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 08:03:17",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "23",
+    "exit_name": "Le Mans-Nord"
   },
   {
     "id": 67170006,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A4",
     "nom": "186 Avenue de Strasbourg",
     "sens": "Double sens (Sortie)",
     "adresse": "186 Avenue de Strasbourg",
@@ -72738,12 +73048,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 17:38:35",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "47",
+    "exit_name": "Brumath"
   },
   {
     "id": 85260005,
     "enseigne": "R.services",
-    "autoroute": "",
+    "autoroute": "A83",
     "nom": "1 ZA LA COLONNE 1",
     "sens": "Double sens (Sortie)",
     "adresse": "1 ZA LA COLONNE 1",
@@ -72770,12 +73082,14 @@
     ],
     "pays": "FR",
     "maj": "2026-10-26 09:26:46",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "4",
+    "exit_name": "Montaigu"
   },
   {
     "id": 73240001,
     "enseigne": "Netto",
-    "autoroute": "",
+    "autoroute": "A43",
     "nom": "Lieu dit Contin",
     "sens": "Double sens (Sortie)",
     "adresse": "Lieu dit Contin",
@@ -72814,12 +73128,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 08:18:15",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "11",
+    "exit_name": "Saint-Genix"
   },
   {
     "id": 74130017,
     "enseigne": "Elan",
-    "autoroute": "",
+    "autoroute": "A40",
     "nom": "403 AVENUE DES GLIERES",
     "sens": "Double sens (Sortie)",
     "adresse": "403 AVENUE DES GLIERES",
@@ -72846,12 +73162,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-01 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "16",
+    "exit_name": "Bonneville"
   },
   {
     "id": 69390005,
     "enseigne": "Système U",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "641 route de Givors",
     "sens": "Double sens (Sortie)",
     "adresse": "641 route de Givors",
@@ -72876,12 +73194,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 07:41:10",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "7",
+    "exit_name": "Solaize / Vernaison"
   },
   {
     "id": 73250001,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A430",
     "nom": "ZI DU CAROUGE",
     "sens": "Double sens (Sortie)",
     "adresse": "ZI DU CAROUGE",
@@ -72910,12 +73230,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 05:57:38",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "24",
+    "exit_name": "Saint-Pierre-d'Albigny"
   },
   {
     "id": 4200003,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A51",
     "nom": "route de Sisteron",
     "sens": "Double sens (Sortie)",
     "adresse": "route de Sisteron",
@@ -72941,12 +73263,14 @@
     ],
     "pays": "FR",
     "maj": "2026-10-30 08:58:04",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "23",
+    "exit_name": "Sisteron-Sud / Peipin"
   },
   {
     "id": 12150007,
     "enseigne": "Relais 9",
-    "autoroute": "",
+    "autoroute": "A75",
     "nom": "37 AVENUE DE PARIS",
     "sens": "Double sens (Sortie)",
     "adresse": "37 AVENUE DE PARIS",
@@ -72974,12 +73298,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 08:58:04",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "42",
+    "exit_name": "Sévérac-le-Château"
   },
   {
     "id": 62860002,
     "enseigne": "Super U",
-    "autoroute": "",
+    "autoroute": "A26",
     "nom": "ROUTE DEPARTEMENTAL CD 939",
     "sens": "Double sens (Sortie)",
     "adresse": "ROUTE DEPARTEMENTAL CD 939",
@@ -73007,12 +73333,14 @@
     ],
     "pays": "FR",
     "maj": "2026-10-30 13:33:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "8",
+    "exit_name": "Marquion"
   },
   {
     "id": 62590001,
     "enseigne": "Match",
-    "autoroute": "",
+    "autoroute": "A1",
     "nom": "38 Rue Émile Zola",
     "sens": "Double sens (Sortie)",
     "adresse": "38 Rue Émile Zola",
@@ -73042,12 +73370,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 11:01:51",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "17",
+    "exit_name": "Oignies"
   },
   {
     "id": 74600017,
     "enseigne": "Auchan",
-    "autoroute": "",
+    "autoroute": "A41",
     "nom": "AVENUE D AIX LES BAINS",
     "sens": "Double sens (Sortie)",
     "adresse": "AVENUE D AIX LES BAINS",
@@ -73074,12 +73404,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 11:28:40",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "15",
+    "exit_name": "Annecy-Sud / Seynod"
   },
   {
     "id": 34690011,
     "enseigne": "Esso Express",
-    "autoroute": "",
+    "autoroute": "A9",
     "nom": "44 rue Francis Bergèse, parking LIDL",
     "sens": "Double sens (Sortie)",
     "adresse": "44 rue Francis Bergèse, parking LIDL",
@@ -73106,12 +73438,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 07:31:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "32",
+    "exit_name": "Saint-Jean-de-Védas / Fabrègues"
   },
   {
     "id": 38080003,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A43",
     "nom": "25 Rue des Sayes",
     "sens": "Double sens (Sortie)",
     "adresse": "25 Rue des Sayes",
@@ -73140,12 +73474,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 11:06:17",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "7",
+    "exit_name": "L'Isle-d'Abeau"
   },
   {
     "id": 59494002,
     "enseigne": "Auchan",
-    "autoroute": "",
+    "autoroute": "A2",
     "nom": "RN45",
     "sens": "Double sens (Sortie)",
     "adresse": "RN45",
@@ -73175,12 +73511,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 10:30:58",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "21",
+    "exit_name": "Valenciennes-Nord"
   },
   {
     "id": 59300025,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A2",
     "nom": "Z.A.C d'Aulnoy lez Valenciennes",
     "sens": "Double sens (Sortie)",
     "adresse": "Z.A.C d'Aulnoy lez Valenciennes",
@@ -73206,12 +73544,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 00:49:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "21",
+    "exit_name": "Valenciennes"
   },
   {
     "id": 26270006,
     "enseigne": "E.Leclerc",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "AVENUE DU DAUPHINE",
     "sens": "Double sens (Sortie)",
     "adresse": "AVENUE DU DAUPHINE",
@@ -73240,12 +73580,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 08:45:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "16",
+    "exit_name": "Loriol / Saulce"
   },
   {
     "id": 93240001,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A1",
     "nom": "80 BOULEVARD MAXIME GORKI",
     "sens": "Double sens (Sortie)",
     "adresse": "80 BOULEVARD MAXIME GORKI",
@@ -73273,12 +73615,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 07:31:09",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "4",
+    "exit_name": "Stains"
   },
   {
     "id": 74800002,
     "enseigne": "Esso Express",
-    "autoroute": "",
+    "autoroute": "A40",
     "nom": "3515 Avenue du Mont-Blanc",
     "sens": "Double sens (Sortie)",
     "adresse": "3515 Avenue du Mont-Blanc",
@@ -73300,12 +73644,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-03 07:31:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "16",
+    "exit_name": "Bonneville-Ouest"
   },
   {
     "id": 84700004,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "1238 ROUTE D'ORANGE",
     "sens": "Double sens (Sortie)",
     "adresse": "1238 ROUTE D'ORANGE",
@@ -73337,12 +73683,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 10:44:30",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "23",
+    "exit_name": "Avignon-Nord"
   },
   {
     "id": 13011026,
     "enseigne": "Auchan",
-    "autoroute": "",
+    "autoroute": "A50",
     "nom": "ROUTE DE LA SABLIERE BP 49",
     "sens": "Double sens (Sortie)",
     "adresse": "ROUTE DE LA SABLIERE BP 49",
@@ -73372,12 +73720,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 11:23:31",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "5",
+    "exit_name": "La Valentine"
   },
   {
     "id": 66300017,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A9",
     "nom": "1 RUE DE LA COMMANDERIE",
     "sens": "Double sens (Sortie)",
     "adresse": "1 RUE DE LA COMMANDERIE",
@@ -73400,12 +73750,14 @@
     "services": [],
     "pays": "FR",
     "maj": "2026-11-03 09:57:53",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "42",
+    "exit_name": "Perpignan-Sud"
   },
   {
     "id": 33400009,
     "enseigne": "Esso",
-    "autoroute": "",
+    "autoroute": "A630",
     "nom": "7 Rue Pierre Corneille",
     "sens": "Double sens (Sortie)",
     "adresse": "7 Rue Pierre Corneille",
@@ -73430,12 +73782,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-01 12:04:24",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "16",
+    "exit_name": "Talence"
   },
   {
     "id": 13012029,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A50",
     "nom": "CENTRE ALPES URBAIN DES CAILLOLS - 81 AVENUE WILLIAM BOOTH",
     "sens": "Double sens (Sortie)",
     "adresse": "CENTRE ALPES URBAIN DES CAILLOLS - 81 AVENUE WILLIAM BOOTH",
@@ -73456,12 +73810,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 10:52:51",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "5",
+    "exit_name": "Saint-Marcel"
   },
   {
     "id": 38340015,
     "enseigne": "La Station U",
-    "autoroute": "",
+    "autoroute": "A48",
     "nom": "129 avenue Simone Veil - avenue du 11 novembre",
     "sens": "Double sens (Sortie)",
     "adresse": "129 avenue Simone Veil - avenue du 11 novembre",
@@ -73491,12 +73847,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 09:05:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "12",
+    "exit_name": "Voreppe"
   },
   {
     "id": 38690006,
     "enseigne": "Système U",
-    "autoroute": "",
+    "autoroute": "A48",
     "nom": "PARC D ACTIVITE BIEVRE DAUPHINE - 250 Route de Rives",
     "sens": "Double sens (Sortie)",
     "adresse": "PARC D ACTIVITE BIEVRE DAUPHINE - 250 Route de Rives",
@@ -73524,12 +73882,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 09:19:45",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "9",
+    "exit_name": "Rives / Apprieu"
   },
   {
     "id": 34690004,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A9",
     "nom": "RD 613",
     "sens": "Double sens (Sortie)",
     "adresse": "RD 613",
@@ -73557,12 +73917,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 07:55:49",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "32",
+    "exit_name": "Saint-Jean-de-Védas / Fabrègues"
   },
   {
     "id": 26140004,
     "enseigne": "E.Leclerc",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "ZA LA TULANDIERE 26 route de la Maison Blanche",
     "sens": "Double sens (Sortie)",
     "adresse": "ZA LA TULANDIERE 26 route de la Maison Blanche",
@@ -73588,12 +73950,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 09:55:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "12",
+    "exit_name": "Chanas / Saint-Rambert"
   },
   {
     "id": 26800009,
     "enseigne": "Auchan",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "PLACE DU 8 MAI 1945",
     "sens": "Double sens (Sortie)",
     "adresse": "PLACE DU 8 MAI 1945",
@@ -73623,12 +73987,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 09:07:59",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "15",
+    "exit_name": "Valence-Sud"
   },
   {
     "id": 74520010,
     "enseigne": "Carrefour Market",
-    "autoroute": "",
+    "autoroute": "A40",
     "nom": "37 chemin des artisans",
     "sens": "Double sens (Sortie)",
     "adresse": "37 chemin des artisans",
@@ -73658,12 +74024,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 09:58:20",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "11",
+    "exit_name": "Valleiry"
   },
   {
     "id": 42152001,
     "enseigne": "Système U",
-    "autoroute": "",
+    "autoroute": "A47",
     "nom": "38 TER AVENUE PASTEUR",
     "sens": "Double sens (Sortie)",
     "adresse": "38 TER AVENUE PASTEUR",
@@ -73695,12 +74063,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 10:07:57",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "15",
+    "exit_name": "Saint-Chamond"
   },
   {
     "id": 67700011,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A4",
     "nom": "39 ROUTE DE PARIS RN4",
     "sens": "Double sens (Sortie)",
     "adresse": "39 ROUTE DE PARIS RN4",
@@ -73732,12 +74102,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "45",
+    "exit_name": "Saverne"
   },
   {
     "id": 30320001,
     "enseigne": "Système U",
-    "autoroute": "",
+    "autoroute": "A9",
     "nom": "58 Avenue Clément Ader",
     "sens": "Double sens (Sortie)",
     "adresse": "58 Avenue Clément Ader",
@@ -73782,12 +74154,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 09:33:24",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "24",
+    "exit_name": "Nîmes-Est"
   },
   {
     "id": 33170005,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A63",
     "nom": "6 avenue Favard",
     "sens": "Double sens (Sortie)",
     "adresse": "6 avenue Favard",
@@ -73821,12 +74195,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 09:08:20",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "26",
+    "exit_name": "Gradignan"
   },
   {
     "id": 26600014,
     "enseigne": "Total Access",
-    "autoroute": "",
+    "autoroute": "A7",
     "nom": "RN7",
     "sens": "Double sens (Sortie)",
     "adresse": "RN7",
@@ -73861,12 +74237,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "13",
+    "exit_name": "Tain-l'Hermitage"
   },
   {
     "id": 33170008,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "A63",
     "nom": "62 COURS DU GENERAL DE GAULLE",
     "sens": "Double sens (Sortie)",
     "adresse": "62 COURS DU GENERAL DE GAULLE",
@@ -73898,12 +74276,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 08:55:15",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "26",
+    "exit_name": "Gradignan"
   },
   {
     "id": 59113009,
     "enseigne": "Total Access",
-    "autoroute": "",
+    "autoroute": "A1",
     "nom": "1 Route d'Avelin",
     "sens": "Double sens (Sortie)",
     "adresse": "1 Route d'Avelin",
@@ -73936,12 +74316,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "19",
+    "exit_name": "Seclin"
   },
   {
     "id": 49480001,
     "enseigne": "Système U",
-    "autoroute": "",
+    "autoroute": "A11",
     "nom": "LA MAISON BLANCHE",
     "sens": "Double sens (Sortie)",
     "adresse": "LA MAISON BLANCHE",
@@ -73971,12 +74353,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 08:28:46",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "14",
+    "exit_name": "Tiercé / Pellouailles"
   },
   {
     "id": 31410008,
     "enseigne": "Super U",
-    "autoroute": "",
+    "autoroute": "A620",
     "nom": "Route de Toulouse",
     "sens": "Double sens (Sortie)",
     "adresse": "Route de Toulouse",
@@ -74014,12 +74398,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 08:15:03",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "29",
+    "exit_name": "Toulouse Purpan"
   },
   {
     "id": 94012001,
     "enseigne": "Carrefour",
-    "autoroute": "",
+    "autoroute": "A86",
     "nom": "119 Avenue du Général de Gaulle",
     "sens": "Double sens (Sortie)",
     "adresse": "119 Avenue du Général de Gaulle",
@@ -74047,12 +74433,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 00:47:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "22",
+    "exit_name": "Créteil"
   },
   {
     "id": 74130001,
     "enseigne": "Carrefour Market",
-    "autoroute": "",
+    "autoroute": "A40",
     "nom": "61 rue des Grebes Huppés",
     "sens": "Double sens (Sortie)",
     "adresse": "61 rue des Grebes Huppés",
@@ -74084,12 +74472,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 07:31:05",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "16",
+    "exit_name": "Bonneville"
   },
   {
     "id": 62143002,
     "enseigne": "E.Leclerc",
-    "autoroute": "",
+    "autoroute": "A26",
     "nom": "Route de Souchez",
     "sens": "Double sens (Sortie)",
     "adresse": "Route de Souchez",
@@ -74115,12 +74505,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 09:15:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "6.1",
+    "exit_name": "Liévin / Angres"
   },
   {
     "id": 91570004,
     "enseigne": "TotalEnergies",
-    "autoroute": "",
+    "autoroute": "N118",
     "nom": "RN118",
     "sens": "Double sens (Sortie)",
     "adresse": "RN118",
@@ -74156,12 +74548,14 @@
     ],
     "pays": "FR",
     "maj": "2026-11-03 00:01:00",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "7",
+    "exit_name": "Bièvres"
   },
   {
     "id": 33700012,
     "enseigne": "Intermarché",
-    "autoroute": "",
+    "autoroute": "A630",
     "nom": "78 Avenue de Magudas",
     "sens": "Double sens (Sortie)",
     "adresse": "78 Avenue de Magudas",
@@ -74191,6 +74585,8 @@
     ],
     "pays": "FR",
     "maj": "2026-11-02 09:47:02",
-    "is_exit_station": true
+    "is_exit_station": true,
+    "exit_number": "9",
+    "exit_name": "Mérignac-Aéroport"
   }
 ]
