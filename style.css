@@ -6028,24 +6028,63 @@ header {
 }
 
 /* ------------------------------------------------------------- */
-/* v8.8: Off-motorway station cards (fond gris foncé contrasté)  */
+/* v9.0: Off-motorway station cards (contraste maximal dans la liste) */
 /* ------------------------------------------------------------- */
 .station-card.exit-station-card {
-  background: #334155 !important; /* Gris fonce/moyen Slate-700 nettement contraste avec le noir #0f172a */
-  border: 1.5px solid #64748b !important;
-  border-left: 5px solid #f59e0b !important; /* Barre d'accentuation sortie autoroute orange vive */
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
+  background: #3b485d !important; /* Gris ardoise/acier nettement plus clair que le noir #0f172a */
+  border: 2px solid #f59e0b !important; /* Bordure ambre 2px bien vive et visible */
+  border-left: 6px solid #d97706 !important; /* Barre d'accentuation sortie autoroute orange épaisse */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 0 12px rgba(245, 158, 11, 0.25) !important;
+  position: relative;
 }
 
 .station-card.exit-station-card:hover {
-  background: #2b3648 !important;
-  border-color: #60a5fa !important;
+  background: #475569 !important;
+  border-color: #fbbf24 !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 16px rgba(245, 158, 11, 0.4) !important;
 }
 
 .station-card.exit-station-card.highlighted {
-  background: #263852 !important;
-  border-color: #38bdf8 !important;
-  box-shadow: 0 0 16px rgba(56, 189, 248, 0.35) !important;
+  background: #334358 !important;
+  border: 2px solid #38bdf8 !important;
+  border-left: 6px solid #f59e0b !important;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.4), 0 4px 16px rgba(245, 158, 11, 0.3) !important;
+}
+
+/* Bannière pleine largeur pour stations hors autoroute */
+.exit-card-banner {
+  background: linear-gradient(90deg, #b45309 0%, #d97706 40%, #f59e0b 100%);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.6px;
+  padding: 6px 12px;
+  margin: -14px -14px 10px -14px;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.2);
+}
+
+.exit-card-banner-icon {
+  font-size: 0.85rem;
+}
+
+.exit-card-banner-text {
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.station-card.exit-station-card .station-type-badge.exit-badge {
+  background: #f59e0b !important;
+  color: #0f172a !important;
+  font-weight: 800 !important;
+  border: 1px solid #d97706 !important;
 }
 
 .badge-app-version {

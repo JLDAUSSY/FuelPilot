@@ -1075,13 +1075,14 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '8.9';
+const APP_VERSION = '9.0';
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages never override the physical country
 try {
   localStorage.removeItem('fuelpilot_lang');
   localStorage.removeItem('fuelpilot_geo_lang');
+  localStorage.removeItem('fuelpilot_last_known_gps');
 } catch (e) {}
 
 function mapCountryToLang(countryCode, lat, lon) {
@@ -4249,6 +4250,12 @@ function renderCurrentRouteStations() {
 
     card.innerHTML = `
       ${isCheapest ? `<div class="best-price-ribbon">${t().bestPrice}</div>` : ''}
+      ${st.isExitStation ? `
+        <div class="exit-card-banner">
+          <span class="exit-card-banner-icon">🚪</span>
+          <span class="exit-card-banner-text">${offMotorwayBadgeText.toUpperCase()}</span>
+        </div>
+      ` : ''}
       <div class="card-top">
         <div style="display:flex; align-items:center; gap:4px; flex-wrap:wrap;">
           <span class="station-rank">#${idx + 1}</span>
@@ -4883,110 +4890,101 @@ function formatGeolocationErrorMessage(err) {
   return (t().locationError || "Impossible d'obtenir votre position GPS.") + msg;
 }
 
-// Cached IP location fallback (useful when GPS satellites are slow or indoors)
-let ipLocationCache = null;
-
-async function fetchIpGeolocation() {
-  if (ipLocationCache) return ipLocationCache;
-  try {
-    const ctrl = new AbortController();
-    const tId = setTimeout(() => ctrl.abort(), 3500);
-    const res = await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client', { signal: ctrl.signal });
-    clearTimeout(tId);
-    if (res.ok) {
-      const data = await res.json();
-      if (data && typeof data.latitude === 'number' && typeof data.longitude === 'number') {
-        const city = data.city || data.locality || data.principalSubdivision || '';
-        ipLocationCache = {
-          coords: {
-            latitude: data.latitude,
-            longitude: data.longitude,
-            accuracy: 3000,
-            isIpFallback: true
-          },
-          city: city,
-          countryCode: data.countryCode
-        };
-        return ipLocationCache;
-      }
-    }
-  } catch (e) {}
-
-  return null;
-}
-
-// Rock-solid single-listener watchPosition acquisition
-// Avoids Chromium WebAPK single-request IPC deadlock bug on Android
+// Progressive Two-Stage Native Geolocation Acquisition:
+// Stage 1 (Fast Fused fix): enableHighAccuracy: false, queries Google Play Services network/Wi-Fi provider (<500ms)
+// Stage 2 (Satellite Precision lock): enableHighAccuracy: true, queries hardware GPS satellites (up to 30s)
+// ZERO IP FALLBACK: We strictly use the phone's native hardware/fused location.
 function getFreshUserLocation(onSuccess, onError) {
   if (!navigator.geolocation) {
     if (onError) onError({ code: 2, message: "Géolocalisation non supportée." });
     return;
   }
 
-  let finished = false;
+  let hasDeliveredAnyFix = false;
+  let hasDeliveredHighAcc = false;
+  let hasCalledError = false;
   let watchId = null;
+  let globalTimeout = null;
 
   const cleanup = () => {
     if (watchId !== null) {
       try { navigator.geolocation.clearWatch(watchId); } catch (e) {}
       watchId = null;
     }
+    if (globalTimeout) {
+      clearTimeout(globalTimeout);
+      globalTimeout = null;
+    }
   };
 
-  // 1. Safety fallback timer (6s)
-  const safetyTimer = setTimeout(async () => {
-    if (!finished) {
-      finished = true;
+  const dispatchError = (err) => {
+    if (!hasCalledError && !hasDeliveredAnyFix) {
+      hasCalledError = true;
       cleanup();
-      console.warn("GPS satellite delay: trying IP geolocation fallback...");
-      const ipLoc = await fetchIpGeolocation();
-      if (ipLoc) {
-        onSuccess(ipLoc, false);
-      } else if (onError) {
-        onError({ code: 3, message: "Délai GPS dépassé. Veuillez vérifier que la Position est activée dans Android." });
-      }
+      if (onError) onError(err);
     }
-  }, 6000);
+  };
 
-  // 2. Single watchPosition listener (bypasses Android WebAPK getCurrentPosition deadlock)
+  // Stage 1: Fast Fused / Cell / Wi-Fi position (enableHighAccuracy: false)
+  // On Android, Google Play Services Fused Location resolves within 200-500ms
+  try {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        if (!hasDeliveredHighAcc && pos && pos.coords) {
+          hasDeliveredAnyFix = true;
+          if (onSuccess) onSuccess(pos, false);
+        }
+      },
+      (err) => {
+        console.warn("GPS Stage 1 (Fused) notice:", err && err.message);
+        if (err && err.code === 1) {
+          dispatchError(err);
+        }
+      },
+      {
+        enableHighAccuracy: false,
+        timeout: 8000,
+        maximumAge: 60000
+      }
+    );
+  } catch (e) {
+    console.warn("Stage 1 getCurrentPosition exception:", e);
+  }
+
+  // Stage 2: Hardware satellite lock (enableHighAccuracy: true, up to 30s)
   try {
     watchId = navigator.geolocation.watchPosition(
       (pos) => {
-        if (!finished && pos && pos.coords) {
-          finished = true;
-          clearTimeout(safetyTimer);
+        if (pos && pos.coords) {
+          hasDeliveredAnyFix = true;
+          hasDeliveredHighAcc = true;
           cleanup();
-          onSuccess(pos, true);
+          if (onSuccess) onSuccess(pos, true);
         }
       },
-      async (err) => {
-        if (!finished) {
-          finished = true;
-          clearTimeout(safetyTimer);
-          cleanup();
-          if (err && err.code === 1) {
-            if (onError) onError(err);
-            return;
-          }
-          const ipLoc = await fetchIpGeolocation();
-          if (ipLoc) {
-            onSuccess(ipLoc, false);
-          } else if (onError) {
-            onError(err);
-          }
+      (err) => {
+        console.warn("GPS Stage 2 (Satellite) notice:", err && err.message);
+        if (err && err.code === 1) {
+          dispatchError(err);
         }
       },
       {
         enableHighAccuracy: true,
-        timeout: 8000,
-        maximumAge: 30000
+        timeout: 30000,
+        maximumAge: 0
       }
     );
   } catch (e) {
-    clearTimeout(safetyTimer);
-    cleanup();
-    if (onError) onError({ code: 2, message: e.message });
+    console.warn("Stage 2 watchPosition exception:", e);
   }
+
+  // Global safety timeout: 30s
+  globalTimeout = setTimeout(() => {
+    cleanup();
+    if (!hasDeliveredAnyFix) {
+      dispatchError({ code: 3, message: "Délai d'attente satellite GPS dépassé." });
+    }
+  }, 30000);
 }
 
 function requestUserGeolocation(onSuccess, onError, forceFresh = false) {
@@ -5000,13 +4998,6 @@ function requestUserGeolocation(onSuccess, onError, forceFresh = false) {
       const { latitude, longitude, heading, speed } = pos.coords;
       userGpsPosition = { lat: latitude, lon: longitude, heading, speed, isHighAccuracy: isHighAcc, timestamp: Date.now() };
       updateUserGpsMarker(latitude, longitude);
-      try {
-        localStorage.setItem('fuelpilot_last_known_gps', JSON.stringify({
-          lat: latitude,
-          lon: longitude,
-          time: Date.now()
-        }));
-      } catch (e) {}
       if (onSuccess) onSuccess(pos);
     },
     (err) => {

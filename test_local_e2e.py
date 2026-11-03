@@ -174,6 +174,7 @@ try:
         alert = driver.switch_to.alert
         print(f"Alert was opened: '{alert.text[:40]}...' - Accepting it")
         alert.accept()
+        time.sleep(0.5)
     except Exception:
         print("No blocking alert, smooth handling.")
     print("[PASS] Locate button clicked cleanly.")
@@ -265,13 +266,21 @@ try:
     assert re.search(r'\d+\.\d+\s*km', sample_exit_badge), f"FAILURE: Exit badge distance does not contain 1-decimal km: '{sample_exit_badge}'"
     print(f"[PASS] Exit badge distance correctly formatted in decimal km: '{sample_exit_badge}'")
 
-    # Check that exit station cards have exit-station-card class and distinct dark grey background
+    # Check that exit station cards have exit-station-card class and distinct slate grey background
     exit_cards_styled = [c for c in exit_cards if 'exit-station-card' in c.get_attribute('className')]
     assert len(exit_cards_styled) > 0, "FAILURE: No cards have exit-station-card class!"
     bg_color = driver.execute_script("return window.getComputedStyle(arguments[0]).backgroundColor;", exit_cards_styled[0])
     print(f"Exit station card background color: {bg_color}")
     assert bg_color != 'rgb(15, 23, 42)', "FAILURE: Exit card still has default black background!"
-    print("[PASS] Exit station cards have distinct dark grey background styling.")
+    
+    # Check that exit station cards feature the high-contrast exit-card-banner
+    exit_banners = driver.find_elements(By.CLASS_NAME, 'exit-card-banner')
+    print(f"Found {len(exit_banners)} high-contrast exit card top banners.")
+    assert len(exit_banners) > 0, "FAILURE: No exit-card-banner found on off-motorway cards!"
+    sample_banner = exit_banners[0].get_attribute('textContent').strip()
+    print(f"Sample exit banner text: '{sample_banner}'")
+    assert "🚪" in sample_banner and ("HORS AUTOROUTE" in sample_banner or "SORTIE" in sample_banner), f"FAILURE: Invalid exit banner text: '{sample_banner}'"
+    print("[PASS] Exit station cards feature high-contrast exit-card-banner and distinct slate styling.")
 
     savings_badges = driver.find_elements(By.CLASS_NAME, 'station-savings-badge')
     print(f"Found {len(savings_badges)} savings badges ('💰 Économie').")
@@ -377,7 +386,10 @@ try:
     print(f"[PASS] Successfully resolved municipality: '{besnate_match.text}'")
 
     
-    print("\n--- TEST 16: PWA Standalone Geolocation Permission Guidance ---")
+    print("\n--- TEST 16: Native Geolocation & Zero IP Fallback Audit ---")
+    no_ip_geo = driver.execute_script("return typeof fetchIpGeolocation === 'undefined';")
+    assert no_ip_geo, "FAILURE: fetchIpGeolocation still exists! Must be removed to prevent ISP positioning."
+    print("[PASS] Zero IP Geolocation Fallback verified: app strictly relies on native GPS.")
     geo_msg_standalone = driver.execute_script('''
         return formatGeolocationErrorMessage({ code: 1 });
     ''')
