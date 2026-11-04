@@ -71,59 +71,40 @@ body {
 
 
 /* Header */
-
 header {
-
-  background-color: var(--bg-secondary);
-
-  border-bottom: 1px solid var(--border-color);
-
+  background: linear-gradient(180deg, #0f172a 0%, #0b1329 100%);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.2);
   padding: 10px 20px;
-
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
   z-index: 1000;
-
-  min-height: 95px;
-
+  min-height: 90px;
   height: auto;
-
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
 }
-
-
 
 .brand-title {
-
   display: flex;
-
   align-items: center;
-
-  gap: 12px;
-
+  gap: 14px;
 }
 
-
-
 .brand-logo-img {
-
   width: 87px;
-
   height: 87px;
-
   border-radius: 20px;
-
   box-shadow: 0 0 24px rgba(14, 165, 233, 0.55), 0 4px 12px rgba(0, 0, 0, 0.55);
-
   border: 2px solid rgba(255, 255, 255, 0.4);
-
   object-fit: cover;
-
   flex-shrink: 0;
+}
 
+.brand-text-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
 }
 
 
@@ -193,67 +174,93 @@ header {
 
 
 .header-status {
-
   display: flex;
-
-  align-items: center;
-
-  gap: 12px;
-
-  font-size: 0.85rem;
-
-}
-
-
-
-.badge-live {
-
-  background: rgba(16, 185, 129, 0.15);
-
-  color: var(--accent-green);
-
-  border: 1px solid rgba(16, 185, 129, 0.3);
-
-  padding: 4px 10px;
-
-  border-radius: 20px;
-
-  display: flex;
-
-  align-items: center;
-
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
   gap: 6px;
-
-  font-weight: 500;
-
+  font-size: 0.85rem;
 }
 
+.header-status-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 26px;
+}
 
+.header-status-bottom {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 22px;
+}
+
+/* 3D Glossy Metallic Green Gem Indicator */
+.badge-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  padding: 2px 8px 2px 3px;
+  border-radius: 14px;
+  height: 24px;
+  box-sizing: border-box;
+}
+
+.gem-3d-button {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  position: relative;
+  background: conic-gradient(from 180deg at 50% 50%, #ffffff 0deg, #94a3b8 60deg, #334155 120deg, #cbd5e1 180deg, #475569 260deg, #ffffff 360deg);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6), 0 0 6px rgba(34, 197, 94, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.gem-3d-button::before {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  border-radius: 50%;
+  background: #020617;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+.gem-3d-button::after {
+  content: '';
+  position: absolute;
+  inset: 2.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 45% 32%, #a7f3d0 0%, #34d399 30%, #10b981 60%, #047857 85%, #022c22 100%);
+  box-shadow: inset 0 -1.5px 2px rgba(0, 0, 0, 0.5), inset 0 1.5px 2px rgba(255, 255, 255, 0.5);
+  animation: gemGlowPulse 2.2s ease-in-out infinite alternate;
+}
+
+.gem-glare {
+  position: absolute;
+  top: 3px;
+  left: 3.5px;
+  width: 9px;
+  height: 4.5px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.3) 60%, rgba(255, 255, 255, 0) 100%);
+  z-index: 2;
+  pointer-events: none;
+  transform: rotate(-15deg);
+}
+
+@keyframes gemGlowPulse {
+  0% { filter: brightness(1) drop-shadow(0 0 1px rgba(34, 197, 94, 0.4)); }
+  100% { filter: brightness(1.25) drop-shadow(0 0 5px rgba(34, 197, 94, 0.9)); }
+}
 
 .pulse-dot {
-
-  width: 8px;
-
-  height: 8px;
-
-  background-color: var(--accent-green);
-
-  border-radius: 50%;
-
-  animation: pulse 1.8s infinite;
-
-}
-
-
-
-@keyframes pulse {
-
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-
-  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
-
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-
+  display: none;
 }
 
 
@@ -2918,84 +2925,109 @@ header {
 
 
 
-  .header-badges-group {
-
-    display: flex !important;
-
-    flex-direction: column !important;
-
-    align-items: flex-end !important;
-
-    gap: 3px !important;
-
+  header {
+    padding: 8px 10px !important;
+    min-height: 72px !important;
   }
 
-
-
-  .badge-jld {
-
-    display: flex !important;
-
-    font-size: 0.66rem !important;
-
-    font-weight: 800 !important;
-
-    padding: 2px 7px !important;
-
-    border-radius: 10px !important;
-
-    white-space: nowrap !important;
-
-    letter-spacing: 0.3px !important;
-
-    line-height: 1.15 !important;
-
+  .brand-title {
+    gap: 10px !important;
   }
 
-
-
-  .badge-privacy,
-
-  .badge-guide {
-
-    display: flex !important;
-
-    font-size: 0.65rem !important;
-
-    font-weight: 700 !important;
-
-    padding: 2px 7px !important;
-
-    border-radius: 10px !important;
-
-    white-space: nowrap !important;
-
-    line-height: 1.15 !important;
-
+  .brand-logo-img {
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 14px !important;
+    box-shadow: 0 0 14px rgba(14, 165, 233, 0.45) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.35) !important;
   }
 
+  .brand-title h1 {
+    font-size: 1.08rem !important;
+  }
 
+  .brand-tagline {
+    font-size: 0.64rem !important;
+  }
 
   .header-status {
-
-    gap: 6px !important;
-
+    gap: 4px !important;
+    flex-shrink: 0 !important;
   }
 
+  .header-status-top {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 5px !important;
+    height: 24px !important;
+  }
 
+  .header-status-bottom {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 4px !important;
+    height: 19px !important;
+  }
+
+  .btn-fuel-info {
+    width: 20px !important;
+    height: 20px !important;
+    font-size: 0.68rem !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .badge-jld {
+    display: inline-flex !important;
+    align-items: center !important;
+    font-size: 0.60rem !important;
+    font-weight: 800 !important;
+    padding: 1px 5px !important;
+    border-radius: 8px !important;
+    white-space: nowrap !important;
+    letter-spacing: 0.2px !important;
+    line-height: 1.15 !important;
+    height: 20px !important;
+    box-sizing: border-box !important;
+    flex-shrink: 0 !important;
+  }
+
+  .jld-prefix {
+    display: none !important;
+  }
+
+  .badge-privacy,
+  .badge-guide {
+    display: inline-flex !important;
+    align-items: center !important;
+    font-size: 0.63rem !important;
+    font-weight: 700 !important;
+    padding: 1px 6px !important;
+    border-radius: 8px !important;
+    white-space: nowrap !important;
+    line-height: 1.15 !important;
+    height: 19px !important;
+    box-sizing: border-box !important;
+  }
 
   .badge-live {
-
-    padding: 4px 6px !important;
-
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    height: 22px !important;
+    display: inline-flex !important;
+    align-items: center !important;
   }
 
-
+  .gem-3d-button {
+    width: 20px !important;
+    height: 20px !important;
+  }
 
   .live-text {
-
-    display: none;
-
+    display: none !important;
   }
 
 
