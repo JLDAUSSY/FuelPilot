@@ -257,6 +257,86 @@
       .footer-actions { flex-direction: column; align-items: stretch; text-align: center; }
       .btn-back { justify-content: center; }
     }
+  
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #1e293b !important;
+        padding: 0 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .container {
+        max-width: 100% !important;
+        background: #ffffff !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 10px !important;
+      }
+      header {
+        border-bottom: 2px solid #0284c7 !important;
+        padding-bottom: 12px !important;
+      }
+      h1 { color: #0f172a !important; }
+      h1 span { color: #0284c7 !important; }
+      h2 {
+        color: #0369a1 !important;
+        break-after: avoid;
+        margin-top: 18px !important;
+      }
+      .badge-tag {
+        background: #e0f2fe !important;
+        color: #0369a1 !important;
+        border: 1px solid #bae6fd !important;
+      }
+      .lang-switcher, .footer-actions {
+        display: none !important;
+      }
+      .features-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+      }
+      .feature-card {
+        background: #f8fafc !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #334155 !important;
+        break-inside: avoid;
+        padding: 12px !important;
+      }
+      .feature-title { color: #0f172a !important; font-size: 0.92rem !important; }
+      .feature-desc { color: #475569 !important; font-size: 0.82rem !important; }
+      table {
+        border: 1px solid #cbd5e1 !important;
+        break-inside: avoid;
+      }
+      th {
+        background: #f1f5f9 !important;
+        color: #0f172a !important;
+        border-bottom: 2px solid #cbd5e1 !important;
+      }
+      td {
+        color: #334155 !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+      }
+      .callout {
+        background: #f0f9ff !important;
+        border-left: 4px solid #0284c7 !important;
+        break-inside: avoid;
+      }
+      .callout p { color: #0369a1 !important; }
+      .status-live {
+        background: #dcfce7 !important;
+        color: #166534 !important;
+        border: 1px solid #86efac !important;
+      }
+      .status-ref {
+        background: #fef3c7 !important;
+        color: #92400e !important;
+        border: 1px solid #fcd34d !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -266,7 +346,7 @@
         <img src="icon.png" alt="FuelCoPilot Logo" class="logo">
         <div>
           <h1 id="title-main">FuelCo<span>Pilot</span> • Mode d'emploi</h1>
-          <div class="badge-tag" id="badge-version">Guide officiel d'utilisation • v7.8</div>
+          <div class="badge-tag" id="badge-version">Guide officiel d'utilisation • v9.5</div>
         </div>
       </div>
       <div class="lang-switcher" id="lang-switcher">
@@ -295,7 +375,7 @@
       fr: {
         docTitle: "Mode d'emploi & Guide • FuelCoPilot",
         headerTitle: "FuelCo<span>Pilot</span> • Mode d'emploi",
-        badgeVersion: "Guide officiel d'utilisation • v7.8",
+        badgeVersion: "Guide officiel d'utilisation • v9.5",
         backBtn: "Retourner à l'application",
         privacyLink: "Politique de Confidentialité",
         html: `
@@ -354,6 +434,18 @@
               <span class="feature-icon">⭐</span>
               <div class="feature-title">8. Prix le plus bas & Ruptures</div>
               <p class="feature-desc">La station la plus économique de tout votre parcours est mise en avant par un badge doré <strong>⭐ PRIX LE PLUS BAS</strong>. Les carburants en rupture de stock sont signalés en rouge.</p>
+            </div>
+
+            <div class="feature-card">
+              <span class="feature-icon">🚪</span>
+              <div class="feature-title">9. Stations hors autoroute (< 1,5 km)</div>
+              <p class="feature-desc">Repérez les stations situées immédiatement après le péage (< 1,5 km) avec indication précise du <strong>numéro officiel de la sortie d'autoroute</strong> pour réaliser jusqu'à 30 centimes/litre d'économies sans allonger votre temps de parcours.</p>
+            </div>
+
+            <div class="feature-card">
+              <span class="feature-icon">⚡</span>
+              <div class="feature-title">10. Badge Télépéage Ulys (Vinci)</div>
+              <p class="feature-desc">Accédez en 1 clic à l'offre partenaire officielle badge télépéage Ulys Vinci (0 € de frais de gestion les mois non circulés) pour franchir les voies de péage sans arrêt en France, Espagne et Italie.</p>
             </div>
           </div>
 
@@ -474,7 +566,7 @@
       de: {
         docTitle: "Bedienungsanleitung & Leitfaden • FuelCoPilot",
         headerTitle: "FuelCo<span>Pilot</span> • Bedienungsanleitung",
-        badgeVersion: "Offizieller Benutzerleitfaden • v7.8",
+        badgeVersion: "Offizieller Benutzerleitfaden • v9.5",
         backBtn: "Zurück zur Anwendung",
         privacyLink: "Datenschutzerklärung",
         html: `
@@ -537,7 +629,7 @@
       it: {
         docTitle: "Guida all'uso • FuelCoPilot",
         headerTitle: "FuelCo<span>Pilot</span> • Guida all'uso",
-        badgeVersion: "Guida ufficiale • v7.8",
+        badgeVersion: "Guida ufficiale • v9.5",
         backBtn: "Torna all'applicazione",
         privacyLink: "Informativa sulla Privacy",
         html: `
@@ -600,7 +692,7 @@
       es: {
         docTitle: "Guía de uso • FuelCoPilot",
         headerTitle: "FuelCo<span>Pilot</span> • Guía de uso",
-        badgeVersion: "Guía oficial de usuario • v7.8",
+        badgeVersion: "Guía oficial de usuario • v9.5",
         backBtn: "Volver a la aplicación",
         privacyLink: "Política de Privacidad",
         html: `
@@ -663,7 +755,7 @@
       en: {
         docTitle: "User Guide • FuelCoPilot",
         headerTitle: "FuelCo<span>Pilot</span> • User Guide",
-        badgeVersion: "Official User Guide • v7.8",
+        badgeVersion: "Official User Guide • v9.5",
         backBtn: "Back to Application",
         privacyLink: "Privacy Policy",
         html: `
