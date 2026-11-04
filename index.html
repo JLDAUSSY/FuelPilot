@@ -34,7 +34,7 @@
   <!-- Cache Purge on Version Change -->
   <script>
     (function() {
-      var LATEST_BUILD = '9.5.3';
+      var LATEST_BUILD = '9.5.4';
       var currentBuild = localStorage.getItem('fuelcopilot_build');
       if (currentBuild !== LATEST_BUILD) {
         localStorage.setItem('fuelcopilot_build', LATEST_BUILD);
@@ -48,17 +48,7 @@
   </script>
 
 
-  <!-- Travelpayouts Monetization Script (Marker: 595700) -->
-  <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
-    (function () {
-        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') return;
-        var script = document.createElement("script");
-        script.async = 1;
-        script.setAttribute("data-cmp-ab","2");
-        script.src = 'https://tp-em.com/NTk1NzAw.js?t=595700';
-        document.head.appendChild(script);
-    })();
-  </script>
+  <!-- Travelpayouts Drive desactive car popups intrusifs sur clics -->
 
 
 
@@ -78,7 +68,7 @@
 
 
 
-  <link rel="stylesheet" href="style.css?v=9.5.3">
+  <link rel="stylesheet" href="style.css?v=9.5.4">
 
 </head>
 
@@ -600,7 +590,7 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-  <script src="app.js?v=9.5.3"></script>
+  <script src="app.js?v=9.5.4"></script>
 
 </body>
 
