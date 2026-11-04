@@ -4967,7 +4967,7 @@ function formatGeolocationErrorMessage(err) {
   const isNoTwa = rawMsg.toLowerCase().includes('notwa');
 
   if (isNoTwa) {
-    return "📱 Autorisation GPS : mise à jour requise. Désinstallez puis réinstallez FuelCoPilot v1.0.4.";
+    return "📍 Position GPS : saisissez votre ville de départ au clavier ou utilisez le raccourci Chrome.";
   }
   if (code === 1) { // PERMISSION_DENIED
     return "📍 Autorisation GPS requise : autorisez la localisation dans Chrome (Paramètres > Paramètres de sites > Localisation) ou dans les réglages Android.";
