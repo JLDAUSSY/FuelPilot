@@ -31,6 +31,22 @@
   <meta http-equiv="Pragma" content="no-cache">
 
   <meta http-equiv="Expires" content="0">
+  <!-- Cache Purge on Version Change -->
+  <script>
+    (function() {
+      var LATEST_BUILD = '9.5.3';
+      var currentBuild = localStorage.getItem('fuelcopilot_build');
+      if (currentBuild !== LATEST_BUILD) {
+        localStorage.setItem('fuelcopilot_build', LATEST_BUILD);
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            names.forEach(function(name) { caches.delete(name); });
+          });
+        }
+      }
+    })();
+  </script>
+
 
   <!-- Travelpayouts Monetization Script (Marker: 595700) -->
   <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
@@ -62,7 +78,7 @@
 
 
 
-  <link rel="stylesheet" href="style.css?v=9.5">
+  <link rel="stylesheet" href="style.css?v=9.5.3">
 
 </head>
 
@@ -584,7 +600,7 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-  <script src="app.js?v=9.5"></script>
+  <script src="app.js?v=9.5.3"></script>
 
 </body>
 
