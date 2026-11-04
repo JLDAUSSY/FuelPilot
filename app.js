@@ -4940,36 +4940,17 @@ function formatGeolocationErrorMessage(err) {
   const code = err && err.code;
   let rawMsg = (err && err.message) ? String(err.message) : '';
   const isNoTwa = rawMsg.toLowerCase().includes('notwa');
-
-  if (isNoTwa) {
-    return "📱 Mise à jour de l'application Android requise :\n\n" +
-      "L'application actuellement installée sur votre smartphone est une ancienne version sans passerelle de délégation GPS native.\n\n" +
-      "👉 Pour activer le GPS natif (comme sur WaterMetrics) :\n" +
-      "Installez la mise à jour v1.0.3 disponible ici :\n" +
-      "https://jldaussy.github.io/FuelPilot/apk/FuelCoPilot.apk\n\n" +
-      "💡 En attendant l'installation, le GPS fonctionne immédiatement en ouvrant le site dans Google Chrome !";
-  }
-
   const msg = rawMsg ? ` (${rawMsg})` : '';
 
-  if (code === 1) { // PERMISSION_DENIED
-    if (isStandalonePwaMode()) {
-      return "📍 Autorisation GPS requise dans l'application :\n\n" +
-        "Sur Android, l'application FuelCoPilot sur votre écran d'accueil nécessite l'autorisation de localisation :\n\n" +
-        "👉 Pour l'activer en 5 secondes :\n" +
-        "1. Ouvrez les Paramètres de votre téléphone Android ⚙️\n" +
-        "2. Allez dans 'Applications' > 'FuelCoPilot'\n" +
-        "3. Touchez 'Autorisations' > 'Position' (ou Localisation)\n" +
-        "4. Cochez 'Autoriser seulement si l'appli est en cours d'utilisation'\n" +
-        "5. Revenez dans FuelCoPilot : votre position GPS fonctionnera instantanément !";
-    }
-    return "📍 Autorisation GPS refusée dans le navigateur Chrome :\n\n" +
-      "Vos applications natives (Google Maps, Waze) utilisent l'autorisation directe Android, mais Google Chrome a actuellement l'accès bloqué pour jldaussy.github.io.\n\n" +
-      "👉 Pour activer en 5 secondes :\n" +
-      "1. Tout en haut à gauche, appuyez sur le cadenas 🔒 (à gauche de l'adresse).\n" +
-      "2. Appuyez sur 'Autorisations' ou 'Paramètres du site'.\n" +
-      "3. Activez 'Localisation' sur AUTORISER.\n" +
-      "4. Rechargez la page : votre position GPS exacte s'affichera instantanément !";
+  if (isNoTwa || code === 1) { // PERMISSION_DENIED ou délégation de permission Android
+    return "📍 Autorisation GPS requise dans l'application :\n\n" +
+      "Pour que FuelCoPilot puisse vous localiser automatiquement :\n\n" +
+      "👉 Activez la localisation en 5 secondes :\n" +
+      "1. Ouvrez les Paramètres de votre téléphone Android ⚙️\n" +
+      "2. Allez dans 'Applications' > 'FuelCoPilot' (ou 'FuelPilot')\n" +
+      "3. Touchez 'Autorisations' > 'Position' (ou 'Localisation')\n" +
+      "4. Cochez 'Lorsque l'appli est en cours d'utilisation'\n\n" +
+      "💡 Revenez ensuite dans l'application : votre position GPS fonctionnera instantanément !";
   } else if (code === 2) { // POSITION_UNAVAILABLE
     return "⚠️ Signal GPS introuvable" + msg + " :\n\nVérifiez que la 'Position' (GPS) est bien activée dans le volet déroulant supérieur de votre smartphone.";
   } else if (code === 3) { // TIMEOUT
