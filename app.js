@@ -2378,12 +2378,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   const endInput = document.getElementById('input-end');
 
   setupAutocomplete('input-start', 'dropdown-start', (coords, label) => {
-    startPoint = { coords, label };
+    startPoint = coords ? { coords, label } : null;
     if (startInput) startInput.classList.remove('input-attention-pulse');
+    populateBrandFilter();
   });
   setupAutocomplete('input-end', 'dropdown-end', (coords, label) => {
-    endPoint = { coords, label };
+    endPoint = coords ? { coords, label } : null;
     if (endInput) endInput.classList.remove('input-attention-pulse');
+    populateBrandFilter();
   });
 
   if (startInput) {
@@ -2557,22 +2559,86 @@ async function loadCoveredCountries() {
   }
 }
 
+// Detect country (FR, ES, IT, DE, BE, GB) from geographic coordinates using nearest station or bounding boxes
+function getCountryFromCoordinates(lat, lon) {
+  if (allStations && allStations.length > 0) {
+    let bestDistSq = Infinity;
+    let bestCountry = 'FR';
+    for (let i = 0; i < allStations.length; i++) {
+      const s = allStations[i];
+      const dLat = s.lat - lat;
+      const dLon = s.lon - lon;
+      const d = dLat * dLat + dLon * dLon;
+      if (d < bestDistSq) {
+        bestDistSq = d;
+        bestCountry = s.pays || 'FR';
+      }
+    }
+    return bestCountry;
+  }
+  // Bounding box fallbacks
+  if (lat >= 36.0 && lat <= 43.8 && lon >= -9.3 && lon <= 3.3) return 'ES';
+  if (lat >= 36.6 && lat <= 47.1 && lon >= 6.6 && lon <= 18.5) return 'IT';
+  if (lat >= 47.2 && lat <= 55.1 && lon >= 5.8 && lon <= 15.1) return 'DE';
+  if (lat >= 49.9 && lat <= 59.0 && lon >= -8.0 && lon <= 1.8) return 'GB';
+  if (lat >= 49.5 && lat <= 51.5 && lon >= 2.5 && lon <= 6.4) return 'BE';
+  return 'FR';
+}
+
+// Determines the relevant country/countries for the current itinerary or search context
+function getActiveSearchCountries() {
+  // 1. If an active route has matched stations, use their countries
+  if (currentRouteStations && currentRouteStations.length > 0) {
+    const routeCountries = [...new Set(currentRouteStations.map(s => s.pays).filter(Boolean))];
+    if (routeCountries.length > 0) return routeCountries;
+  }
+
+  // 2. If startPoint and/or endPoint are defined with coordinates, detect their countries
+  const pts = [startPoint, endPoint].filter(p => p && p.coords);
+  if (pts.length > 0) {
+    const detected = [];
+    pts.forEach(pt => {
+      const c = getCountryFromCoordinates(pt.coords[1], pt.coords[0]);
+      if (c && !detected.includes(c)) detected.push(c);
+    });
+    if (detected.length > 0) return detected;
+  }
+
+  // 3. Fallback based on selected UI language flag (fr -> FR, es -> ES, it -> IT, de -> DE, en -> GB)
+  const langCountryMap = {
+    fr: 'FR',
+    es: 'ES',
+    it: 'IT',
+    de: 'DE',
+    en: 'GB'
+  };
+  return [langCountryMap[currentLang] || 'FR'];
+}
+
 // Populate Brands Filter dropdown
-// Dynamically adjusts: when route stations are computed, prioritizes brands of the traversed country/countries
+// Dynamically adjusts: for an itinerary or search in a single country, strictly limits to brands available in that country!
 function populateBrandFilter() {
   const brandSelect = document.getElementById('select-brand');
   if (!brandSelect) return;
   const currentVal = selectedBrand;
 
-  // Determine station pool: if an itinerary has matched stations, use route stations
-  // otherwise fallback to all network stations
-  const pool = (currentRouteStations && currentRouteStations.length > 0)
-    ? currentRouteStations
-    : allStations;
+  const activeCountries = getActiveSearchCountries();
+
+  // Determine station pool:
+  // If route stations exist, use them directly (they already match the route's countries)
+  // Otherwise, strictly filter all network stations by the active country/countries
+  let pool = [];
+  if (currentRouteStations && currentRouteStations.length > 0) {
+    pool = currentRouteStations;
+  } else {
+    pool = allStations.filter(s => activeCountries.includes(s.pays || 'FR'));
+    if (pool.length === 0) pool = allStations;
+  }
 
   const counts = {};
   pool.forEach(s => {
-    const b = s.enseigne || 'Indépendant';
+    let b = s.enseigne || 'Indépendant';
+    if (b.startsWith('DELETE TAG')) b = 'TotalEnergies';
     counts[b] = (counts[b] || 0) + 1;
   });
 
