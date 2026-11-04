@@ -6137,3 +6137,49 @@ header {
   border: 1px solid rgba(56, 189, 248, 0.4);
   margin-left: 4px;
 }
+
+
+/* TOAST NOTIFICATIONS (Non-intrusives & Fluides) */
+.toast-notification {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
+  background: #1e293b;
+  color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+  z-index: 99999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  max-width: 90vw;
+  width: max-content;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+
+.toast-notification.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast-notification.warning {
+  background: #7f1d1d;
+  border-color: #ef4444;
+  color: #fef2f2;
+}
+
+.toast-notification.info {
+  background: #0c4a6e;
+  border-color: #0284c7;
+  color: #f0f9ff;
+}

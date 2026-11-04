@@ -3200,8 +3200,11 @@ function useCurrentGpsLocationAsStart() {
     },
     (err) => {
       console.warn('Erreur acquisition GPS départ:', err);
-      alert(formatGeolocationErrorMessage(err));
-      if (startInput && !startPoint) startInput.value = '';
+      showToast(formatGeolocationErrorMessage(err), { isWarning: true, duration: 6000 });
+      if (startInput && !startPoint) {
+        startInput.value = '';
+        startInput.placeholder = (t().inputStartPlaceholder || 'Ville ou lieu de départ...');
+      }
       if (typeof updateAllClearButtons === 'function') updateAllClearButtons();
     }
   );
@@ -4928,6 +4931,28 @@ function updateUserGpsMarker(latitude, longitude) {
   }
 }
 
+let toastTimer = null;
+function showToast(msg, options = {}) {
+  let toast = document.getElementById('app-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'app-toast';
+    toast.className = 'toast-notification';
+    document.body.appendChild(toast);
+  }
+  const isWarning = options.isWarning !== false;
+  const isInfo = options.isInfo === true;
+  toast.className = `toast-notification ${isWarning ? 'warning' : ''} ${isInfo ? 'info' : ''}`;
+  toast.innerHTML = msg;
+  toast.classList.add('show');
+
+  if (toastTimer) clearTimeout(toastTimer);
+  const dur = options.duration || 4500;
+  toastTimer = setTimeout(() => {
+    toast.classList.remove('show');
+  }, dur);
+}
+
 function isStandalonePwaMode() {
   return (
     (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
@@ -4940,23 +4965,18 @@ function formatGeolocationErrorMessage(err) {
   const code = err && err.code;
   let rawMsg = (err && err.message) ? String(err.message) : '';
   const isNoTwa = rawMsg.toLowerCase().includes('notwa');
-  const msg = rawMsg ? ` (${rawMsg})` : '';
 
-  if (isNoTwa || code === 1) { // PERMISSION_DENIED ou délégation de permission Android
-    return "📍 Autorisation GPS requise dans l'application :\n\n" +
-      "Pour que FuelCoPilot puisse vous localiser automatiquement :\n\n" +
-      "👉 Activez la localisation en 5 secondes :\n" +
-      "1. Ouvrez les Paramètres de votre téléphone Android ⚙️\n" +
-      "2. Allez dans 'Applications' > 'FuelCoPilot' (ou 'FuelPilot')\n" +
-      "3. Touchez 'Autorisations' > 'Position' (ou 'Localisation')\n" +
-      "4. Cochez 'Lorsque l'appli est en cours d'utilisation'\n\n" +
-      "💡 Revenez ensuite dans l'application : votre position GPS fonctionnera instantanément !";
-  } else if (code === 2) { // POSITION_UNAVAILABLE
-    return "⚠️ Signal GPS introuvable" + msg + " :\n\nVérifiez que la 'Position' (GPS) est bien activée dans le volet déroulant supérieur de votre smartphone.";
-  } else if (code === 3) { // TIMEOUT
-    return "⏳ Délai satellite GPS dépassé" + msg + " :\n\nLe capteur GPS de votre téléphone prend du temps à capter les satellites. Veuillez réappuyer sur le bouton dans quelques instants.";
+  if (isNoTwa) {
+    return "📱 Autorisation GPS : mise à jour requise. Désinstallez puis réinstallez FuelCoPilot v1.0.4.";
   }
-  return (t().locationError || "Impossible d'obtenir votre position GPS.") + msg;
+  if (code === 1) { // PERMISSION_DENIED
+    return "📍 Autorisation GPS requise : autorisez la localisation dans Chrome (Paramètres > Paramètres de sites > Localisation) ou dans les réglages Android.";
+  } else if (code === 2) { // POSITION_UNAVAILABLE
+    return "⚠️ Signal GPS introuvable : activez la 'Position' dans le volet déroulant de votre téléphone.";
+  } else if (code === 3) { // TIMEOUT
+    return "⏳ Recherche GPS longue : placez-vous à ciel ouvert ou saisissez votre ville au clavier.";
+  }
+  return "Autorisation GPS : impossible d'obtenir votre position. Saisissez votre ville au clavier.";
 }
 
 // Proven WaterMetrics Geolocation Architecture + Android TWA NoTwaFound Auto-Recovery:
@@ -5096,11 +5116,6 @@ function getFreshUserLocation(onSuccess, onError) {
       },
       (err) => {
         console.warn('[GPS WaterMetrics] watchPosition callback notice:', err && err.message);
-        if (err && err.code === 1) { // PERMISSION_DENIED
-          finish(null, err);
-          return;
-        }
-
         // Si Android TWA signale NoTwaFound (ancienne version APK sans DelegationService)
         const isNoTwa = err && err.message && String(err.message).toLowerCase().includes('notwa');
         if (isNoTwa) {
@@ -5118,6 +5133,11 @@ function getFreshUserLocation(onSuccess, onError) {
               if (!resolved && !bestCoords) finish(null, err);
             }
           }
+          return;
+        }
+
+        if (err && err.code === 1) { // PERMISSION_DENIED
+          finish(null, err);
           return;
         }
 
@@ -5202,7 +5222,7 @@ function centerMapOnUser() {
     (err) => {
       if (btnLocate) btnLocate.classList.remove('locating');
       console.warn('Center on user error:', err);
-      alert(formatGeolocationErrorMessage(err));
+      showToast(formatGeolocationErrorMessage(err), { isWarning: true, duration: 5000 });
     }
   );
 }
@@ -5237,7 +5257,7 @@ function startGpsNavigation() {
       (err) => {
         console.warn("Erreur GPS Navigation démarrage:", err);
         if (err && err.code === 1) {
-          alert(formatGeolocationErrorMessage(err));
+          showToast(formatGeolocationErrorMessage(err), { isWarning: true, duration: 5000 });
         }
       }
     );
