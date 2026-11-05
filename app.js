@@ -2,17 +2,9 @@
 // Trajet point A à point B, étapes, alternatives, stations en ordre chronologique avec PK, enseignes et prix
 
 // ============================================================================
-// Configuration des partenariats & affiliations (Ulys Télépéage & Amazon)
+// Configuration des partenariats & affiliations (Amazon Équipement Route)
 // ============================================================================
 const AFFILIATE_CONFIG = {
-  ulys: {
-    enabled: false,
-    url: "https://ulys.vinci-autoroutes.com/", // À mettre à jour dès validation Awin
-    badge: "🚗 BON PLAN PÉAGE",
-    title: "Badge Télépéage Ulys",
-    desc: "Passez les barrières sans attente en France, Espagne et Italie. Sans engagement.",
-    cta: "Profiter de l'offre ➔"
-  },
   amazon: {
     enabled: true,
     tag: "watermetrics-21",
@@ -1238,10 +1230,6 @@ const I18N_DICT = {
     alertMissingPoints: "Veuillez renseigner un point de départ et un point d'arrivée.",
     alertNoRoute: "Aucun itinéraire routier trouvé.",
     alertServerError: "Impossible de joindre le serveur d'itinéraire. Veuillez réessayer.",
-    ulysBadge: "🔥 BON PLAN PÉAGE • 0€ FRAIS DE GESTION",
-    ulysTitle: "Badge Télépéage Ulys (Vinci)",
-    ulysDesc: "Zéro attente aux barrières de péage en France, Espagne & Italie. Offre sans engagement.",
-    ulysCta: "Profiter de l'offre ➔",
     amazonBadge: "🛒 ÉQUIPEMENT TRAJET RECOMMANDÉ",
     amazonView: "Voir ➔",
     amazonItems: [
@@ -1361,10 +1349,6 @@ const I18N_DICT = {
     alertMissingPoints: "Bitte geben Sie einen Startort und einen Zielort ein.",
     alertNoRoute: "Keine Straßenroute gefunden.",
     alertServerError: "Routenserver nicht erreichbar. Bitte versuchen Sie es erneut.",
-    ulysBadge: "🔥 MAUT-ANGEBOT • 0 € GRUNDGEBÜHR",
-    ulysTitle: "Ulys Mautbox (Vinci)",
-    ulysDesc: "Ohne Wartezeit durch die Mautstellen in Frankreich, Spanien & Italien. Ohne Vertragsbindung.",
-    ulysCta: "Angebot sichern ➔",
     amazonBadge: "🛒 EMPFOHLENES REISEZUBEHÖR",
     amazonView: "Ansehen ➔",
     amazonItems: [
@@ -1484,10 +1468,6 @@ const I18N_DICT = {
     alertMissingPoints: "Please enter a departure point and an arrival point.",
     alertNoRoute: "No driving route found.",
     alertServerError: "Unable to reach the routing server. Please try again.",
-    ulysBadge: "🔥 TOLL PASS DEAL • €0 MANAGEMENT FEE",
-    ulysTitle: "Ulys Electronic Toll Tag (Vinci)",
-    ulysDesc: "Zero wait at toll booths across France, Spain & Italy. No commitment.",
-    ulysCta: "Get offer ➔",
     amazonBadge: "🛒 RECOMMENDED ROAD TRIP GEAR",
     amazonView: "View ➔",
     amazonItems: [
@@ -1607,10 +1587,6 @@ const I18N_DICT = {
     alertMissingPoints: "Inserisci un punto di partenza e un punto di arrivo.",
     alertNoRoute: "Nessun itinerario stradale trovato.",
     alertServerError: "Impossibile contattare il server di calcolo percorso. Riprova.",
-    ulysBadge: "🔥 OFFERTA TELEPEDAGGIO • 0€ COSTI DI GESTIONE",
-    ulysTitle: "Badge Telepedaggio Ulys (Vinci)",
-    ulysDesc: "Zero attese ai caselli in Francia, Spagna e Italia. Senza vincoli.",
-    ulysCta: "Scopri l'offerta ➔",
     amazonBadge: "🛒 ACCESSORI VIAGGIO CONSIGLIATI",
     amazonView: "Vedi ➔",
     amazonItems: [
@@ -1730,10 +1706,6 @@ const I18N_DICT = {
     alertMissingPoints: "Por favor, introduzca un punto de salida y un punto de llegada.",
     alertNoRoute: "No se encontró ninguna ruta por carretera.",
     alertServerError: "No se pudo conectar con el servidor de rutas. Inténtelo de nuevo.",
-    ulysBadge: "🔥 OFERTA TELEPEAJE • 0€ GASTOS DE GESTIÓN",
-    ulysTitle: "Via-T Telepeaje Ulys (Vinci)",
-    ulysDesc: "Cero esperas en los peajes de Francia, España e Italia. Sin compromiso.",
-    ulysCta: "Ver oferta ➔",
     amazonBadge: "🛒 EQUIPAMIENTO DE VIAJE RECOMENDADO",
     amazonView: "Ver ➔",
     amazonItems: [
@@ -2022,18 +1994,6 @@ function setAppLanguage(lang, isManual = false) {
     populateBrandFilter();
   }
 
-  // Update Ulys Partner card texts
-  const ulysCard = document.getElementById('partner-ulys-card');
-  if (ulysCard) {
-    const ub = ulysCard.querySelector('.ulys-badge-alert');
-    const ut = ulysCard.querySelector('.partner-title');
-    const ud = ulysCard.querySelector('.partner-desc');
-    const uc = ulysCard.querySelector('#link-partner-ulys');
-    if (ub) ub.textContent = tr.ulysBadge;
-    if (ut) ut.textContent = tr.ulysTitle;
-    if (ud) ud.textContent = tr.ulysDesc;
-    if (uc) uc.textContent = tr.ulysCta;
-  }
 
   // Update fuel dropdown default labels when no route is active
   const fuelSelectEl = document.getElementById('select-fuel');
@@ -3496,17 +3456,6 @@ async function calculateItinerary() {
     renderRouteAlternatives();
     updateNavButtonUI();
 
-    // Afficher le bon plan Télépéage Ulys
-    const ulysCard = document.getElementById('partner-ulys-card');
-    // Ulys n'est utile que sur les péages de France, Espagne et Italie
-    const ulysCountries = [...new Set((currentRouteStations || []).map(s => s.pays || 'FR'))];
-    const ulysRelevant = ulysCountries.some(c => ['FR', 'ES', 'IT'].includes(c));
-    if (ulysCard) ulysCard.style.display = 'none';
-    if (ulysCard && AFFILIATE_CONFIG.ulys.enabled && ulysRelevant) {
-      ulysCard.style.display = 'block';
-      const ulysLink = document.getElementById('link-partner-ulys');
-      if (ulysLink) ulysLink.href = AFFILIATE_CONFIG.ulys.url;
-    }
 
     // Afficher l'encart Amazon Équipement Route
     const amazonCard = document.getElementById('partner-amazon-card');

@@ -138,9 +138,10 @@ try:
     WebDriverWait(driver, 14).until(
         lambda d: any("Lyon" in it.text for it in d.find_element(By.ID, 'dropdown-end').find_elements(By.CLASS_NAME, 'autocomplete-item'))
     )
+    time.sleep(0.3)
     dropdown_end = driver.find_element(By.ID, 'dropdown-end')
     lyon_item = next(it for it in dropdown_end.find_elements(By.CLASS_NAME, 'autocomplete-item') if "Lyon" in it.text)
-    lyon_item.click()
+    driver.execute_script("arguments[0].click();", lyon_item)
     time.sleep(0.5)
     print("[PASS] Clear button ('✕') successfully resets address input cleanly.")
 
