@@ -6,7 +6,7 @@
 // ============================================================================
 const AFFILIATE_CONFIG = {
   ulys: {
-    enabled: true,
+    enabled: false,
     url: "https://ulys.vinci-autoroutes.com/", // À mettre à jour dès validation Awin
     badge: "🚗 BON PLAN PÉAGE",
     title: "Badge Télépéage Ulys",
