@@ -1232,9 +1232,10 @@ const I18N_DICT = {
     alertServerError: "Impossible de joindre le serveur d'itinéraire. Veuillez réessayer.",
     amazonBadge: "🛒 ÉQUIPEMENT TRAJET RECOMMANDÉ",
     amazonView: "Voir ➔",
+    amazonDisclosure: "En tant que Partenaire Amazon, nous réalisons un bénéfice sur les achats remplissant les conditions requises.",
     amazonItems: [
-      { icon: "📱", name: "Support Smartphone Grille / MagSafe", sub: "Maintien ultra-stable pour guidage GPS" },
-      { icon: "⚡", name: "Chargeur Allume-Cigare USB-C Rapide", sub: "Recharge rapide 65W pendant votre trajet" }
+      { icon: "📱", name: "Support Smartphone Grille / MagSafe", sub: "Maintien ultra-stable pour guidage GPS", url: "https://www.amazon.fr/s?k=support+telephone+voiture+grille+aeration&tag=watermetrics-21" },
+      { icon: "⚡", name: "Chargeur Allume-Cigare USB-C Rapide", sub: "Recharge rapide 65W pendant votre trajet", url: "https://www.amazon.fr/s?k=chargeur+allume+cigare+rapide+usb+c&tag=watermetrics-21" }
     ],
     fuelInfoBtnTitle: "Correspondance des noms de carburants par pays",
     fuelInfoTitle: "⛽ Correspondance des carburants par pays",
@@ -1351,9 +1352,10 @@ const I18N_DICT = {
     alertServerError: "Routenserver nicht erreichbar. Bitte versuchen Sie es erneut.",
     amazonBadge: "🛒 EMPFOHLENES REISEZUBEHÖR",
     amazonView: "Ansehen ➔",
+    amazonDisclosure: "Als Amazon-Partner verdienen wir an qualifizierten Verkäufen.",
     amazonItems: [
-      { icon: "📱", name: "Kfz-Handyhalterung Lüftung / MagSafe", sub: "Ultrastabiler Halt für die GPS-Navigation" },
-      { icon: "⚡", name: "65W USB-C Schnellladegerät fürs Auto", sub: "Schnelles Aufladen während der Fahrt" }
+      { icon: "📱", name: "Kfz-Handyhalterung Lüftung / MagSafe", sub: "Ultrastabiler Halt für die GPS-Navigation", url: "https://www.amazon.de/s?k=handyhalterung+auto+lueftung+magsafe&tag=watermetrics-21" },
+      { icon: "⚡", name: "65W USB-C Schnellladegerät fürs Auto", sub: "Schnelles Aufladen während der Fahrt", url: "https://www.amazon.de/s?k=kfz+ladegeraet+usb+c+schnellladen&tag=watermetrics-21" }
     ],
     fuelInfoBtnTitle: "Kraftstoffbezeichnungen nach Ländern",
     fuelInfoTitle: "⛽ Kraftstoff-Übersicht nach Ländern",
@@ -1470,9 +1472,10 @@ const I18N_DICT = {
     alertServerError: "Unable to reach the routing server. Please try again.",
     amazonBadge: "🛒 RECOMMENDED ROAD TRIP GEAR",
     amazonView: "View ➔",
+    amazonDisclosure: "As an Amazon Associate, we earn from qualifying purchases.",
     amazonItems: [
-      { icon: "📱", name: "MagSafe / Air Vent Car Phone Mount", sub: "Ultra-stable hold for GPS navigation" },
-      { icon: "⚡", name: "65W Fast USB-C Car Charger", sub: "Fast charging during your journey" }
+      { icon: "📱", name: "MagSafe / Air Vent Car Phone Mount", sub: "Ultra-stable hold for GPS navigation", url: "https://www.amazon.co.uk/s?k=car+phone+holder+air+vent+magsafe&tag=watermetrics-21" },
+      { icon: "⚡", name: "65W Fast USB-C Car Charger", sub: "Fast charging during your journey", url: "https://www.amazon.co.uk/s?k=fast+usb+c+car+charger+65w&tag=watermetrics-21" }
     ],
     fuelInfoBtnTitle: "Fuel name correspondence across countries",
     fuelInfoTitle: "⛽ Fuel Names by Country",
@@ -1589,9 +1592,10 @@ const I18N_DICT = {
     alertServerError: "Impossibile contattare il server di calcolo percorso. Riprova.",
     amazonBadge: "🛒 ACCESSORI VIAGGIO CONSIGLIATI",
     amazonView: "Vedi ➔",
+    amazonDisclosure: "In qualità di Affiliato Amazon, riceviamo un guadagno dagli acquisti idonei.",
     amazonItems: [
-      { icon: "📱", name: "Supporto Auto Smartphone / MagSafe", sub: "Tenuta ultra-stabile per navigazione GPS" },
-      { icon: "⚡", name: "Caricabatterie Auto Rapido USB-C 65W", sub: "Ricarica rapida durante il viaggio" }
+      { icon: "📱", name: "Supporto Auto Smartphone / MagSafe", sub: "Tenuta ultra-stabile per navigazione GPS", url: "https://www.amazon.it/s?k=supporto+auto+smartphone+bocchette+magsafe&tag=watermetrics-21" },
+      { icon: "⚡", name: "Caricabatterie Auto Rapido USB-C 65W", sub: "Ricarica rapida durante il viaggio", url: "https://www.amazon.it/s?k=caricabatterie+auto+usb+c+rapido&tag=watermetrics-21" }
     ],
     fuelInfoBtnTitle: "Tabella di corrispondenza dei carburanti per paese",
     fuelInfoTitle: "⛽ Corrispondenza Carburanti per Paese",
@@ -1708,9 +1712,10 @@ const I18N_DICT = {
     alertServerError: "No se pudo conectar con el servidor de rutas. Inténtelo de nuevo.",
     amazonBadge: "🛒 EQUIPAMIENTO DE VIAJE RECOMENDADO",
     amazonView: "Ver ➔",
+    amazonDisclosure: "Como Afiliado de Amazon, obtenemos ingresos por las compras adscritas que cumplen los requisitos.",
     amazonItems: [
-      { icon: "📱", name: "Soporte Móvil Coche Rejilla / MagSafe", sub: "Sujeción ultraestable para navegación GPS" },
-      { icon: "⚡", name: "Cargador Coche Rápido USB-C 65W", sub: "Carga rápida durante su viaje" }
+      { icon: "📱", name: "Soporte Móvil Coche Rejilla / MagSafe", sub: "Sujeción ultraestable para navegación GPS", url: "https://www.amazon.es/s?k=soporte+movil+coche+rejilla+magsafe&tag=watermetrics-21" },
+      { icon: "⚡", name: "Cargador Coche Rápido USB-C 65W", sub: "Carga rápida durante su viaje", url: "https://www.amazon.es/s?k=cargador+coche+carga+rapida+usb+c&tag=watermetrics-21" }
     ],
     fuelInfoBtnTitle: "Tabla de correspondencia de carburantes por país",
     fuelInfoTitle: "⛽ Correspondencia de Carburantes por País",
@@ -4066,13 +4071,15 @@ function renderCurrentRouteStations() {
     amazonCard.id = 'partner-amazon-card';
     const tr = t();
     const trItems = tr.amazonItems || AFFILIATE_CONFIG.amazon.items;
+    const disclosure = tr.amazonDisclosure || "En tant que Partenaire Amazon, nous réalisons un bénéfice sur les achats remplissant les conditions requises.";
     amazonCard.innerHTML = `
       <div class="partner-badge amazon-badge">${tr.amazonBadge}</div>
       <div class="amazon-items-list">
         ${AFFILIATE_CONFIG.amazon.items.map((item, i) => {
           const loc = trItems[i] || item;
+          const targetUrl = loc.url || item.url;
           return `
-          <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="amazon-item-row" title="Amazon">
+          <a href="${targetUrl}" target="_blank" rel="noopener sponsored" class="amazon-item-row" title="Amazon">
             <span class="amazon-item-icon">${item.icon}</span>
             <div class="amazon-item-details">
               <span class="amazon-item-name">${loc.name}</span>
@@ -4083,6 +4090,7 @@ function renderCurrentRouteStations() {
         `;
         }).join('')}
       </div>
+      <div class="amazon-disclosure">${disclosure}</div>
     `;
     return amazonCard;
   }
