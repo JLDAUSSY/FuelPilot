@@ -2,7 +2,7 @@
 // Trajet point A à point B, étapes, alternatives, stations en ordre chronologique avec PK, enseignes et prix
 
 // ============================================================================
-// Configuration des partenariats & affiliations (Amazon Équipement Route)
+// Configuration des partenariats & affiliations (Amazon Équipement Route & EVDANCE)
 // ============================================================================
 const AFFILIATE_CONFIG = {
   amazon: {
@@ -22,6 +22,11 @@ const AFFILIATE_CONFIG = {
         url: "https://www.amazon.fr/s?k=chargeur+allume+cigare+rapide+usb+c&tag=watermetrics-21"
       }
     ]
+  },
+  evdance: {
+    enabled: true,
+    promoCode: "EVEU20",
+    url: "https://www.awin1.com/cread.php?awinmid=67740&awinaffid=3139082&clickref=fuelcopilot_elec+&ued=https%3A%2F%2Feu.evdances.com"
   }
 };
 
@@ -1237,6 +1242,11 @@ const I18N_DICT = {
       { icon: "📱", name: "Support Smartphone Grille / MagSafe", sub: "Maintien ultra-stable pour guidage GPS", url: "https://www.amazon.fr/s?k=support+telephone+voiture+grille+aeration&tag=watermetrics-21" },
       { icon: "⚡", name: "Chargeur Allume-Cigare USB-C Rapide", sub: "Recharge rapide 65W pendant votre trajet", url: "https://www.amazon.fr/s?k=chargeur+allume+cigare+rapide+usb+c&tag=watermetrics-21" }
     ],
+    evdanceBadge: "⚡ PARTENAIRE RECHARGE VE • EVDANCE",
+    evdanceTitle: "Chargeurs Portables & Câbles Type 2 EVDANCE",
+    evdanceSub: "Jusqu'à -20% sur toute la boutique UE • Code :",
+    evdanceCta: "Voir -20% ➔",
+    evdanceDisclosure: "Lien partenaire affilié • Code promo EVEU20 valable sur eu.evdances.com",
     fuelInfoBtnTitle: "Correspondance des noms de carburants par pays",
     fuelInfoTitle: "⛽ Correspondance des carburants par pays",
     fuelInfoSubtitle: "Dénominations officielles aux pompes (Norme européenne EN 16942)",
@@ -1357,6 +1367,11 @@ const I18N_DICT = {
       { icon: "📱", name: "Kfz-Handyhalterung Lüftung / MagSafe", sub: "Ultrastabiler Halt für die GPS-Navigation", url: "https://www.amazon.de/s?k=handyhalterung+auto+lueftung+magsafe&tag=watermetrics-21" },
       { icon: "⚡", name: "65W USB-C Schnellladegerät fürs Auto", sub: "Schnelles Aufladen während der Fahrt", url: "https://www.amazon.de/s?k=kfz+ladegeraet+usb+c+schnellladen&tag=watermetrics-21" }
     ],
+    evdanceBadge: "⚡ E-MOBILITÄTS-PARTNER • EVDANCE",
+    evdanceTitle: "EVDANCE Mobile Ladegeräte & Typ-2-Kabel",
+    evdanceSub: "Bis zu -20 % im gesamten EU-Shop • Code:",
+    evdanceCta: "Ansehen -20% ➔",
+    evdanceDisclosure: "Partner-Link • Rabattcode EVEU20 gültig auf eu.evdances.com",
     fuelInfoBtnTitle: "Kraftstoffbezeichnungen nach Ländern",
     fuelInfoTitle: "⛽ Kraftstoff-Übersicht nach Ländern",
     fuelInfoSubtitle: "Offizielle Bezeichnungen an der Zapfsäule (EU-Norm EN 16942)",
@@ -1477,6 +1492,11 @@ const I18N_DICT = {
       { icon: "📱", name: "MagSafe / Air Vent Car Phone Mount", sub: "Ultra-stable hold for GPS navigation", url: "https://www.amazon.co.uk/s?k=car+phone+holder+air+vent+magsafe&tag=watermetrics-21" },
       { icon: "⚡", name: "65W Fast USB-C Car Charger", sub: "Fast charging during your journey", url: "https://www.amazon.co.uk/s?k=fast+usb+c+car+charger+65w&tag=watermetrics-21" }
     ],
+    evdanceBadge: "⚡ EV CHARGING PARTNER • EVDANCE",
+    evdanceTitle: "EVDANCE Portable EV Chargers & Type 2 Cables",
+    evdanceSub: "Up to 20% OFF sitewide on EU store • Code:",
+    evdanceCta: "Shop -20% ➔",
+    evdanceDisclosure: "Affiliate partner link • Promo code EVEU20 valid on eu.evdances.com",
     fuelInfoBtnTitle: "Fuel name correspondence across countries",
     fuelInfoTitle: "⛽ Fuel Names by Country",
     fuelInfoSubtitle: "Official pump labels across Europe (EN 16942 standard)",
@@ -1597,6 +1617,11 @@ const I18N_DICT = {
       { icon: "📱", name: "Supporto Auto Smartphone / MagSafe", sub: "Tenuta ultra-stabile per navigazione GPS", url: "https://www.amazon.it/s?k=supporto+auto+smartphone+bocchette+magsafe&tag=watermetrics-21" },
       { icon: "⚡", name: "Caricabatterie Auto Rapido USB-C 65W", sub: "Ricarica rapida durante il viaggio", url: "https://www.amazon.it/s?k=caricabatterie+auto+usb+c+rapido&tag=watermetrics-21" }
     ],
+    evdanceBadge: "⚡ PARTNER RICARICA EV • EVDANCE",
+    evdanceTitle: "Caricatori Portatili & Cavi Tipo 2 EVDANCE",
+    evdanceSub: "Fino al -20% su tutto lo store UE • Codice:",
+    evdanceCta: "Vedi -20% ➔",
+    evdanceDisclosure: "Link affiliato partner • Codice promo EVEU20 valido su eu.evdances.com",
     fuelInfoBtnTitle: "Tabella di corrispondenza dei carburanti per paese",
     fuelInfoTitle: "⛽ Corrispondenza Carburanti per Paese",
     fuelInfoSubtitle: "Denominazioni ufficiali alla pompa (Norma europea EN 16942)",
@@ -1717,6 +1742,11 @@ const I18N_DICT = {
       { icon: "📱", name: "Soporte Móvil Coche Rejilla / MagSafe", sub: "Sujeción ultraestable para navegación GPS", url: "https://www.amazon.es/s?k=soporte+movil+coche+rejilla+magsafe&tag=watermetrics-21" },
       { icon: "⚡", name: "Cargador Coche Rápido USB-C 65W", sub: "Carga rápida durante su viaje", url: "https://www.amazon.es/s?k=cargador+coche+carga+rapida+usb+c&tag=watermetrics-21" }
     ],
+    evdanceBadge: "⚡ SOCIO RECARGA VE • EVDANCE",
+    evdanceTitle: "Cargadores Portátiles y Cables Tipo 2 EVDANCE",
+    evdanceSub: "Hasta -20 % en toda la tienda UE • Código:",
+    evdanceCta: "Ver -20% ➔",
+    evdanceDisclosure: "Enlace de afiliado • Código promo EVEU20 válido en eu.evdances.com",
     fuelInfoBtnTitle: "Tabla de correspondencia de carburantes por país",
     fuelInfoTitle: "⛽ Correspondencia de Carburantes por País",
     fuelInfoSubtitle: "Denominaciones oficiales en surtidor (Norma europea EN 16942)",
@@ -2047,21 +2077,7 @@ function setAppLanguage(lang, isManual = false) {
   if (alternativeRoutes && alternativeRoutes.length > 1) {
     renderRouteAlternatives();
   }
-  if (activeRouteData || (currentRouteStations && currentRouteStations.length > 0)) {
-    renderCurrentRouteStations();
-  } else {
-    const countLabel = document.getElementById('stations-count-label');
-    if (countLabel) countLabel.textContent = tr.stationsCount(0);
-    const listContainer = document.getElementById('stations-list');
-    if (listContainer) {
-      listContainer.innerHTML = `
-        <div style="text-align:center; padding: 40px 20px; color: var(--text-muted);">
-          <p style="font-size: 2rem; margin-bottom: 8px;">🛣️</p>
-          <p>${tr.emptyInitial}</p>
-        </div>
-      `;
-    }
-  }
+  renderCurrentRouteStations();
 }
 
 // Dynamically calibrate mobile bottom nav bar position using VisualViewport & Screen APIs
@@ -3981,6 +3997,68 @@ async function maybeLoadGermanLivePrices(route, coords, cumDist) {
   }
 }
 
+function createEvdanceCard() {
+  const card = document.createElement('div');
+  card.className = 'partner-card partner-evdance';
+  card.id = 'partner-evdance-card';
+  const tr = t();
+  const targetUrl = AFFILIATE_CONFIG.evdance.url;
+  const promoCode = AFFILIATE_CONFIG.evdance.promoCode || 'EVEU20';
+  card.innerHTML = `
+    <div class="partner-badge evdance-badge">${tr.evdanceBadge}</div>
+    <a href="${targetUrl}" target="_blank" rel="noopener sponsored" class="evdance-row" title="EVDANCE Europe">
+      <span class="amazon-item-icon">🔌</span>
+      <div class="amazon-item-details">
+        <span class="amazon-item-name">${tr.evdanceTitle}</span>
+        <span class="amazon-item-sub">${tr.evdanceSub} <span class="evdance-promo-pill">${promoCode}</span></span>
+      </div>
+      <span class="evdance-arrow">${tr.evdanceCta}</span>
+    </a>
+    <div class="amazon-disclosure">${tr.evdanceDisclosure}</div>
+  `;
+  return card;
+}
+
+function createAmazonCard() {
+  const amazonCard = document.createElement('div');
+  amazonCard.className = 'partner-card partner-amazon';
+  amazonCard.id = 'partner-amazon-card';
+  const tr = t();
+  const trItems = tr.amazonItems || AFFILIATE_CONFIG.amazon.items;
+  const disclosure = tr.amazonDisclosure || "En tant que Partenaire Amazon, nous réalisons un bénéfice sur les achats remplissant les conditions requises.";
+  amazonCard.innerHTML = `
+    <div class="partner-badge amazon-badge">${tr.amazonBadge}</div>
+    <div class="amazon-items-list">
+      ${AFFILIATE_CONFIG.amazon.items.map((item, i) => {
+        const loc = trItems[i] || item;
+        const targetUrl = loc.url || item.url;
+        return `
+        <a href="${targetUrl}" target="_blank" rel="noopener sponsored" class="amazon-item-row" title="Amazon">
+          <span class="amazon-item-icon">${item.icon}</span>
+          <div class="amazon-item-details">
+            <span class="amazon-item-name">${loc.name}</span>
+            <span class="amazon-item-sub">${loc.sub}</span>
+          </div>
+          <span class="amazon-item-arrow">${tr.amazonView}</span>
+        </a>
+      `;
+      }).join('')}
+    </div>
+    <div class="amazon-disclosure">${disclosure}</div>
+  `;
+  return amazonCard;
+}
+
+function createActivePartnerCard() {
+  if (selectedFuel === 'elec' && AFFILIATE_CONFIG.evdance && AFFILIATE_CONFIG.evdance.enabled) {
+    return createEvdanceCard();
+  }
+  if (AFFILIATE_CONFIG.amazon && AFFILIATE_CONFIG.amazon.enabled) {
+    return createAmazonCard();
+  }
+  return null;
+}
+
 // Render stations in sidebar and on map
 function renderCurrentRouteStations() {
   // Clear map markers
@@ -4055,47 +4133,28 @@ function renderCurrentRouteStations() {
   listContainer.innerHTML = '';
 
   if (filtered.length === 0) {
-    listContainer.innerHTML = `
-      <div style="text-align:center; padding: 40px 20px; color: var(--text-muted);">
-        <p style="font-size: 2rem; margin-bottom: 8px;">⛽</p>
-        <p>${t().emptyFilteredTitle}</p>
-        <p style="font-size:0.8rem; margin-top:4px;">${t().emptyFilteredSub}</p>
-      </div>
-    `;
+    const tr = t();
+    if (selectedFuel === 'elec' && AFFILIATE_CONFIG.evdance && AFFILIATE_CONFIG.evdance.enabled) {
+      listContainer.appendChild(createEvdanceCard());
+    }
+    const emptyBox = document.createElement('div');
+    const isInitial = !activeRouteData && currentRouteStations.length === 0;
+    emptyBox.style.cssText = `text-align:center; padding: ${selectedFuel === 'elec' ? '18px 14px' : '40px 20px'}; color: var(--text-muted);`;
+    emptyBox.innerHTML = isInitial
+      ? `
+        <p style="font-size: 1.8rem; margin-bottom: 6px;">${selectedFuel === 'elec' ? '⚡' : '🛣️'}</p>
+        <p>${tr.emptyInitial}</p>
+      `
+      : `
+        <p style="font-size: 2rem; margin-bottom: 8px;">${selectedFuel === 'elec' ? '⚡' : '⛽'}</p>
+        <p>${tr.emptyFilteredTitle}</p>
+        <p style="font-size:0.8rem; margin-top:4px;">${tr.emptyFilteredSub}</p>
+      `;
+    listContainer.appendChild(emptyBox);
     return;
   }
 
-  function createAmazonCard() {
-    const amazonCard = document.createElement('div');
-    amazonCard.className = 'partner-card partner-amazon';
-    amazonCard.id = 'partner-amazon-card';
-    const tr = t();
-    const trItems = tr.amazonItems || AFFILIATE_CONFIG.amazon.items;
-    const disclosure = tr.amazonDisclosure || "En tant que Partenaire Amazon, nous réalisons un bénéfice sur les achats remplissant les conditions requises.";
-    amazonCard.innerHTML = `
-      <div class="partner-badge amazon-badge">${tr.amazonBadge}</div>
-      <div class="amazon-items-list">
-        ${AFFILIATE_CONFIG.amazon.items.map((item, i) => {
-          const loc = trItems[i] || item;
-          const targetUrl = loc.url || item.url;
-          return `
-          <a href="${targetUrl}" target="_blank" rel="noopener sponsored" class="amazon-item-row" title="Amazon">
-            <span class="amazon-item-icon">${item.icon}</span>
-            <div class="amazon-item-details">
-              <span class="amazon-item-name">${loc.name}</span>
-              <span class="amazon-item-sub">${loc.sub}</span>
-            </div>
-            <span class="amazon-item-arrow">${tr.amazonView}</span>
-          </a>
-        `;
-        }).join('')}
-      </div>
-      <div class="amazon-disclosure">${disclosure}</div>
-    `;
-    return amazonCard;
-  }
-
-  let amazonInserted = false;
+  let partnerInserted = false;
 
   // Dynamically adapt Fuel Selector dropdown labels according to the route's country/countries
   const routeCountries = [...new Set(currentRouteStations.map(s => s.pays || 'FR'))];
@@ -4372,16 +4431,20 @@ function renderCurrentRouteStations() {
 
     listContainer.appendChild(card);
 
-    // Insérer l'encart Amazon juste après la 2e station pour qu'il soit immédiatement visible sans faire défiler tout l'écran
-    if (idx === 1 && AFFILIATE_CONFIG.amazon.enabled) {
-      listContainer.appendChild(createAmazonCard());
-      amazonInserted = true;
+    // Insérer l'encart partenaire (EVDANCE si Électrique, sinon Amazon) juste après la 2e station
+    if (idx === 1) {
+      const pCard = createActivePartnerCard();
+      if (pCard) {
+        listContainer.appendChild(pCard);
+        partnerInserted = true;
+      }
     }
   });
 
   // Si l'itinéraire a moins de 2 stations, l'insérer à la fin
-  if (!amazonInserted && AFFILIATE_CONFIG.amazon.enabled && filtered.length > 0) {
-    listContainer.appendChild(createAmazonCard());
+  if (!partnerInserted && filtered.length > 0) {
+    const pCard = createActivePartnerCard();
+    if (pCard) listContainer.appendChild(pCard);
   }
 
   // Asynchronously fetch and display live weather from Open-Meteo

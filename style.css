@@ -6191,3 +6191,66 @@ header {
   line-height: 1.3;
   opacity: 0.85;
 }
+
+/* EVDANCE Electric Partner Card (affichée uniquement en mode Électrique) */
+.partner-evdance {
+  flex-shrink: 0 !important;
+  background: linear-gradient(135deg, rgba(12, 36, 62, 0.96), rgba(15, 23, 42, 0.98)) !important;
+  border: 1.5px solid #0ea5e9 !important;
+  box-shadow: 0 4px 16px rgba(14, 165, 233, 0.25) !important;
+  border-radius: 10px !important;
+  padding: 10px 12px !important;
+  margin: 10px 0 !important;
+  display: block !important;
+  visibility: visible !important;
+}
+
+.evdance-badge {
+  color: #38bdf8 !important;
+  background: rgba(14, 165, 233, 0.16) !important;
+  font-weight: 800 !important;
+}
+
+.evdance-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-top: 8px !important;
+  padding: 9px 11px !important;
+  background: rgba(15, 23, 42, 0.88) !important;
+  border: 1px solid rgba(56, 189, 248, 0.4) !important;
+  border-radius: 8px !important;
+  text-decoration: none !important;
+  transition: all 0.15s ease !important;
+}
+
+.evdance-row:hover, .evdance-row:active {
+  background: rgba(15, 23, 42, 1) !important;
+  border-color: #38bdf8 !important;
+  transform: translateX(2px) !important;
+}
+
+.evdance-promo-pill {
+  display: inline-block;
+  background: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.45);
+  font-family: monospace;
+  font-weight: 800;
+  font-size: 0.72rem;
+  padding: 1px 6px;
+  border-radius: 5px;
+  letter-spacing: 0.4px;
+}
+
+.evdance-arrow {
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  color: #ffffff !important;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 6px 10px;
+  border-radius: 7px;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.35);
+}
