@@ -218,6 +218,16 @@ const FUEL_LABELS_BY_COUNTRY = {
     elec: '⚡ Elektro (kWh)',
     all: 'Alle Kraftstoffe'
   },
+  NL: {
+    e10: 'Euro 95 (E10)',
+    gazole: 'Diesel (B7)',
+    sp98: 'Super Plus 98 (E5)',
+    sp95: 'Euro 95 (E10)',
+    e85: 'Bio-ethanol E85',
+    gplc: 'LPG / Autogas',
+    elec: '⚡ Elektrisch (kWh)',
+    all: 'Alle brandstoffen'
+  },
   BE: {
     e10: 'Super 95 (E10)',
     gazole: 'Diesel (B7)',
@@ -798,6 +808,28 @@ const AMENITY_TRANSLATIONS = {
     'bar': 'Coffee / Bar',
     'relais colis': 'Parcel pickup'
   },
+  nl: {
+    'douches chaudes': 'Warme douches',
+    'espace bébé': 'Babyverzorging',
+    'gonflage pneus': 'Bandenspanning',
+    'wi-fi gratuit': 'Gratis wifi',
+    'distributeur dab': 'Geldautomaat (ATM)',
+    'aire camping-cars': 'Camperstandplaats',
+    'parking pl': 'Vrachtwagenparkeerplaats',
+    'sanitaires 24/7': 'Toiletten 24/7',
+    'toilettes publiques': 'Openbare toiletten',
+    'boutique alimentaire': 'Levensmiddelenwinkel',
+    'boutique non alimentaire': 'Shop / Winkel',
+    'restauration sur place': 'Restaurant',
+    'restauration à emporter': 'Afhaalgerechten',
+    'lavage automatique': 'Carwash',
+    'lavage haute pression': 'Hogedrukwasser',
+    'lavage manuel': 'Wasbox',
+    'bornes électriques': 'Laadpalen elektrisch',
+    'automate cb 24/24': '24/7 Betaalautomaat',
+    'bar': 'Bar / Café',
+    'relais colis': 'Pakketpunt'
+  },
   it: {
     'douches chaudes': 'Docce calde',
     'espace bébé': 'Fasciatoio bebè',
@@ -934,6 +966,12 @@ function getWeatherInfo(code, isDay = 1) {
       partlyDay: 'Schiarite', partlyNight: 'Poco nuvoloso',
       overcast: 'Coperto', fog: 'Nebbia', drizzle: 'Pioggerella',
       rain: 'Pioggia', snow: 'Neve', storm: 'Temporale'
+    },
+    nl: {
+      clearDay: 'Zonnig', clearNight: 'Heldere nacht',
+      partlyDay: 'Opklaringen', partlyNight: 'Gedeeltelijk bewolkt',
+      overcast: 'Zwaarbewolkt', fog: 'Mist', drizzle: 'Motregen',
+      rain: 'Regen', snow: 'Sneeuw', storm: 'Onweer'
     },
     es: {
       clearDay: 'Soleado', clearNight: 'Noche despejada',
@@ -1102,6 +1140,7 @@ function getTimezoneCountryLang() {
   try {
     if (typeof Intl !== 'undefined' && Intl.DateTimeFormat) {
       const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
+      if (tz.includes('amsterdam')) return 'nl';
       if (tz.includes('paris') || tz.includes('brussels') || tz.includes('luxembourg') || tz.includes('monaco')) return 'fr';
       if (tz.includes('berlin') || tz.includes('busingen') || tz.includes('vienna') || tz.includes('vaduz') || tz.includes('zurich')) return 'de';
       if (tz.includes('rome') || tz.includes('san_marino') || tz.includes('vatican')) return 'it';
@@ -1115,7 +1154,7 @@ function getTimezoneCountryLang() {
 function getInitialDefaultLang() {
   try {
     const manualSession = typeof sessionStorage !== 'undefined' && sessionStorage.getItem('fuelpilot_manual_lang');
-    if (manualSession && ['fr', 'de', 'it', 'es', 'en'].includes(manualSession)) {
+    if (manualSession && ['fr', 'de', 'it', 'es', 'en', 'nl'].includes(manualSession)) {
       userManuallySelectedLang = true;
       return manualSession;
     }
@@ -1128,13 +1167,14 @@ function getInitialDefaultLang() {
         : (navigator.language ? [navigator.language] : []);
       for (const l of langs) {
         const short = String(l).slice(0, 2).toLowerCase();
-        if (['fr', 'de', 'it', 'es', 'en'].includes(short)) return short;
+        if (['fr', 'de', 'it', 'es', 'en', 'nl'].includes(short)) return short;
       }
     }
   } catch (e) {}
   return 'fr';
 }
 
+let userSelectedCountry = null;
 let currentLang = getInitialDefaultLang();
 
 
@@ -1660,6 +1700,132 @@ const I18N_DICT = {
     weatherLoading: "Meteo in tempo reale",
     fuelUnavailable: "Non disp."
   },
+  nl: {
+    pageTitle: "FuelPilot • Snelweg Brandstofprijzen & Laadpalen",
+    tagline: "Brandstofprijzen & snelwegparkings",
+    privacy: "Privacy",
+    guide: "Gids",
+    guideTitle: "Handleiding & Gebruikersgids",
+    live: "Actuele prijzen",
+    refreshTitle: "FuelCoPilot vernieuwen",
+    sec1: "1. Routekeuze",
+    startPlaceholder: "Stad of vertreklocatie...",
+    endPlaceholder: "Stad of bestemming...",
+    stepPlaceholder: (n) => `Tussenstop ${n} (bijv. Gent, Antwerpen...)`,
+    removeStepTitle: "Tussenstop verwijderen",
+    addStep: "+ Tussenstop",
+    calcBtn: "<span>🚀</span> Route berekenen",
+    calcInProgress: "Route berekenen...",
+    startNav: "Starten",
+    stopNav: "Stoppen",
+    navFollowing: "Starten",
+    currentPos: "📍 Mijn huidige positie",
+    locating: "Positie bepalen...",
+    locationError: "Kan gps-positie niet bepalen.",
+    fromCurrentPos: (km) => `🎯 Over ${km} km`,
+    upcomingStationsCount: (n) => `${n} volgend${n > 1 ? 'e' : ''} station${n > 1 ? 's' : ''}`,
+    editBtn: "<span>✏️</span> Wijzigen",
+    closeBtn: "<span>✖</span> Sluiten",
+    editBtnTitle: "Route aanpassen",
+    allBrands: "🏢 Alle merken",
+    filterBrandTitle: "Filteren op merk",
+    filterFuelTitle: "Filteren op brandstof",
+    sortTitle: "Sorteervolgorde",
+    sec3: "3. Snelwegstations",
+    sortRoute: "Sortering: Routevolgorde",
+    sortPrice: "Sortering: Goedkoopste eerst",
+    sortDist: "Sortering: Afstand",
+    tabMap: "Kaart",
+    tabList: "Lijst & Filters",
+    coverage: "Gedekt netwerk: 🇫🇷 Frankrijk • 🇩🇪 Duitsland • 🇧🇪 België • 🇮🇹 Italië • 🇪🇸 Spanje • 🇬🇧 VK",
+    recentHdr: "🕒 10 recente locaties",
+    bestPrice: "⭐ LAAGSTE PRIJS",
+    fromStart: (km) => `🎯 Over ${km} km`,
+    stationsCount: (n) => `${n} station${n !== 1 ? 's' : ''} op de route`,
+    unavail: "⚠️ Niet beschikbaar",
+    noPrice: "Niet doorgegeven",
+    priceLbl: "Prijs",
+    outOfStock: "⚠️ Uitverkocht:",
+    estimatedPrice: "ℹ️ Indicatieve prijs (niet actueel doorgegeven)",
+    recommended: "🔵 Aanbevolen",
+    optionN: (n) => `🟠 Optie ${n}`,
+    directRoute: "Directe route",
+    countryCH: "Zwitserland",
+    countryFR: "Frankrijk",
+    countryDE: "Duitsland",
+    countryES: "Spanje",
+    countryIT: "Italië",
+    countryGB: "Verenigd Koninkrijk",
+    countryIE: "Ierland",
+    countryBE: "België",
+    areasCount: (n) => `${n} verzorgingsplaatsen`,
+    areasListed: (n) => `${n} verzorgingsplaatsen geregistreerd • Actuele prijzen`,
+    kmMarker: (hw, pk) => `${hw || 'Snelweg'} • Kilometerpaal ${pk}`,
+    popupDirDist: (dir, km) => `Richting: ${dir} • Over ${km} km`,
+    sensDirect: "Heenrichting",
+    sensInverse: "Terugrichting",
+    sensDouble: "Beide richtingen",
+    wazeTitle: "Navigeren met Waze",
+    gmapsTitle: "Navigeren met Google Maps",
+    mapRoad: "🗺️ Wegenkaart",
+    mapOsm: "🌍 OpenStreetMap",
+    mapSat: "🛰️ Satellietbeeld",
+    emptyInitial: "Selecteer een vertrekpunt en een bestemming om snelwegstations en hun kilometerpalen te tonen.",
+    emptyFilteredTitle: "Geen enkel snelwegstation gevonden met deze criteria.",
+    emptyFilteredSub: "Probeer « Alle merken » of een andere brandstof te selecteren.",
+    alertMissingPoints: "Voer een vertrekpunt en een aankomstpunt in.",
+    alertNoRoute: "Geen route voor auto's gevonden.",
+    alertServerError: "Kan de routeserver niet bereiken. Probeer het opnieuw.",
+    amazonBadge: "🛒 AANBEVOLEN REISUITRUSTING",
+    amazonView: "Bekijk ➔",
+    amazonDisclosure: "Als Amazon-partner verdienen we aan in aanmerking komende aankopen.",
+    amazonItems: [
+      { icon: "📱", name: "Smartphonehouder Ventilatierooster / MagSafe", sub: "Ultrastabiel voor gps-navigatie", url: "https://www.amazon.de/s?k=auto+handyhalterung+lueftung+magsafe&tag=watermetrics-21" },
+      { icon: "⚡", name: "Snelle 65W USB-C Autolader", sub: "Snelladen tijdens uw rit", url: "https://www.amazon.de/s?k=usb+c+auto+ladegeraet+schnellladen+65w&tag=watermetrics-21" }
+    ],
+    evdanceBadge: "⚡ EV LAADPARTNER • EVDANCE",
+    evdanceTitle: "EVDANCE Draagbare EV-laders & Type 2 Kabels",
+    evdanceSub: "Tot -20% korting op de hele EU-webshop • Code:",
+    evdanceCta: "Bekijk -20% ➔",
+    evdanceDisclosure: "Affiliate partnerlink • Promotiecode EVEU20 geldig op eu.evdances.com",
+    fuelInfoBtnTitle: "Namen van brandstoffen per land",
+    fuelInfoTitle: "⛽ Brandstofnamen per land",
+    fuelInfoSubtitle: "Officiële pomplabels in Europa (Norm EN 16942)",
+    fuelColNorm: "EU-norm",
+    fuelCatE10: "Euro 95 (E10)",
+    fuelCatE5: "Super 95 (E5)",
+    fuelCatSp98: "Super Plus 98 (E5)",
+    fuelCatDiesel: "Diesel (B7)",
+    fuelCatLpg: "LPG / Autogas",
+    fuelCatE85: "Bio-ethanol / Aardgas",
+    defaultCountry: "BE",
+    today: "Vandaag",
+    yesterday: "Gisteren",
+    atTime: "om",
+    verifiedAt: "Geverifieerd:",
+    toggleExit: "🚪 Stations bij afrit (< 1,5 km)",
+    statusOpen: "🟢 Horeca open",
+    statusClosing: "🟡 Horeca sluit binnenkort",
+    statusNight: "🌙 Brandstof 24/7 · Horeca gesloten",
+    statusScheduleOpen: "🟢 Horeca open (06:30 - 21:30)",
+    statusScheduleClosing: "🟡 Horeca sluit binnenkort (sluit om 22:00)",
+    statusScheduleNight: "🌙 Horeca gesloten (heropent om 06:30)",
+    pumps247: "Brandstof & Betaalautomaat: 24/7",
+    foodLabel: "Horeca & winkels:",
+    amenitiesBrandsTitle: "☕ Merken & Horeca",
+    amenitiesServicesTitle: "🛠️ Diensten van de verzorgingsplaats",
+    moreBrands: (n) => `+${n} merken`,
+    hoursTitle: "🕒 OPENINGSTIJDEN",
+    offMotorwayBadge: (d, exitNum) => exitNum ? `Op ${d} van afrit nr. ${exitNum}` : `Op ${d} van de snelwegafrit`,
+    offMotorwayPopupTitle: "Station buiten de snelweg",
+    offMotorwayPopupDesc: (d, exitNum) => exitNum ? `Bereikbaar via afrit nr. ${exitNum} (~${d})` : `Bereikbaar via snelwegafrit / tolpoort (~${d})`,
+    offMotorwayTooltip: "Station gelegen buiten de snelweg, direct aan de afrit",
+    savingsBadge: (amt, cur, diff, unit) => `💰 Besparing: ~${amt} ${cur} per tankbeurt (-${diff} ${cur}/${unit})`,
+    savingsTooltip: "Geschatte besparing vergeleken met de gemiddelde snelwegprijs",
+    defaultHighway: "Snelweg",
+    weatherLoading: "Actueel weer",
+    fuelUnavailable: "Niet besch."
+  },
   es: {
     pageTitle: "FuelPilot • Precios Carburante y Áreas de Autopista",
     tagline: "Precios de carburante y áreas de autopista",
@@ -1795,14 +1961,14 @@ function translateCountryName(rawName) {
   if (!rawName) return '';
   const tr = t();
   const n = rawName.trim().toLowerCase();
-  if (n === 'france' || n === 'francia' || n === 'frankreich') return tr.countryFR;
-  if (n === 'allemagne' || n === 'germany' || n === 'deutschland' || n === 'germania' || n === 'alemania') return tr.countryDE;
-  if (n === 'espagne' || n === 'spain' || n === 'spagna' || n === 'españa' || n === 'spanien') return tr.countryES;
-  if (n === 'italie' || n === 'italy' || n === 'italia' || n === 'italien') return tr.countryIT;
-  if (n === 'royaume-uni' || n === 'united kingdom' || n === 'regno unito' || n === 'reino unido' || n === 'vereinigtes königreich') return tr.countryGB;
-  if (n === 'suisse' || n === 'switzerland' || n === 'svizzera' || n === 'suiza' || n === 'schweiz') return tr.countryCH;
-  if (n === 'irlande' || n === 'ireland' || n === 'irlanda' || n === 'irland') return tr.countryIE;
-  if (n === 'belgique' || n === 'belgium' || n === 'belgio' || n === 'bélgica' || n === 'belgien') return tr.countryBE;
+  if (n === 'france' || n === 'francia' || n === 'frankreich' || n === 'frankrijk') return tr.countryFR;
+  if (n === 'allemagne' || n === 'germany' || n === 'deutschland' || n === 'germania' || n === 'alemania' || n === 'duitsland') return tr.countryDE;
+  if (n === 'espagne' || n === 'spain' || n === 'spagna' || n === 'españa' || n === 'spanien' || n === 'spanje') return tr.countryES;
+  if (n === 'italie' || n === 'italy' || n === 'italia' || n === 'italien' || n === 'italië') return tr.countryIT;
+  if (n === 'royaume-uni' || n === 'united kingdom' || n === 'regno unito' || n === 'reino unido' || n === 'vereinigtes königreich' || n === 'verenigd koninkrijk') return tr.countryGB;
+  if (n === 'suisse' || n === 'switzerland' || n === 'svizzera' || n === 'suiza' || n === 'schweiz' || n === 'zwitserland') return tr.countryCH;
+  if (n === 'irlande' || n === 'ireland' || n === 'irlanda' || n === 'irland' || n === 'ierland') return tr.countryIE;
+  if (n === 'belgique' || n === 'belgium' || n === 'belgio' || n === 'bélgica' || n === 'belgien' || n === 'belgië') return tr.countryBE;
   return rawName;
 }
 
@@ -1816,10 +1982,12 @@ function translateSens(sensStr, isNativeCase) {
 
   if (sLow === 'sens gauche (i)') {
     if (currentLang === 'de') return 'Linke Seite (L)';
+    if (currentLang === 'nl') return 'Linkerzijde (L)';
     return currentLang === 'en' ? 'Left side (L)' : (currentLang === 'it' ? 'Lato sinistro (S)' : 'Margen izquierdo (I)');
   }
   if (sLow === 'sens droite (d)') {
     if (currentLang === 'de') return 'Rechte Seite (R)';
+    if (currentLang === 'nl') return 'Rechterzijde (R)';
     return currentLang === 'en' ? 'Right side (R)' : (currentLang === 'it' ? 'Lato destro (D)' : 'Margen derecho (D)');
   }
 
@@ -1867,6 +2035,22 @@ function translateSens(sensStr, isNativeCase) {
       .replace(/\bItalie\b/gi, 'Italia')
       .replace(/\bAllemagne\b/gi, 'Germania')
       .replace(/\bFrance\b/gi, 'Francia');
+  } else if (currentLang === 'nl') {
+    out = out
+      .replace(/^Côté\s+/i, 'Zijde ')
+      .replace(/^Sens\s+/i, 'Richting ')
+      .replace(/\bOuest\b/gi, 'West')
+      .replace(/\bEst\b/gi, 'Oost')
+      .replace(/\bNord\b/gi, 'Noord')
+      .replace(/\bSud\b/gi, 'Zuid')
+      .replace(/\bIntérieur\b/gi, 'Binnenring')
+      .replace(/\bExtérieur\b/gi, 'Buitenring')
+      .replace(/\bEspagne\b/gi, 'Spanje')
+      .replace(/\bItalie\b/gi, 'Italië')
+      .replace(/\bAllemagne\b/gi, 'Duitsland')
+      .replace(/\bFrance\b/gi, 'Frankrijk')
+      .replace(/\bBelgique\b/gi, 'België')
+      .replace(/\bSuisse\b/gi, 'Zwitserland');
   } else if (currentLang === 'es') {
     out = out
       .replace(/^Côté\s+/i, 'Lado ')
@@ -1927,10 +2111,12 @@ function ensureLangBarOrder() {
     deBtn.innerHTML = `<svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="12" fill="#000000"/><rect y="12" width="60" height="12" fill="#DD0000"/><rect y="24" width="60" height="12" fill="#FFCE00"/></svg>`;
     bar.appendChild(deBtn);
   }
-  const desiredOrder = ['fr', 'de', 'it', 'es', 'en'];
+  const desiredOrder = ['fr', 'be', 'de', 'it', 'es', 'en'];
   desiredOrder.forEach(code => {
-    const btn = bar.querySelector(`[data-lang="${code}"]`);
-    if (btn) bar.appendChild(btn);
+    const el = (code === 'be')
+      ? (document.getElementById('belgium-lang-container') || bar.querySelector('[data-lang="be"]'))
+      : bar.querySelector(`[data-lang="${code}"]`);
+    if (el) bar.appendChild(el);
   });
 }
 
@@ -1960,7 +2146,14 @@ function setAppLanguage(lang, isManual = false) {
 
   document.documentElement.lang = lang;
   document.querySelectorAll('#lang-bar .lang-flag-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === lang);
+    if (userSelectedCountry === 'BE') {
+      btn.classList.toggle('active', btn.dataset.lang === 'be');
+    } else {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    }
+  });
+  document.querySelectorAll('#belgium-lang-menu .belgium-lang-opt').forEach(opt => {
+    opt.classList.toggle('active', userSelectedCountry === 'BE' && opt.dataset.beLang === lang);
   });
 
   const tr = t();
@@ -2345,10 +2538,53 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
   ensureLangBarOrder();
+  const langCountryMap = { fr: 'FR', de: 'DE', it: 'IT', es: 'ES', en: 'GB', nl: 'BE' };
   document.querySelectorAll('#lang-bar .lang-flag-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      setAppLanguage(btn.dataset.lang, true);
+    if (btn.dataset.lang === 'be') {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const menu = document.getElementById('belgium-lang-menu');
+        if (menu) {
+          const isOpen = menu.style.display !== 'none';
+          menu.style.display = isOpen ? 'none' : 'flex';
+          btn.setAttribute('aria-expanded', !isOpen);
+        }
+      });
+    } else {
+      btn.addEventListener('click', () => {
+        const beMenu = document.getElementById('belgium-lang-menu');
+        if (beMenu) beMenu.style.display = 'none';
+        userSelectedCountry = langCountryMap[btn.dataset.lang] || 'FR';
+        setAppLanguage(btn.dataset.lang, true);
+        populateBrandFilter();
+      });
+    }
+  });
+
+  document.querySelectorAll('#belgium-lang-menu .belgium-lang-opt').forEach(opt => {
+    opt.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const lang = opt.dataset.beLang;
+      userSelectedCountry = 'BE';
+      setAppLanguage(lang, true);
+      const beMenu = document.getElementById('belgium-lang-menu');
+      if (beMenu) beMenu.style.display = 'none';
+      const beBtn = document.getElementById('btn-flag-be');
+      if (beBtn) {
+        beBtn.setAttribute('aria-expanded', 'false');
+      }
+      populateBrandFilter();
     });
+  });
+
+  document.addEventListener('click', (e) => {
+    const beContainer = document.getElementById('belgium-lang-container');
+    const beMenu = document.getElementById('belgium-lang-menu');
+    if (beMenu && beMenu.style.display !== 'none' && beContainer && !beContainer.contains(e.target)) {
+      beMenu.style.display = 'none';
+      const beBtn = document.getElementById('btn-flag-be');
+      if (beBtn) beBtn.setAttribute('aria-expanded', 'false');
+    }
   });
   setAppLanguage(currentLang, false);
   initMap();
@@ -2443,6 +2679,33 @@ async function loadStationsData() {
       // Les aires allemandes réelles sont chargées à la demande depuis Tankerkönig
       allStations = allStations.filter(s => !(s.pays === 'DE' && String(s.id).startsWith('DE-BAB-')));
     }
+
+    // Normalisation des enseignes espagnoles (regrouper les multiples déclinaisons BP, Cepsa, etc.)
+    allStations.forEach(s => {
+      if (s.pays === 'ES' && s.enseigne) {
+        const ensTrim = s.enseigne.trim();
+        const low = ensTrim.toLowerCase();
+        if (low === 'bp' || low.startsWith('bp ') || low.startsWith('bp-')) {
+          s.enseigne = 'BP';
+        } else if (low.startsWith('cepsa ') || low === 'cepsa etxegarate' || low.includes('gasolinera cepsa')) {
+          s.enseigne = 'Cepsa';
+        } else if (low.startsWith('repsol-') || low === 'repsol-e.s.jaime i') {
+          s.enseigne = 'Repsol';
+        } else if (low.startsWith('agla ') || low.endsWith(' agla')) {
+          s.enseigne = 'Agla';
+        } else if (low.startsWith('ham ') || low.endsWith(' ham')) {
+          s.enseigne = 'Ham';
+        } else if (low.startsWith('q8 ')) {
+          s.enseigne = 'Q8';
+        } else if (low.startsWith('moeve -')) {
+          s.enseigne = 'Moeve';
+        } else if (low.startsWith('área 117') || low.startsWith('area 117') || low === 'area-220') {
+          s.enseigne = 'Área 117';
+        } else if (low.includes('valcarce')) {
+          s.enseigne = 'Valcarce';
+        }
+      }
+    });
 
     // Initialize EV charging availability & live rates per kWh
     allStations.forEach(s => {
@@ -2585,13 +2848,17 @@ function getActiveSearchCountries() {
     if (detected.length > 0) return detected;
   }
 
-  // 3. Fallback based on selected UI language flag (fr -> FR, es -> ES, it -> IT, de -> DE, en -> GB)
+  // 3. Fallback based on selected UI country or language flag
+  if (userSelectedCountry) {
+    return [userSelectedCountry];
+  }
   const langCountryMap = {
     fr: 'FR',
     es: 'ES',
     it: 'IT',
     de: 'DE',
-    en: 'GB'
+    en: 'GB',
+    nl: 'BE'
   };
   return [langCountryMap[currentLang] || 'FR'];
 }

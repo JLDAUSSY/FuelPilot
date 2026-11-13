@@ -34,7 +34,7 @@
   <!-- Cache Purge on Version Change -->
   <script>
     (function() {
-      var LATEST_BUILD = '9.6.2';
+      var LATEST_BUILD = '9.6.3';
       var currentBuild = localStorage.getItem('fuelcopilot_build');
       if (currentBuild !== LATEST_BUILD) {
         localStorage.setItem('fuelcopilot_build', LATEST_BUILD);
@@ -68,7 +68,7 @@
 
 
 
-  <link rel="stylesheet" href="style.css?v=9.6.2">
+  <link rel="stylesheet" href="style.css?v=9.6.3">
 
 </head>
 
@@ -123,6 +123,27 @@
       </svg>
 
     </button>
+
+    <div class="belgium-lang-container" id="belgium-lang-container">
+      <button type="button" class="lang-flag-btn" id="btn-flag-be" data-lang="be" title="Belgique • België • Belgien" aria-label="Belgique (Français, Nederlands, Deutsch)" aria-haspopup="true" aria-expanded="false">
+        <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+          <rect width="20" height="36" fill="#000000"/>
+          <rect x="20" width="20" height="36" fill="#FDDA24"/>
+          <rect x="40" width="20" height="36" fill="#EF3340"/>
+        </svg>
+      </button>
+      <div class="belgium-lang-menu" id="belgium-lang-menu" style="display:none;" role="menu" aria-label="Langues de Belgique">
+        <button type="button" class="belgium-lang-opt" data-be-lang="fr" role="menuitem">
+          <span class="be-opt-flag">🇫🇷</span> <span class="be-opt-label">Français</span>
+        </button>
+        <button type="button" class="belgium-lang-opt" data-be-lang="nl" role="menuitem">
+          <span class="be-opt-flag">🇳🇱</span> <span class="be-opt-label">Nederlands</span>
+        </button>
+        <button type="button" class="belgium-lang-opt" data-be-lang="de" role="menuitem">
+          <span class="be-opt-flag">🇩🇪</span> <span class="be-opt-label">Deutsch</span>
+        </button>
+      </div>
+    </div>
 
     <button type="button" class="lang-flag-btn" data-lang="de" title="Deutsch">
 
@@ -565,7 +586,7 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-  <script src="app.js?v=9.6.2"></script>
+  <script src="app.js?v=9.6.3"></script>
 
 </body>
 
