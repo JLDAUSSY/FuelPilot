@@ -5322,6 +5322,14 @@ header {
 
 }
 
+.gps-user-tooltip-ip {
+
+  background: #b45309 !important;
+
+  border: 1px solid rgba(245, 158, 11, 0.7) !important;
+
+}
+
 
 
 /* Floating Locate Me Button on Map */
@@ -6252,6 +6260,12 @@ header {
   background: #0c4a6e;
   border-color: #0284c7;
   color: #f0f9ff;
+}
+
+.toast-notification.success {
+  background: #064e3b;
+  border-color: #10b981;
+  color: #ecfdf5;
 }
 
 .amazon-disclosure {
