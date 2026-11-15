@@ -1111,6 +1111,7 @@ function getStationOpeningStatus(st) {
 
 // Initialize Application
 const APP_VERSION = '9.6.5';
+window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
 // Clean up legacy localStorage keys so stale IP/test languages or false Marseille positions never override true GPS
@@ -3497,13 +3498,6 @@ function useCurrentGpsLocationAsStart() {
       console.warn('Erreur acquisition GPS départ:', err);
       showToast(formatGeolocationErrorMessage(err), { isWarning: true, duration: 6000 });
       if (startInput && !startPoint) {
-        startInput.value = '';
-        startInput.placeholder = (t().inputStartPlaceholder || 'Ville ou lieu de départ...');
-      }
-      if (typeof updateAllClearButtons === 'function') updateAllClearButtons();
-    }
-  );
-}
         startInput.value = '';
         startInput.placeholder = (t().inputStartPlaceholder || 'Ville ou lieu de départ...');
       }
