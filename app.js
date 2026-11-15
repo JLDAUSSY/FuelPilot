@@ -1114,7 +1114,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.6.7';
+const APP_VERSION = '9.6.8';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -5379,31 +5379,31 @@ function formatGeolocationErrorMessage(err) {
     if (lang === 'en') return "📍 Permission required: please enable 'Precise location' in your phone settings or browser.";
     if (lang === 'it') return "📍 Autorizzazione richiesta: attiva la 'Posizione precisa' nelle impostazioni dello smartphone.";
     if (lang === 'es') return "📍 Permiso requerido: active la 'Ubicación precisa' en los ajustes de su teléfono.";
-    return "📍 Autorisation requise : activez l'autorisation « Position exacte » pour FuelCoPilot dans les paramètres de votre smartphone.";
+    return "📍 Autorisation requise : veuillez autoriser la localisation pour FuelCoPilot dans les paramètres de votre navigateur.";
   } else if (code === 2) { // POSITION_UNAVAILABLE
-    if (lang === 'nl') return "⚠️ Gps-signaal niet beschikbaar: controleer of 'Locatie' is ingeschakeld in het snelle menu.";
-    if (lang === 'de') return "⚠️ Kein GPS-Signal: Prüfen Sie, ob 'Standort' im Schnellmenü aktiviert ist.";
-    if (lang === 'en') return "⚠️ GPS signal unavailable: check that 'Location' is enabled in your phone's quick menu.";
-    if (lang === 'it') return "⚠️ Segnale GPS non disponible: controlla che la 'Posizione' sia attiva nel menu rapido.";
-    if (lang === 'es') return "⚠️ Señal GPS no disponible: compruebe que la 'Ubicación' esté activada en el panel superior.";
-    return "⚠️ Signal GPS indisponible : vérifiez que la 'Position' est bien activée dans le volet déroulant de votre smartphone.";
+    if (lang === 'nl') return "⚠️ Gps-signaal niet beschikbaar: controleer uw instellingen of typ uw vertrekstad.";
+    if (lang === 'de') return "⚠️ Kein GPS-Signal: Prüfen Sie Ihre Einstellungen oder tippen Sie Ihren Startort ein.";
+    if (lang === 'en') return "⚠️ GPS signal unavailable: check your settings or type your departure city.";
+    if (lang === 'it') return "⚠️ Segnale GPS non disponibile: controlla le impostazioni o digita la tua città di partenza.";
+    if (lang === 'es') return "⚠️ Señal GPS no disponible: compruebe sus ajustes o escriba su ciudad de salida.";
+    return "⚠️ Signal GPS temporairement indisponible : vérifiez vos paramètres de position ou saisissez votre ville de départ au clavier.";
   } else if (code === 3) { // TIMEOUT
-    if (lang === 'nl') return "⏳ Zwak gps-signaal: ga naar open lucht voor satellietontvangst of typ uw stad.";
-    if (lang === 'de') return "⏳ Schwaches GPS-Signal: Gehen Sie unter freien Himmel oder tippen Sie Ihren Ort ein.";
-    if (lang === 'en') return "⏳ Weak GPS signal: move outdoors to acquire satellites or type your city.";
-    if (lang === 'it') return "⏳ Segnale GPS debole: posizionati all'aperto o digita la tua città.";
-    if (lang === 'es') return "⏳ Señal GPS débil: sitúese a cielo abierto o escriba su ciudad.";
-    return "⏳ Signal GPS faible : placez-vous à ciel ouvert pour capter les satellites ou saisissez votre ville au clavier.";
+    if (lang === 'nl') return "⏳ Satellietzoekopdracht duurde te lang: ga naar open lucht of typ uw stad.";
+    if (lang === 'de') return "⏳ Satellitensuche hat zu lange gedauert: Gehen Sie ins Freie oder tippen Sie Ihren Ort ein.";
+    if (lang === 'en') return "⏳ Satellite search took too long: move outdoors or type your departure city.";
+    if (lang === 'it') return "⏳ Ricerca satellitare troppo lunga: posizionati all'aperto o digita la tua città.";
+    if (lang === 'es') return "⏳ Búsqueda por satélite tardó demasiado: sitúese a cielo abierto o escriba su ciudad.";
+    return "⏳ Recherche satellite trop longue : placez-vous à ciel ouvert ou saisissez votre ville de départ au clavier.";
   }
   return t().locationError || "Impossible d'obtenir la position GPS.";
 }
 
-// Architecture de géolocalisation satellite WaterMetrics :
-// 1. Streaming GNSS haute précision direct (watchPosition, enableHighAccuracy, timeout 12s, maximumAge 30s)
-// 2. Verrouillage instantané dès signal précis (<= 2500m) sans attendre la fin du chrono
-// 3. Fenêtre de sécurité globale de 12.5s pour accrochage à ciel ouvert
-// 4. Repli de secours sur getCurrentPosition en cas d'erreur de flux
-// 5. Blocage strict des coordonnées IP 5G grossières (> 3000m) qui pointent vers les passerelles régionales (Marseille)
+// Architecture de géolocalisation haute résilience RandoTracker & WaterMetrics :
+// 1. Double interrogation matérielle instantanée (getCurrentPosition haute précision + watchPosition streaming)
+// 2. Repli automatique Tier-2 Fused Location (Wi-Fi/Cellulaire) après 3.5s ou dès erreur GNSS (sans afficher d'erreur prématurée)
+// 3. Verrouillage instantané dès précision locale exploitable (<= 2500m)
+// 4. Maintien du flux watchPosition en arrière-plan pour surclassement satellite automatique au centimètre dès qu'il est disponible
+// 5. Blocage strict des relais 5G/IP grossiers (> 3000m)
 let activeLocationCallbacks = [];
 let isAcquiringLocation = false;
 let globalGpsWatchId = null;
@@ -5413,8 +5413,8 @@ function getFreshUserLocation(onSuccess, onError) {
     activeLocationCallbacks.push({ onSuccess, onError });
   }
 
-  // Si on a déjà un relevé GPS récent (< 20 secondes) et de haute précision (<= 500m), notifier immédiatement
-  if (userGpsPosition && userGpsPosition.isHighAccuracy && !userGpsPosition.isIpFallback && (userGpsPosition.accuracy <= 500) && (Date.now() - (userGpsPosition.timestamp || 0) < 20000)) {
+  // 1. Réactivité immédiate : si un relevé récent (< 20 secondes) et précis (<= 500m) existe déjà en mémoire, répondre immédiatement
+  if (userGpsPosition && !userGpsPosition.isIpFallback && (userGpsPosition.accuracy <= 500) && (Date.now() - (userGpsPosition.timestamp || 0) < 20000)) {
     const cachedPos = {
       coords: {
         latitude: userGpsPosition.lat,
@@ -5451,6 +5451,7 @@ function getFreshUserLocation(onSuccess, onError) {
   let bestCoords = null;
   let bestAccuracy = Infinity;
   let safetyTimer = null;
+  let lowAccuracyTimer = null;
 
   const clearWatchSafely = () => {
     if (globalGpsWatchId !== null) {
@@ -5463,8 +5464,8 @@ function getFreshUserLocation(onSuccess, onError) {
     if (resolved) return;
     resolved = true;
     isAcquiringLocation = false;
-    clearWatchSafely();
     if (safetyTimer) { clearTimeout(safetyTimer); safetyTimer = null; }
+    if (lowAccuracyTimer) { clearTimeout(lowAccuracyTimer); lowAccuracyTimer = null; }
 
     const cbs = [...activeLocationCallbacks];
     activeLocationCallbacks = [];
@@ -5476,6 +5477,7 @@ function getFreshUserLocation(onSuccess, onError) {
         }
       });
     } else {
+      clearWatchSafely();
       cbs.forEach(cb => {
         if (cb.onError) {
           try { cb.onError(finalErr); } catch (e) { console.error(e); }
@@ -5484,72 +5486,110 @@ function getFreshUserLocation(onSuccess, onError) {
     }
   };
 
-  // Délai de sécurité global : 12.5 secondes (exact pattern WaterMetrics)
+  // Traitement d'un point reçu (Satellite GNSS ou Fused Location)
+  const handleIncomingPosition = (pos) => {
+    if (resolved || !pos || !pos.coords) return;
+    const acc = (typeof pos.coords.accuracy === 'number') ? Math.round(pos.coords.accuracy) : 9999;
+    console.log(`[GPS Engine] Position reçue : lat=${pos.coords.latitude.toFixed(5)}, lon=${pos.coords.longitude.toFixed(5)}, précision=±${acc}m`);
+
+    // Rejet strict des relais 5G/IP grossiers (> 3000m)
+    if (acc > 3000) {
+      console.warn(`[GPS Engine] Rejet position trop grossière : ±${acc}m (> 3000m)`);
+      return;
+    }
+
+    if (acc < bestAccuracy) {
+      bestAccuracy = acc;
+      bestCoords = pos;
+    }
+
+    // Dès qu'on obtient une précision fiable (<= 2500m), valider immédiatement !
+    if (acc <= 2500) {
+      finish(pos, null);
+    }
+  };
+
+  // Tier 2 : Repli transparent Fused Location / Réseau Wi-Fi/Cellulaire (Pattern RandoTracker & WaterMetrics)
+  const triggerLowAccuracyFallback = () => {
+    if (resolved || bestCoords) return;
+    console.log('[GPS Engine] Déclenchement du repli Fused Location / Réseau (enableHighAccuracy: false)...');
+    try {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => handleIncomingPosition(pos),
+        (errFallback) => {
+          console.warn('[GPS Engine] Échec repli basse précision:', errFallback && errFallback.message);
+        },
+        { enableHighAccuracy: false, timeout: 6000, maximumAge: 120000 }
+      );
+    } catch (eLow) {
+      console.warn('[GPS Engine] Exception repli basse précision:', eLow);
+    }
+  };
+
+  // Timer de sécurité global : 13 secondes maximum
   safetyTimer = setTimeout(() => {
     if (resolved) return;
     if (bestCoords && bestAccuracy <= 3000) {
-      console.log(`[GPS Engine] Fin du délai (12.5s), validation du meilleur relevé (±${bestAccuracy}m)`);
+      console.log(`[GPS Engine] Fin du délai, validation du meilleur relevé (±${bestAccuracy}m)`);
       finish(bestCoords, null);
     } else {
-      console.warn('[GPS Engine] Délai GPS de sécurité dépassé sans position satellite exploitable.');
+      console.warn('[GPS Engine] Délai GPS de sécurité dépassé sans position exploitable.');
       finish(null, { code: 3, message: 'Délai GPS dépassé' });
     }
-  }, 12500);
+  }, 13000);
 
-  const geoOptions = {
+  // Déclencher le repli Tier-2 Fused Location après 3.5s si la recherche satellite pure tarde
+  lowAccuracyTimer = setTimeout(() => {
+    if (!resolved && !bestCoords) {
+      triggerLowAccuracyFallback();
+    }
+  }, 3500);
+
+  // Tier 1 : Double flux GNSS Haute Précision simultané (RandoTracker getCurrentPosition + watchPosition)
+  const highAccOptions = {
     enableHighAccuracy: true,
     timeout: 12000,
     maximumAge: 30000
   };
 
+  // 1A. Requête immédiate de réveil matériel
+  try {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => handleIncomingPosition(pos),
+      (err) => {
+        console.warn('[GPS Engine] getCurrentPosition (highAcc):', err && err.code, err && err.message);
+        if (err && err.code === 1) { // PERMISSION_DENIED
+          finish(null, err);
+          return;
+        }
+        // En cas d'impossibilité satellite indoors, enclencher immédiatement le repli Fused sans attendre
+        triggerLowAccuracyFallback();
+      },
+      highAccOptions
+    );
+  } catch (eCurr) {
+    console.warn('[GPS Engine] getCurrentPosition non supporté:', eCurr);
+    triggerLowAccuracyFallback();
+  }
+
+  // 1B. Flux continu watchPosition
   try {
     clearWatchSafely();
     globalGpsWatchId = navigator.geolocation.watchPosition(
-      (pos) => {
-        if (resolved || !pos || !pos.coords) return;
-        const acc = (typeof pos.coords.accuracy === 'number') ? Math.round(pos.coords.accuracy) : 9999;
-        console.log(`[GPS Engine] Signal satellite reçu : lat=${pos.coords.latitude.toFixed(5)}, lon=${pos.coords.longitude.toFixed(5)}, précision=±${acc}m`);
-
-        if (acc < bestAccuracy) {
-          bestAccuracy = acc;
-          bestCoords = pos;
-        }
-
-        // Dès qu'on obtient une précision satellite fiable (<= 2500m), valider immédiatement !
-        if (acc <= 2500) {
-          finish(pos, null);
-        }
-      },
+      (pos) => handleIncomingPosition(pos),
       (err) => {
         console.warn('[GPS Engine] watchPosition event:', err && err.message);
         if (err && err.code === 1) { // PERMISSION_DENIED
           finish(null, err);
           return;
         }
-        if (bestCoords && !resolved) {
-          finish(bestCoords, null);
-          return;
-        }
-        // Si aucun fix obtenu et erreur, repli de secours sur getCurrentPosition
-        if (!bestCoords && !resolved) {
-          navigator.geolocation.getCurrentPosition(
-            (pos) => finish(pos, null),
-            (err2) => {
-              if (!resolved && !bestCoords) finish(null, err2 || err);
-            },
-            { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 }
-          );
-        }
+        triggerLowAccuracyFallback();
       },
-      geoOptions
+      highAccOptions
     );
   } catch (eWatch) {
-    console.warn('[GPS Engine] watchPosition non supporté, repli sur getCurrentPosition:', eWatch);
-    navigator.geolocation.getCurrentPosition(
-      (pos) => finish(pos, null),
-      (err) => finish(null, err),
-      geoOptions
-    );
+    console.warn('[GPS Engine] watchPosition non supporté:', eWatch);
+    triggerLowAccuracyFallback();
   }
 }
 
