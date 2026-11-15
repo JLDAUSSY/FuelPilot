@@ -2706,27 +2706,17 @@ header {
 /* Top Language Selection Bar (4 Flags under FuelPilot Header) */
 
 .lang-bar {
-
+  position: relative;
+  z-index: 5000;
   background: rgba(15, 23, 42, 0.96);
-
   border-bottom: 1px solid var(--border-color);
-
   height: 30px;
-
   min-height: 30px;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   gap: 18px;
-
   padding: 2px 14px;
-
-  z-index: 995;
-
 }
 
 
@@ -2799,6 +2789,7 @@ header {
   position: relative;
   display: inline-flex;
   align-items: center;
+  z-index: 5001;
 }
 
 .belgium-lang-menu {
@@ -2816,7 +2807,7 @@ header {
   flex-direction: column;
   gap: 4px;
   min-width: 142px;
-  z-index: 1050;
+  z-index: 5002 !important;
   animation: beMenuFadeIn 0.16s ease-out;
 }
 
@@ -3854,7 +3845,7 @@ header {
 
   max-width: calc(100% - 74px);
 
-  z-index: 999;
+  z-index: 900;
 
   background: rgba(15, 23, 42, 0.9);
 

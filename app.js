@@ -45,6 +45,10 @@ let alternativeRoutes = [];
 let currentWaypoints = []; // [{ id, text, coords: [lon, lat] }]
 let startPoint = null;
 let endPoint = null;
+try {
+  Object.defineProperty(window, 'map', { get: () => map, set: (v) => { map = v; }, configurable: true });
+  Object.defineProperty(window, 'startPoint', { get: () => startPoint, set: (v) => { startPoint = v; }, configurable: true });
+} catch(e) {}
 let selectedFuel = 'e10'; // Default to SP95
 let selectedBrand = 'all';
 let currentSort = 'route'; // 'route', 'price', 'dist'
@@ -1110,7 +1114,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.6.5';
+const APP_VERSION = '9.6.6';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -2144,6 +2148,7 @@ function updateMapLayerControlLabels() {
 function setAppLanguage(lang, isManual = false) {
   if (!I18N_DICT[lang]) lang = 'fr';
   currentLang = lang;
+  window.currentLang = lang;
   if (isManual) {
     userManuallySelectedLang = true;
     try {
@@ -2593,6 +2598,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (beBtn) beBtn.setAttribute('aria-expanded', 'false');
     }
   });
+  // Purger tout ancien cache corrompu (IP Marseille ou grossier > 500m)
+  try {
+    const rawCache = localStorage.getItem('fuelpilot_last_known_gps');
+    if (rawCache) {
+      const d = JSON.parse(rawCache);
+      if (d && (d.isIpFallback || d.accuracy > 500 || (Math.abs(d.lat - 43.2951) < 0.02 && Math.abs(d.lon - 5.3861) < 0.02))) {
+        localStorage.removeItem('fuelpilot_last_known_gps');
+      }
+    }
+  } catch (e) {}
+
   setAppLanguage(currentLang, false);
   initMap();
   initPermanentGpsTracking();
@@ -3441,7 +3457,37 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
   });
 }
 
-// Handler for "Ma position actuelle" as departure
+// Geocodage inverse rapide (WaterMetrics : API officielle data.gouv.fr en France, Nominatim ailleurs)
+async function reverseGeocodeCoords(lat, lon) {
+  if (typeof lat !== 'number' || typeof lon !== 'number') return '';
+  // 1. France métropolitaine : API Adresse officielle data.gouv.fr (rapide, sans clé, précis au village/ville)
+  if (lat >= 41.0 && lat <= 51.5 && lon >= -5.5 && lon <= 10.0) {
+    try {
+      const resp = await fetch(`https://api-adresse.data.gouv.fr/reverse/?lon=${lon}&lat=${lat}`);
+      if (resp.ok) {
+        const data = await resp.json();
+        if (data && data.features && data.features.length > 0) {
+          const props = data.features[0].properties;
+          return props.city || props.name || props.municipality || '';
+        }
+      }
+    } catch (eGouv) {}
+  }
+  // 2. Hors France ou secours : Nominatim OpenStreetMap
+  try {
+    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}&zoom=14`, {
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      const addr = data.address || {};
+      return addr.city || addr.town || addr.village || addr.municipality || addr.road || '';
+    }
+  } catch (eNom) {}
+  return '';
+}
+
+// Handler for "Ma position actuelle" as departure (WaterMetrics GNSS Streaming Engine)
 function useCurrentGpsLocationAsStart() {
   const startInput = document.getElementById('input-start');
   if (startInput) {
@@ -3456,43 +3502,47 @@ function useCurrentGpsLocationAsStart() {
     updateUserGpsMarker(cachedPos.lat, cachedPos.lon, cachedPos.accuracy, false);
     if (typeof updateAllClearButtons === 'function') updateAllClearButtons();
 
-    // Si la position a moins de 45 secondes, elle est déjà toute fraîche
-    if (Date.now() - (cachedPos.timestamp || 0) < 45000) return;
+    // Si la position a moins de 30 secondes, elle est déjà toute fraîche
+    if (Date.now() - (cachedPos.timestamp || 0) < 30000) return;
   }
 
-  // 2. Acquisition ou rafraîchissement satellite avec surclassement progressif
+  // 2. Acquisition satellite WaterMetrics (streaming GNSS)
   getFreshUserLocation(
-    (pos, isHighAcc) => {
+    async (pos) => {
       if (!pos || !pos.coords) return;
-      const { latitude, longitude, accuracy, isIpFallback } = pos.coords;
-      const isRealGps = Boolean(isHighAcc && !isIpFallback && (accuracy <= 500));
-      const city = pos.city || (userGpsPosition && userGpsPosition.city);
+      const { latitude, longitude, accuracy } = pos.coords;
+
+      // Protection stricte contre les relais 5G/IP grossiers (> 3000m)
+      if (accuracy > 3000) {
+        showToast("⚠️ Signal GPS trop approximatif (±" + Math.round(accuracy) + "m). Activez la « Position exacte » dans les paramètres de votre smartphone ou saisissez votre ville au clavier.", { isWarning: true, duration: 6000 });
+        if (startInput && !startPoint) {
+          startInput.value = '';
+          startInput.placeholder = (t().inputStartPlaceholder || 'Ville ou lieu de départ...');
+        }
+        if (typeof updateAllClearButtons === 'function') updateAllClearButtons();
+        return;
+      }
+
+      const city = await reverseGeocodeCoords(latitude, longitude);
 
       userGpsPosition = {
         lat: latitude,
         lon: longitude,
-        accuracy: accuracy || (isRealGps ? 15 : 5000),
-        isHighAccuracy: isRealGps,
-        isIpFallback: Boolean(isIpFallback),
+        accuracy: accuracy || 15,
+        isHighAccuracy: true,
+        isIpFallback: false,
         timestamp: Date.now(),
         city
       };
+      saveCachedUserPosition(userGpsPosition);
 
-      if (isRealGps) {
-        saveCachedUserPosition(userGpsPosition);
-      }
-
-      updateUserGpsMarker(latitude, longitude, accuracy, Boolean(isIpFallback));
-      // Si vrai GPS satellite, laisser applyGpsAsStartPoint résoudre la commune précise (ex: Sanary-sur-Mer)
-      applyGpsAsStartPoint(latitude, longitude, isRealGps ? null : city);
+      updateUserGpsMarker(latitude, longitude, accuracy, false);
+      await applyGpsAsStartPoint(latitude, longitude, city);
       if (typeof updateAllClearButtons === 'function') updateAllClearButtons();
 
-      if (isRealGps) {
-        const trAcc = Math.round(accuracy || 15);
-        showToast(`🎯 Position GPS exacte acquise (±${trAcc}m)`, { isSuccess: true, duration: 4000 });
-      } else if (isIpFallback) {
-        showToast(`📍 Position estimée via le réseau mobile (Marseille). Recherche satellite GPS en cours...`, { isWarning: false, isInfo: true, duration: 5500 });
-      }
+      const trAcc = Math.round(accuracy || 15);
+      const locLabel = city ? `${city} (±${trAcc}m)` : `±${trAcc}m`;
+      showToast(`🎯 Position GPS départ validée : ${locLabel}`, { isSuccess: true, duration: 4000 });
     },
     (err) => {
       console.warn('Erreur acquisition GPS départ:', err);
@@ -3510,8 +3560,13 @@ async function applyGpsAsStartPoint(lat, lon, knownCity) {
   const startInput = document.getElementById('input-start');
   let displayName = t().currentPos ? t().currentPos.replace('📍 ', '') : 'Ma position actuelle';
   
-  if (knownCity) {
-    displayName = `${displayName} (${knownCity})`;
+  let city = knownCity;
+  if (!city) {
+    city = await reverseGeocodeCoords(lat, lon);
+  }
+
+  if (city) {
+    displayName = `${displayName} (${city})`;
   }
 
   startPoint = { coords: [lon, lat], label: displayName };
@@ -3519,27 +3574,7 @@ async function applyGpsAsStartPoint(lat, lon, knownCity) {
     startInput.value = displayName;
     startInput.classList.remove('input-attention-pulse');
   }
-
-  // Reverse geocode in background to refine city name if not already provided
-  if (!knownCity) {
-    try {
-      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}&zoom=14`, {
-        headers: { 'Accept': 'application/json' }
-      });
-      if (res.ok) {
-        const data = await res.json();
-        const addr = data.address || {};
-        const locality = addr.city || addr.town || addr.village || addr.municipality || addr.road;
-        if (locality) {
-          displayName = `${displayName} (${locality})`;
-          startPoint.label = displayName;
-          if (startInput) { startInput.value = displayName; if (typeof updateAllClearButtons === 'function') updateAllClearButtons(); }
-        }
-      }
-    } catch (e) {
-      // Keep fallback label
-    }
-  }
+  if (typeof updateAllClearButtons === 'function') updateAllClearButtons();
 }
 
 // Event Listeners for Filters and Controls
@@ -5191,6 +5226,10 @@ let isGpsNavActive = false;
 let gpsWatchId = null;
 let userGpsPosition = null; // { lat, lon, heading, speed }
 let userGpsMarker = null;
+try {
+  Object.defineProperty(window, 'userGpsPosition', { get: () => userGpsPosition, set: (v) => { userGpsPosition = v; }, configurable: true });
+  Object.defineProperty(window, 'userGpsMarker', { get: () => userGpsMarker, set: (v) => { userGpsMarker = v; }, configurable: true });
+} catch(e) {}
 let userProgressionKmOnRoute = 0;
 let permanentGpsWatchId = null;
 
@@ -5335,7 +5374,15 @@ function getCachedUserPosition() {
     const data = JSON.parse(raw);
     if (data && typeof data.lat === 'number' && typeof data.lon === 'number') {
       // Rejeter formellement si c'est un repli IP ou si la précision est médiocre (> 500m)
-      if (data.isIpFallback || (data.accuracy && data.accuracy > 500)) return null;
+      if (data.isIpFallback || (data.accuracy && data.accuracy > 500)) {
+        localStorage.removeItem('fuelpilot_last_known_gps');
+        return null;
+      }
+      // Rejeter et purger si les coordonnées correspondent au point central IP de Marseille (43.2951, 5.3861)
+      if (Math.abs(data.lat - 43.2951) < 0.02 && Math.abs(data.lon - 5.3861) < 0.02) {
+        localStorage.removeItem('fuelpilot_last_known_gps');
+        return null;
+      }
       // Valable jusqu'à 6 heures pour un vrai fix GPS
       if (Date.now() - (data.timestamp || 0) < 6 * 3600 * 1000) {
         return data;
@@ -5349,6 +5396,8 @@ function saveCachedUserPosition(posObj) {
   if (!posObj || typeof posObj.lat !== 'number' || typeof posObj.lon !== 'number') return;
   // Ne JAMAIS mettre en cache une position issue d'un repli IP ou avec mauvaise précision (> 500m)
   if (posObj.isIpFallback || (posObj.accuracy && posObj.accuracy > 500)) return;
+  // Ne JAMAIS mettre en cache les coordonnées de Marseille IP
+  if (Math.abs(posObj.lat - 43.2951) < 0.02 && Math.abs(posObj.lon - 5.3861) < 0.02) return;
   try {
     localStorage.setItem('fuelpilot_last_known_gps', JSON.stringify({
       lat: posObj.lat,
@@ -5359,64 +5408,6 @@ function saveCachedUserPosition(posObj) {
       timestamp: Date.now()
     }));
   } catch (e) {}
-}
-
-async function fetchIpFallbackLocation() {
-  // 1. Essai primaire : GeoJS (ultra-rapide ~150ms, sans clé, supporte CORS)
-  try {
-    const ctrl = new AbortController();
-    const tid = setTimeout(() => ctrl.abort(), 2800);
-    const res = await fetch('https://get.geojs.io/v1/ip/geo.json', { signal: ctrl.signal });
-    clearTimeout(tid);
-    if (res.ok) {
-      const data = await res.json();
-      if (data && data.latitude && data.longitude) {
-        const lat = parseFloat(data.latitude);
-        const lon = parseFloat(data.longitude);
-        if (!isNaN(lat) && !isNaN(lon) && Math.abs(lat) > 0.001) {
-          return {
-            coords: {
-              latitude: lat,
-              longitude: lon,
-              accuracy: 5000,
-              isIpFallback: true
-            },
-            city: data.city || data.region || '',
-            timestamp: Date.now()
-          };
-        }
-      }
-    }
-  } catch (e) {}
-
-  // 2. Essai secondaire de secours : ipwho.is (CORS activé, fiable en secours)
-  try {
-    const ctrl2 = new AbortController();
-    const tid2 = setTimeout(() => ctrl2.abort(), 2800);
-    const res2 = await fetch('https://ipwho.is/', { signal: ctrl2.signal });
-    clearTimeout(tid2);
-    if (res2.ok) {
-      const data2 = await res2.json();
-      if (data2 && data2.success && data2.latitude && data2.longitude) {
-        const lat = parseFloat(data2.latitude);
-        const lon = parseFloat(data2.longitude);
-        if (!isNaN(lat) && !isNaN(lon) && Math.abs(lat) > 0.001) {
-          return {
-            coords: {
-              latitude: lat,
-              longitude: lon,
-              accuracy: 5000,
-              isIpFallback: true
-            },
-            city: data2.city || data2.region || '',
-            timestamp: Date.now()
-          };
-        }
-      }
-    }
-  } catch (e2) {}
-
-  return null;
 }
 
 function isStandalonePwaMode() {
@@ -5441,7 +5432,7 @@ function formatGeolocationErrorMessage(err) {
     if (lang === 'nl') return "⚠️ Gps-signaal niet beschikbaar: controleer of 'Locatie' is ingeschakeld in het snelle menu.";
     if (lang === 'de') return "⚠️ Kein GPS-Signal: Prüfen Sie, ob 'Standort' im Schnellmenü aktiviert ist.";
     if (lang === 'en') return "⚠️ GPS signal unavailable: check that 'Location' is enabled in your phone's quick menu.";
-    if (lang === 'it') return "⚠️ Segnale GPS non disponibile: controlla che la 'Posizione' sia attiva nel menu rapido.";
+    if (lang === 'it') return "⚠️ Segnale GPS non disponible: controlla che la 'Posizione' sia attiva nel menu rapido.";
     if (lang === 'es') return "⚠️ Señal GPS no disponible: compruebe que la 'Ubicación' esté activada en el panel superior.";
     return "⚠️ Signal GPS indisponible : vérifiez que la 'Position' est bien activée dans le volet déroulant de votre smartphone.";
   } else if (code === 3) { // TIMEOUT
@@ -5455,11 +5446,12 @@ function formatGeolocationErrorMessage(err) {
   return t().locationError || "Impossible d'obtenir la position GPS.";
 }
 
-// Progressive Multi-Tier Satellite GPS Engine:
-// 1. Lance un streaming haute précision (watchPosition) sans le couper prématurément.
-// 2. Si les satellites tardent (>3.5s), affiche un aperçu réseau/IP pour ne pas figer l'UI.
-// 3. Dès que les satellites sont verrouillés (précision <= 300m), surclasse automatiquement
-//    la position vers les coordonnées GPS physiques exactes (ex: Sanary-sur-Mer).
+// Architecture de géolocalisation satellite WaterMetrics :
+// 1. Streaming GNSS haute précision direct (watchPosition, enableHighAccuracy, timeout 12s, maximumAge 30s)
+// 2. Verrouillage instantané dès signal précis (<= 2500m) sans attendre la fin du chrono
+// 3. Fenêtre de sécurité globale de 12.5s pour accrochage à ciel ouvert
+// 4. Repli de secours sur getCurrentPosition en cas d'erreur de flux
+// 5. Blocage strict des coordonnées IP 5G grossières (> 3000m) qui pointent vers les passerelles régionales (Marseille)
 let activeLocationCallbacks = [];
 let isAcquiringLocation = false;
 let globalGpsWatchId = null;
@@ -5469,8 +5461,8 @@ function getFreshUserLocation(onSuccess, onError) {
     activeLocationCallbacks.push({ onSuccess, onError });
   }
 
-  // Si on a déjà un relevé GPS très récent (< 20 secondes) et de haute précision, notifier immédiatement
-  if (userGpsPosition && userGpsPosition.isHighAccuracy && !userGpsPosition.isIpFallback && (Date.now() - (userGpsPosition.timestamp || 0) < 20000)) {
+  // Si on a déjà un relevé GPS récent (< 20 secondes) et de haute précision (<= 500m), notifier immédiatement
+  if (userGpsPosition && userGpsPosition.isHighAccuracy && !userGpsPosition.isIpFallback && (userGpsPosition.accuracy <= 500) && (Date.now() - (userGpsPosition.timestamp || 0) < 20000)) {
     const cachedPos = {
       coords: {
         latitude: userGpsPosition.lat,
@@ -5483,7 +5475,7 @@ function getFreshUserLocation(onSuccess, onError) {
       timestamp: userGpsPosition.timestamp
     };
     if (onSuccess) {
-      try { onSuccess(cachedPos, true); } catch(e) {}
+      try { onSuccess(cachedPos); } catch(e) {}
     }
     return;
   }
@@ -5491,150 +5483,121 @@ function getFreshUserLocation(onSuccess, onError) {
   if (isAcquiringLocation) return;
   isAcquiringLocation = true;
 
-  let bestSatellitePos = null;
-  let bestSatelliteAccuracy = Infinity;
-  let hasNotifiedInitialPosition = false;
-  let satelliteSafetyTimer = null;
-  let interimIpTimer = null;
-
-  const notifySubscribers = (pos, isHighAcc) => {
-    if (isHighAcc) {
-      // Relevé satellite physique haute précision validé : vider la liste des callbacks
-      const cbs = [...activeLocationCallbacks];
-      activeLocationCallbacks = [];
-      cbs.forEach(cb => {
-        if (cb.onSuccess) {
-          try { cb.onSuccess(pos, true); } catch (e) { console.error(e); }
-        }
-      });
-    } else {
-      // Relevé intérimaire (IP ou réseau) : notifier les abonnés sans purger la liste
-      // pour qu'ils soient automatiquement mis à jour dès l'arrivée du vrai GPS satellite !
-      activeLocationCallbacks.forEach(cb => {
-        if (cb.onSuccess) {
-          try { cb.onSuccess(pos, false); } catch (e) { console.error(e); }
-        }
-      });
-    }
-  };
-
-  const notifyErrors = (err) => {
+  if (!navigator.geolocation) {
+    isAcquiringLocation = false;
     const cbs = [...activeLocationCallbacks];
     activeLocationCallbacks = [];
     cbs.forEach(cb => {
       if (cb.onError) {
-        try { cb.onError(err); } catch (e) { console.error(e); }
+        try { cb.onError({ code: 2, message: "Géolocalisation non supportée." }); } catch(e) {}
       }
     });
-  };
-
-  // 1. Minuteur de repli IP intérimaire : si les satellites prennent plus de 3.5s,
-  // afficher la position réseau (ex: Marseille) comme indication temporaire SANS TUER LE GPS !
-  interimIpTimer = setTimeout(async () => {
-    if (bestSatelliteAccuracy <= 300) return;
-    console.log('[GPS Engine] Recherche satellite en cours (>3.5s), chargement repli réseau intérimaire...');
-    const ipPos = await fetchIpFallbackLocation();
-    if (ipPos && bestSatelliteAccuracy > 300) {
-      console.log(`[GPS Engine] Position réseau temporaire affichée (${ipPos.city}) en attendant le signal satellite`);
-      hasNotifiedInitialPosition = true;
-      notifySubscribers(ipPos, false);
-    }
-  }, 3500);
-
-  // 2. Délai de sécurité global étendu à 25s (temps nécessaire pour fix GNSS à froid)
-  satelliteSafetyTimer = setTimeout(() => {
-    isAcquiringLocation = false;
-    if (interimIpTimer) clearTimeout(interimIpTimer);
-    if (bestSatellitePos) {
-      console.log(`[GPS Engine] Fin délai sécurité : validation meilleur relevé satellite (±${bestSatelliteAccuracy}m)`);
-      notifySubscribers(bestSatellitePos, true);
-    } else if (!hasNotifiedInitialPosition) {
-      console.warn('[GPS Engine] Aucun signal satellite après 25s, repli IP final...');
-      fetchIpFallbackLocation().then(ipPos => {
-        if (ipPos) {
-          notifySubscribers(ipPos, false);
-        } else {
-          notifyErrors({ code: 3, message: 'Délai d\'acquisition GPS dépassé' });
-        }
-      });
-    }
-  }, 25000);
-
-  if (!navigator.geolocation) {
-    if (satelliteSafetyTimer) clearTimeout(satelliteSafetyTimer);
-    if (interimIpTimer) clearTimeout(interimIpTimer);
-    isAcquiringLocation = false;
-    notifyErrors({ code: 2, message: "Géolocalisation non supportée." });
     return;
   }
 
-  // 3. Lancement du streaming haute précision GPS matériel
-  try {
+  let resolved = false;
+  let bestCoords = null;
+  let bestAccuracy = Infinity;
+  let safetyTimer = null;
+
+  const clearWatchSafely = () => {
     if (globalGpsWatchId !== null) {
       try { navigator.geolocation.clearWatch(globalGpsWatchId); } catch(e) {}
       globalGpsWatchId = null;
     }
+  };
 
+  const finish = (finalPos, finalErr) => {
+    if (resolved) return;
+    resolved = true;
+    isAcquiringLocation = false;
+    clearWatchSafely();
+    if (safetyTimer) { clearTimeout(safetyTimer); safetyTimer = null; }
+
+    const cbs = [...activeLocationCallbacks];
+    activeLocationCallbacks = [];
+
+    if (finalPos) {
+      cbs.forEach(cb => {
+        if (cb.onSuccess) {
+          try { cb.onSuccess(finalPos); } catch (e) { console.error(e); }
+        }
+      });
+    } else {
+      cbs.forEach(cb => {
+        if (cb.onError) {
+          try { cb.onError(finalErr); } catch (e) { console.error(e); }
+        }
+      });
+    }
+  };
+
+  // Délai de sécurité global : 12.5 secondes (exact pattern WaterMetrics)
+  safetyTimer = setTimeout(() => {
+    if (resolved) return;
+    if (bestCoords && bestAccuracy <= 3000) {
+      console.log(`[GPS Engine] Fin du délai (12.5s), validation du meilleur relevé (±${bestAccuracy}m)`);
+      finish(bestCoords, null);
+    } else {
+      console.warn('[GPS Engine] Délai GPS de sécurité dépassé sans position satellite exploitable.');
+      finish(null, { code: 3, message: 'Délai GPS dépassé' });
+    }
+  }, 12500);
+
+  const geoOptions = {
+    enableHighAccuracy: true,
+    timeout: 12000,
+    maximumAge: 30000
+  };
+
+  try {
+    clearWatchSafely();
     globalGpsWatchId = navigator.geolocation.watchPosition(
       (pos) => {
-        if (!pos || !pos.coords) return;
+        if (resolved || !pos || !pos.coords) return;
         const acc = (typeof pos.coords.accuracy === 'number') ? Math.round(pos.coords.accuracy) : 9999;
-        console.log(`[GPS Engine] Fix GPS matériel reçu : lat=${pos.coords.latitude.toFixed(5)}, lon=${pos.coords.longitude.toFixed(5)}, précision=±${acc}m`);
+        console.log(`[GPS Engine] Signal satellite reçu : lat=${pos.coords.latitude.toFixed(5)}, lon=${pos.coords.longitude.toFixed(5)}, précision=±${acc}m`);
 
-        if (acc < bestSatelliteAccuracy) {
-          bestSatelliteAccuracy = acc;
-          bestSatellitePos = pos;
+        if (acc < bestAccuracy) {
+          bestAccuracy = acc;
+          bestCoords = pos;
         }
 
-        // Dès qu'on obtient une vraie précision satellite (<= 300m)
-        if (acc <= 300) {
-          if (interimIpTimer) { clearTimeout(interimIpTimer); interimIpTimer = null; }
-          if (satelliteSafetyTimer) { clearTimeout(satelliteSafetyTimer); satelliteSafetyTimer = null; }
-          isAcquiringLocation = false;
-          hasNotifiedInitialPosition = true;
-          notifySubscribers(pos, true);
-        } else if (!hasNotifiedInitialPosition && acc <= 2500) {
-          // Relevé réseau/cellulaire initial
-          notifySubscribers(pos, false);
+        // Dès qu'on obtient une précision satellite fiable (<= 2500m), valider immédiatement !
+        if (acc <= 2500) {
+          finish(pos, null);
         }
       },
       (err) => {
         console.warn('[GPS Engine] watchPosition event:', err && err.message);
-
-        // Sur TIMEOUT (code 3) : NE SURTOUT PAS TUER LE WATCH !
-        // Les puces GPS smartphones émettent des timeouts tant que le verrouillage satellite n'est pas établi.
-        if (err && err.code === 3) {
+        if (err && err.code === 1) { // PERMISSION_DENIED
+          finish(null, err);
           return;
         }
-
-        // Si autorisation explicitement refusée par l'OS ou l'utilisateur (code 1)
-        if (err && err.code === 1) {
-          if (interimIpTimer) clearTimeout(interimIpTimer);
-          if (satelliteSafetyTimer) clearTimeout(satelliteSafetyTimer);
-          isAcquiringLocation = false;
-          try { navigator.geolocation.clearWatch(globalGpsWatchId); } catch(e) {}
-          globalGpsWatchId = null;
-          notifyErrors(err);
+        if (bestCoords && !resolved) {
+          finish(bestCoords, null);
           return;
         }
-
-        // Erreur de signal indisponible (code 2)
-        if (err && err.code === 2) {
-          if (bestSatellitePos) {
-            notifySubscribers(bestSatellitePos, true);
-          }
+        // Si aucun fix obtenu et erreur, repli de secours sur getCurrentPosition
+        if (!bestCoords && !resolved) {
+          navigator.geolocation.getCurrentPosition(
+            (pos) => finish(pos, null),
+            (err2) => {
+              if (!resolved && !bestCoords) finish(null, err2 || err);
+            },
+            { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 }
+          );
         }
       },
-      {
-        enableHighAccuracy: true,
-        timeout: 25000,
-        maximumAge: 0 // Forcer un vrai relevé physique, interdire le vieux cache réseau
-      }
+      geoOptions
     );
   } catch (eWatch) {
-    console.warn('[GPS Engine] Erreur lancement watchPosition:', eWatch);
-    isAcquiringLocation = false;
-    notifyErrors({ code: 2, message: eWatch.message || "Erreur géolocalisation" });
+    console.warn('[GPS Engine] watchPosition non supporté, repli sur getCurrentPosition:', eWatch);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => finish(pos, null),
+      (err) => finish(null, err),
+      geoOptions
+    );
   }
 }
 
@@ -5645,20 +5608,23 @@ function requestUserGeolocation(onSuccess, onError, forceFresh = false) {
   }
 
   getFreshUserLocation(
-    (pos, isHighAcc) => {
-      const { latitude, longitude, heading, speed, accuracy, isIpFallback } = pos.coords;
-      const isRealGps = Boolean(isHighAcc && !isIpFallback && (accuracy <= 500));
+    (pos) => {
+      const { latitude, longitude, heading, speed, accuracy } = pos.coords;
+      if (accuracy > 3000) {
+        if (onError) onError({ code: 3, message: "Précision insuffisante" });
+        return;
+      }
       userGpsPosition = {
         lat: latitude,
         lon: longitude,
         heading,
         speed,
-        accuracy: accuracy || (isRealGps ? 15 : 5000),
-        isHighAccuracy: isRealGps,
-        isIpFallback: Boolean(isIpFallback),
+        accuracy: accuracy || 15,
+        isHighAccuracy: true,
+        isIpFallback: false,
         timestamp: Date.now()
       };
-      updateUserGpsMarker(latitude, longitude, accuracy, Boolean(isIpFallback));
+      updateUserGpsMarker(latitude, longitude, accuracy, false);
       if (onSuccess) onSuccess(pos);
     },
     (err) => {
@@ -5667,54 +5633,55 @@ function requestUserGeolocation(onSuccess, onError, forceFresh = false) {
   );
 }
 
-// Center map on user position smoothly (always fetches latest live location with progressive upgrade)
+// Center map on user position smoothly (WaterMetrics streaming architecture)
 function centerMapOnUser() {
   const btnLocate = document.getElementById('btn-locate-me');
   if (btnLocate) btnLocate.classList.add('locating');
 
-  // 1. Centrage instantané (0ms) si un vrai GPS récent en cache existe
+  // 1. Centrage instantané (0ms) si un vrai GPS récent en cache existe (<= 500m)
   const cachedPos = userGpsPosition || getCachedUserPosition();
   if (cachedPos && cachedPos.lat && cachedPos.lon && map && !cachedPos.isIpFallback && (cachedPos.accuracy <= 500)) {
     map.setView([cachedPos.lat, cachedPos.lon], 15, { animate: true });
     updateUserGpsMarker(cachedPos.lat, cachedPos.lon, cachedPos.accuracy, false);
     if (userGpsMarker) userGpsMarker.openTooltip();
+  } else {
+    showToast(t().locating || "📍 Recherche du signal GPS en cours...", { isInfo: true, duration: 4000 });
   }
 
-  // 2. Acquisition ou rafraîchissement satellite haute précision avec surclassement automatique
+  // 2. Acquisition satellite WaterMetrics
   getFreshUserLocation(
-    (pos, isHighAcc) => {
+    async (pos) => {
+      if (btnLocate) btnLocate.classList.remove('locating');
       if (!pos || !pos.coords) return;
-      const { latitude, longitude, accuracy, isIpFallback } = pos.coords;
-      const isRealGps = Boolean(isHighAcc && !isIpFallback && (accuracy <= 500));
-      const city = pos.city || (userGpsPosition && userGpsPosition.city) || '';
+      const { latitude, longitude, accuracy } = pos.coords;
+
+      if (accuracy > 3000) {
+        showToast("⚠️ Signal GPS trop approximatif (±" + Math.round(accuracy) + "m). Activez la « Position exacte » dans les paramètres de votre smartphone ou saisissez votre ville au clavier.", { isWarning: true, duration: 6000 });
+        return;
+      }
+
+      const city = await reverseGeocodeCoords(latitude, longitude);
 
       userGpsPosition = {
         lat: latitude,
         lon: longitude,
-        accuracy: accuracy || (isRealGps ? 15 : 5000),
-        isHighAccuracy: isRealGps,
-        isIpFallback: Boolean(isIpFallback),
+        accuracy: accuracy || 15,
+        isHighAccuracy: true,
+        isIpFallback: false,
         timestamp: Date.now(),
         city
       };
-
-      if (isRealGps) {
-        if (btnLocate) btnLocate.classList.remove('locating');
-        saveCachedUserPosition(userGpsPosition);
-      }
+      saveCachedUserPosition(userGpsPosition);
 
       if (map) {
-        map.setView([latitude, longitude], isRealGps ? 15 : 13, { animate: true });
-        updateUserGpsMarker(latitude, longitude, accuracy, Boolean(isIpFallback));
+        map.setView([latitude, longitude], 15, { animate: true });
+        updateUserGpsMarker(latitude, longitude, accuracy, false);
         if (userGpsMarker) userGpsMarker.openTooltip();
       }
 
-      if (isRealGps) {
-        const trAcc = Math.round(accuracy || 15);
-        showToast(`🎯 Position GPS exacte acquise (±${trAcc}m)`, { isSuccess: true, duration: 4000 });
-      } else if (isIpFallback) {
-        showToast(`📍 Position estimée via le réseau mobile (Marseille). Recherche satellite GPS en cours...`, { isWarning: false, isInfo: true, duration: 5500 });
-      }
+      const trAcc = Math.round(accuracy || 15);
+      const locLabel = city ? `${city} (±${trAcc}m)` : `±${trAcc}m`;
+      showToast(`🎯 Position GPS acquise : ${locLabel}`, { isSuccess: true, duration: 4000 });
     },
     (err) => {
       if (btnLocate) btnLocate.classList.remove('locating');
