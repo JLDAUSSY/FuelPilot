@@ -5847,34 +5847,6 @@ header {
 
 
 
-.station-savings-badge {
-
-  margin-top: 6px;
-
-  padding: 5px 8px;
-
-  border-radius: 6px;
-
-  font-size: 0.74rem;
-
-  font-weight: 700;
-
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.15));
-
-  border: 1px solid rgba(16, 185, 129, 0.4);
-
-  color: #34d399;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 4px;
-
-}
-
-
-
 .popup-exit-badge {
 
   display: inline-block;
@@ -5894,28 +5866,6 @@ header {
   color: #fef08a;
 
   margin-bottom: 6px;
-
-}
-
-
-
-.popup-savings-banner {
-
-  padding: 5px 8px;
-
-  border-radius: 6px;
-
-  font-size: 0.76rem;
-
-  font-weight: 700;
-
-  background: rgba(16, 185, 129, 0.2);
-
-  border: 1px solid rgba(16, 185, 129, 0.45);
-
-  color: #6ee7b7;
-
-  margin-bottom: 8px;
 
 }
 

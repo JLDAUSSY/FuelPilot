@@ -291,12 +291,9 @@ try:
     print("[PASS] Exit station cards feature high-contrast exit-card-banner and distinct slate styling.")
 
     savings_badges = driver.find_elements(By.CLASS_NAME, 'station-savings-badge')
-    print(f"Found {len(savings_badges)} savings badges ('💰 Économie').")
-    if len(savings_badges) > 0:
-        sample_savings = savings_badges[0].get_attribute('textContent').strip()
-        print(f"Sample savings badge text: '{sample_savings}'")
-        assert "💰" in sample_savings and "plein" in sample_savings, f"FAILURE: Invalid savings badge format: '{sample_savings}'"
-    print("[PASS] Exit stations toggle, exit badges, and savings calculations verified successfully.")
+    print(f"Verified {len(savings_badges)} savings badges (station-savings-badge removed as requested).")
+    assert len(savings_badges) == 0, f"FAILURE: station-savings-badge must be 0, found {len(savings_badges)}"
+    print("[PASS] Exit stations toggle and exit badges verified, savings indication successfully removed.")
 
 
     print("\n--- TEST 12: Exit Station Brand and Off-Highway Popup Verification ---")

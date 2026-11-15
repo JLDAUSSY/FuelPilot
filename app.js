@@ -1114,7 +1114,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.6.6';
+const APP_VERSION = '9.6.7';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -1330,8 +1330,6 @@ const I18N_DICT = {
     offMotorwayPopupTitle: "Station hors autoroute",
     offMotorwayPopupDesc: (d, exitNum) => exitNum ? `Accessible à la sortie n° ${exitNum} (~${d})` : `Accessible à la sortie d'autoroute / péage (~${d})`,
     offMotorwayTooltip: "Station située hors autoroute, à la sortie immédiate",
-    savingsBadge: (amt, cur, diff, unit) => `💰 Économie : ~${amt} ${cur} sur le plein (-${diff} ${cur}/${unit})`,
-    savingsTooltip: "Économie estimée par rapport au prix moyen sur l'autoroute",
     defaultHighway: "Autoroute",
     weatherLoading: "Météo en direct",
     fuelUnavailable: "Indispo"
@@ -1455,8 +1453,6 @@ const I18N_DICT = {
     offMotorwayPopupTitle: "Station außerhalb der Autobahn",
     offMotorwayPopupDesc: (d, exitNum) => exitNum ? `Erreichbar an Ausfahrt ${exitNum} (~${d})` : `An der Autobahnausfahrt / Mautstelle (~${d})`,
     offMotorwayTooltip: "Tankstelle außerhalb der Autobahn, direkt an der Ausfahrt",
-    savingsBadge: (amt, cur, diff, unit) => `💰 Ersparnis: ~${amt} ${cur} pro Tankfüllung (-${diff} ${cur}/${unit})`,
-    savingsTooltip: "Geschätzte Ersparnis im Vergleich zum Autobahn-Durchschnitt",
     defaultHighway: "Autobahn",
     weatherLoading: "Live-Wetter",
     fuelUnavailable: "Nicht verf."
@@ -1580,8 +1576,6 @@ const I18N_DICT = {
     offMotorwayPopupTitle: "Off-motorway station",
     offMotorwayPopupDesc: (d, exitNum) => exitNum ? `Accessible from exit ${exitNum} (~${d})` : `Accessible from motorway exit / toll (~${d})`,
     offMotorwayTooltip: "Station located off the motorway, right at the exit",
-    savingsBadge: (amt, cur, diff, unit) => `💰 Savings: ~${cur}${amt} on a full tank (-${cur}${diff}/${unit})`,
-    savingsTooltip: "Estimated savings compared to motorway service area average",
     defaultHighway: "Motorway",
     weatherLoading: "Live weather",
     fuelUnavailable: "Unavailable"
@@ -1705,8 +1699,6 @@ const I18N_DICT = {
     offMotorwayPopupTitle: "Stazione fuori autostrada",
     offMotorwayPopupDesc: (d, exitNum) => exitNum ? `Raggiungibile all'uscita n. ${exitNum} (~${d})` : `All'uscita autostradale / casello (~${d})`,
     offMotorwayTooltip: "Stazione situata fuori autostrada, subito all'uscita",
-    savingsBadge: (amt, cur, diff, unit) => `💰 Risparmio: ~${amt} ${cur} sul pieno (-${diff} ${cur}/${unit})`,
-    savingsTooltip: "Risparmio stimato rispetto alla media delle aree autostradali",
     defaultHighway: "Autostrada",
     weatherLoading: "Meteo in tempo reale",
     fuelUnavailable: "Non disp."
@@ -1831,8 +1823,6 @@ const I18N_DICT = {
     offMotorwayPopupTitle: "Station buiten de snelweg",
     offMotorwayPopupDesc: (d, exitNum) => exitNum ? `Bereikbaar via afrit nr. ${exitNum} (~${d})` : `Bereikbaar via snelwegafrit / tolpoort (~${d})`,
     offMotorwayTooltip: "Station gelegen buiten de snelweg, direct aan de afrit",
-    savingsBadge: (amt, cur, diff, unit) => `💰 Besparing: ~${amt} ${cur} per tankbeurt (-${diff} ${cur}/${unit})`,
-    savingsTooltip: "Geschatte besparing vergeleken met de gemiddelde snelwegprijs",
     defaultHighway: "Snelweg",
     weatherLoading: "Actueel weer",
     fuelUnavailable: "Niet besch."
@@ -1956,8 +1946,6 @@ const I18N_DICT = {
     offMotorwayPopupTitle: "Estación fuera de autopista",
     offMotorwayPopupDesc: (d, exitNum) => exitNum ? `Accesible en la salida n.º ${exitNum} (~${d})` : `En la salida de la autopista / peaje (~${d})`,
     offMotorwayTooltip: "Estación fuera de autopista, justo en la salida",
-    savingsBadge: (amt, cur, diff, unit) => `💰 Ahorro: ~${amt} ${cur} en depósito (-${diff} ${cur}/${unit})`,
-    savingsTooltip: "Ahorro estimado respecto a la media en autopista",
     defaultHighway: "Autopista",
     weatherLoading: "Tiempo en vivo",
     fuelUnavailable: "No disp."
@@ -4436,20 +4424,13 @@ function renderCurrentRouteStations() {
 
   // Find lowest price for selected fuel among candidate stations
   let lowestPrice = 999;
-  let motorwayPriceSum = 0;
-  let motorwayCount = 0;
 
   if (selectedFuel !== 'all') {
     filtered.forEach(s => {
       const p = getFuelPrice(s.prix, selectedFuel);
       if (p && p < lowestPrice) lowestPrice = p;
-      if (!s.isExitStation && p && p > 0) {
-        motorwayPriceSum += p;
-        motorwayCount++;
-      }
     });
   }
-  const avgMotorwayPrice = motorwayCount > 0 ? (motorwayPriceSum / motorwayCount) : null;
 
   // Sort stations
   if (currentSort === 'route') {
@@ -4580,32 +4561,6 @@ function renderCurrentRouteStations() {
       ? `<span class="popup-weather-icon">${cachedWeather.icon}</span> <strong>${cachedWeather.temp}°C</strong> · ${cachedWeather.desc}`
       : `<span>🌤️ ${tr.weatherLoading || 'Météo en direct'}</span>`;
 
-    // Exit savings calculation vs average motorway service area
-    let exitSavingsHtml = '';
-    let cardSavingsHtml = '';
-    if (st.isExitStation && avgMotorwayPrice && fuelPrice && fuelPrice < avgMotorwayPrice) {
-      const diffUnit = avgMotorwayPrice - fuelPrice;
-      const vol = isElec ? 40 : 50;
-      const totalSaved = diffUnit * vol;
-      const cur = isUK ? '£' : '€';
-      const unitLbl = isElec ? 'kWh' : 'L';
-      if (totalSaved >= 0.5) {
-        const savingsText = (tr.savingsBadge && typeof tr.savingsBadge === 'function')
-          ? tr.savingsBadge(totalSaved.toFixed(1), cur, diffUnit.toFixed(3), unitLbl)
-          : `💰 Économie : ~${totalSaved.toFixed(1)} ${cur} sur le plein (-${diffUnit.toFixed(3)} ${cur}/${unitLbl})`;
-        cardSavingsHtml = `
-          <div class="station-savings-badge" title="${tr.savingsTooltip || ''}">
-            ${savingsText}
-          </div>
-        `;
-        exitSavingsHtml = `
-          <div class="popup-savings-banner">
-            ${savingsText}
-          </div>
-        `;
-      }
-    }
-
     // Popup content
     const flag = st.pays === 'GB' ? '🇬🇧' : (st.pays === 'DE' ? '🇩🇪' : (st.pays === 'BE' ? '🇧🇪' : (st.pays === 'ES' ? '🇪🇸' : (st.pays === 'IT' ? '🇮🇹' : '🇫🇷'))));
     const nomFormatted = isNativeCase ? st.nom : formatProperName(st.nom);
@@ -4652,8 +4607,6 @@ function renderCurrentRouteStations() {
         <div class="popup-weather-row" id="weather-popup-${st.id}">
           ${weatherPopupHtml}
         </div>
-
-        ${exitSavingsHtml}
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; font-size:0.8rem; margin-bottom:8px;">
           ${renderPopupPrices(st.prix, selectedFuel, st.pays, st.maj)}
@@ -4743,7 +4696,6 @@ function renderCurrentRouteStations() {
       <div class="prices-container">
         ${renderCardPrices(st.prix, selectedFuel, isCheapest, st.pays, st.maj)}
       </div>
-      ${cardSavingsHtml}
       ${(st.pays === 'BE' || (st.pays === 'DE' && !st.live)) ? `<div style="font-size:0.68rem; color:#94a3b8; margin-top:3px;">${t().estimatedPrice}</div>` : ''}
       ${(st.pays === 'DE' && st.live) ? `<div style="font-size:0.66rem; color:#94a3b8; margin-top:3px;">MTS-K · <a href="https://www.tankerkoenig.de" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" style="color:#7dd3fc;">Tankerkönig</a> (CC BY 4.0)</div>` : ''}
 
