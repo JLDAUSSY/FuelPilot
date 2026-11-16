@@ -1114,7 +1114,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.7.9';
+const APP_VERSION = '9.8.0';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -5643,7 +5643,7 @@ function handleGpsFix(pos, source = 'watch') {
             console.log('[GPS Engine] Validation du meilleur candidat (±' + Math.round(bestCandidatePos.coords.accuracy) + 'm)');
             resolvePendingLocation(bestCandidatePos, null);
           }
-        }, 3500);
+        }, 2000);
       }
     }
   }
@@ -5728,17 +5728,31 @@ function getFreshUserLocation(onSuccess, onError) {
     }
   }, 16000);
 
-  // Déclencher aussi un getCurrentPosition en parallèle pour réveil immédiat
+  // Déclencher une double acquisition : réactivité instantanée (WiFi/antenne) + précision satellite en tâche de fond
   if (navigator.geolocation) {
+    // 1. Récupération immédiate Fused OS (WiFi / réseau Android, 0-200ms)
     try {
       navigator.geolocation.getCurrentPosition(
-        (pos) => handleGpsFix(pos, 'getCurrentPosition'),
+        (pos) => handleGpsFix(pos, 'fast'),
         (err) => {
-          if (err && err.code === 1) { // PERMISSION_DENIED
+          if (err && err.code === 1) {
             resolvePendingLocation(null, err);
           }
         },
-        { enableHighAccuracy: true, timeout: 12000, maximumAge: 15000 }
+        { enableHighAccuracy: false, timeout: 5000, maximumAge: 300000 }
+      );
+    } catch (e) {}
+
+    // 2. Acquisition GNSS haute précision (satellites)
+    try {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => handleGpsFix(pos, 'fine'),
+        (err) => {
+          if (err && err.code === 1) {
+            resolvePendingLocation(null, err);
+          }
+        },
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 10000 }
       );
     } catch (e) {
       console.warn('[GPS Engine] Exception getCurrentPosition:', e);
