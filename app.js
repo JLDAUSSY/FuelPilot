@@ -1124,7 +1124,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.0';
+const APP_VERSION = '9.9.2';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -2561,6 +2561,8 @@ function renderFuelInfoModal() {
           <th>🇧🇪 ${tr.countryBE}</th>
           <th>🇮🇹 ${tr.countryIT}</th>
           <th>🇪🇸 ${tr.countryES}</th>
+          <th>🇵🇹 ${tr.countryPT}</th>
+          <th>🇳🇱 ${tr.countryNL}</th>
           <th>🇬🇧 ${tr.countryGB}</th>
         </tr>
       </thead>
@@ -2572,6 +2574,8 @@ function renderFuelInfoModal() {
           <td><b>Super 95 (E10)</b></td>
           <td>Benzina (E5/E10)</td>
           <td>Gasolina 95 E5/E10</td>
+          <td><b>Gasolina 95 (E10)</b></td>
+          <td><b>Euro 95 (E10)</b></td>
           <td><b>Unleaded (E10)</b></td>
         </tr>
         <tr>
@@ -2581,6 +2585,8 @@ function renderFuelInfoModal() {
           <td>Super 95 (E5)</td>
           <td><b>Benzina (E5)</b></td>
           <td><b>Gasolina 95 E5</b></td>
+          <td><b>Gasolina Simples 95</b></td>
+          <td>Euro 95 (E5)</td>
           <td>Unleaded 95</td>
         </tr>
         <tr>
@@ -2590,6 +2596,8 @@ function renderFuelInfoModal() {
           <td><b>Diesel (B7)</b></td>
           <td><b>Gasolio (B7)</b></td>
           <td><b>Gasóleo A (B7)</b></td>
+          <td><b>Gasóleo Simples (B7)</b></td>
+          <td><b>Diesel (B7)</b></td>
           <td><b>Diesel (B7)</b></td>
         </tr>
         <tr>
@@ -2599,6 +2607,8 @@ function renderFuelInfoModal() {
           <td><b>Super 98 (E5)</b></td>
           <td><b>Benzina Speciale 98/100</b></td>
           <td><b>Gasolina 98 E5</b></td>
+          <td><b>Gasolina Especial 98</b></td>
+          <td><b>Super Plus 98 (E5)</b></td>
           <td><b>Super Unleaded (E5)</b></td>
         </tr>
         <tr>
@@ -2608,6 +2618,8 @@ function renderFuelInfoModal() {
           <td><b>LPG</b></td>
           <td><b>GPL</b></td>
           <td><b>GLP (Autogás)</b></td>
+          <td><b>GPL Auto</b></td>
+          <td><b>Autogas (LPG)</b></td>
           <td><b>LPG Autogas</b></td>
         </tr>
         <tr>
@@ -2617,6 +2629,8 @@ function renderFuelInfoModal() {
           <td>Bioéthanol E85</td>
           <td><b>Metano (CNG)</b> / E85</td>
           <td><b>Bioetanol E85</b></td>
+          <td>Bioetanol E85</td>
+          <td>Bio-ethanol E85</td>
           <td>Bioethanol E85</td>
         </tr>
       </tbody>
@@ -4484,7 +4498,12 @@ function processStationsOnRoute(route) {
 
     const exitStationsChk = document.getElementById('chk-exit-stations');
     const includeExit = Boolean(exitStationsChk && exitStationsChk.checked);
-    const isExitCandidate = Boolean(s.is_exit_station || (!s.pk_text && !s.nom?.toLowerCase().includes('aire') && !s.adresse?.toLowerCase().includes('aire')));
+    const isServiceArea = Boolean(
+      s.pk || s.pk_text ||
+      /aire|área|area|vzp|verzorgingsplaats|snelweg|rastst|autobahn|autostrad|autoestrad|services|msa/i.test(s.nom || '') ||
+      /aire|área|area|vzp|verzorgingsplaats|snelweg|rastst|autobahn|autostrad|autoestrad|services|msa/i.test(s.adresse || '')
+    );
+    const isExitCandidate = Boolean(s.is_exit_station || !isServiceArea);
     
     // When exit stations toggle is ON, expand search tolerance up to 1.8 km
     const stationToleranceKm = includeExit ? 1.80 : (s.pays === 'GB' ? 0.95 : maxDistanceKm);
@@ -4510,7 +4529,7 @@ function processStationsOnRoute(route) {
           if (sensLow.includes('anti-clockwise') && bestCross > 0) return;
         }
       } else {
-        // Directional check: in France/Spain/Italy, vehicles drive on the right.
+        // Directional check: in France/Spain/Italy/Portugal/Netherlands, vehicles drive on the right.
         const isRightSide = bestCross < 0;
         if (!isRightSide && !isDoubleSens) {
           // Exclude twin station on opposing carriageway
@@ -4519,7 +4538,7 @@ function processStationsOnRoute(route) {
       }
 
       // Official highway Point Kilométrique (PK)
-      let displayedPk = s.pk_text || null;
+      let displayedPk = s.pk_text || (s.pk ? `${s.pk}` : null);
 
       matched.push({
         ...s,
@@ -4832,7 +4851,8 @@ function renderCurrentRouteStations() {
       : `<span>🌤️ ${tr.weatherLoading || 'Météo en direct'}</span>`;
 
     // Popup content
-    const flag = st.pays === 'GB' ? '🇬🇧' : (st.pays === 'DE' ? '🇩🇪' : (st.pays === 'BE' ? '🇧🇪' : (st.pays === 'ES' ? '🇪🇸' : (st.pays === 'IT' ? '🇮🇹' : '🇫🇷'))));
+    const countryFlags = { GB: '🇬🇧', DE: '🇩🇪', BE: '🇧🇪', ES: '🇪🇸', IT: '🇮🇹', PT: '🇵🇹', NL: '🇳🇱', FR: '🇫🇷' };
+    const flag = countryFlags[st.pays] || '🇫🇷';
     const nomFormatted = isNativeCase ? st.nom : formatProperName(st.nom);
     const villeFormatted = isNativeCase ? st.ville : formatProperName(st.ville);
     const sensFormatted = st.sens ? translateSens(st.sens, isNativeCase) : '';
