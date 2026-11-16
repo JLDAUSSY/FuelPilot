@@ -62389,14 +62389,14 @@
     "pays": "DE",
     "enseigne": "Shell",
     "autoroute": "A6",
-    "nom": "Raststätte Homburg",
-    "sens": "Richtung Ost/West",
+    "nom": "Raststätte Homburg/Saar (Süd)",
+    "sens": "Richtung Ost",
     "adresse": "A6 • 66424 Homburg",
     "ville": "Homburg",
     "cp": "66424",
     "departement": "Deutschland",
-    "lat": 49.3022,
-    "lon": 7.3658,
+    "lat": 49.3467,
+    "lon": 7.312,
     "pk_text": "km 18",
     "displayedPk": "18",
     "prix": {
@@ -62420,14 +62420,14 @@
     "pays": "DE",
     "enseigne": "Aral",
     "autoroute": "A6",
-    "nom": "Raststätte Pfalz",
-    "sens": "Richtung Ost/West",
+    "nom": "Raststätte Pfalz (Süd)",
+    "sens": "Richtung Ost",
     "adresse": "A6 • 67319 Wattenheim",
     "ville": "Wattenheim",
     "cp": "67319",
     "departement": "Deutschland",
-    "lat": 49.5189,
-    "lon": 8.0558,
+    "lat": 49.5245,
+    "lon": 8.065,
     "pk_text": "km 55",
     "displayedPk": "55",
     "prix": {
@@ -65658,8 +65658,8 @@
     "adresse": "Autoroute E19 (Saint-Ghislain)",
     "cp": "7330",
     "ville": "Saint-Ghislain",
-    "lat": 50.4678,
-    "lon": 3.8312,
+    "lat": 50.452405,
+    "lon": 3.8099,
     "prix": {
       "e10": 1.687,
       "sp95": 1.687,
@@ -65682,8 +65682,8 @@
     "adresse": "Autoroute E19 (Saint-Ghislain)",
     "cp": "7330",
     "ville": "Saint-Ghislain",
-    "lat": 50.4667,
-    "lon": 3.8325,
+    "lat": 50.452405,
+    "lon": 3.8089,
     "prix": {
       "e10": 1.689,
       "sp95": 1.689,
@@ -65707,8 +65707,8 @@
     "adresse": "Autoroute E19 (Le Roeulx)",
     "cp": "7070",
     "ville": "Le Roeulx",
-    "lat": 50.4912,
-    "lon": 4.0956,
+    "lat": 50.488266,
+    "lon": 4.0975,
     "prix": {
       "e10": 1.684,
       "sp95": 1.684,
@@ -65731,8 +65731,8 @@
     "adresse": "Autoroute E19 (Le Roeulx)",
     "cp": "7070",
     "ville": "Le Roeulx",
-    "lat": 50.4901,
-    "lon": 4.0968,
+    "lat": 50.488266,
+    "lon": 4.0963,
     "prix": {
       "e10": 1.689,
       "sp95": 1.689,
@@ -65756,8 +65756,8 @@
     "adresse": "Autoroute E19 (Nivelles)",
     "cp": "1400",
     "ville": "Nivelles",
-    "lat": 50.6114,
-    "lon": 4.3125,
+    "lat": 50.61547,
+    "lon": 4.3008,
     "prix": {
       "e10": 1.691,
       "sp95": 1.691,
@@ -65780,8 +65780,8 @@
     "adresse": "Autoroute E19 (Nivelles)",
     "cp": "1400",
     "ville": "Nivelles",
-    "lat": 50.6122,
-    "lon": 4.3111,
+    "lat": 50.61547,
+    "lon": 4.2995,
     "prix": {
       "e10": 1.683,
       "sp95": 1.683,
@@ -65854,8 +65854,8 @@
     "adresse": "Autoroute E19 (Vilvoorde)",
     "cp": "1800",
     "ville": "Vilvoorde",
-    "lat": 50.9245,
-    "lon": 4.4628,
+    "lat": 50.92384,
+    "lon": 4.4661,
     "prix": {
       "e10": 1.693,
       "sp95": 1.693,
@@ -65878,8 +65878,8 @@
     "adresse": "Autoroute E19 (Vilvoorde)",
     "cp": "1800",
     "ville": "Vilvoorde",
-    "lat": 50.9254,
-    "lon": 4.4614,
+    "lat": 50.92384,
+    "lon": 4.4649,
     "prix": {
       "e10": 1.69,
       "sp95": 1.69,
@@ -65903,8 +65903,8 @@
     "adresse": "Autoroute E19 (Kontich)",
     "cp": "2550",
     "ville": "Kontich",
-    "lat": 51.1128,
-    "lon": 4.4567,
+    "lat": 51.101285,
+    "lon": 4.4365,
     "prix": {
       "e10": 1.685,
       "sp95": 1.685,
@@ -65927,8 +65927,8 @@
     "adresse": "Autoroute E19 (Kontich)",
     "cp": "2550",
     "ville": "Kontich",
-    "lat": 51.1136,
-    "lon": 4.4553,
+    "lat": 51.101285,
+    "lon": 4.4353,
     "prix": {
       "e10": 1.682,
       "sp95": 1.682,
@@ -66491,8 +66491,8 @@
     "adresse": "Autoroute E42 (Tournai)",
     "cp": "7503",
     "ville": "Tournai",
-    "lat": 50.6289,
-    "lon": 3.3522,
+    "lat": 50.619064,
+    "lon": 3.3402,
     "prix": {
       "e10": 1.692,
       "sp95": 1.692,
@@ -66515,8 +66515,8 @@
     "adresse": "Autoroute E42 (Tournai)",
     "cp": "7503",
     "ville": "Tournai",
-    "lat": 50.63,
-    "lon": 3.3511,
+    "lat": 50.619064,
+    "lon": 3.3389,
     "prix": {
       "e10": 1.695,
       "sp95": 1.695,
@@ -74620,8 +74620,8 @@
     "adresse": "Autoestrada A1 (Área de Serviço de Aveiras (Norte))",
     "cp": "2050-043",
     "ville": "Aveiras de Cima",
-    "lat": 39.1219,
-    "lon": -8.9075,
+    "lat": 39.1228,
+    "lon": -8.9077,
     "prix": {
       "gazole": 1.577,
       "sp95": 1.707,
@@ -74647,7 +74647,7 @@
     "cp": "2050-043",
     "ville": "Aveiras de Cima",
     "lat": 39.1223,
-    "lon": -8.9089,
+    "lon": -8.9094,
     "prix": {
       "gazole": 1.601,
       "sp95": 1.731,
@@ -74672,8 +74672,8 @@
     "adresse": "Autoestrada A1 (Área de Serviço de Santarém (Norte))",
     "cp": "2000-010",
     "ville": "Santarém",
-    "lat": 39.3923,
-    "lon": -8.6378,
+    "lat": 39.392,
+    "lon": -8.6385,
     "prix": {
       "gazole": 1.612,
       "sp95": 1.742,
@@ -74698,8 +74698,8 @@
     "adresse": "Autoestrada A1 (Área de Serviço de Santarém (Sul))",
     "cp": "2000-010",
     "ville": "Santarém",
-    "lat": 39.3927,
-    "lon": -8.6392,
+    "lat": 39.3926,
+    "lon": -8.6396,
     "prix": {
       "gazole": 1.587,
       "sp95": 1.717,
@@ -75894,8 +75894,8 @@
     "adresse": "Autoestrada A23 (Área de Serviço de Abrantes)",
     "cp": "2200-010",
     "ville": "Abrantes",
-    "lat": 39.4678,
-    "lon": -8.1934,
+    "lat": 39.485835,
+    "lon": -8.158001,
     "prix": {
       "gazole": 1.578,
       "sp95": 1.708,
@@ -75920,8 +75920,8 @@
     "adresse": "Autoestrada A23 (Área de Serviço de Vila Velha de Ródão)",
     "cp": "6030-010",
     "ville": "Vila Velha de Ródão",
-    "lat": 39.6545,
-    "lon": -7.6712,
+    "lat": 39.573309,
+    "lon": -7.781762,
     "prix": {
       "gazole": 1.593,
       "sp95": 1.723,
@@ -75946,8 +75946,8 @@
     "adresse": "Autoestrada A23 (Área de Serviço de Castelo Branco)",
     "cp": "6000-010",
     "ville": "Castelo Branco",
-    "lat": 39.8212,
-    "lon": -7.489,
+    "lat": 39.887745,
+    "lon": -7.488388,
     "prix": {
       "gazole": 1.617,
       "sp95": 1.747,
@@ -75972,8 +75972,8 @@
     "adresse": "Autoestrada A23 (Área de Serviço do Fundão)",
     "cp": "6230-010",
     "ville": "Fundão",
-    "lat": 40.1345,
-    "lon": -7.5023,
+    "lat": 40.190468,
+    "lon": -7.487161,
     "prix": {
       "gazole": 1.583,
       "sp95": 1.713,
@@ -76076,8 +76076,8 @@
     "adresse": "Autoestrada A25 (Área de Serviço de Celorico da Beira (Este))",
     "cp": "6360-010",
     "ville": "Celorico da Beira",
-    "lat": 40.6423,
-    "lon": -7.3845,
+    "lat": 40.630431,
+    "lon": -7.355824,
     "prix": {
       "gazole": 1.601,
       "sp95": 1.731,
@@ -76102,8 +76102,8 @@
     "adresse": "Autoestrada A25 (Área de Serviço de Celorico da Beira (Oeste))",
     "cp": "6360-010",
     "ville": "Celorico da Beira",
-    "lat": 40.6412,
-    "lon": -7.3856,
+    "lat": 40.6308,
+    "lon": -7.3565,
     "prix": {
       "gazole": 1.597,
       "sp95": 1.727,
@@ -76128,8 +76128,8 @@
     "adresse": "Autoestrada A25 (Área de Serviço da Guarda)",
     "cp": "6300-010",
     "ville": "Guarda",
-    "lat": 40.5489,
-    "lon": -7.2145,
+    "lat": 40.54362,
+    "lon": -7.215164,
     "prix": {
       "gazole": 1.59,
       "sp95": 1.72,
@@ -76154,8 +76154,8 @@
     "adresse": "Autoestrada A25 (Área de Serviço de Vilar Formoso)",
     "cp": "6355-010",
     "ville": "Almeida",
-    "lat": 40.6012,
-    "lon": -6.8312,
+    "lat": 40.616926,
+    "lon": -6.830048,
     "prix": {
       "gazole": 1.613,
       "sp95": 1.743,
@@ -77779,5 +77779,146 @@
     "ruptures": [],
     "horaires": "24h/24",
     "maj": "2026-11-16T17:00:00Z"
+  },
+  {
+    "id": "DE-BAB-219",
+    "nom": "Raststätte Waldmohr (Süd)",
+    "marque": "TotalEnergies",
+    "autoroute": "A6",
+    "pk": 648,
+    "lat": 49.3725,
+    "lon": 7.374875,
+    "sens": "Richtung Ost",
+    "pays": "DE",
+    "services": [
+      "Boutique",
+      "Restauration",
+      "Toilettes",
+      "Douches",
+      "Poids lourds"
+    ],
+    "carburants": {
+      "Gazole": 1.729,
+      "SP95": 1.789,
+      "E10": 1.729,
+      "SP98": 1.849
+    }
+  },
+  {
+    "id": "DE-BAB-220",
+    "nom": "Raststätte Waldmohr (Nord)",
+    "marque": "TotalEnergies",
+    "autoroute": "A6",
+    "pk": 648,
+    "lat": 49.3732,
+    "lon": 7.374875,
+    "sens": "Richtung West",
+    "pays": "DE",
+    "services": [
+      "Boutique",
+      "Restauration",
+      "Toilettes",
+      "Douches",
+      "Poids lourds"
+    ],
+    "carburants": {
+      "Gazole": 1.729,
+      "SP95": 1.789,
+      "E10": 1.729,
+      "SP98": 1.849
+    }
+  },
+  {
+    "id": "DE-BAB-221",
+    "nom": "Autohof Ramstein (A6 Ausfahrt 13)",
+    "marque": "Shell",
+    "autoroute": "A6",
+    "pk": 662,
+    "lat": 49.424621,
+    "lon": 7.55973,
+    "sens": "Richtung Ost/West",
+    "pays": "DE",
+    "services": [
+      "Boutique",
+      "Restauration",
+      "Toilettes",
+      "Douches",
+      "Poids lourds"
+    ],
+    "carburants": {
+      "Gazole": 1.689,
+      "SP95": 1.749,
+      "E10": 1.689,
+      "SP98": 1.809
+    }
+  },
+  {
+    "id": "DE-BAB-222",
+    "nom": "24-TOTAL Autohof Wörrstadt (A63 Ausfahrt 8)",
+    "marque": "TotalEnergies",
+    "autoroute": "A63",
+    "pk": 35,
+    "lat": 49.839756,
+    "lon": 8.14238,
+    "sens": "Richtung Nord/Süd",
+    "pays": "DE",
+    "services": [
+      "Boutique",
+      "Restauration",
+      "Toilettes",
+      "Douches",
+      "Poids lourds"
+    ],
+    "carburants": {
+      "Gazole": 1.699,
+      "SP95": 1.759,
+      "E10": 1.699,
+      "SP98": 1.819
+    }
+  },
+  {
+    "id": "DE-BAB-223",
+    "nom": "Raststätte Heidenfahrt (A60)",
+    "marque": "Aral",
+    "autoroute": "A60",
+    "pk": 18,
+    "lat": 50.001751,
+    "lon": 8.108178,
+    "sens": "Richtung Ost/West",
+    "pays": "DE",
+    "services": [
+      "Boutique",
+      "Restauration",
+      "Toilettes",
+      "Poids lourds"
+    ],
+    "carburants": {
+      "Gazole": 1.739,
+      "SP95": 1.799,
+      "E10": 1.739,
+      "SP98": 1.859
+    }
+  },
+  {
+    "id": "DE-BAB-224",
+    "nom": "Flughafen Frankfurt Tankstelle (A3)",
+    "marque": "Shell",
+    "autoroute": "A3",
+    "pk": 150,
+    "lat": 50.049935,
+    "lon": 8.562226,
+    "sens": "Richtung Ost/West",
+    "pays": "DE",
+    "services": [
+      "Boutique",
+      "Restauration",
+      "Toilettes"
+    ],
+    "carburants": {
+      "Gazole": 1.719,
+      "SP95": 1.779,
+      "E10": 1.719,
+      "SP98": 1.839
+    }
   }
 ]

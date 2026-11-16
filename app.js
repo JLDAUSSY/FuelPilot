@@ -1124,7 +1124,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.2';
+const APP_VERSION = '9.9.3';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -2884,8 +2884,9 @@ async function loadStationsData() {
       allStations = allStations.filter(s => !(s.pays === 'DE' && String(s.id).startsWith('DE-BAB-')));
     }
 
-    // Normalisation des enseignes espagnoles (regrouper les multiples déclinaisons BP, Cepsa, etc.)
+    // Normalisation des enseignes et marques pour tous les pays
     allStations.forEach(s => {
+      s.enseigne = s.enseigne || s.marque || s.brand || 'Station';
       if (s.pays === 'ES' && s.enseigne) {
         const ensTrim = s.enseigne.trim();
         const low = ensTrim.toLowerCase();
@@ -4075,7 +4076,11 @@ async function calculateItinerary() {
     let data = null;
     for (let attempt = 0; attempt < 3; attempt++) {
       try {
-        const res = await fetch(url);
+        // En cas d'échec ou saturation du serveur public, repli sans alternatives multiples
+        const fetchUrl = (attempt === 2)
+          ? `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&steps=true`
+          : url;
+        const res = await fetch(fetchUrl);
         if (res.ok) {
           const json = await res.json();
           if (json && json.routes && json.routes.length > 0) {
@@ -4086,7 +4091,7 @@ async function calculateItinerary() {
       } catch (eFetch) {
         console.warn(`[OSRM Router] Tentative ${attempt + 1}/3 échouée:`, eFetch);
       }
-      if (attempt < 2) await new Promise(r => setTimeout(r, 700));
+      if (attempt < 2) await new Promise(r => setTimeout(r, 1000));
     }
 
     if (!data || !data.routes || data.routes.length === 0) {
@@ -4515,8 +4520,9 @@ function processStationsOnRoute(route) {
       }
 
       const sensLow = (s.sens || '').toLowerCase();
-      // Exit stations accessible via interchange roundabouts in both directions
-      const isDoubleSens = sensLow.includes('double') || isExit;
+      // Exit stations accessible via interchange roundabouts in both directions,
+      // and bidirectional service areas across Europe (ambos, beide, double, nord/süd, etc.)
+      const isDoubleSens = /double|deux sens|2 sens|ambos|beide|entrambi|both|tous sens|nord\/süd|ost\/west/i.test(sensLow) || isExit;
 
       if (s.pays === 'GB') {
         // UK Motorway Service Areas (MSAs): check cardinal direction if directional twin site
@@ -4529,8 +4535,9 @@ function processStationsOnRoute(route) {
           if (sensLow.includes('anti-clockwise') && bestCross > 0) return;
         }
       } else {
-        // Directional check: in France/Spain/Italy/Portugal/Netherlands, vehicles drive on the right.
-        const isRightSide = bestCross < 0;
+        // Directional check: in France/Spain/Italy/Portugal/Netherlands/Germany, vehicles drive on the right.
+        // Add small numerical epsilon (2e-6) so stations right on the centerline or in slight curves aren't discarded
+        const isRightSide = bestCross < 0.000002;
         if (!isRightSide && !isDoubleSens) {
           // Exclude twin station on opposing carriageway
           return;
@@ -4829,7 +4836,7 @@ function renderCurrentRouteStations() {
     // Create Map Marker Pin
     const pinHtml = `
       <div class="custom-station-pin ${isCheapest ? 'cheapest' : ''} ${isElec ? 'electric-pin' : ''} ${exitPinClass}" id="pin-${st.id}">
-        <span class="brand-badge ${brandClass}" style="padding:1px 4px; font-size:0.65rem;">${exitPinIcon}${isElec ? '⚡' : ''} ${st.enseigne.substring(0, 5)}</span>
+        <span class="brand-badge ${brandClass}" style="padding:1px 4px; font-size:0.65rem;">${exitPinIcon}${isElec ? '⚡' : ''} ${(st.enseigne || st.marque || 'Station').substring(0, 5)}</span>
         <span>${pinPriceDisplay}</span>
       </div>
     `;
