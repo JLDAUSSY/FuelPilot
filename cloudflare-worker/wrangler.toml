@@ -1,0 +1,5 @@
+name = "fuelpilot-de"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+# Le secret TANKERKOENIG_API_KEY se configure avec :
+#   npx wrangler secret put TANKERKOENIG_API_KEY

@@ -49,13 +49,13 @@ def run_tests():
         driver.get(url)
         time.sleep(1)
 
-        # Test 1: Verify version badge is v9.8.0
+        # Test 1: Verify version badge is v9.8.1
         badge = driver.find_element(By.ID, "app-version-badge")
-        assert_test(badge.text == "v9.8.0", f"App version badge is v9.8.0 (got '{badge.text}')")
+        assert_test(badge.text == "v9.8.1", f"App version badge is v9.8.1 (got '{badge.text}')")
 
-        # Test 2: Verify APP_VERSION in JS is 9.8.0
+        # Test 2: Verify APP_VERSION in JS is 9.8.1
         app_ver = driver.execute_script("return typeof APP_VERSION !== 'undefined' ? APP_VERSION : null;")
-        assert_test(app_ver == "9.8.0", f"APP_VERSION is 9.8.0 (got '{app_ver}')")
+        assert_test(app_ver == "9.8.1", f"APP_VERSION is 9.8.1 (got '{app_ver}')")
 
         # Test 3: Fast Fused fix (0-200ms) with enableHighAccuracy: false resolves instantly
         driver.execute_script("""

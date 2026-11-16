@@ -1114,7 +1114,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.8.0';
+const APP_VERSION = '9.8.1';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -5504,29 +5504,30 @@ function isStandalonePwaMode() {
 function formatGeolocationErrorMessage(err) {
   const code = err && err.code;
   const lang = currentLang || 'fr';
+  const actionBtn = ' <a href="javascript:void(0)" onclick="const inp=document.getElementById(\'start-input\');if(inp){inp.focus();inp.click();}" style="color:#93c5fd;text-decoration:underline;font-weight:700;margin-left:6px;cursor:pointer;">Saisir ma ville</a>';
   if (code === 1) { // PERMISSION_DENIED
-    if (lang === 'nl') return "📍 Locatie geblokkeerd: tik op het 🔒-pictogram links van fuelcopilot.fr en kies 'Precieze locatie'.";
-    if (lang === 'de') return "📍 Standort blockiert: Tippen Sie auf das 🔒-Symbol links neben fuelcopilot.fr und wählen Sie 'Genaue Position'.";
-    if (lang === 'en') return "📍 Location blocked: tap the 🔒 icon left of fuelcopilot.fr and ensure 'Precise location' is ON.";
-    if (lang === 'it') return "📍 Posizione bloccata: tocca l'icona 🔒 a sinistra di fuelcopilot.fr e attiva 'Posizione precisa'.";
-    if (lang === 'es') return "📍 Ubicación bloqueada: toca el icono 🔒 a la izquierda de fuelcopilot.fr y activa 'Ubicación precisa'.";
-    return "📍 Position bloquée : touchez l'icône 🔒 à gauche de fuelcopilot.fr et assurez-vous que 'Position précise' est activée.";
+    if (lang === 'nl') return "📍 Locatie geblokkeerd: tik op het 🔒-pictogram links van fuelcopilot.fr en kies 'Precieze locatie'." + actionBtn;
+    if (lang === 'de') return "📍 Standort blockiert: Tippen Sie auf das 🔒-Symbol links neben fuelcopilot.fr und wählen Sie 'Genaue Position'." + actionBtn;
+    if (lang === 'en') return "📍 Location blocked: tap the 🔒 icon left of fuelcopilot.fr and ensure 'Precise location' is ON." + actionBtn;
+    if (lang === 'it') return "📍 Posizione bloccata: tocca l'icona 🔒 a sinistra di fuelcopilot.fr e attiva 'Posizione precisa'." + actionBtn;
+    if (lang === 'es') return "📍 Ubicación bloqueada: toca el icono 🔒 a la izquierda de fuelcopilot.fr y activa 'Ubicación precisa'." + actionBtn;
+    return "📍 Position bloquée : touchez l'icône 🔒 à gauche de fuelcopilot.fr et vérifiez que 'Position' est autorisée." + actionBtn;
   } else if (code === 2) { // POSITION_UNAVAILABLE
-    if (lang === 'nl') return "📍 Gps-signaal niet beschikbaar: activeer GPS op telefoon of typ uw vertrekstad.";
-    if (lang === 'de') return "📍 Kein GPS-Signal: GPS aktivieren oder Startort manuell eingeben.";
-    if (lang === 'en') return "📍 GPS signal unavailable: turn on device location or type your departure city.";
-    if (lang === 'it') return "📍 Segnale GPS non disponibile: attiva la geolocalizzazione o digita la tua città.";
-    if (lang === 'es') return "📍 Señal GPS no disponible: activa la ubicación o escribe tu ciudad.";
-    return "📍 Signal GPS indisponible : vérifiez que la localisation est activée ou saisissez votre ville de départ.";
+    if (lang === 'nl') return "📍 Gps-signaal niet beschikbaar: activeer 'Locatie' in het snelmenu van uw telefoon." + actionBtn;
+    if (lang === 'de') return "📍 Kein GPS-Signal: Bitte 'Standort' im Schnelleinstellungs-Menü aktivieren." + actionBtn;
+    if (lang === 'en') return "📍 GPS unavailable: please turn on 'Location' in your phone's top swipe-down menu." + actionBtn;
+    if (lang === 'it') return "📍 Segnale GPS non disponibile: attiva 'Posizione' nel menu a discesa del telefono." + actionBtn;
+    if (lang === 'es') return "📍 Señal GPS no disponible: activa 'Ubicación' en el menú superior del teléfono." + actionBtn;
+    return "📍 Position non fournie par le smartphone : vérifiez que le bouton 'Position' est activé dans le volet du haut (glisser depuis le haut)." + actionBtn;
   } else if (code === 3) { // TIMEOUT
-    if (lang === 'nl') return "📍 Gps-signaal niet ontvangen: controleer of 'Precieze locatie' is ingeschakeld in Chrome.";
-    if (lang === 'de') return "📍 Kein GPS-Signal empfangen: Prüfen Sie, ob 'Genaue Position' in Chrome aktiviert ist.";
-    if (lang === 'en') return "📍 No GPS signal received: check that 'Precise location' is enabled in Chrome.";
-    if (lang === 'it') return "📍 Segnale GPS non ricevuto: verifica che 'Posizione precisa' sia attiva in Chrome.";
-    if (lang === 'es') return "📍 No se recibió señal GPS: verifique que 'Ubicación precisa' esté activada en Chrome.";
-    return "📍 Aucun signal GPS satellite reçu : vérifiez que la Localisation est active sur votre smartphone (volet du haut) et que 'Position précise' est activée dans Chrome.";
+    if (lang === 'nl') return "📍 Gps-signaal te traag: controleer 'Precieze locatie' in Chrome of voer uw stad in." + actionBtn;
+    if (lang === 'de') return "📍 GPS-Suche zu lange: Prüfen Sie die Positionseinstellungen oder geben Sie Ihre Stadt ein." + actionBtn;
+    if (lang === 'en') return "📍 GPS search timed out: check 'Precise location' in Chrome or type your departure city." + actionBtn;
+    if (lang === 'it') return "📍 Ricerca GPS scaduta: verifica la posizione in Chrome o digita la tua città." + actionBtn;
+    if (lang === 'es') return "📍 Búsqueda GPS agotada: verifique la ubicación en Chrome o escriba su ciudad." + actionBtn;
+    return "📍 Aucun signal GPS reçu : vérifiez le bouton 'Position' dans le volet du haut et 'Position précise' dans Chrome." + actionBtn;
   }
-  return t().locationError || "Signal GPS en cours d'acquisition. Vous pouvez saisir votre ville de départ.";
+  return (t().locationError || "Signal GPS en cours d'acquisition.") + actionBtn;
 }
 
 // ============================================================================
@@ -5730,32 +5731,55 @@ function getFreshUserLocation(onSuccess, onError) {
 
   // Déclencher une double acquisition : réactivité instantanée (WiFi/antenne) + précision satellite en tâche de fond
   if (navigator.geolocation) {
+    let fastFailed = false;
+    let fineFailed = false;
+    let lastErr = null;
+
+    const checkBothFailed = () => {
+      if (fastFailed && fineFailed && !bestCandidatePos && pendingLocationResolvers.length > 0) {
+        console.warn('[GPS Engine] Les deux requêtes de position ont échoué:', lastErr);
+        resolvePendingLocation(null, lastErr || { code: 2, message: 'Position indisponible' });
+      }
+    };
+
     // 1. Récupération immédiate Fused OS (WiFi / réseau Android, 0-200ms)
     try {
       navigator.geolocation.getCurrentPosition(
         (pos) => handleGpsFix(pos, 'fast'),
         (err) => {
+          fastFailed = true;
+          lastErr = err;
           if (err && err.code === 1) {
             resolvePendingLocation(null, err);
+          } else {
+            checkBothFailed();
           }
         },
         { enableHighAccuracy: false, timeout: 5000, maximumAge: 300000 }
       );
-    } catch (e) {}
+    } catch (e) {
+      fastFailed = true;
+      checkBothFailed();
+    }
 
     // 2. Acquisition GNSS haute précision (satellites)
     try {
       navigator.geolocation.getCurrentPosition(
         (pos) => handleGpsFix(pos, 'fine'),
         (err) => {
+          fineFailed = true;
+          lastErr = err;
           if (err && err.code === 1) {
             resolvePendingLocation(null, err);
+          } else {
+            checkBothFailed();
           }
         },
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 10000 }
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
       );
     } catch (e) {
-      console.warn('[GPS Engine] Exception getCurrentPosition:', e);
+      fineFailed = true;
+      checkBothFailed();
     }
   } else {
     resolvePendingLocation(null, { code: 2, message: "GPS non supporté sur ce navigateur" });
