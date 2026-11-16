@@ -34,7 +34,7 @@
   <!-- Cache Purge & Service Worker Cleanup on Version Change -->
   <script>
     (function() {
-      var LATEST_BUILD = '9.8.1';
+      var LATEST_BUILD = '9.9.0';
       var currentBuild = localStorage.getItem('fuelcopilot_build');
       if (currentBuild !== LATEST_BUILD) {
         localStorage.setItem('fuelcopilot_build', LATEST_BUILD);
@@ -75,7 +75,7 @@
 
 
 
-  <link rel="stylesheet" href="style.css?v=9.8.1">
+  <link rel="stylesheet" href="style.css?v=9.9.0">
 
 </head>
 
@@ -96,7 +96,7 @@
     <div class="header-status">
       <div class="header-status-top">
         <button type="button" class="btn-fuel-info" id="btn-fuel-info" title="Correspondance des carburants par pays" aria-label="Correspondance des carburants par pays">i</button>
-        <div class="badge-jld" title="JLDApps 2026 • Version 9.8.1"><span class="jld-prefix">JLDApps </span><span class="badge-app-version" id="app-version-badge">v9.8.1</span></div>
+        <div class="badge-jld" title="JLDApps 2026 • Version 9.9.0"><span class="jld-prefix">JLDApps </span><span class="badge-app-version" id="app-version-badge">v9.9.0</span></div>
         <div class="badge-live" title="Données officielles en direct 24/7" aria-label="Prix en direct">
           <div class="gem-3d-button">
             <span class="gem-glare"></span>
@@ -152,6 +152,14 @@
       </div>
     </div>
 
+    <button type="button" class="lang-flag-btn" data-lang="nl" title="Nederland • Nederlands" aria-label="Nederlands">
+      <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+        <rect width="60" height="12" fill="#AE1C28"/>
+        <rect y="12" width="60" height="12" fill="#FFFFFF"/>
+        <rect y="24" width="60" height="12" fill="#21468B"/>
+      </svg>
+    </button>
+
     <button type="button" class="lang-flag-btn" data-lang="de" title="Deutsch">
 
       <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
@@ -192,6 +200,15 @@
 
       </svg>
 
+    </button>
+
+    <button type="button" class="lang-flag-btn" data-lang="pt" title="Portugal • Português" aria-label="Português">
+      <svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+        <rect width="24" height="36" fill="#046A38"/>
+        <rect x="24" width="36" height="36" fill="#DA291C"/>
+        <circle cx="24" cy="18" r="7" fill="#FFE600" stroke="#002B7F" stroke-width="1.2"/>
+        <rect x="21" y="14" width="6" height="8" rx="1" fill="#FFFFFF" stroke="#DA291C" stroke-width="1"/>
+      </svg>
     </button>
 
     <button type="button" class="lang-flag-btn" data-lang="en" title="English (UK)">
@@ -507,7 +524,7 @@
 
         <span class="coverage-dot"></span>
 
-        <span class="coverage-text">Réseau couvert : 🇫🇷 France • 🇩🇪 Allemagne • 🇧🇪 Belgique • 🇮🇹 Italie • 🇪🇸 Espagne • 🇬🇧 Royaume-Uni</span>
+        <span class="coverage-text">Réseau couvert : 🇫🇷 France • 🇩🇪 Allemagne • 🇧🇪 Belgique • 🇳🇱 Pays-Bas • 🇮🇹 Italie • 🇪🇸 Espagne • 🇵🇹 Portugal • 🇬🇧 Royaume-Uni</span>
 
       </div>
 
@@ -593,7 +610,7 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-  <script src="app.js?v=9.8.1"></script>
+  <script src="app.js?v=9.9.0"></script>
 
 </body>
 
