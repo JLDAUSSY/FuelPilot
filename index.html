@@ -31,10 +31,10 @@
   <meta http-equiv="Pragma" content="no-cache">
 
   <meta http-equiv="Expires" content="0">
-  <!-- Cache Purge on Version Change -->
+  <!-- Cache Purge & Service Worker Cleanup on Version Change -->
   <script>
     (function() {
-      var LATEST_BUILD = '9.6.9';
+      var LATEST_BUILD = '9.7.0';
       var currentBuild = localStorage.getItem('fuelcopilot_build');
       if (currentBuild !== LATEST_BUILD) {
         localStorage.setItem('fuelcopilot_build', LATEST_BUILD);
@@ -43,6 +43,13 @@
             names.forEach(function(name) { caches.delete(name); });
           });
         }
+      }
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(regs) {
+          for (var i = 0; i < regs.length; i++) {
+            regs[i].unregister();
+          }
+        });
       }
     })();
   </script>
@@ -68,7 +75,7 @@
 
 
 
-  <link rel="stylesheet" href="style.css?v=9.6.9">
+  <link rel="stylesheet" href="style.css?v=9.7.0">
 
 </head>
 
@@ -89,7 +96,7 @@
     <div class="header-status">
       <div class="header-status-top">
         <button type="button" class="btn-fuel-info" id="btn-fuel-info" title="Correspondance des carburants par pays" aria-label="Correspondance des carburants par pays">i</button>
-        <div class="badge-jld" title="JLDApps 2026 • Version 9.6.9"><span class="jld-prefix">JLDApps </span><span class="badge-app-version" id="app-version-badge">v9.6.9</span></div>
+        <div class="badge-jld" title="JLDApps 2026 • Version 9.7.0"><span class="jld-prefix">JLDApps </span><span class="badge-app-version" id="app-version-badge">v9.7.0</span></div>
         <div class="badge-live" title="Données officielles en direct 24/7" aria-label="Prix en direct">
           <div class="gem-3d-button">
             <span class="gem-glare"></span>
@@ -586,7 +593,7 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-  <script src="app.js?v=9.6.9"></script>
+  <script src="app.js?v=9.7.0"></script>
 
 </body>
 
