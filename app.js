@@ -1114,7 +1114,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.7.3';
+const APP_VERSION = '9.7.4';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -3570,10 +3570,6 @@ function useCurrentGpsLocationAsStart() {
       const { latitude, longitude, accuracy } = pos.coords;
       const acc = Math.round(accuracy || 15);
 
-      if (acc > 4000) {
-        return;
-      }
-
       userGpsPosition = {
         lat: latitude,
         lon: longitude,
@@ -5603,11 +5599,16 @@ function getFreshUserLocation(onSuccess, onError) {
   let bestCoords = null;
   let bestAccuracy = Infinity;
   let safetyTimer = null;
+  let bestFixTimer = null;
 
   const clearWatchSafely = () => {
     if (globalGpsWatchId !== null) {
       try { navigator.geolocation.clearWatch(globalGpsWatchId); } catch(e) {}
       globalGpsWatchId = null;
+    }
+    if (bestFixTimer) {
+      clearTimeout(bestFixTimer);
+      bestFixTimer = null;
     }
   };
 
@@ -5616,6 +5617,7 @@ function getFreshUserLocation(onSuccess, onError) {
     resolved = true;
     isAcquiringLocation = false;
     if (safetyTimer) { clearTimeout(safetyTimer); safetyTimer = null; }
+    if (bestFixTimer) { clearTimeout(bestFixTimer); bestFixTimer = null; }
     clearWatchSafely();
 
     const cbs = [...activeLocationCallbacks];
@@ -5688,9 +5690,19 @@ function getFreshUserLocation(onSuccess, onError) {
       bestCoords = pos;
     }
 
-    // Dès qu'on obtient une précision satellite fiable (<= 2500m), valider immédiatement !
-    if (acc <= 2500) {
+    // Dès qu'on obtient une précision satellite fiable (<= 3000m, typique GPS, Wi-Fi, 4G/5G ou mode Approximatif Android), valider immédiatement !
+    if (acc <= 3000) {
       finish(pos, null);
+      return;
+    }
+
+    // Si on a capté un relevé plus large (> 3000m, ex: 4200m en 2G/EDGE), donner 2.5 secondes aux satellites pour affiner, sinon valider ce relevé
+    if (!bestFixTimer && !resolved) {
+      bestFixTimer = setTimeout(() => {
+        if (!resolved && bestCoords) {
+          finish(bestCoords, null);
+        }
+      }, 2500);
     }
   };
 
@@ -5708,13 +5720,25 @@ function getFreshUserLocation(onSuccess, onError) {
           finish(bestCoords, null);
           return;
         }
-        // Repli séquentiel sur getCurrentPosition en cas d'erreur sans fix (identique à WaterMetrics)
+        // Repli séquentiel sur getCurrentPosition en cas d'erreur sans fix
         if (!bestCoords && !resolved) {
           try {
             navigator.geolocation.getCurrentPosition(
               (pos) => finish(pos, null),
               (err2) => {
-                if (!resolved && !bestCoords) finish(null, err2 || errWatch);
+                if (resolved || bestCoords) return;
+                // Repli ultime réseau cellulaire / Wi-Fi (au cas où les satellites GNSS sont inaccessibles ou localisation approximative Android)
+                try {
+                  navigator.geolocation.getCurrentPosition(
+                    (posNet) => finish(posNet, null),
+                    (err3) => {
+                      if (!resolved && !bestCoords) finish(null, err3 || err2 || errWatch);
+                    },
+                    { enableHighAccuracy: false, timeout: 6000, maximumAge: 300000 }
+                  );
+                } catch(eLow) {
+                  if (!resolved && !bestCoords) finish(null, err2 || errWatch);
+                }
               },
               { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 }
             );
@@ -5730,7 +5754,18 @@ function getFreshUserLocation(onSuccess, onError) {
     try {
       navigator.geolocation.getCurrentPosition(
         (pos) => finish(pos, null),
-        (err) => finish(null, err),
+        (err) => {
+          // Repli réseau cellulaire / Wi-Fi si GNSS indisponible
+          try {
+            navigator.geolocation.getCurrentPosition(
+              (posNet) => finish(posNet, null),
+              (errNet) => finish(null, errNet || err),
+              { enableHighAccuracy: false, timeout: 8000, maximumAge: 300000 }
+            );
+          } catch(e2) {
+            finish(null, err);
+          }
+        },
         geoWatchOptions
       );
     } catch(eCurr) {
@@ -5749,10 +5784,6 @@ function requestUserGeolocation(onSuccess, onError, forceFresh = false) {
     (pos) => {
       const { latitude, longitude, heading, speed, accuracy } = pos.coords;
       const acc = Math.round(accuracy || 15);
-      if (acc > 4000) {
-        if (onError) onError({ code: 3, message: "Précision insuffisante" });
-        return;
-      }
       userGpsPosition = {
         lat: latitude,
         lon: longitude,
@@ -5795,10 +5826,6 @@ function centerMapOnUser() {
       if (!pos || !pos.coords) return;
       const { latitude, longitude, accuracy } = pos.coords;
       const acc = Math.round(accuracy || 15);
-
-      if (acc > 4000) {
-        return;
-      }
 
       userGpsPosition = {
         lat: latitude,
