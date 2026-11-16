@@ -1114,7 +1114,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.7.0';
+const APP_VERSION = '9.7.1';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -3264,12 +3264,56 @@ async function searchLocationsBilingual(q) {
 // ============================================================================
 const RECENT_LOCATIONS_KEY = 'fuelpilot_recent_locations_v1';
 
+// Nettoie un libellé pour ne conserver que le nom réel de la commune
+// Empêche la multiplication de "Ma position actuelle (Ville)" dans l'historique
+function sanitizeLocationName(rawName) {
+  if (!rawName) return '';
+  let str = String(rawName).trim();
+  // Retirer les émojis de tête éventuels (📍, 🕒, etc.)
+  str = str.replace(/^[📍🕒\s]+/, '').trim();
+  // Détecter "Ma position actuelle (Ville)" ou ses variantes multilingues
+  const m = str.match(/^(?:ma\s+position\s+actuelle|current\s+location|posici[oó]n\s+actual|aktuelle\s+position|posizione\s+attuale|huidige\s+locatie)(?:\s*\((.*?)\))?$/i);
+  if (m) {
+    // S'il y a un nom de ville entre parenthèses, renvoyer UNIQUEMENT la ville
+    return m[1] ? m[1].trim() : '';
+  }
+  return str;
+}
+
 function getRecentLocations() {
   try {
     const raw = localStorage.getItem(RECENT_LOCATIONS_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed.slice(0, 10) : [];
+    if (!Array.isArray(parsed)) return [];
+
+    const cleaned = [];
+    const seenNames = new Set();
+
+    for (const item of parsed) {
+      if (!item) continue;
+      const sClean = sanitizeLocationName(item.cleanName || item.label || '');
+      // Ignorer les "positions actuelles" sans commune identifiable
+      if (!sClean) continue;
+      const norm = sClean.toLowerCase();
+      if (seenNames.has(norm)) continue;
+      seenNames.add(norm);
+
+      const sLabel = sanitizeLocationName(item.label) || sClean;
+      cleaned.push({
+        cleanName: sClean,
+        label: sLabel,
+        coords: Array.isArray(item.coords) ? [Number(item.coords[0]), Number(item.coords[1])] : [0, 0]
+      });
+      if (cleaned.length >= 10) break;
+    }
+
+    // Assainir le stockage local si des entrées ont été nettoyées ou dédoublonnées
+    const cleanedJson = JSON.stringify(cleaned);
+    if (cleanedJson !== raw) {
+      localStorage.setItem(RECENT_LOCATIONS_KEY, cleanedJson);
+    }
+    return cleaned;
   } catch (e) {
     return [];
   }
@@ -3277,19 +3321,25 @@ function getRecentLocations() {
 
 function saveRecentLocation(cleanName, coords, fullLabel) {
   if (!cleanName || !Array.isArray(coords) || coords.length < 2) return;
+  const sClean = sanitizeLocationName(cleanName);
+  const sLabel = sanitizeLocationName(fullLabel) || sClean;
+  // Si le libellé était une "position actuelle" générique sans commune, ne pas polluer l'historique
+  if (!sClean) return;
+
   try {
     const list = getRecentLocations();
-    const normName = cleanName.trim().toLowerCase();
+    const normName = sClean.toLowerCase();
     const filtered = list.filter(item => {
-      const sameName = (item.cleanName || '').trim().toLowerCase() === normName;
+      const itemClean = sanitizeLocationName(item.cleanName || item.label || '');
+      const sameName = itemClean.toLowerCase() === normName;
       const sameCoords = item.coords &&
         Math.abs(item.coords[0] - coords[0]) < 0.03 &&
         Math.abs(item.coords[1] - coords[1]) < 0.03;
       return !sameName && !sameCoords;
     });
     filtered.unshift({
-      cleanName: cleanName.trim(),
-      label: fullLabel || cleanName.trim(),
+      cleanName: sClean,
+      label: sLabel,
       coords: [Number(coords[0]), Number(coords[1])]
     });
     localStorage.setItem(RECENT_LOCATIONS_KEY, JSON.stringify(filtered.slice(0, 10)));
