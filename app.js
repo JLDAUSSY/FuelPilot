@@ -6927,6 +6927,34 @@ function startBackgroundGpsWatch() {
   startLiveGpsWatch(false);
 }
 
+// WakeLock pour maintien de l'écran allumé pendant le suivi GPS (inspiré de RandoTracker)
+let navScreenWakeLock = null;
+
+async function requestNavWakeLock() {
+  if ('wakeLock' in navigator) {
+    try {
+      if (navScreenWakeLock && !navScreenWakeLock.released) return;
+      navScreenWakeLock = await navigator.wakeLock.request('screen');
+      navScreenWakeLock.addEventListener('release', () => {
+        navScreenWakeLock = null;
+        if (isGpsNavActive && document.visibilityState === 'visible') {
+          setTimeout(requestNavWakeLock, 500);
+        }
+      });
+      console.log('[GPS Nav] WakeLock écran actif');
+    } catch (e) {
+      console.warn('[GPS Nav] WakeLock non activé:', e);
+    }
+  }
+}
+
+function releaseNavWakeLock() {
+  if (navScreenWakeLock) {
+    try { navScreenWakeLock.release(); } catch (e) {}
+    navScreenWakeLock = null;
+  }
+}
+
 // Gestion de la veille / réactivation immédiate lors du déverrouillage ou retour sur l'onglet
 if (typeof document !== 'undefined' && document.addEventListener) {
   document.addEventListener('visibilitychange', () => {
@@ -6937,6 +6965,9 @@ if (typeof document !== 'undefined' && document.addEventListener) {
     } else if (document.visibilityState === 'visible') {
       // Dès que l'utilisateur déverrouille son téléphone ou revient sur l'app : réactiver le flux satellite SANS CONDITION !
       startLiveGpsWatch(true);
+      if (isGpsNavActive) {
+        requestNavWakeLock();
+      }
     }
   });
 }
@@ -7032,8 +7063,9 @@ function centerMapOnUser() {
   // 1. Si on dispose déjà d'un relevé satellite ultra-récent (< 4 secondes)
   if (isVeryFresh && map) {
     stopSpinner();
-    const zoomLvl = (userGpsPosition.accuracy <= 500) ? 14 : 12;
-    map.setView([userGpsPosition.lat, userGpsPosition.lon], zoomLvl, { animate: true });
+    const currentZoom = map.getZoom();
+    const targetZoom = (userGpsPosition.accuracy <= 500) ? Math.max(currentZoom, 15) : Math.max(currentZoom, 13);
+    map.flyTo([userGpsPosition.lat, userGpsPosition.lon], targetZoom, { animate: true, duration: 0.8 });
     updateUserGpsMarker(userGpsPosition.lat, userGpsPosition.lon, userGpsPosition.accuracy || 25, false);
     if (userGpsMarker) userGpsMarker.openTooltip();
     showToast(`🎯 Position : ${userGpsPosition.city || 'Centré'} (±${userGpsPosition.accuracy || 25}m)`, { isSuccess: true, duration: 3000 });
@@ -7051,8 +7083,9 @@ function centerMapOnUser() {
       const acc = Math.round(accuracy || 15);
 
       if (map) {
-        const zoomLvl = (acc <= 500) ? 14 : 12;
-        map.setView([latitude, longitude], zoomLvl, { animate: true });
+        const currentZoom = map.getZoom();
+        const targetZoom = (acc <= 500) ? Math.max(currentZoom, 15) : Math.max(currentZoom, 13);
+        map.flyTo([latitude, longitude], targetZoom, { animate: true, duration: 0.8 });
         updateUserGpsMarker(latitude, longitude, acc, false);
         if (userGpsMarker) userGpsMarker.openTooltip();
       }
@@ -7069,7 +7102,8 @@ function centerMapOnUser() {
       console.warn('[GPS] Erreur centrage:', err);
       if (userGpsPosition && userGpsPosition.lat && userGpsPosition.lon) {
         if (map) {
-          map.setView([userGpsPosition.lat, userGpsPosition.lon], 13, { animate: true });
+          const currentZoom = map.getZoom();
+          map.flyTo([userGpsPosition.lat, userGpsPosition.lon], Math.max(currentZoom, 13), { animate: true, duration: 0.8 });
           updateUserGpsMarker(userGpsPosition.lat, userGpsPosition.lon, userGpsPosition.accuracy || 25, false);
         }
         showToast("📍 Dernière position GPS retenue (" + (userGpsPosition.city || "locale") + ")", { isInfo: true, duration: 3500 });
@@ -7106,6 +7140,9 @@ function startGpsNavigation() {
   // Activer le watcher continu en direct
   startLiveGpsWatch(true);
 
+  // Maintien actif de l'écran allumé pendant la conduite (WakeLock comme RandoTracker)
+  requestNavWakeLock();
+
   // Rafraîchir immédiatement la liste des stations avec les décomptes kilométriques
   renderCurrentRouteStations();
 }
@@ -7113,6 +7150,7 @@ function startGpsNavigation() {
 function stopGpsNavigation() {
   isGpsNavActive = false;
   userProgressionKmOnRoute = 0;
+  releaseNavWakeLock();
   updateNavButtonUI();
   renderCurrentRouteStations();
 }
