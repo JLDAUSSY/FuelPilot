@@ -273,6 +273,36 @@ const FUEL_LABELS_BY_COUNTRY = {
     elec: '⚡ Elettrico (kWh)',
     all: 'Tutti i carburanti'
   },
+  LU: {
+    e10: 'Super 95 (E10)',
+    gazole: 'Diesel (B7)',
+    sp98: 'Super 98 (E5)',
+    sp95: 'Super 95 (E5)',
+    e85: 'Bioéthanol E85',
+    gplc: 'GPL / Autogas',
+    elec: '⚡ Électrique (kWh)',
+    all: 'Tous carburants'
+  },
+  AT: {
+    e10: 'Super 95 (E10)',
+    gazole: 'Diesel (B7)',
+    sp98: 'Super Plus (98)',
+    sp95: 'Super 95 (E5)',
+    e85: 'Bioethanol E85',
+    gplc: 'Autogas (LPG)',
+    elec: '⚡ Elektro (kWh)',
+    all: 'Alle Kraftstoffe'
+  },
+  CH: {
+    e10: 'Bleifrei 95 (E10)',
+    gazole: 'Diesel (B7)',
+    sp98: 'Super Plus 98 (E5)',
+    sp95: 'Bleifrei 95 / SP95',
+    e85: 'Bioethanol E85',
+    gplc: 'Autogas / GPL',
+    elec: '⚡ Électrique / Elektro (kWh)',
+    all: 'Tous carburants / Alle Treibstoffe'
+  },
   GB: {
     e10: 'Unleaded (E10)',
     gazole: 'Diesel (B7)',
@@ -308,7 +338,8 @@ function getServedFuelLabel(prices, requestedFuel, pays) {
 // Distinct fuels to display when "All fuels" is selected in a given country (avoids duplicating e10/sp95 in ES, IT, GB)
 function getDistinctCountryFuels(pays) {
   if (pays === 'GB' || pays === 'BE') return ['gazole', 'e10', 'sp98', 'gplc'];
-  if (pays === 'DE') return ['gazole', 'e10', 'sp95', 'sp98', 'gplc'];
+  if (pays === 'DE' || pays === 'AT' || pays === 'LU') return ['gazole', 'e10', 'sp95', 'sp98', 'gplc'];
+  if (pays === 'CH') return ['gazole', 'sp95', 'sp98', 'gplc'];
   if (pays === 'ES') return ['gazole', 'sp95', 'sp98', 'gplc', 'e85'];
   if (pays === 'IT') return ['gazole', 'sp95', 'sp98', 'gplc', 'metano'];
   return ['gazole', 'e10', 'sp98', 'sp95', 'e85', 'gplc'];
@@ -779,8 +810,8 @@ function getAmenityBadgeIcon(name, fallbackEmoji) {
 
 const AMENITY_TRANSLATIONS = {
   de: {
-    refRoutesTitle: "32 Referenzrouten",
-    refRoutesSub: "4 Korridore pro Land (8 europäische Länder)",
+    refRoutesTitle: "44 Referenzrouten",
+    refRoutesSub: "4 Korridore pro Land (11 europäische Länder)",
     refRoutesTest: "Testen",
 
     'douches chaudes': 'Warme Duschen',
@@ -805,8 +836,8 @@ const AMENITY_TRANSLATIONS = {
     'relais colis': 'Paketstation'
   },
   en: {
-    refRoutesTitle: "32 Reference Routes",
-    refRoutesSub: "4 corridors per country (8 European countries)",
+    refRoutesTitle: "44 Reference Routes",
+    refRoutesSub: "4 corridors per country (11 European countries)",
     refRoutesTest: "Test",
 
     'douches chaudes': 'Hot showers',
@@ -831,8 +862,8 @@ const AMENITY_TRANSLATIONS = {
     'relais colis': 'Parcel pickup'
   },
   nl: {
-    refRoutesTitle: "32 Referentieroutes",
-    refRoutesSub: "4 corridors per land (8 Europese landen)",
+    refRoutesTitle: "44 Referentieroutes",
+    refRoutesSub: "4 corridors per land (11 Europese landen)",
     refRoutesTest: "Testen",
 
     'douches chaudes': 'Warme douches',
@@ -857,8 +888,8 @@ const AMENITY_TRANSLATIONS = {
     'relais colis': 'Pakketpunt'
   },
   it: {
-    refRoutesTitle: "32 Itinerari di riferimento",
-    refRoutesSub: "4 corridoi per paese (8 paesi europei)",
+    refRoutesTitle: "44 Itinerari di riferimento",
+    refRoutesSub: "4 corridoi per paese (11 paesi europei)",
     refRoutesTest: "Testare",
 
     'douches chaudes': 'Docce calde',
@@ -883,8 +914,8 @@ const AMENITY_TRANSLATIONS = {
     'relais colis': 'Ritiro pacchi'
   },
   es: {
-    refRoutesTitle: "32 Itinerarios de referencia",
-    refRoutesSub: "4 corredores por país (8 países europeos)",
+    refRoutesTitle: "44 Itinerarios de referencia",
+    refRoutesSub: "4 corredores por país (11 países europeos)",
     refRoutesTest: "Probar",
 
     'douches chaudes': 'Duchas calientes',
@@ -978,8 +1009,8 @@ function getWeatherInfo(code, isDay = 1) {
   const lang = currentLang || 'fr';
   const descMap = {
     fr: {
-    refRoutesTitle: "32 Itinéraires de référence",
-    refRoutesSub: "4 corridors par pays (8 pays d'Europe)",
+    refRoutesTitle: "44 Itinéraires de référence",
+    refRoutesSub: "4 corridors par pays (11 pays d'Europe)",
     refRoutesTest: "Tester",
 
       clearDay: 'Ensoleillé', clearNight: 'Nuit claire',
@@ -1148,7 +1179,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.4';
+const APP_VERSION = '9.9.5';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -1275,7 +1306,7 @@ const I18N_DICT = {
     sortDist: "Tri : Distance",
     tabMap: "Carte",
     tabList: "Liste & Filtres",
-    coverage: "Réseau couvert : 🇫🇷 France • 🇩🇪 Allemagne • 🇧🇪 Belgique • 🇮🇹 Italie • 🇪🇸 Espagne • 🇬🇧 Royaume-Uni • 🇵🇹 Portugal • 🇳🇱 Pays-Bas",
+    coverage: "Réseau couvert : 🇫🇷 France • 🇩🇪 Allemagne • 🇧🇪 Belgique • 🇮🇹 Italie • 🇪🇸 Espagne • 🇬🇧 Royaume-Uni • 🇵🇹 Portugal • 🇳🇱 Pays-Bas • 🇱🇺 Luxembourg • 🇦🇹 Autriche • 🇨🇭 Suisse",
     recentHdr: "🕒 10 dernières localités",
     bestPrice: "⭐ PRIX LE PLUS BAS",
     fromStart: (km) => `🎯 Dans ${km} km`,
@@ -1298,6 +1329,8 @@ const I18N_DICT = {
     countryBE: "Belgique",
     countryPT: "Portugal",
     countryNL: "Pays-Bas",
+    countryLU: "Luxembourg",
+    countryAT: "Autriche",
     areasCount: (n) => `${n} aires`,
     areasListed: (n) => `${n} aires répertoriées • Prix en direct`,
     kmMarker: (hw, pk) => `${hw || 'Autoroute'} • Borne km ${pk}`,
@@ -1424,6 +1457,8 @@ const I18N_DICT = {
     countryBE: "Belgien",
     countryPT: "Portugal",
     countryNL: "Niederlande",
+    countryLU: "Luxemburg",
+    countryAT: "Österreich",
     areasCount: (n) => `${n} Raststätten`,
     areasListed: (n) => `${n} Autobahnraststätten • Live-Preise`,
     kmMarker: (hw, pk) => `${hw || 'Autobahn'} • km ${pk}`,
@@ -1550,6 +1585,8 @@ const I18N_DICT = {
     countryBE: "Belgium",
     countryPT: "Portugal",
     countryNL: "Netherlands",
+    countryLU: "Luxembourg",
+    countryAT: "Austria",
     areasCount: (n) => `${n} areas`,
     areasListed: (n) => `${n} service areas • Live prices`,
     kmMarker: (hw, pk) => `${hw || 'Motorway'} • Marker km ${pk}`,
@@ -1676,6 +1713,8 @@ const I18N_DICT = {
     countryBE: "Belgio",
     countryPT: "Portogallo",
     countryNL: "Paesi Bassi",
+    countryLU: "Lussemburgo",
+    countryAT: "Austria",
     areasCount: (n) => `${n} aree`,
     areasListed: (n) => `${n} aree di servizio • Prezzi live`,
     kmMarker: (hw, pk) => `${hw || 'Autostrada'} • Km ${pk}`,
@@ -1803,6 +1842,8 @@ const I18N_DICT = {
     countryBE: "België",
     countryPT: "Portugal",
     countryNL: "Nederland",
+    countryLU: "Luxemburg",
+    countryAT: "Oostenrijk",
     areasCount: (n) => `${n} verzorgingsplaatsen`,
     areasListed: (n) => `${n} verzorgingsplaatsen geregistreerd • Actuele prijzen`,
     kmMarker: (hw, pk) => `${hw || 'Snelweg'} • Kilometerpaal ${pk}`,
@@ -1929,6 +1970,8 @@ const I18N_DICT = {
     countryBE: "Bélgica",
     countryPT: "Portugal",
     countryNL: "Países Baixos",
+    countryLU: "Luxemburgo",
+    countryAT: "Áustria",
     areasCount: (n) => `${n} áreas`,
     areasListed: (n) => `${n} áreas de servicio • Precios en vivo`,
     kmMarker: (hw, pk) => `${hw || 'Autopista'} • PK km ${pk}`,
@@ -1996,8 +2039,8 @@ const I18N_DICT = {
     fuelUnavailable: "No disp."
   },
   pt: {
-    refRoutesTitle: "32 Itinerários de referência",
-    refRoutesSub: "4 corredores por país (8 países europeus)",
+    refRoutesTitle: "44 Itinerários de referência",
+    refRoutesSub: "4 corredores por país (11 países europeus)",
     refRoutesTest: "Testar",
 
     pageTitle: "FuelPilot • Combustível Autoestrada & Marcos PK",
@@ -2060,6 +2103,8 @@ const I18N_DICT = {
     countryBE: "Bélgica",
     countryPT: "Portugal",
     countryNL: "Países Baixos",
+    countryLU: "Luxemburgo",
+    countryAT: "Áustria",
     areasCount: (n) => `${n} áreas`,
     areasListed: (n) => `${n} áreas de serviço registadas • Preços em direto`,
     kmMarker: (hw, pk) => `${hw || 'Autoestrada'} • Marco km ${pk}`,
@@ -2146,6 +2191,8 @@ function translateCountryName(rawName) {
   if (n === 'belgique' || n === 'belgium' || n === 'belgio' || n === 'bélgica' || n === 'belgien' || n === 'belgië') return tr.countryBE;
   if (n === 'portugal' || n === 'portogallo') return tr.countryPT;
   if (n === 'pays-bas' || n === 'netherlands' || n === 'nederland' || n === 'paesi bassi' || n === 'países baixos' || n === 'niederlande') return tr.countryNL;
+  if (n === 'luxembourg' || n === 'luxemburg' || n === 'lussemburgo' || n === 'luxemburgo') return tr.countryLU;
+  if (n === 'autriche' || n === 'austria' || n === 'österreich' || n === 'oostenrijk' || n === 'áustria') return tr.countryAT;
   return rawName;
 }
 
@@ -2591,6 +2638,9 @@ function renderFuelInfoModal() {
           <th>🇪🇸 ${tr.countryES}</th>
           <th>🇵🇹 ${tr.countryPT}</th>
           <th>🇳🇱 ${tr.countryNL}</th>
+          <th>🇱🇺 ${tr.countryLU}</th>
+          <th>🇦🇹 ${tr.countryAT}</th>
+          <th>🇨🇭 ${tr.countryCH}</th>
           <th>🇬🇧 ${tr.countryGB}</th>
         </tr>
       </thead>
@@ -2604,6 +2654,9 @@ function renderFuelInfoModal() {
           <td>Gasolina 95 E5/E10</td>
           <td><b>Gasolina 95 (E10)</b></td>
           <td><b>Euro 95 (E10)</b></td>
+          <td><b>Super 95 (E10)</b></td>
+          <td><b>Super 95 (E10)</b></td>
+          <td><b>Bleifrei 95 (E10)</b></td>
           <td><b>Unleaded (E10)</b></td>
         </tr>
         <tr>
@@ -2615,6 +2668,9 @@ function renderFuelInfoModal() {
           <td><b>Gasolina 95 E5</b></td>
           <td><b>Gasolina Simples 95</b></td>
           <td>Euro 95 (E5)</td>
+          <td>Super 95 (E5)</td>
+          <td>Super 95</td>
+          <td>Sans plomb 95</td>
           <td>Unleaded 95</td>
         </tr>
         <tr>
@@ -2627,6 +2683,9 @@ function renderFuelInfoModal() {
           <td><b>Gasóleo Simples (B7)</b></td>
           <td><b>Diesel (B7)</b></td>
           <td><b>Diesel (B7)</b></td>
+          <td><b>Diesel (B7)</b></td>
+          <td><b>Diesel</b></td>
+          <td><b>Diesel (B7)</b></td>
         </tr>
         <tr>
           <td><span class="eu-pump-tag eu-tag-gasoline">E5</span> <b>${tr.fuelCatSp98}</b></td>
@@ -2637,6 +2696,9 @@ function renderFuelInfoModal() {
           <td><b>Gasolina 98 E5</b></td>
           <td><b>Gasolina Especial 98</b></td>
           <td><b>Super Plus 98 (E5)</b></td>
+          <td><b>Super 98 (E5)</b></td>
+          <td><b>Super Plus (98)</b></td>
+          <td><b>Super Plus 98</b></td>
           <td><b>Super Unleaded (E5)</b></td>
         </tr>
         <tr>
@@ -2648,6 +2710,9 @@ function renderFuelInfoModal() {
           <td><b>GLP (Autogás)</b></td>
           <td><b>GPL Auto</b></td>
           <td><b>Autogas (LPG)</b></td>
+          <td><b>GPL / Autogas</b></td>
+          <td><b>Autogas (LPG)</b></td>
+          <td><b>Autogas / GPL</b></td>
           <td><b>LPG Autogas</b></td>
         </tr>
         <tr>
@@ -2659,6 +2724,9 @@ function renderFuelInfoModal() {
           <td><b>Bioetanol E85</b></td>
           <td>Bioetanol E85</td>
           <td>Bio-ethanol E85</td>
+          <td>Bioéthanol E85</td>
+          <td>Bioethanol E85</td>
+          <td>Bioethanol E85</td>
           <td>Bioethanol E85</td>
         </tr>
       </tbody>
@@ -4068,6 +4136,24 @@ const REFERENCE_ROUTES_32 = {
     { dir: 'Est ➔ Ouest', icon: '⬅️', label: 'Hengelo ➔ Den Haag', start: 'Hengelo', startCoords: [6.7933, 52.2657], end: 'Den Haag', endCoords: [4.3007, 52.0705], motorway: 'A1 • A12', desc: 'Frontière allemande vers Mer du Nord' },
     { dir: 'Nord-Est ➔ Sud-Ouest', icon: '↙️', label: 'Groningen ➔ Breda', start: 'Groningen', startCoords: [6.5665, 53.2194], end: 'Breda', endCoords: [4.7756, 51.5719], motorway: 'A28 • A27', desc: 'Nord vers Brabant-Septentrional' },
     { dir: 'Nord-Ouest ➔ Sud-Est', icon: '↘️', label: 'Alkmaar ➔ Eindhoven', start: 'Alkmaar', startCoords: [4.7593, 52.6324], end: 'Eindhoven', endCoords: [5.4697, 51.4416], motorway: 'A9 • A2', desc: 'Hollande-Septentrionale vers Brainport' },
+  ],
+  LU: [
+    { dir: 'Nord ➔ Sud', icon: '⬇️', label: 'Ettelbruck ➔ Dudelange', start: 'Ettelbruck', startCoords: [6.1030, 49.8475], end: 'Dudelange', endCoords: [6.0844, 49.4800], motorway: 'A7 • A3', desc: 'Corridor Nord-Sud Luxembourg' },
+    { dir: 'Est ➔ Ouest', icon: '⬅️', label: 'Wasserbillig ➔ Steinfort', start: 'Wasserbillig', startCoords: [6.5028, 49.7139], end: 'Steinfort', endCoords: [5.9142, 49.6606], motorway: 'A1 • A6', desc: 'Axe frontalier Allemagne - Belgique' },
+    { dir: 'Nord-Est ➔ Sud-Ouest', icon: '↙️', label: 'Echternach ➔ Pétange', start: 'Echternach', startCoords: [6.4219, 49.8116], end: 'Pétange', endCoords: [5.8756, 49.5578], motorway: 'A1 • A4 • A13', desc: 'Petite Suisse vers Bassin Minier' },
+    { dir: 'Nord-Ouest ➔ Sud-Est', icon: '↘️', label: 'Steinfort ➔ Schengen', start: 'Steinfort', startCoords: [5.9142, 49.6606], end: 'Schengen', endCoords: [6.3653, 49.5094], motorway: 'A6 • A3 • A13', desc: 'Diagonale Belgique vers Tripoint Moselle' },
+  ],
+  AT: [
+    { dir: 'Nord ➔ Sud', icon: '⬇️', label: 'Linz ➔ Graz', start: 'Linz', startCoords: [14.2858, 48.3064], end: 'Graz', endCoords: [15.4395, 47.0707], motorway: 'A1 • A9', desc: 'Pyhrn Autobahn Nord-Sud' },
+    { dir: 'Est ➔ Ouest', icon: '⬅️', label: 'Wien ➔ Salzburg', start: 'Wien', startCoords: [16.3738, 48.2082], end: 'Salzburg', endCoords: [13.0550, 47.8095], motorway: 'A1 West Autobahn', desc: 'Dorsale Capitale vers Salzbourg' },
+    { dir: 'Nord-Est ➔ Sud-Ouest', icon: '↙️', label: 'Wien ➔ Klagenfurt', start: 'Wien', startCoords: [16.3738, 48.2082], end: 'Klagenfurt', endCoords: [14.3050, 46.6247], motorway: 'A2 Süd Autobahn', desc: 'Dorsale Sud Autriche - Carinthie' },
+    { dir: 'Nord-Ouest ➔ Sud-Est', icon: '↘️', label: 'Salzburg ➔ Graz', start: 'Salzburg', startCoords: [13.0550, 47.8095], end: 'Graz', endCoords: [15.4395, 47.0707], motorway: 'A10 • A9', desc: 'Tauern & Pyhrn Autobahn' },
+  ],
+  CH: [
+    { dir: 'Nord ➔ Sud', icon: '⬇️', label: 'Basel ➔ Chiasso', start: 'Basel', startCoords: [7.5886, 47.5596], end: 'Chiasso', endCoords: [9.0322, 45.8358], motorway: 'A2 Gotthard', desc: 'Axe transalpin Gothard majeur' },
+    { dir: 'Est ➔ Ouest', icon: '⬅️', label: 'St. Gallen ➔ Genève', start: 'St. Gallen', startCoords: [9.3767, 47.4245], end: 'Genève', endCoords: [6.1432, 46.2044], motorway: 'A1 Autoroute', desc: 'Transversale suisse Lac de Constance - Léman' },
+    { dir: 'Nord-Est ➔ Sud-Ouest', icon: '↙️', label: 'Zürich ➔ Lausanne', start: 'Zürich', startCoords: [8.5417, 47.3769], end: 'Lausanne', endCoords: [6.6323, 46.5197], motorway: 'A1 Autoroute', desc: 'Centre financier vers Romandie' },
+    { dir: 'Nord-Ouest ➔ Sud-Est', icon: '↘️', label: 'Basel ➔ Lugano', start: 'Basel', startCoords: [7.5886, 47.5596], end: 'Lugano', endCoords: [8.9511, 46.0037], motorway: 'A2 Gotthard', desc: 'Rhin vers Tessin' },
   ]
 };
 
@@ -4129,6 +4215,7 @@ function initReferenceRoutesUI() {
 }
 
 window.REFERENCE_ROUTES_32 = REFERENCE_ROUTES_32;
+window.REFERENCE_ROUTES_44 = REFERENCE_ROUTES_32;
 window.applyReferenceRoute = applyReferenceRoute;
 window.initReferenceRoutesUI = initReferenceRoutesUI;
 
@@ -4965,6 +5052,7 @@ function renderCurrentRouteStations() {
   filtered.forEach((st, idx) => {
     const tr = t();
     const isUK = st.pays === 'GB';
+    const isCH = st.pays === 'CH' || st.devise === 'CHF';
     const isNativeCase = st.pays === 'GB' || st.pays === 'DE';
     const isElec = selectedFuel === 'elec';
     const fuelPrice = (selectedFuel !== 'all') ? getFuelPrice(st.prix, selectedFuel) : (st.prix ? Object.values(st.prix)[0] : null);
@@ -4973,8 +5061,8 @@ function renderCurrentRouteStations() {
     const unavailText = tr.fuelUnavailable || 'Indispo';
     const pinPriceDisplay = fuelPrice 
       ? (isElec 
-          ? `${fuelPrice.toFixed(3)}${isUK ? '£' : '€'}/kWh` 
-          : (isUK ? `£${fuelPrice.toFixed(3)}` : `${fuelPrice.toFixed(3)}€`)) 
+          ? `${fuelPrice.toFixed(3)}${isUK ? '£' : (isCH ? ' CHF' : '€')}/kWh` 
+          : (isUK ? `£${fuelPrice.toFixed(3)}` : (isCH ? `${fuelPrice.toFixed(3)} CHF` : `${fuelPrice.toFixed(3)}€`))) 
       : unavailText;
 
     const exitPinClass = st.isExitStation ? 'exit-pin' : '';
@@ -5245,9 +5333,10 @@ function formatPriceMaj(majStr) {
 function renderCardPrices(prices, featuredFuel, isCheapest, pays, maj) {
   const isUK = pays === 'GB';
   const isElec = featuredFuel === 'elec';
+  const isCH = pays === 'CH';
   const formatPrice = (val) => {
-    if (isElec) return isUK ? `${val.toFixed(3)} £/kWh` : `${val.toFixed(3)} €/kWh`;
-    return isUK ? `£${val.toFixed(3)}` : `${val.toFixed(3)} €`;
+    if (isElec) return isUK ? `${val.toFixed(3)} £/kWh` : (isCH ? `${val.toFixed(3)} CHF/kWh` : `${val.toFixed(3)} €/kWh`);
+    return isUK ? `£${val.toFixed(3)}` : (isCH ? `${val.toFixed(3)} CHF` : `${val.toFixed(3)} €`);
   };
   const majFormatted = formatPriceMaj(maj);
   const fuelIcon = isElec ? '⚡' : '⛽';
@@ -5319,9 +5408,10 @@ function renderCardPrices(prices, featuredFuel, isCheapest, pays, maj) {
 function renderPopupPrices(prices, featuredFuel, pays, maj) {
   const isUK = pays === 'GB';
   const isElec = featuredFuel === 'elec';
+  const isCH = pays === 'CH';
   const formatPrice = (val) => {
-    if (isElec) return isUK ? `${val.toFixed(3)} £/kWh` : `${val.toFixed(3)} €/kWh`;
-    return isUK ? `£${val.toFixed(3)}` : `${val.toFixed(3)} €`;
+    if (isElec) return isUK ? `${val.toFixed(3)} £/kWh` : (isCH ? `${val.toFixed(3)} CHF/kWh` : `${val.toFixed(3)} €/kWh`);
+    return isUK ? `£${val.toFixed(3)}` : (isCH ? `${val.toFixed(3)} CHF` : `${val.toFixed(3)} €`);
   };
   const majFormatted = formatPriceMaj(maj);
   const fuelIcon = isElec ? '⚡' : '⛽';
