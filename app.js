@@ -1374,8 +1374,8 @@ const I18N_DICT = {
     live: "Prix en direct",
     refreshTitle: "Actualiser FuelCoPilot",
     sec1: "1. Choix de l'itinéraire",
-    startPlaceholder: "Ville ou lieu de départ...",
-    endPlaceholder: "Ville ou lieu d'arrivée...",
+    startPlaceholder: "Adresse, lieu, parking, ville...",
+    endPlaceholder: "Adresse, lieu, parking, ville...",
     stepPlaceholder: (n) => `Étape ${n} (ex: Beaune, Orléans...)`,
     removeStepTitle: "Supprimer l'étape",
     addStep: "+ Étape",
@@ -1515,8 +1515,8 @@ const I18N_DICT = {
     live: "Live-Preise",
     refreshTitle: "FuelCoPilot aktualisieren",
     sec1: "1. Routenwahl",
-    startPlaceholder: "Startort oder Adresse...",
-    endPlaceholder: "Zielort oder Adresse...",
+    startPlaceholder: "Adresse, Ort, Parkplatz, Stadt...",
+    endPlaceholder: "Adresse, Ort, Parkplatz, Stadt...",
     stepPlaceholder: (n) => `Zwischenstopp ${n} (z. B. Köln, Nürnberg...)`,
     removeStepTitle: "Zwischenstopp entfernen",
     addStep: "+ Stopp",
@@ -1655,8 +1655,8 @@ const I18N_DICT = {
     live: "Live prices",
     refreshTitle: "Refresh FuelCoPilot",
     sec1: "1. Route planner",
-    startPlaceholder: "Departure city or place...",
-    endPlaceholder: "Arrival city or place...",
+    startPlaceholder: "Address, place, parking, city...",
+    endPlaceholder: "Address, place, parking, city...",
     stepPlaceholder: (n) => `Stop ${n} (e.g. Oxford, Reading...)`,
     removeStepTitle: "Remove stop",
     addStep: "+ Stop",
@@ -1795,8 +1795,8 @@ const I18N_DICT = {
     live: "Prezzi live",
     refreshTitle: "Aggiorna FuelCoPilot",
     sec1: "1. Scelta dell'itinerario",
-    startPlaceholder: "Città o luogo di partenza...",
-    endPlaceholder: "Città o luogo di arrivo...",
+    startPlaceholder: "Indirizzo, luogo, parcheggio, città...",
+    endPlaceholder: "Indirizzo, luogo, parcheggio, città...",
     stepPlaceholder: (n) => `Tappa ${n} (es. Bologna, Firenze...)`,
     removeStepTitle: "Rimuovi tappa",
     addStep: "+ Tappa",
@@ -1935,8 +1935,8 @@ const I18N_DICT = {
     live: "Actuele prijzen",
     refreshTitle: "FuelCoPilot vernieuwen",
     sec1: "1. Routekeuze",
-    startPlaceholder: "Stad of vertreklocatie...",
-    endPlaceholder: "Stad of bestemming...",
+    startPlaceholder: "Adres, plek, parking, stad...",
+    endPlaceholder: "Adres, plek, parking, stad...",
     stepPlaceholder: (n) => `Tussenstop ${n} (bijv. Gent, Antwerpen...)`,
     removeStepTitle: "Tussenstop verwijderen",
     addStep: "+ Tussenstop",
@@ -2076,8 +2076,8 @@ const I18N_DICT = {
     live: "Precios en vivo",
     refreshTitle: "Actualizar FuelCoPilot",
     sec1: "1. Elección de ruta",
-    startPlaceholder: "Ciudad o lugar de salida...",
-    endPlaceholder: "Ciudad o lugar de llegada...",
+    startPlaceholder: "Dirección, lugar, parking, ciudad...",
+    endPlaceholder: "Dirección, lugar, parking, ciudad...",
     stepPlaceholder: (n) => `Etapa ${n} (ej. Zaragoza, Burgos...)`,
     removeStepTitle: "Eliminar etapa",
     addStep: "+ Etapa",
@@ -2216,8 +2216,8 @@ const I18N_DICT = {
     live: "Preços em tempo real",
     refreshTitle: "Atualizar o FuelCoPilot",
     sec1: "1. Escolha do itinerário",
-    startPlaceholder: "Cidade ou local de partida...",
-    endPlaceholder: "Cidade ou destino...",
+    startPlaceholder: "Morada, local, parque, cidade...",
+    endPlaceholder: "Morada, local, parque, cidade...",
     stepPlaceholder: (n) => `Paragem ${n} (ex: Coimbra, Leiria...)`,
     removeStepTitle: "Remover paragem",
     addStep: "+ Paragem",
@@ -2357,8 +2357,8 @@ const I18N_DICT = {
     live: "Cene v živo",
     refreshTitle: "Osveži FuelCoPilot",
     sec1: "1. Izbira poti",
-    startPlaceholder: "Mesto ali naslov odhoda...",
-    endPlaceholder: "Mesto ali cilj...",
+    startPlaceholder: "Naslov, kraj, parkirišče, mesto...",
+    endPlaceholder: "Naslov, kraj, parkirišče, mesto...",
     stepPlaceholder: (n) => `Vmesni postanek ${n} (npr. Maribor, Celje...)`,
     removeStepTitle: "Odstrani postanek",
     addStep: "+ Postanek",
@@ -2511,8 +2511,8 @@ const I18N_DICT = {
     live: "Cijene uživo",
     refreshTitle: "Osvježi FuelCoPilot",
     sec1: "1. Odabir rute",
-    startPlaceholder: "Mjesto ili adresa polaska...",
-    endPlaceholder: "Grad ili odredište...",
+    startPlaceholder: "Adresa, mjesto, parking, grad...",
+    endPlaceholder: "Adresa, mjesto, parking, grad...",
     stepPlaceholder: (n) => `Međutočka ${n} (npr. Karlovac, Zadar...)`,
     removeStepTitle: "Ukloni međutočku",
     addStep: "+ Međutočka",
@@ -3904,6 +3904,13 @@ async function searchLocationsBilingual(q) {
   const qNorm = q.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   const results = [];
 
+  const hasDigits = /\d/.test(qNorm);
+  const streetKeywords = ['rue', 'av', 'avenue', 'bd', 'boulevard', 'chemin', 'allee', 'place', 'impasse', 'route', 'cours', 'quai', 'square', 'street', 'road', 'st', 'rd', 'str', 'strasse', 'straße', 'via', 'calle', 'rua', 'plein', 'straat'];
+  const hasStreetKeyword = streetKeywords.some(kw => new RegExp(`\\b${kw}\\b`, 'i').test(qNorm));
+  const poiKeywords = ['parking', 'parkhaus', 'aparcamiento', 'parcheggio', 'car park', 'gare', 'station', 'aeroport', 'airport', 'flughafen', 'mairie', 'rathaus', 'hotel de ville', 'hopital', 'hospital', 'universite', 'university', 'ecole', 'school', 'tribunal', 'courthouse', 'police', 'poste', 'stade', 'stadium', 'centre commercial', 'expo', 'congre'];
+  const hasPoiKeyword = poiKeywords.some(kw => qNorm.includes(kw));
+  const isSpecificSearch = hasDigits || hasStreetKeyword || hasPoiKeyword;
+
   const fetchWithTimeout = (url, opts = {}, ms = 2200) => {
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), ms);
@@ -3913,24 +3920,26 @@ async function searchLocationsBilingual(q) {
   };
 
   // 1. Instant Bilingual Major Cities Match (English + French + Native names)
-  // Only match when the user is typing a city name (not a full street address like "Joubert Street London")
+  // When user is typing a specific search (e.g. street address or POI), give lower priority
   BILINGUAL_CITIES_INDEX.forEach(city => {
-    const matched = city.names.some(n => {
+    let isExact = false;
+    let isPrefix = false;
+    city.names.forEach(n => {
       const nNorm = n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-      return nNorm.startsWith(qNorm) || qNorm === nNorm;
+      if (nNorm === qNorm) isExact = true;
+      else if (nNorm.startsWith(qNorm)) isPrefix = true;
     });
-    if (matched) {
+    if (isExact || isPrefix) {
       results.push({
-        label: `${city.flag} ${city.display}, ${translateCountryName(city.country)}`,
+        label: `${city.flag} 🏘️ ${city.display}, ${translateCountryName(city.country)}`,
         cleanName: city.display,
         coords: city.coords,
-        priority: 100
+        priority: isSpecificSearch ? 40 : (isExact ? 150 : 110)
       });
     }
   });
 
-  // 2. Query European Photon (bounded to Western Europe), Nominatim OSM (fast street/postcode/POI search), & French BAN in parallel
-  // Normalize common US/UK/FR POI synonyms (e.g., "Technical Center" -> "Technology Centre", "Center" -> "Centre")
+  // 2. Query European Photon (bounded to Western & Central Europe), Nominatim OSM, & French BAN in parallel
   const qNormalizedVariant = q
     .replace(/\btechnical\s+cent(er|re)\b/gi, 'Technology Centre')
     .replace(/\btech\s+cent(er|re)\b/gi, 'Technology Centre')
@@ -3938,9 +3947,9 @@ async function searchLocationsBilingual(q) {
 
   const euroBbox = '-11.0,35.0,19.5,61.0';
   const queriesToRun = [
-    fetchWithTimeout(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(q)}&limit=5`, {}, 2000),
-    fetchWithTimeout(`https://photon.komoot.io/api/?q=${encodeURIComponent(qNormalizedVariant)}&bbox=${euroBbox}&limit=7`, {}, 3500),
-    fetchWithTimeout(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(qNormalizedVariant)}&countrycodes=it,fr,de,es,gb,be,ch,lu,nl,at&limit=6`, {}, 3500)
+    fetchWithTimeout(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(q)}&limit=6`, {}, 2200),
+    fetchWithTimeout(`https://photon.komoot.io/api/?q=${encodeURIComponent(qNormalizedVariant)}&bbox=${euroBbox}&limit=8`, {}, 3000),
+    fetchWithTimeout(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(qNormalizedVariant)}&countrycodes=fr,es,it,de,gb,be,nl,pt,lu,at,ch,si,hr&addressdetails=1&extratags=1&limit=6`, {}, 3200)
   ];
   const [banRes, photonDefaultRes, nominatimRes] = await Promise.allSettled(queriesToRun);
 
@@ -3952,71 +3961,202 @@ async function searchLocationsBilingual(q) {
     if (code === 'IT' || cLow.includes('ital')) return '🇮🇹';
     if (code === 'FR' || cLow.includes('fran')) return '🇫🇷';
     if (code === 'IE' || cLow.includes('ireland') || cLow.includes('irlande')) return '🇮🇪';
-    if (code === 'DE' || cLow.includes('allem') || cLow.includes('germ')) return '🇩🇪';
+    if (code === 'DE' || cLow.includes('allem') || cLow.includes('germ') || cLow.includes('deutschland')) return '🇩🇪';
     if (code === 'BE' || cLow.includes('belg')) return '🇧🇪';
-    if (code === 'CH' || cLow.includes('suis') || cLow.includes('switz')) return '🇨🇭';
+    if (code === 'NL' || cLow.includes('pays-bas') || cLow.includes('netherland') || cLow.includes('nederland') || cLow.includes('holland')) return '🇳🇱';
+    if (code === 'PT' || cLow.includes('portug')) return '🇵🇹';
     if (code === 'LU' || cLow.includes('lux')) return '🇱🇺';
+    if (code === 'AT' || cLow.includes('autrich') || cLow.includes('austria') || cLow.includes('österreich')) return '🇦🇹';
+    if (code === 'CH' || cLow.includes('suis') || cLow.includes('switz') || cLow.includes('schweiz') || cLow.includes('svizzera')) return '🇨🇭';
+    if (code === 'SI' || cLow.includes('slovén') || cLow.includes('sloven')) return '🇸🇮';
+    if (code === 'HR' || cLow.includes('croat') || cLow.includes('hrvat')) return '🇭🇷';
     return '🌍';
   };
 
   const addResultIfUnique = (item) => {
-    const itemNameNorm = (item.cleanName || '').toLowerCase();
+    const itemNameNorm = (item.cleanName || '').toLowerCase().trim();
     const isDup = results.some(r => {
-      const sameCoords = Math.abs(r.coords[0] - item.coords[0]) < 0.003 && Math.abs(r.coords[1] - item.coords[1]) < 0.003;
-      const sameCityCoords = Math.abs(r.coords[0] - item.coords[0]) < 0.04 && Math.abs(r.coords[1] - item.coords[1]) < 0.04 && (r.cleanName || '').toLowerCase() === itemNameNorm;
-      return sameCoords || sameCityCoords;
+      const rNameNorm = (r.cleanName || '').toLowerCase().trim();
+      const sameCoordsExact = Math.abs(r.coords[0] - item.coords[0]) < 0.001 && Math.abs(r.coords[1] - item.coords[1]) < 0.001;
+      const sameName = rNameNorm === itemNameNorm;
+      return sameCoordsExact || sameName;
     });
     if (!isDup) {
       results.push(item);
     }
   };
 
-  const getPoiIcon = (cat, type) => {
+  const getPoiInfo = (cat, type, name) => {
     const c = (cat || '').toLowerCase();
     const t = (type || '').toLowerCase();
-    if (c === 'aeroway' || t.includes('aerodrome') || t.includes('airport')) return '✈️ ';
-    if (c === 'railway' || t === 'station' || t === 'halt') return '🚉 ';
-    if (t === 'ferry_terminal') return '⛴️ ';
-    if (t === 'theme_park' || t === 'zoo' || t === 'aquarium') return '🎢 ';
-    if (t === 'stadium' || t === 'sports_centre' || c === 'leisure') return '🏟️ ';
-    if (c === 'tourism' || c === 'historic' || t === 'monument' || t === 'castle' || t === 'museum' || t === 'attraction' || t === 'viewpoint' || t === 'tower' || t === 'amphitheatre' || t === 'palace' || t === 'place_of_worship') return '🏛️ ';
-    return '';
+    const n = (name || '').toLowerCase();
+
+    // 1. Parking
+    if (t.includes('parking') || t === 'car_park' || t === 'garage' || c === 'parking' ||
+        n.includes('parking') || n.includes('parkhaus') || n.includes('aparcamiento') ||
+        n.includes('parcheggio') || n.includes('car park') || n.startsWith('p+r') || n.includes(' p+r')) {
+      return { icon: '🅿️ ', category: 'parking', isPoi: true };
+    }
+
+    // 2. Transports: Airports, Stations, Ferries, Bus
+    if (c === 'aeroway' || t.includes('aerodrome') || t.includes('airport') || t === 'terminal' ||
+        n.includes('aéroport') || n.includes('aeroport') || n.includes('airport') || n.includes('flughafen') || n.includes('aeropuerto')) {
+      return { icon: '✈️ ', category: 'airport', isPoi: true };
+    }
+    if (c === 'railway' || t === 'station' || t === 'halt' || t === 'train_station' || t === 'subway_entrance' ||
+        n.includes('gare ') || n.startsWith('gare') || n.includes('bahnhof') || n.includes('stazione') || n.includes('estación')) {
+      return { icon: '🚉 ', category: 'station', isPoi: true };
+    }
+    if (t === 'bus_station' || t === 'coach_station' || n.includes('gare routière') || n.includes('bus station')) {
+      return { icon: '🚌 ', category: 'bus', isPoi: true };
+    }
+    if (t === 'ferry_terminal' || t === 'dock' || t === 'port' || n.includes('ferry') || n.includes('terminal ferry') || n.includes('embarcadère')) {
+      return { icon: '⛴️ ', category: 'ferry', isPoi: true };
+    }
+
+    // 3. Civic & Public Administration: Mairie, Townhall, Hôtel de Ville, Préfecture
+    if (t === 'townhall' || t === 'civic' || t === 'public_building' ||
+        n.includes('mairie') || n.includes('hôtel de ville') || n.includes('hotel de ville') ||
+        n.includes('rathaus') || n.includes('ayuntamiento') || n.includes('municipio') ||
+        n.includes('préfecture') || n.includes('prefecture') || n.includes('sous-préfecture')) {
+      return { icon: '🏛️ ', category: 'townhall', isPoi: true };
+    }
+
+    // 4. Justice / Courthouse
+    if (t === 'courthouse' || n.includes('tribunal') || n.includes('palais de justice') ||
+        n.includes('cour d\'appel') || n.includes('justizpalast') || n.includes('juzgado')) {
+      return { icon: '⚖️ ', category: 'courthouse', isPoi: true };
+    }
+
+    // 5. Emergency & Healthcare: Hospital, Police, Fire
+    if (t === 'hospital' || t === 'clinic' || t === 'doctors' ||
+        n.includes('hôpital') || n.includes('hopital') || n.includes('clinique') ||
+        n.includes('chu') || n.includes('chr ') || n.includes('krankenhaus') || n.includes('hospital') || n.includes('ospedale')) {
+      return { icon: '🏥 ', category: 'hospital', isPoi: true };
+    }
+    if (t === 'police' || n.includes('police') || n.includes('gendarmerie') || n.includes('commissariat') ||
+        n.includes('polizei') || n.includes('comisaría') || n.includes('questura')) {
+      return { icon: '👮 ', category: 'police', isPoi: true };
+    }
+    if (t === 'fire_station' || n.includes('pompier') || n.includes('feuerwehr') ||
+        n.includes('bomberos') || n.includes('caserne')) {
+      return { icon: '🚒 ', category: 'fire_station', isPoi: true };
+    }
+
+    // 6. Post Office
+    if (t === 'post_office' || n.includes('la poste') || n.includes('post office') ||
+        n.includes('postamt') || n.includes('correos') || n.includes('poste italiane')) {
+      return { icon: '🏣 ', category: 'post_office', isPoi: true };
+    }
+
+    // 7. Education: Universities, Schools
+    if (t === 'university' || t === 'college' || t === 'school' ||
+        n.includes('université') || n.includes('universite') || n.includes('campus') ||
+        n.includes('faculté') || n.includes('universität') || n.includes('universidad')) {
+      return { icon: '🎓 ', category: 'university', isPoi: true };
+    }
+
+    // 8. Library / Media
+    if (t === 'library' || n.includes('bibliothèque') || n.includes('bibliotheque') ||
+        n.includes('médiathèque') || n.includes('mediatheque') || n.includes('library') || n.includes('bibliothek')) {
+      return { icon: '📚 ', category: 'library', isPoi: true };
+    }
+
+    // 9. Arts, Culture, Entertainment
+    if (t === 'theatre' || t === 'arts_centre' || t === 'cinema' ||
+        n.includes('théâtre') || n.includes('theatre') || n.includes('opéra') ||
+        n.includes('opera') || n.includes('cinéma') || n.includes('cinema') || n.includes('zenith') || n.includes('philharmonie')) {
+      return { icon: '🎭 ', category: 'theatre', isPoi: true };
+    }
+    if (t === 'conference_centre' || t === 'exhibition_centre' ||
+        n.includes('exposition') || n.includes('congrès') || n.includes('congres') ||
+        n.includes('parc expo') || n.includes('messe') || n.includes('convention center')) {
+      return { icon: '🏢 ', category: 'convention', isPoi: true };
+    }
+
+    // 10. Religious Sites
+    if (t === 'place_of_worship' || t === 'cathedral' || t === 'church' || t === 'basilica' ||
+        n.includes('cathédrale') || n.includes('cathedrale') || n.includes('église') ||
+        n.includes('eglise') || n.includes('basilique') || n.includes('duomo') || n.includes('kirch') || n.includes('temple')) {
+      return { icon: '⛪ ', category: 'worship', isPoi: true };
+    }
+
+    // 11. Tourism, Monuments & Historic
+    if (c === 'tourism' || c === 'historic' || t === 'monument' || t === 'castle' ||
+        t === 'museum' || t === 'attraction' || t === 'viewpoint' || t === 'palace' ||
+        n.includes('musée') || n.includes('musee') || n.includes('museum') || n.includes('museo') ||
+        n.includes('château') || n.includes('castle') || n.includes('palais')) {
+      return { icon: '🏛️ ', category: 'monument', isPoi: true };
+    }
+
+    // 12. Shopping / Commercial
+    if (c === 'shop' || t === 'mall' || t === 'supermarket' || t === 'department_store' ||
+        n.includes('centre commercial') || n.includes('supermarché') || n.includes('hypermarché') ||
+        n.includes('shopping') || n.includes('galerie marchande')) {
+      return { icon: '🛒 ', category: 'shopping', isPoi: true };
+    }
+
+    // 13. Sports & Parks
+    if (t === 'theme_park' || t === 'zoo' || t === 'aquarium') {
+      return { icon: '🎢 ', category: 'theme_park', isPoi: true };
+    }
+    if (t === 'stadium' || t === 'sports_centre' || (c === 'leisure' && t !== 'park') ||
+        n.includes('stade') || n.includes('arena') || n.includes('stadium') || n.includes('vélodrome')) {
+      return { icon: '🏟️ ', category: 'stadium', isPoi: true };
+    }
+    if (t === 'park' || t === 'garden' || c === 'natural' || n.includes('parc') || n.includes('jardin')) {
+      return { icon: '🌳 ', category: 'park', isPoi: true };
+    }
+    if (c === 'amenity' && (t === 'hotel' || t === 'guest_house' || t === 'hostel' || t === 'camp_site')) {
+      return { icon: '🏨 ', category: 'hotel', isPoi: true };
+    }
+
+    return { icon: '', category: '', isPoi: false };
   };
 
   const parsePhotonFeatures = (features) => {
     if (!features) return;
     features.forEach(f => {
       const p = f.properties || {};
-      if (!p.name) return;
+      const mainName = p.name || p.street || '';
+      if (!mainName) return;
       const country = p.country || '';
       const flag = getCountryFlag(p.countrycode, country);
       const isCity = ['city', 'town', 'village', 'municipality', 'administrative'].includes(p.osm_value || p.type);
       const isStreetOrHouse = ['street', 'house', 'residential', 'secondary', 'primary', 'tertiary', 'living_street', 'pedestrian', 'postcode'].includes(p.osm_value || p.type);
-      const poiIcon = (!isCity && !isStreetOrHouse) ? getPoiIcon(p.osm_key, p.osm_value || p.type) : '';
-      const isLandmark = Boolean(poiIcon);
-      const isCoveredCountry = ['🇬🇧', '🇫🇷', '🇪🇸', '🇮🇹', '🇮🇪', '🇧🇪', '🇨🇭', '🇩🇪'].includes(flag);
+      const poiInfo = getPoiInfo(p.osm_key, p.osm_value || p.type, mainName);
+      const isPoi = poiInfo.isPoi;
+      const isCoveredCountry = ['🇫🇷', '🇪🇸', '🇮🇹', '🇩🇪', '🇬🇧', '🇧🇪', '🇳🇱', '🇵🇹', '🇱🇺', '🇦🇹', '🇨🇭', '🇸🇮', '🇭🇷'].includes(flag);
 
       // Build rich city/district/postcode context for street-level & landmark searches
       const rawCity = p.city || p.town || p.village || p.county || '';
       const shortCity = rawCity.replace(/^London Borough of\s+/i, 'London — ').replace(/^Royal Borough of\s+/i, 'London — ');
-      const streetLabel = p.housenumber ? `${p.housenumber} ${p.name}` : p.name;
+      const streetLabel = p.housenumber ? `${p.housenumber} ${p.street || mainName}` : mainName;
 
       let nameParts;
       let cleanName;
-      if (isStreetOrHouse) {
+      let icon = '';
+
+      if (isPoi) {
+        icon = poiInfo.icon;
+        nameParts = [mainName, shortCity && shortCity !== mainName ? shortCity : p.district, country].filter(Boolean);
+        cleanName = [mainName, shortCity && shortCity !== mainName ? shortCity : null].filter(Boolean).join(', ');
+      } else if (isStreetOrHouse) {
+        icon = '📍 ';
         nameParts = [streetLabel, p.district, shortCity, p.postcode, country].filter(Boolean);
         cleanName = [streetLabel, shortCity || p.state, p.postcode].filter(Boolean).join(', ');
-      } else if (isLandmark) {
-        nameParts = [p.name, shortCity && shortCity !== p.name ? shortCity : p.district, country].filter(Boolean);
-        cleanName = [p.name, shortCity && shortCity !== p.name ? shortCity : null].filter(Boolean).join(', ');
+      } else if (isCity) {
+        icon = '🏘️ ';
+        nameParts = [mainName, p.state && p.state !== mainName ? p.state : null, country].filter(Boolean);
+        cleanName = mainName;
       } else {
-        nameParts = [p.name, shortCity && shortCity !== p.name ? shortCity : null, p.state, country].filter(Boolean);
-        cleanName = p.name;
+        nameParts = [mainName, shortCity && shortCity !== mainName ? shortCity : null, country].filter(Boolean);
+        cleanName = mainName;
       }
 
       // Deduplicate consecutive identical parts
       const uniqueParts = nameParts.filter((part, idx) => idx === 0 || part.toLowerCase() !== nameParts[idx - 1].toLowerCase());
-      const label = `${flag} ${poiIcon}${uniqueParts.join(', ')}`;
+      const label = `${flag} ${icon}${uniqueParts.join(', ')}`;
       const coords = f.geometry.coordinates;
 
       // Boost priority when the result matches both street/landmark name and city in the query
@@ -4024,7 +4164,16 @@ async function searchLocationsBilingual(q) {
       const queryTokens = qNorm.split(/\s+/).filter(t => t.length >= 2);
       const allTokensMatched = queryTokens.length > 0 && queryTokens.every(tok => fullTextNorm.includes(tok) || (tok === 'londres' && fullTextNorm.includes('london')));
 
-      const priority = (isCity ? 60 : (isLandmark ? 62 : (isStreetOrHouse ? 55 : 35))) + (isCoveredCountry ? 20 : 0) + (allTokensMatched ? 30 : 0);
+      let priority = 50;
+      if (isPoi) {
+        priority = (isSpecificSearch ? 120 : 65) + (allTokensMatched ? 25 : 0);
+      } else if (isStreetOrHouse) {
+        priority = (isSpecificSearch ? 105 : 55) + (allTokensMatched ? 20 : 0);
+      } else if (isCity) {
+        const isExactCity = mainName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '') === qNorm;
+        priority = (isSpecificSearch ? 45 : (isExactCity ? 135 : 80)) + (allTokensMatched ? 15 : -10);
+      }
+      if (isCoveredCountry) priority += 15;
 
       addResultIfUnique({
         label,
@@ -4045,17 +4194,65 @@ async function searchLocationsBilingual(q) {
       const lat = parseFloat(it.lat);
       const lon = parseFloat(it.lon);
       const disp = it.display_name || '';
-      const flag = getCountryFlag('', disp);
-      const name = it.name || disp.split(',')[0].trim();
-      const parts = disp.split(',').map(s => s.trim()).filter(Boolean);
-      const shortParts = parts.length > 3 ? [parts[0], parts[1], parts[parts.length - 1]] : parts;
-      const label = `${flag} ${shortParts.join(', ')}`;
-      const cleanName = [name, parts.length > 1 ? parts[1] : null].filter(Boolean).join(', ');
+      const addr = it.address || {};
+      const flag = getCountryFlag(addr.country_code, addr.country || disp);
+      const isCoveredCountry = ['🇫🇷', '🇪🇸', '🇮🇹', '🇩🇪', '🇬🇧', '🇧🇪', '🇳🇱', '🇵🇹', '🇱🇺', '🇦🇹', '🇨🇭', '🇸🇮', '🇭🇷'].includes(flag);
+
+      const rawCity = addr.city || addr.town || addr.village || addr.municipality || addr.county || '';
+      const shortCity = rawCity.replace(/^London Borough of\s+/i, 'London — ').replace(/^Royal Borough of\s+/i, 'London — ');
+
+      const poiInfo = getPoiInfo(it.class, it.type, it.name || disp);
+      const isPoi = poiInfo.isPoi;
+      const isCity = ['city', 'town', 'village', 'municipality'].includes(it.type) || it.class === 'boundary';
+      const isStreetOrHouse = ['house', 'residential', 'primary', 'secondary', 'tertiary', 'living_street'].includes(it.type) || it.class === 'highway' || (it.class === 'place' && it.type === 'house');
+
+      let icon = '';
+      let cleanName = '';
+      let label = '';
+
+      if (isPoi) {
+        icon = poiInfo.icon;
+        const mainName = it.name || disp.split(',')[0].trim();
+        cleanName = [mainName, shortCity && shortCity !== mainName ? shortCity : null].filter(Boolean).join(', ');
+        label = `${flag} ${icon}${cleanName}, ${addr.country || ''}`.replace(/,\s*$/, '');
+      } else if (isStreetOrHouse) {
+        icon = '📍 ';
+        const houseNum = addr.house_number || '';
+        const road = addr.road || it.name || disp.split(',')[0].trim();
+        const streetStr = houseNum ? `${houseNum} ${road}` : road;
+        cleanName = [streetStr, shortCity, addr.postcode].filter(Boolean).join(', ');
+        label = `${flag} ${icon}${cleanName}, ${addr.country || ''}`.replace(/,\s*$/, '');
+      } else if (isCity) {
+        icon = '🏘️ ';
+        cleanName = it.name || shortCity || disp.split(',')[0].trim();
+        label = `${flag} ${icon}${cleanName}, ${addr.country || ''}`.replace(/,\s*$/, '');
+      } else {
+        const parts = disp.split(',').map(s => s.trim()).filter(Boolean);
+        const shortParts = parts.length > 3 ? [parts[0], parts[1], parts[parts.length - 1]] : parts;
+        cleanName = parts[0];
+        label = `${flag} ${shortParts.join(', ')}`;
+      }
+
+      const fullTextNorm = (label + ' ' + cleanName).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      const queryTokens = qNorm.split(/\s+/).filter(t => t.length >= 2);
+      const allTokensMatched = queryTokens.length > 0 && queryTokens.every(tok => fullTextNorm.includes(tok));
+
+      let priority = 55;
+      if (isPoi) {
+        priority = (isSpecificSearch ? 118 : 65) + (allTokensMatched ? 25 : 0);
+      } else if (isStreetOrHouse) {
+        priority = (isSpecificSearch ? 102 : 55) + (allTokensMatched ? 20 : 0);
+      } else if (isCity) {
+        const isExactCity = (it.name || cleanName).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '') === qNorm;
+        priority = (isSpecificSearch ? 45 : (isExactCity ? 135 : 75)) + (allTokensMatched ? 15 : -10);
+      }
+      if (isCoveredCountry) priority += 15;
+
       addResultIfUnique({
         label,
         cleanName,
         coords: [lon, lat],
-        priority: 70
+        priority
       });
     });
   }
@@ -4064,15 +4261,34 @@ async function searchLocationsBilingual(q) {
     banRes.value.features.forEach(f => {
       const p = f.properties || {};
       const coords = f.geometry.coordinates;
+      const isHousenumber = p.type === 'housenumber';
+      const isStreet = p.type === 'street';
       const isMunicipality = p.type === 'municipality';
       const labelNorm = (p.label || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
       const queryTokens = qNorm.split(/\s+/).filter(t => t.length >= 2);
       const allTokensMatched = queryTokens.length > 0 && queryTokens.every(tok => labelNorm.includes(tok));
-      const priority = (isMunicipality ? 85 : 35) + (allTokensMatched ? 25 : -20);
+
+      let icon = '📍 ';
+      if (isMunicipality) icon = '🏘️ ';
+
+      const label = `🇫🇷 ${icon}${p.label}`;
+      const cleanName = p.label;
+
+      let priority = 70;
+      if (isHousenumber) {
+        priority = (isSpecificSearch ? 125 : 50) + (allTokensMatched ? 25 : 0) + (p.score ? Math.round(p.score * 15) : 0);
+      } else if (isStreet) {
+        priority = (isSpecificSearch ? 110 : 55) + (allTokensMatched ? 20 : 0) + (p.score ? Math.round(p.score * 10) : 0);
+      } else if (isMunicipality) {
+        const isExactMun = labelNorm === qNorm;
+        priority = (isSpecificSearch ? 50 : (isExactMun ? 140 : 95)) + (allTokensMatched ? 15 : -10);
+      } else {
+        priority = 45 + (allTokensMatched ? 15 : 0);
+      }
 
       addResultIfUnique({
-        label: '🇫🇷 ' + p.label,
-        cleanName: p.label,
+        label,
+        cleanName,
         coords,
         priority
       });
@@ -4119,8 +4335,8 @@ const RECENT_LOCATIONS_KEY = 'fuelpilot_recent_locations_v1';
 function sanitizeLocationName(rawName) {
   if (!rawName) return '';
   let str = String(rawName).trim();
-  // Retirer les émojis de tête éventuels (📍, 🕒, etc.)
-  str = str.replace(/^[📍🕒\s]+/, '').trim();
+  // Retirer les émojis de tête éventuels (flags, POI, épingles, horloges)
+  str = str.replace(/^[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}📍🕒🟢🏁🅿️🏛️🏥⚖️👮🚒🏣🎓📚🎭🏢⛪🛒🏟️🚉✈️⛴️🏨🌳🏘️🌍🇫🇷🇪🇸🇮🇹🇩🇪🇬🇧🇧🇪🇳🇱🇵🇹🇱🇺🇦🇹🇨🇭🇸🇮🇭🇷\s]+/u, '').trim();
   // Détecter "Ma position actuelle (Ville)" ou ses variantes multilingues
   const m = str.match(/^(?:ma\s+position\s+actuelle|current\s+location|posici[oó]n\s+actual|aktuelle\s+position|posizione\s+attuale|huidige\s+locatie)(?:\s*\((.*?)\))?$/i);
   if (m) {
@@ -4183,8 +4399,8 @@ function saveRecentLocation(cleanName, coords, fullLabel) {
       const itemClean = sanitizeLocationName(item.cleanName || item.label || '');
       const sameName = itemClean.toLowerCase() === normName;
       const sameCoords = item.coords &&
-        Math.abs(item.coords[0] - coords[0]) < 0.03 &&
-        Math.abs(item.coords[1] - coords[1]) < 0.03;
+        Math.abs(item.coords[0] - coords[0]) < 0.001 &&
+        Math.abs(item.coords[1] - coords[1]) < 0.001;
       return !sameName && !sameCoords;
     });
     filtered.unshift({
@@ -4465,7 +4681,7 @@ function useCurrentGpsLocationAsStart() {
       showToast(formatGeolocationErrorMessage(err), { isWarning: true, duration: 6000 });
       if (startInput && !startPoint) {
         startInput.value = '';
-        startInput.placeholder = (t().inputStartPlaceholder || 'Ville ou lieu de départ...');
+        startInput.placeholder = (t().inputStartPlaceholder || t().startPlaceholder || 'Adresse, lieu, parking, ville...');
       }
       if (typeof updateAllClearButtons === 'function') updateAllClearButtons();
     }
@@ -4846,6 +5062,19 @@ async function calculateItinerary() {
       if (matches.length > 0) {
         endPoint = { coords: matches[0].coords, label: matches[0].cleanName };
         endInput.value = matches[0].cleanName;
+      }
+    }
+  }
+
+  // Auto-resolve any waypoint typed without clicking dropdown
+  for (const wp of currentWaypoints) {
+    const wpInput = document.getElementById(`input-${wp.id}`);
+    if (wpInput && wpInput.value.trim().length >= 2 && (!wp.coords || (wp.label || '').toLowerCase() !== wpInput.value.trim().toLowerCase())) {
+      const matches = await searchLocationsBilingual(wpInput.value.trim());
+      if (matches.length > 0) {
+        wp.coords = matches[0].coords;
+        wp.label = matches[0].cleanName;
+        wpInput.value = matches[0].cleanName;
       }
     }
   }
