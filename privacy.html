@@ -74,17 +74,18 @@
     }
     .lang-switcher {
       display: flex;
-      gap: 6px;
+      gap: 5px;
       background: rgba(15, 23, 42, 0.7);
       padding: 4px;
       border-radius: 20px;
       border: 1px solid rgba(56, 189, 248, 0.25);
+      flex-wrap: wrap;
     }
     .lang-btn {
       background: transparent;
       border: none;
       font-size: 1.15rem;
-      padding: 4px 8px;
+      padding: 4px 6px;
       border-radius: 14px;
       cursor: pointer;
       opacity: 0.55;
@@ -142,14 +143,18 @@
         <img src="icon.png" alt="FuelCoPilot Logo" class="logo">
         <div>
           <h1 id="title-main">FuelCo<span>Pilot</span> — Politique de Confidentialité</h1>
-          <div class="badge-date" id="badge-date">Dernière mise à jour : 31 octobre 2026</div>
+          <div class="badge-date" id="badge-date">Dernière mise à jour : 17 novembre 2026</div>
         </div>
       </div>
       <div class="lang-switcher" id="lang-switcher">
-        <button type="button" class="lang-btn" data-lang="fr" title="Français">🇫🇷</button>
+        <button type="button" class="lang-btn active" data-lang="fr" title="Français">🇫🇷</button>
+        <button type="button" class="lang-btn" data-lang="nl" title="Nederlands">🇳🇱</button>
         <button type="button" class="lang-btn" data-lang="de" title="Deutsch">🇩🇪</button>
         <button type="button" class="lang-btn" data-lang="it" title="Italiano">🇮🇹</button>
         <button type="button" class="lang-btn" data-lang="es" title="Español">🇪🇸</button>
+        <button type="button" class="lang-btn" data-lang="pt" title="Português">🇵🇹</button>
+        <button type="button" class="lang-btn" data-lang="sl" title="Slovenščina">🇸🇮</button>
+        <button type="button" class="lang-btn" data-lang="hr" title="Hrvatski">🇭🇷</button>
         <button type="button" class="lang-btn" data-lang="en" title="English">🇬🇧</button>
       </div>
     </header>
@@ -167,8 +172,9 @@
       fr: {
         docTitle: 'Politique de Confidentialité — FuelCoPilot',
         headerTitle: 'FuelCo<span>Pilot</span> — Politique de Confidentialité',
-        badgeDate: 'Dernière mise à jour : 31 octobre 2026',
+        badgeDate: 'Dernière mise à jour : 17 novembre 2026',
         backBtn: '← Retour à FuelCoPilot',
+        guideBtn: "📖 Mode d'emploi & Guide",
         html: `
           <p>Cette politique de confidentialité s'applique à l'application <strong>FuelCoPilot</strong> (application Web, PWA et version Android distribuée sur le Google Play Store), éditée par <strong>JLDApps</strong>.</p>
 
@@ -195,7 +201,7 @@
           <h2>4. Sources et services tiers utilisés</h2>
           <p>Pour fournir des informations précises et en temps réel, FuelCoPilot interroge exclusivement des services ouverts et des données publiques officielles :</p>
           <ul>
-            <li><strong>Prix des carburants :</strong> Données publiques ouvertes officielles (Ministère de l'Économie en France, Tankerkönig / MTS-K en Allemagne, Ministère de la Transition Écologique en Espagne, MIMIT en Italie, Open Data officiels en Belgique et Royaume-Uni).</li>
+            <li><strong>Prix des carburants :</strong> Données publiques ouvertes officielles dans 13 pays européens (France : Ministère de l'Économie ; Allemagne : MTS-K / Tankerkönig ; Espagne : Ministère de la Transition Écologique ; Italie : MIMIT Osservaprezzi ; Belgique & Royaume-Uni : portails officiels Open Data ; Portugal : DGEG ; Pays-Bas, Luxembourg, Autriche, Suisse, Slovénie et Croatie : registres officiels ouverts).</li>
             <li><strong>Cartographie :</strong> Fonds de carte libres OpenStreetMap et dalles CARTO.</li>
             <li><strong>Calcul d'itinéraires :</strong> Moteur de routage OSRM (Open Source Routing Machine).</li>
           </ul>
@@ -211,11 +217,60 @@
           <p><strong>E-mail :</strong> <a href="mailto:contact.fuelpilot@gmail.com" style="color:#38bdf8; text-decoration:none;">contact.fuelpilot@gmail.com</a></p>
         `
       },
+      nl: {
+        docTitle: 'Privacybeleid — FuelCoPilot',
+        headerTitle: 'FuelCo<span>Pilot</span> — Privacybeleid',
+        badgeDate: 'Laatste update: 17 november 2026',
+        backBtn: '← Terug naar FuelCoPilot',
+        guideBtn: '📖 Handleiding & Gids',
+        html: `
+          <p>Dit privacybeleid is van toepassing op de applicatie <strong>FuelCoPilot</strong> (Web App, PWA en Android-versie op de Google Play Store), uitgegeven door <strong>JLDApps</strong>.</p>
+
+          <h2>1. Verzameling en verwerking van persoonsgegevens</h2>
+          <p><strong>FuelCoPilot verzamelt, bewaart en verzendt geen identificeerbare persoonsgegevens.</strong></p>
+          <ul>
+            <li>Er is geen accountregistratie vereist.</li>
+            <li>Er worden geen namen, e-mailadressen of telefoonnummers verzameld.</li>
+            <li>Er is geen betaalsysteem in de applicatie geïntegreerd.</li>
+          </ul>
+
+          <h2>2. Locatiegegevens</h2>
+          <p>De applicatie kan alleen met uw voorafgaande toestemming toegang vragen tot de GPS-locatie van uw apparaat, uitsluitend om:</p>
+          <ul>
+            <li>De kaart te centreren op uw huidige positie.</li>
+            <li>Snelwegroutes te berekenen vanaf uw vertrekpunt naar uw bestemming.</li>
+          </ul>
+          <p><strong>Deze geografische gegevens worden uitsluitend lokaal in het geheugen van uw apparaat verwerkt.</strong> Ze worden nooit opgeslagen op onze servers en niet gedeeld met derden.</p>
+
+          <h2>3. Cookies en tracking</h2>
+          <p>FuelCoPilot <strong>gebruikt geen advertentiecookies, commerciële profileringshulpmiddelen of tracking-SDK's</strong>.</p>
+          <p>De lokale browseropslag (localStorage) wordt uitsluitend gebruikt om uw weergavevoorkeuren lokaal op te slaan (taal, brandstofkeuze en merkfilters).</p>
+
+          <h2>4. Officiële bronnen en diensten van derden</h2>
+          <p>FuelCoPilot raadpleegt uitsluitend officiële open data en openbare overheidsbronnen in 13 Europese landen:</p>
+          <ul>
+            <li><strong>Brandstofprijzen:</strong> Officiële open data (Frankrijk, Duitsland, Spanje, Italië, België, Verenigd Koninkrijk, Portugal, Nederland, Luxemburg, Oostenrijk, Zwitserland, Slovenië en Kroatië).</li>
+            <li><strong>Kaarten:</strong> OpenStreetMap en CARTO met open licentie.</li>
+            <li><strong>Routeberekening:</strong> OSRM-routeringsengine.</li>
+          </ul>
+
+          <h2>5. Beveiliging</h2>
+          <p>Alle netwerkcommunicatie verloopt via beveiligde, versleutelde <strong>HTTPS (TLS)</strong>-verbindingen.</p>
+
+          <h2>6. Uw rechten (AVG / GDPR)</h2>
+          <p>In overeenstemming met de Algemene Verordening Gegevensbescherming (AVG/GDPR) behoudt u te allen tijde volledige controle. Aangezien er geen persoonsgegevens worden bewaard, wist het sluiten of verwijderen van de app direct alle lokale instellingen.</p>
+
+          <h2>7. Contact</h2>
+          <p>Voor vragen over dit privacybeleid of de FuelCoPilot-applicatie kunt u contact opnemen met de uitgever:</p>
+          <p><strong>E-mail:</strong> <a href="mailto:contact.fuelpilot@gmail.com" style="color:#38bdf8; text-decoration:none;">contact.fuelpilot@gmail.com</a></p>
+        `
+      },
       de: {
         docTitle: 'Datenschutzerklärung — FuelCoPilot',
         headerTitle: 'FuelCo<span>Pilot</span> — Datenschutzerklärung',
-        badgeDate: 'Letzte Aktualisierung: 31. Oktober 2026',
+        badgeDate: 'Letzte Aktualisierung: 17. November 2026',
         backBtn: '← Zurück zu FuelCoPilot',
+        guideBtn: '📖 Bedienungsanleitung & Leitfaden',
         html: `
           <p>Diese Datenschutzerklärung gilt für die Anwendung <strong>FuelCoPilot</strong> (Web-App, PWA und Android-Version im Google Play Store), herausgegeben von <strong>JLDApps</strong>.</p>
 
@@ -240,9 +295,9 @@
           <p>Der lokale Browserspeicher (localStorage) wird lediglich genutzt, um Ihre bevorzugte Sprache, die gewählte Kraftstoffsorte und Markeneinstellungen lokal zu sichern.</p>
 
           <h2>4. Datenquellen und Drittanbieter</h2>
-          <p>FuelCoPilot greift ausschließlich auf offizielle öffentliche Datenquellen und Open Data zu:</p>
+          <p>FuelCoPilot greift ausschließlich auf offizielle öffentliche Datenquellen und Open Data in 13 europäischen Ländern zu:</p>
           <ul>
-            <li><strong>Kraftstoffpreise:</strong> Offizielle Plattformen (Deutschland: Tankerkönig / Markttransparenzstelle für Kraftstoffe MTS-K; Frankreich: Ministère de l'Économie; Spanien: Ministerio para la Transición Ecológica; Italien: MIMIT; Belgien & UK Open Data).</li>
+            <li><strong>Kraftstoffpreise:</strong> Offizielle Plattformen (Deutschland: Tankerkönig / MTS-K; Frankreich: Ministère de l'Économie; Spanien: Ministerio para la Transición Ecológica; Italien: MIMIT; Belgien, Vereinigtes Königreich, Portugal, Niederlande, Luxemburg, Österreich, Schweiz, Slowenien und Kroatien).</li>
             <li><strong>Kartografie:</strong> Freie OpenStreetMap-Kartenkacheln und CARTO.</li>
             <li><strong>Routenberechnung:</strong> OSRM (Open Source Routing Machine).</li>
           </ul>
@@ -261,8 +316,9 @@
       it: {
         docTitle: 'Informativa sulla Privacy — FuelCoPilot',
         headerTitle: 'FuelCo<span>Pilot</span> — Informativa sulla Privacy',
-        badgeDate: 'Ultimo aggiornamento: 31 ottobre 2026',
+        badgeDate: 'Ultimo aggiornamento: 17 novembre 2026',
         backBtn: '← Torna a FuelCoPilot',
+        guideBtn: "📖 Guida all'uso & Istruzioni",
         html: `
           <p>Questa informativa sulla privacy si applica all'applicazione <strong>FuelCoPilot</strong> (Web App, PWA e versione Android su Google Play Store), sviluppata da <strong>JLDApps</strong>.</p>
 
@@ -287,9 +343,9 @@
           <p>La memoria locale (localStorage) serve esclusivamente a conservare la lingua, il tipo di carburante scelto e le preferenze di filtro.</p>
 
           <h2>4. Fonti ufficiali e servizi terzi</h2>
-          <p>FuelCoPilot interroga esclusivamente dati aperti e fonti pubbliche governative:</p>
+          <p>FuelCoPilot interroga esclusivamente dati aperti e fonti pubbliche governative in 13 paesi europei:</p>
           <ul>
-            <li><strong>Prezzi carburanti:</strong> Fonti aperte ufficiali (MIMIT Osservaprezzi in Italia, Ministère de l'Économie in Francia, Tankerkönig in Germania, Ministero della Transizione Ecologica in Spagna, open data Belgio e Regno Unito).</li>
+            <li><strong>Prezzi carburanti:</strong> Fonti aperte ufficiali (Italia: MIMIT Osservaprezzi; Francia: Ministère de l'Économie; Germania: Tankerkönig / MTS-K; Spagna: Ministero della Transizione Ecologica; Belgio, Regno Unito, Portogallo, Paesi Bassi, Lussemburgo, Austria, Svizzera, Slovenia e Croazia).</li>
             <li><strong>Mappe:</strong> OpenStreetMap e CARTO basati su licenza aperta.</li>
             <li><strong>Navigazione e percorsi:</strong> Motore OSRM.</li>
           </ul>
@@ -302,14 +358,15 @@
 
           <h2>7. Contatto</h2>
           <p>Per qualsiasi domanda relativa alla presente informativa o all'app FuelCoPilot:</p>
-          <p><strong>E-mail:</strong> <a href="mailto:contact.fuelpilot@gmail.com" style="color:#38bdf8; text-decoration:none;">contact.fuelpilot@gmail.com</a></p>
+          <p><strong>E-mail :</strong> <a href="mailto:contact.fuelpilot@gmail.com" style="color:#38bdf8; text-decoration:none;">contact.fuelpilot@gmail.com</a></p>
         `
       },
       es: {
         docTitle: 'Política de Privacidad — FuelCoPilot',
         headerTitle: 'FuelCo<span>Pilot</span> — Política de Privacidad',
-        badgeDate: 'Última actualización: 31 de octubre de 2026',
+        badgeDate: 'Última actualización: 17 de noviembre de 2026',
         backBtn: '← Volver a FuelCoPilot',
+        guideBtn: '📖 Manual de uso y Guía',
         html: `
           <p>Esta política de privacidad se aplica a la aplicación <strong>FuelCoPilot</strong> (Web App, PWA y versión Android en Google Play Store), desarrollada por <strong>JLDApps</strong>.</p>
 
@@ -334,9 +391,9 @@
           <p>El almacenamiento local (localStorage) se utiliza únicamente para recordar el idioma, el carburante seleccionado y los filtros de marcas.</p>
 
           <h2>4. Fuentes y servicios de terceros</h2>
-          <p>FuelCoPilot consulta exclusivamente fuentes oficiales de datos públicos y abiertos:</p>
+          <p>FuelCoPilot consulta exclusivamente fuentes oficiales de datos públicos y abiertos en 13 países europeos:</p>
           <ul>
-            <li><strong>Precios de combustibles:</strong> Registros oficiales (Ministerio para la Transición Ecológica de España - Geoportal, Ministère de l'Économie en Francia, Tankerkönig en Alemania, MIMIT en Italia, datos abiertos de Bélgica y Reino Unido).</li>
+            <li><strong>Precios de combustibles:</strong> Registros oficiales (España: Ministerio para la Transición Ecológica - Geoportal; Francia: Ministère de l'Économie; Alemania: Tankerkönig; Italia: MIMIT; Bélgica, Reino Unido, Portugal, Países Bajos, Luxemburgo, Austria, Suiza, Eslovenia y Croacia).</li>
             <li><strong>Mapas:</strong> Cartografía abierta OpenStreetMap y CARTO.</li>
             <li><strong>Cálculo de rutas:</strong> Motor de enrutamiento OSRM.</li>
           </ul>
@@ -352,11 +409,156 @@
           <p><strong>Correo electrónico:</strong> <a href="mailto:contact.fuelpilot@gmail.com" style="color:#38bdf8; text-decoration:none;">contact.fuelpilot@gmail.com</a></p>
         `
       },
+      pt: {
+        docTitle: 'Política de Privacidade — FuelCoPilot',
+        headerTitle: 'FuelCo<span>Pilot</span> — Política de Privacidade',
+        badgeDate: 'Última atualização: 17 de novembro de 2026',
+        backBtn: '← Voltar ao FuelCoPilot',
+        guideBtn: '📖 Manual de Instruções & Guia',
+        html: `
+          <p>Esta política de privacidade aplica-se à aplicação <strong>FuelCoPilot</strong> (aplicação Web, PWA e versão Android disponibilizada no Google Play Store), desenvolvida por <strong>JLDApps</strong>.</p>
+
+          <h2>1. Recolha e tratamento de dados pessoais</h2>
+          <p><strong>O FuelCoPilot não recolhe, não armazena e não transmite quaisquer dados pessoais identificáveis.</strong></p>
+          <ul>
+            <li>Não é necessário criar conta nem fazer registo.</li>
+            <li>Não são recolhidos nomes, endereços de e-mail ou números de telefone.</li>
+            <li>Não existe qualquer sistema de pagamento integrado na aplicação.</li>
+          </ul>
+
+          <h2>2. Dados de localização</h2>
+          <p>A aplicação pode solicitar acesso à localização do seu dispositivo (GPS) apenas com o seu consentimento prévio e exclusivamente para:</p>
+          <ul>
+            <li>Centrar o mapa na sua posição atual.</li>
+            <li>Calcular os itinerários rodoviários desde o ponto de partida até ao seu destino.</li>
+          </ul>
+          <p><strong>Estes dados geográficos são processados exclusivamente na memória local do seu dispositivo.</strong> Nunca são gravados nos nossos servidores, não são partilhados com terceiros e não geram qualquer histórico de geolocalização.</p>
+
+          <h2>3. Cookies e rastreadores</h2>
+          <p>O FuelCoPilot <strong>não utiliza cookies publicitários, ferramentas de criação de perfis comerciais nem rastreadores entre aplicações</strong>.</p>
+          <p>O armazenamento local do navegador (localStorage) é utilizado unicamente para memorizar as suas preferências de utilização (idioma, tipo de combustível e filtros de marcas).</p>
+
+          <h2>4. Fontes oficiais e serviços de terceiros</h2>
+          <p>Para fornecer informações precisas e em tempo real, o FuelCoPilot consulta exclusivamente fontes públicas e dados abertos oficiais em 13 países europeus:</p>
+          <ul>
+            <li><strong>Preços dos combustíveis:</strong> Registos oficiais (Portugal: DGEG; Espanha: Ministério para a Transição Ecológica; França: Ministère de l'Économie; Alemanha: MTS-K / Tankerkönig; Itália: MIMIT; Bélgica, Reino Unido, Países Baixos, Luxemburgo, Áustria, Suíça, Eslovénia e Croácia).</li>
+            <li><strong>Cartografia:</strong> Mapas abertos OpenStreetMap e camadas CARTO.</li>
+            <li><strong>Cálculo de itinerários:</strong> Motor de cálculo de rotas OSRM.</li>
+          </ul>
+
+          <h2>5. Segurança</h2>
+          <p>Todas as comunicações de rede são efetuadas através de protocolos encriptados e seguros <strong>HTTPS (TLS)</strong>.</p>
+
+          <h2>6. Os seus direitos (RGPD)</h2>
+          <p>Em conformidade com o Regulamento Geral sobre a Proteção de Dados (RGPD), dispõe a qualquer momento de controlo total sobre os seus dados. Como não guardamos quaisquer dados pessoais, fechar ou desinstalar a aplicação elimina imediatamente todos os registos locais.</p>
+
+          <h2>7. Contacto</h2>
+          <p>Para qualquer questão relativa a esta política de privacidade ou à aplicação FuelCoPilot, pode contactar o programador:</p>
+          <p><strong>E-mail:</strong> <a href="mailto:contact.fuelpilot@gmail.com" style="color:#38bdf8; text-decoration:none;">contact.fuelpilot@gmail.com</a></p>
+        `
+      },
+      sl: {
+        docTitle: 'Pravilnik o zasebnosti — FuelCoPilot',
+        headerTitle: 'FuelCo<span>Pilot</span> — Pravilnik o zasebnosti',
+        badgeDate: 'Zadnja posodobitev: 17. november 2026',
+        backBtn: '← Nazaj na FuelCoPilot',
+        guideBtn: '📖 Navodila za uporabo & Vodnik',
+        html: `
+          <p>Ta pravilnik o zasebnosti velja za aplikacijo <strong>FuelCoPilot</strong> (spletna aplikacija, PWA in različica za Android v trgovini Google Play Store), ki jo izdaja <strong>JLDApps</strong>.</p>
+
+          <h2>1. Zbiranje in obdelava osebnih podatkov</h2>
+          <p><strong>FuelCoPilot ne zbira, ne shranjuje in ne posreduje nobenih osebnih podatkov.</strong></p>
+          <ul>
+            <li>Ustvarjanje računa ni potrebno.</li>
+            <li>Ne zbiramo imen, e-poštnih naslovov ali telefonskih številk.</li>
+            <li>V aplikaciji ni integriranega plačilnega sistema.</li>
+          </ul>
+
+          <h2>2. Lokacijski podatki</h2>
+          <p>Aplikacija lahko zahteva dostop do lokacije vaše naprave (GPS) le z vašim predhodnim soglasjem in izključno za:</p>
+          <ul>
+            <li>Centriranje zemljevida na vašo trenutno lokacijo.</li>
+            <li>Izračun avtocestnih poti od začetne točke do vašega cilja.</li>
+          </ul>
+          <p><strong>Ti geografski podatki se obdelujejo izključno v lokalnem pomnilniku vaše naprave.</strong> Nikoli se ne shranjujejo na naših strežnikih in se ne delijo s tretjimi osebami.</p>
+
+          <h2>3. Piškotki in sledenje</h2>
+          <p>FuelCoPilot <strong>ne uporablja oglaševalskih piškotkov, orodij za profiliranje ali sledilnikov med aplikacijami</strong>.</p>
+          <p>Lokalna shramba brskalnika (localStorage) se uporablja izključno za shranjevanje vaših nastavitev prikaza (izbira jezika, goriva in filtrov znamk).</p>
+
+          <h2>4. Uradni viri in zunanje storitve</h2>
+          <p>Za zagotavljanje točnih informacij FuelCoPilot uporablja izključno uradne odprte podatke in javne vire v 13 evropskih državah:</p>
+          <ul>
+            <li><strong>Cene goriv:</strong> Uradne platforme odprtih podatkov (Slovenija, Hrvaška, Francija, Nemčija, Španija, Italija, Belgija, Združeno kraljestvo, Portugalska, Nizozemska, Luksemburg, Avstrija in Švica).</li>
+            <li><strong>Zemljevidi:</strong> Odprte kartografske podlage OpenStreetMap in CARTO.</li>
+            <li><strong>Načrtovanje poti:</strong> Mehanizem za usmerjanje OSRM.</li>
+          </ul>
+
+          <h2>5. Varnost</h2>
+          <p>Vsa omrežna komunikacija poteka prek varnih šifriranih protokolov <strong>HTTPS (TLS)</strong>.</p>
+
+          <h2>6. Vaše pravice (GDPR)</h2>
+          <p>V skladu s Splošno uredbo o varstvu podatkov (GDPR) imate ves čas popoln nadzor nad svojimi podatki. Ker se osebni podatki ne shranjujejo, zaprtje ali odstranitev aplikacije takoj izbriše vse lokalne nastavitve.</p>
+
+          <h2>7. Kontakt</h2>
+          <p>Za vsa vprašanja glede tega pravilnika o zasebnosti ali aplikacije FuelCoPilot se lahko obrnete na izdajatelja:</p>
+          <p><strong>E-pošta:</strong> <a href="mailto:contact.fuelpilot@gmail.com" style="color:#38bdf8; text-decoration:none;">contact.fuelpilot@gmail.com</a></p>
+        `
+      },
+      hr: {
+        docTitle: 'Politika privatnosti — FuelCoPilot',
+        headerTitle: 'FuelCo<span>Pilot</span> — Politika privatnosti',
+        badgeDate: 'Zadnje ažuriranje: 17. studenoga 2026.',
+        backBtn: '← Povratak na FuelCoPilot',
+        guideBtn: '📖 Upute za upotrebu & Vodič',
+        html: `
+          <p>Ova politika privatnosti odnosi se na aplikaciju <strong>FuelCoPilot</strong> (Web App, PWA i Android verzija na Google Play Storeu), koju izdaje <strong>JLDApps</strong>.</p>
+
+          <h2>1. Prikupljanje i obrada osobnih podataka</h2>
+          <p><strong>FuelCoPilot ne prikuplja, ne pohranjuje niti prenosi osobne podatke.</strong></p>
+          <ul>
+            <li>Nije potrebno stvaranje korisničkog računa.</li>
+            <li>Ne prikupljaju se imena, adrese e-pošte ili telefonski brojevi.</li>
+            <li>U aplikaciju nije integriran nikakav sustav plaćanja.</li>
+          </ul>
+
+          <h2>2. Podaci o lokaciji</h2>
+          <p>Aplikacija može zatražiti pristup GPS lokaciji vašeg uređaja isključivo uz vaš prethodni pristanak i samo radi:</p>
+          <ul>
+            <li>Centriranja karte na vašu trenutnu lokaciju.</li>
+            <li>Izračunavanja autocestovnih ruta od polazišta do odredišta.</li>
+          </ul>
+          <p><strong>Ovi se geografski podaci obrađuju isključivo u lokalnoj memoriji vašeg uređaja.</strong> Nikada se ne spremaju na našim poslužiteljima niti dijele s trećim stranama.</p>
+
+          <h2>3. Kolačići i praćenje</h2>
+          <p>FuelCoPilot <strong>ne koristi oglasne kolačiće, komercijalne alate za profiliranje niti praćenje među aplikacijama</strong>.</p>
+          <p>Lokalna pohrana preglednika (localStorage) koristi se isključivo za privremeno pamćenje vaših postavki (jezik, vrsta goriva i filtri marki).</p>
+
+          <h2>4. Službeni izvori i usluge trećih strana</h2>
+          <p>FuelCoPilot koristi isključivo službene otvorene podatke i javne izvore u 13 europskih zemalja:</p>
+          <ul>
+            <li><strong>Cijene goriva:</strong> Službeni otvoreni registri (Hrvatska, Slovenija, Francuska, Njemačka, Španjolska, Italija, Belgija, Ujedinjeno Kraljevstvo, Portugal, Nizozemska, Luksemburg, Austrija i Švicarska).</li>
+            <li><strong>Karta:</strong> Otvorene karte OpenStreetMap i CARTO.</li>
+            <li><strong>Izračun ruta:</strong> Sustav za navigaciju OSRM.</li>
+          </ul>
+
+          <h2>5. Sigurnost</h2>
+          <p>Sva mrežna komunikacija odvija se putem sigurnih šifriranih protokola <strong>HTTPS (TLS)</strong>.</p>
+
+          <h2>6. Vaša prava (GDPR)</h2>
+          <p>U skladu s Općom uredbom o zaštiti podataka (GDPR), imate potpunu kontrolu nad svojim podacima. Budući da se osobni podaci ne bilježe, zatvaranjem ili deinstaliranjem aplikacije odmah se brišu sve lokalne postavke.</p>
+
+          <h2>7. Kontakt</h2>
+          <p>Za sva pitanja o ovoj politici privatnosti ili aplikaciji FuelCoPilot možete se obratiti izdavaču:</p>
+          <p><strong>E-pošta:</strong> <a href="mailto:contact.fuelpilot@gmail.com" style="color:#38bdf8; text-decoration:none;">contact.fuelpilot@gmail.com</a></p>
+        `
+      },
       en: {
         docTitle: 'Privacy Policy — FuelCoPilot',
         headerTitle: 'FuelCo<span>Pilot</span> — Privacy Policy',
-        badgeDate: 'Last updated: October 31, 2026',
+        badgeDate: 'Last updated: November 17, 2026',
         backBtn: '← Back to FuelCoPilot',
+        guideBtn: '📖 User Manual & Guide',
         html: `
           <p>This Privacy Policy applies to the <strong>FuelCoPilot</strong> application (Web App, PWA, and Android version on the Google Play Store), published by <strong>JLDApps</strong>.</p>
 
@@ -381,9 +583,9 @@
           <p>Browser local storage (localStorage) is used solely to store your display preferences (selected language, fuel type, and brand filters).</p>
 
           <h2>4. Data Sources and Third-Party Services</h2>
-          <p>To provide accurate, real-time highway fuel prices, FuelCoPilot relies exclusively on official government open-data registries and open services:</p>
+          <p>To provide accurate, real-time highway fuel prices, FuelCoPilot relies exclusively on official government open-data registries across 13 European countries:</p>
           <ul>
-            <li><strong>Fuel Prices:</strong> Official registries (Ministère de l'Économie in France, Tankerkönig / MTS-K in Germany, Ministry for the Ecological Transition in Spain, MIMIT in Italy, and open data portals in Belgium and the UK).</li>
+            <li><strong>Fuel Prices:</strong> Official open-data portals (France, Germany, Spain, Italy, Belgium, United Kingdom, Portugal, Netherlands, Luxembourg, Austria, Switzerland, Slovenia, and Croatia).</li>
             <li><strong>Maps:</strong> OpenStreetMap tiles and CARTO base maps.</li>
             <li><strong>Routing:</strong> Open Source Routing Machine (OSRM).</li>
           </ul>
@@ -392,7 +594,7 @@
           <p>All network traffic is encrypted end-to-end via <strong>HTTPS (TLS)</strong> protocols.</p>
 
           <h2>6. Your Rights (GDPR / Privacy Laws)</h2>
-          <p>In full compliance with the European GDPR and UK Data Protection laws, you retain total sovereignty over your data. Because no personal data is stored on remote servers, closing or uninstalling the app immediately deletes all locally stored preferences.</p>
+          <p>In full compliance with European GDPR and UK Data Protection laws, you retain total sovereignty over your data. Because no personal data is stored on remote servers, closing or uninstalling the app immediately deletes all locally stored preferences.</p>
 
           <h2>7. Contact</h2>
           <p>For any questions regarding this Privacy Policy or FuelCoPilot, you can reach the publisher at:</p>
@@ -429,7 +631,10 @@
       backBtn.href = `index.html?lang=${lang}&_v=${Date.now()}`;
 
       const guideLink = document.getElementById('link-guide');
-      if (guideLink) guideLink.href = `guide.html?lang=${lang}`;
+      if (guideLink) {
+        guideLink.textContent = data.guideBtn || "📖 Mode d'emploi & Guide";
+        guideLink.href = `guide.html?lang=${lang}`;
+      }
 
       document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.lang === lang);

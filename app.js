@@ -830,9 +830,6 @@ function getAmenityBadgeIcon(name, fallbackEmoji) {
 
 const AMENITY_TRANSLATIONS = {
   sl: {
-    refRoutesTitle: "52 Referenčnih poti",
-    refRoutesSub: "4 koridorji na državo (13 evropskih držav)",
-    refRoutesTest: "Preizkusi",
 
     'douches chaudes': 'Topli tuši',
     'espace bébé': 'Previjalnica',
@@ -856,9 +853,6 @@ const AMENITY_TRANSLATIONS = {
     'relais colis': 'Prevzem paketov'
   },
   hr: {
-    refRoutesTitle: "52 Referentnih ruta",
-    refRoutesSub: "4 koridora po državi (13 europskih država)",
-    refRoutesTest: "Testiraj",
 
     'douches chaudes': 'Topli tuševi',
     'espace bébé': 'Prostor za prematanje',
@@ -882,9 +876,6 @@ const AMENITY_TRANSLATIONS = {
     'relais colis': 'Preuzimanje paketa'
   },
   de: {
-    refRoutesTitle: "52 Referenzrouten",
-    refRoutesSub: "4 Korridore pro Land (13 europäische Länder)",
-    refRoutesTest: "Testen",
 
     'douches chaudes': 'Warme Duschen',
     'espace bébé': 'Wickelraum',
@@ -908,9 +899,6 @@ const AMENITY_TRANSLATIONS = {
     'relais colis': 'Paketstation'
   },
   en: {
-    refRoutesTitle: "52 Reference Routes",
-    refRoutesSub: "4 corridors per country (13 European countries)",
-    refRoutesTest: "Test",
 
     'douches chaudes': 'Hot showers',
     'espace bébé': 'Baby care',
@@ -934,9 +922,6 @@ const AMENITY_TRANSLATIONS = {
     'relais colis': 'Parcel pickup'
   },
   nl: {
-    refRoutesTitle: "52 Referentieroutes",
-    refRoutesSub: "4 corridors per land (13 Europese landen)",
-    refRoutesTest: "Testen",
 
     'douches chaudes': 'Warme douches',
     'espace bébé': 'Babyverzorging',
@@ -960,9 +945,6 @@ const AMENITY_TRANSLATIONS = {
     'relais colis': 'Pakketpunt'
   },
   it: {
-    refRoutesTitle: "52 Itinerari di riferimento",
-    refRoutesSub: "4 corridoi per paese (13 paesi europei)",
-    refRoutesTest: "Testare",
 
     'douches chaudes': 'Docce calde',
     'espace bébé': 'Fasciatoio bebè',
@@ -986,9 +968,6 @@ const AMENITY_TRANSLATIONS = {
     'relais colis': 'Ritiro pacchi'
   },
   es: {
-    refRoutesTitle: "52 Itinerarios de referencia",
-    refRoutesSub: "4 corredores por país (13 países europeos)",
-    refRoutesTest: "Probar",
 
     'douches chaudes': 'Duchas calientes',
     'espace bébé': 'Cambiador bebé',
@@ -1010,7 +989,29 @@ const AMENITY_TRANSLATIONS = {
     'automate cb 24/24': 'Surtidor 24h',
     'bar': 'Bar / Cafetería',
     'relais colis': 'Punto de paquetería'
-  }
+  },
+  pt: {
+    'douches chaudes': 'Duches quentes',
+    'espace bébé': 'Fraldário',
+    'gonflage pneus': 'Pressão dos pneus',
+    'wi-fi gratuit': 'Wi-Fi gratuito',
+    'distributeur dab': 'Multibanco (ATM)',
+    'aire camping-cars': 'Área de autocaravanas',
+    'parking pl': 'Estacionamento TIR / camiões',
+    'sanitaires 24/7': 'Sanitários 24/7',
+    'toilettes publiques': 'Casas de banho públicas',
+    'boutique alimentaire': 'Loja de conveniência',
+    'boutique non alimentaire': 'Loja',
+    'restauration sur place': 'Restaurante',
+    'restauration à emporter': 'Comida para levar (Take-away)',
+    'lavage automatique': 'Lavagem automática',
+    'lavage haute pression': 'Lavagem a alta pressão',
+    'lavage manuel': 'Lavagem manual',
+    'bornes électriques': 'Postos de carregamento elétrico',
+    'automate cb 24/24': 'Pagamento automático 24/7',
+    'bar': 'Café / Bar',
+    'relais colis': 'Ponto de recolha'
+  },
 };
 
 function translateAmenityName(name) {
@@ -1081,68 +1082,12 @@ function getWeatherInfo(code, isDay = 1) {
   const lang = currentLang || 'fr';
   const descMap = {
     fr: {
-    refRoutesTitle: "52 Itinéraires de référence",
-    refRoutesSub: "4 corridors par pays (13 pays d'Europe)",
-    refRoutesTest: "Tester",
-
       clearDay: 'Ensoleillé', clearNight: 'Nuit claire',
       partlyDay: 'Éclaircies', partlyNight: 'Partiellement nuageux',
       overcast: 'Couvert', fog: 'Brouillard', drizzle: 'Bruine',
       rain: 'Pluie', snow: 'Neige', storm: 'Orages'
     },
-    sl: {
-    refRoutesTitle: "52 Referenčnih poti",
-    refRoutesSub: "4 koridorji na državo (13 evropskih držav)",
-    refRoutesTest: "Preizkusi",
-
-    'douches chaudes': 'Topli tuši',
-    'espace bébé': 'Previjalnica',
-    'gonflage pneus': 'Tlak v pnevmatikah',
-    'wi-fi gratuit': 'Brezplačen Wi-Fi',
-    'distributeur dab': 'Bančni avtomat (ATM)',
-    'aire camping-cars': 'Postajališče za avtodome',
-    'parking pl': 'Parkirišče za tovornjake',
-    'sanitaires 24/7': 'Sanitarije 24/7',
-    'toilettes publiques': 'Javna stranišča',
-    'boutique alimentaire': 'Trgovina z živili',
-    'boutique non alimentaire': 'Trgovina',
-    'restauration sur place': 'Restavracija',
-    'restauration à emporter': 'Hrana za s seboj',
-    'lavage automatique': 'Avtopralnica',
-    'lavage haute pression': 'Visokotlačno pranje',
-    'lavage manuel': 'Ročno pranje',
-    'bornes électriques': 'E-polnilnice',
-    'automate cb 24/24': 'Plačilni avtomat 24/7',
-    'bar': 'Kavarna / Bar',
-    'relais colis': 'Prevzem paketov'
-  },
-  hr: {
-    refRoutesTitle: "52 Referentnih ruta",
-    refRoutesSub: "4 koridora po državi (13 europskih država)",
-    refRoutesTest: "Testiraj",
-
-    'douches chaudes': 'Topli tuševi',
-    'espace bébé': 'Prostor za prematanje',
-    'gonflage pneus': 'Pumpe za gume',
-    'wi-fi gratuit': 'Besplatni Wi-Fi',
-    'distributeur dab': 'Bankomat (ATM)',
-    'aire camping-cars': 'Kamp kućice / Autodomovi',
-    'parking pl': 'Parkiralište za teretna vozila',
-    'sanitaires 24/7': 'Sanitarni čvor 24/7',
-    'toilettes publiques': 'Javni WC',
-    'boutique alimentaire': 'Trgovina prehrambenih proizvoda',
-    'boutique non alimentaire': 'Trgovina',
-    'restauration sur place': 'Restoran',
-    'restauration à emporter': 'Hrana za van',
-    'lavage automatique': 'Automatska autopraonica',
-    'lavage haute pression': 'Pranje pod visokim tlakom',
-    'lavage manuel': 'Ručno pranje',
-    'bornes électriques': 'Punionice za električna vozila',
-    'automate cb 24/24': 'Automatsko plaćanje karticom 24/7',
-    'bar': 'Kafić / Bar',
-    'relais colis': 'Preuzimanje paketa'
-  },
-  de: {
+    de: {
       clearDay: 'Sonnig', clearNight: 'Klare Nacht',
       partlyDay: 'Heiter', partlyNight: 'Teilweise bewölkt',
       overcast: 'Bedeckt', fog: 'Nebel', drizzle: 'Nieselregen',
@@ -1171,6 +1116,24 @@ function getWeatherInfo(code, isDay = 1) {
       partlyDay: 'Intervalos nubosos', partlyNight: 'Parcialmente nublado',
       overcast: 'Cubierto', fog: 'Niebla', drizzle: 'Llovizna',
       rain: 'Lluvia', snow: 'Nieve', storm: 'Tormentas'
+    },
+    pt: {
+      clearDay: 'Ensolarado', clearNight: 'Noite limpa',
+      partlyDay: 'Abertas', partlyNight: 'Parcialmente nublado',
+      overcast: 'Encoberto', fog: 'Nevoeiro', drizzle: 'Chuvisco',
+      rain: 'Chuva', snow: 'Neve', storm: 'Trovoadas'
+    },
+    sl: {
+      clearDay: 'Sončno', clearNight: 'Jasna noč',
+      partlyDay: 'Delno oblačno', partlyNight: 'Delno oblačno',
+      overcast: 'Oblačno', fog: 'Megla', drizzle: 'Rosenje',
+      rain: 'Dež', snow: 'Sneg', storm: 'Nevihte'
+    },
+    hr: {
+      clearDay: 'Sunčano', clearNight: 'Vedra noć',
+      partlyDay: 'Djelomično oblačno', partlyNight: 'Djelomično oblačno',
+      overcast: 'Oblačno', fog: 'Magla', drizzle: 'Ruljenje',
+      rain: 'Kiša', snow: 'Snijeg', storm: 'Grmljavina'
     }
   };
   const d = descMap[lang] || descMap.fr;
@@ -1392,7 +1355,17 @@ function extractExitNumber(st) {
 }
 
 const I18N_DICT = {
-  fr: {
+  fr: {    scrollRightTitle: "Défiler à droite",
+    scrollLeftTitle: "Défiler à gauche",
+    actionEnterCity: "Saisir ma ville",
+    clearInputTitle: "Effacer la saisie",
+    locateMeTitle: "Centrer sur ma position",
+    toggleExitTitle: "Inclure les stations à prix discount situées aux sorties immédiates de l'autoroute (< 1,5 km)",
+    refRoutesTest: "Tester",
+    refRoutesToggleTitle: "Afficher les 52 itinéraires de référence",
+    refRoutesSub: "4 corridors par pays (13 pays d'Europe)",
+    refRoutesTitle: "52 Itinéraires de référence",
+
     pageTitle: "FuelPilot • Carburant Autoroute & Bornes PK",
     tagline: "Prix carburant & aires d'autoroute",
     privacy: "Confidentialité",
@@ -1430,7 +1403,7 @@ const I18N_DICT = {
     sortDist: "Tri : Distance",
     tabMap: "Carte",
     tabList: "Liste & Filtres",
-    coverage: "Réseau couvert : 🇫🇷 France • 🇩🇪 Allemagne • 🇧🇪 Belgique • 🇮🇹 Italie • 🇪🇸 Espagne • 🇬🇧 Royaume-Uni • 🇵🇹 Portugal • 🇳🇱 Pays-Bas • 🇱🇺 Luxembourg • 🇦🇹 Autriche • 🇨🇭 Suisse • 🇸🇮 Slovénie • 🇭🇷 Croatie",
+    coverage: "Réseau couvert : 🇫🇷 France • 🇩🇪 Allemagne • 🇧🇪 Belgique • 🇳🇱 Pays-Bas • 🇮🇹 Italie • 🇪🇸 Espagne • 🇵🇹 Portugal • 🇬🇧 Royaume-Uni • 🇱🇺 Luxembourg • 🇦🇹 Autriche • 🇨🇭 Suisse • 🇸🇮 Slovénie • 🇭🇷 Croatie",
     recentHdr: "🕒 10 dernières localités",
     bestPrice: "⭐ PRIX LE PLUS BAS",
     fromStart: (km) => `🎯 Dans ${km} km`,
@@ -1523,59 +1496,17 @@ const I18N_DICT = {
     weatherLoading: "Météo en direct",
     fuelUnavailable: "Indispo"
   },
-  sl: {
-    refRoutesTitle: "52 Referenčnih poti",
-    refRoutesSub: "4 koridorji na državo (13 evropskih držav)",
-    refRoutesTest: "Preizkusi",
+  de: {    scrollRightTitle: "Nach rechts scrollen",
+    scrollLeftTitle: "Nach links scrollen",
+    actionEnterCity: "Stadt eingeben",
+    clearInputTitle: "Eingabe löschen",
+    locateMeTitle: "Auf meine Position zentrieren",
+    toggleExitTitle: "Günstige Tankstellen an unmittelbaren Autobahnausfahrten (< 1,5 km) einbeziehen",
+    refRoutesTest: "Testen",
+    refRoutesToggleTitle: "52 Referenzrouten anzeigen",
+    refRoutesSub: "4 Korridore pro Land (13 europäische Länder)",
+    refRoutesTitle: "52 Referenzrouten",
 
-    'douches chaudes': 'Topli tuši',
-    'espace bébé': 'Previjalnica',
-    'gonflage pneus': 'Tlak v pnevmatikah',
-    'wi-fi gratuit': 'Brezplačen Wi-Fi',
-    'distributeur dab': 'Bančni avtomat (ATM)',
-    'aire camping-cars': 'Postajališče za avtodome',
-    'parking pl': 'Parkirišče za tovornjake',
-    'sanitaires 24/7': 'Sanitarije 24/7',
-    'toilettes publiques': 'Javna stranišča',
-    'boutique alimentaire': 'Trgovina z živili',
-    'boutique non alimentaire': 'Trgovina',
-    'restauration sur place': 'Restavracija',
-    'restauration à emporter': 'Hrana za s seboj',
-    'lavage automatique': 'Avtopralnica',
-    'lavage haute pression': 'Visokotlačno pranje',
-    'lavage manuel': 'Ročno pranje',
-    'bornes électriques': 'E-polnilnice',
-    'automate cb 24/24': 'Plačilni avtomat 24/7',
-    'bar': 'Kavarna / Bar',
-    'relais colis': 'Prevzem paketov'
-  },
-  hr: {
-    refRoutesTitle: "52 Referentnih ruta",
-    refRoutesSub: "4 koridora po državi (13 europskih država)",
-    refRoutesTest: "Testiraj",
-
-    'douches chaudes': 'Topli tuševi',
-    'espace bébé': 'Prostor za prematanje',
-    'gonflage pneus': 'Pumpe za gume',
-    'wi-fi gratuit': 'Besplatni Wi-Fi',
-    'distributeur dab': 'Bankomat (ATM)',
-    'aire camping-cars': 'Kamp kućice / Autodomovi',
-    'parking pl': 'Parkiralište za teretna vozila',
-    'sanitaires 24/7': 'Sanitarni čvor 24/7',
-    'toilettes publiques': 'Javni WC',
-    'boutique alimentaire': 'Trgovina prehrambenih proizvoda',
-    'boutique non alimentaire': 'Trgovina',
-    'restauration sur place': 'Restoran',
-    'restauration à emporter': 'Hrana za van',
-    'lavage automatique': 'Automatska autopraonica',
-    'lavage haute pression': 'Pranje pod visokim tlakom',
-    'lavage manuel': 'Ručno pranje',
-    'bornes électriques': 'Punionice za električna vozila',
-    'automate cb 24/24': 'Automatsko plaćanje karticom 24/7',
-    'bar': 'Kafić / Bar',
-    'relais colis': 'Preuzimanje paketa'
-  },
-  de: {
     pageTitle: "FuelPilot • Autobahn-Tankstellen & Kraftstoffpreise",
     tagline: "Kraftstoffpreise & Autobahnraststätten",
     privacy: "Datenschutz",
@@ -1612,7 +1543,7 @@ const I18N_DICT = {
     sortDist: "Sortierung: Entfernung",
     tabMap: "Karte",
     tabList: "Liste & Filter",
-    coverage: "Abgedecktes Netz: 🇫🇷 Frankreich • 🇩🇪 Deutschland • 🇧🇪 Belgien • 🇮🇹 Italien • 🇪🇸 Spanien • 🇬🇧 Vereinigtes Königreich",
+    coverage: "Abgedecktes Netz: 🇫🇷 Frankreich • 🇩🇪 Deutschland • 🇧🇪 Belgien • 🇳🇱 Niederlande • 🇮🇹 Italien • 🇪🇸 Spanien • 🇵🇹 Portugal • 🇬🇧 Vereinigtes Königreich • 🇱🇺 Luxemburg • 🇦🇹 Österreich • 🇨🇭 Schweiz • 🇸🇮 Slowenien • 🇭🇷 Kroatien",
     recentHdr: "🕒 Letzte 10 Orte",
     bestPrice: "⭐ NIEDRIGSTER PREIS",
     fromStart: (km) => `🎯 In ${km} km`,
@@ -1705,7 +1636,17 @@ const I18N_DICT = {
     weatherLoading: "Live-Wetter",
     fuelUnavailable: "Nicht verf."
   },
-  en: {
+  en: {    scrollRightTitle: "Scroll right",
+    scrollLeftTitle: "Scroll left",
+    actionEnterCity: "Enter city",
+    clearInputTitle: "Clear input",
+    locateMeTitle: "Center on my location",
+    toggleExitTitle: "Include discount stations at immediate motorway exits (< 1.5 km)",
+    refRoutesTest: "Test",
+    refRoutesToggleTitle: "Show 52 reference routes",
+    refRoutesSub: "4 corridors per country (13 European countries)",
+    refRoutesTitle: "52 Reference Routes",
+
     pageTitle: "FuelPilot • Motorway Fuel Prices & Service Areas",
     tagline: "Motorway fuel prices & service areas",
     privacy: "Privacy",
@@ -1742,7 +1683,7 @@ const I18N_DICT = {
     sortDist: "Sort: Distance",
     tabMap: "Map",
     tabList: "List & Filters",
-    coverage: "Covered network: 🇫🇷 France • 🇩🇪 Germany • 🇧🇪 Belgium • 🇮🇹 Italy • 🇪🇸 Spain • 🇬🇧 UK",
+    coverage: "Covered network: 🇫🇷 France • 🇩🇪 Germany • 🇧🇪 Belgium • 🇳🇱 Netherlands • 🇮🇹 Italy • 🇪🇸 Spain • 🇵🇹 Portugal • 🇬🇧 United Kingdom • 🇱🇺 Luxembourg • 🇦🇹 Austria • 🇨🇭 Switzerland • 🇸🇮 Slovenia • 🇭🇷 Croatia",
     recentHdr: "🕒 10 recent locations",
     bestPrice: "⭐ LOWEST PRICE",
     fromStart: (km) => `🎯 In ${km} km`,
@@ -1835,7 +1776,17 @@ const I18N_DICT = {
     weatherLoading: "Live weather",
     fuelUnavailable: "Unavailable"
   },
-  it: {
+  it: {    scrollRightTitle: "Scorri a destra",
+    scrollLeftTitle: "Scorri a sinistra",
+    actionEnterCity: "Inserisci città",
+    clearInputTitle: "Cancella inserimento",
+    locateMeTitle: "Centra sulla mia posizione",
+    toggleExitTitle: "Includi distributori economici alle uscite autostradali immediate (< 1,5 km)",
+    refRoutesTest: "Testa",
+    refRoutesToggleTitle: "Mostra 52 itinerari di riferimento",
+    refRoutesSub: "4 corridoi per paese (13 paesi europei)",
+    refRoutesTitle: "52 Itinerari di riferimento",
+
     pageTitle: "FuelPilot • Prezzi Carburante e Aree Autostradali",
     tagline: "Prezzi carburante e aree autostradali",
     privacy: "Privacy",
@@ -1872,7 +1823,7 @@ const I18N_DICT = {
     sortDist: "Ordine: Distanza",
     tabMap: "Mappa",
     tabList: "Lista e Filtri",
-    coverage: "Rete coperta: 🇫🇷 Francia • 🇩🇪 Germania • 🇧🇪 Belgio • 🇮🇹 Italia • 🇪🇸 Spagna • 🇬🇧 Regno Unito",
+    coverage: "Rete coperta: 🇫🇷 Francia • 🇩🇪 Germania • 🇧🇪 Belgio • 🇳🇱 Paesi Bassi • 🇮🇹 Italia • 🇪🇸 Spagna • 🇵🇹 Portogallo • 🇬🇧 Regno Unito • 🇱🇺 Lussemburgo • 🇦🇹 Austria • 🇨🇭 Svizzera • 🇸🇮 Slovenia • 🇭🇷 Croazia",
     recentHdr: "🕒 Ultime 10 località",
     bestPrice: "⭐ PREZZO PIÙ BASSO",
     fromStart: (km) => `🎯 Tra ${km} km`,
@@ -1965,7 +1916,17 @@ const I18N_DICT = {
     weatherLoading: "Meteo in tempo reale",
     fuelUnavailable: "Non disp."
   },
-  nl: {
+  nl: {    scrollRightTitle: "Naar rechts scrollen",
+    scrollLeftTitle: "Naar links scrollen",
+    actionEnterCity: "Voer stad in",
+    clearInputTitle: "Invoer wissen",
+    locateMeTitle: "Centreren op mijn locatie",
+    toggleExitTitle: "Inclusief voordelige stations bij afritten (< 1,5 km van de snelweg)",
+    refRoutesTest: "Testen",
+    refRoutesToggleTitle: "Toon 52 referentieroutes",
+    refRoutesSub: "4 corridors per land (13 Europese landen)",
+    refRoutesTitle: "52 Referentieroutes",
+
     pageTitle: "FuelPilot • Snelweg Brandstofprijzen & Laadpalen",
     tagline: "Brandstofprijzen & snelwegparkings",
     privacy: "Privacy",
@@ -2003,7 +1964,7 @@ const I18N_DICT = {
     sortDist: "Sortering: Afstand",
     tabMap: "Kaart",
     tabList: "Lijst & Filters",
-    coverage: "Gedekt netwerk: 🇫🇷 Frankrijk • 🇩🇪 Duitsland • 🇧🇪 België • 🇮🇹 Italië • 🇪🇸 Spanje • 🇬🇧 VK",
+    coverage: "Gedekt netwerk: 🇫🇷 Frankrijk • 🇩🇪 Duitsland • 🇧🇪 België • 🇳🇱 Nederland • 🇮🇹 Italië • 🇪🇸 Spanje • 🇵🇹 Portugal • 🇬🇧 Verenigd Koninkrijk • 🇱🇺 Luxemburg • 🇦🇹 Oostenrijk • 🇨🇭 Zwitserland • 🇸🇮 Slovenië • 🇭🇷 Kroatië",
     recentHdr: "🕒 10 recente locaties",
     bestPrice: "⭐ LAAGSTE PRIJS",
     fromStart: (km) => `🎯 Over ${km} km`,
@@ -2096,7 +2057,17 @@ const I18N_DICT = {
     weatherLoading: "Actueel weer",
     fuelUnavailable: "Niet besch."
   },
-  es: {
+  es: {    scrollRightTitle: "Desplazar a la derecha",
+    scrollLeftTitle: "Desplazar a la izquierda",
+    actionEnterCity: "Escribir ciudad",
+    clearInputTitle: "Borrar entrada",
+    locateMeTitle: "Centrar en mi ubicación",
+    toggleExitTitle: "Incluir gasolineras económicas en salidas inmediatas de autopista (< 1,5 km)",
+    refRoutesTest: "Probar",
+    refRoutesToggleTitle: "Mostrar 52 itinerarios de referencia",
+    refRoutesSub: "4 corredores por país (13 países europeos)",
+    refRoutesTitle: "52 Itinerarios de referencia",
+
     pageTitle: "FuelPilot • Precios Carburante y Áreas de Autopista",
     tagline: "Precios de carburante y áreas de autopista",
     privacy: "Privacidad",
@@ -2133,7 +2104,7 @@ const I18N_DICT = {
     sortDist: "Orden: Distancia",
     tabMap: "Mapa",
     tabList: "Lista y Filtros",
-    coverage: "Red cubierta: 🇫🇷 Francia • 🇩🇪 Alemania • 🇧🇪 Bélgica • 🇮🇹 Italia • 🇪🇸 España • 🇬🇧 Reino Unido",
+    coverage: "Red cubierta: 🇫🇷 Francia • 🇩🇪 Alemania • 🇧🇪 Bélgica • 🇳🇱 Países Bajos • 🇮🇹 Italia • 🇪🇸 España • 🇵🇹 Portugal • 🇬🇧 Reino Unido • 🇱🇺 Luxemburgo • 🇦🇹 Austria • 🇨🇭 Suiza • 🇸🇮 Eslovenia • 🇭🇷 Croacia",
     recentHdr: "🕒 10 últimas localidades",
     bestPrice: "⭐ PRECIO MÁS BAJO",
     fromStart: (km) => `🎯 En ${km} km`,
@@ -2226,7 +2197,13 @@ const I18N_DICT = {
     weatherLoading: "Tiempo en vivo",
     fuelUnavailable: "No disp."
   },
-  pt: {
+  pt: {    scrollRightTitle: "Deslocar para a direita",
+    scrollLeftTitle: "Deslocar para a esquerda",
+    actionEnterCity: "Introduzir cidade",
+    clearInputTitle: "Limpar campo",
+    locateMeTitle: "Centrar na minha localização",
+    toggleExitTitle: "Incluir postos económicos nas saídas imediatas da autoestrada (< 1,5 km)",
+    refRoutesToggleTitle: "Mostrar 52 itinerários de referência",
     refRoutesTitle: "52 Itinerários de referência",
     refRoutesSub: "4 corredores por país (13 países europeus)",
     refRoutesTest: "Testar",
@@ -2268,7 +2245,7 @@ const I18N_DICT = {
     sortDist: "Ordem: Distância",
     tabMap: "Mapa",
     tabList: "Lista & Filtros",
-    coverage: "Rede coberta: 🇫🇷 França • 🇩🇪 Alemanha • 🇧🇪 Bélgica • 🇳🇱 Países Baixos • 🇮🇹 Itália • 🇪🇸 Espanha • 🇵🇹 Portugal • 🇬🇧 Reino Unido",
+    coverage: "Rede coberta: 🇫🇷 França • 🇩🇪 Alemanha • 🇧🇪 Bélgica • 🇳🇱 Países Baixos • 🇮🇹 Itália • 🇪🇸 Espanha • 🇵🇹 Portugal • 🇬🇧 Reino Unido • 🇱🇺 Luxemburgo • 🇦🇹 Áustria • 🇨🇭 Suíça • 🇸🇮 Eslovénia • 🇭🇷 Croácia",
     recentHdr: "🕒 10 últimas localidades",
     bestPrice: "⭐ PREÇO MAIS BAIXO",
     fromStart: (km) => `🎯 Em ${km} km`,
@@ -2361,7 +2338,13 @@ const I18N_DICT = {
     weatherLoading: "Meteorologia em direto",
     fuelUnavailable: "Indisp."
   },
-  sl: {
+  sl: {    scrollRightTitle: "Pomakni desno",
+    scrollLeftTitle: "Pomakni levo",
+    actionEnterCity: "Vnesite mesto",
+    clearInputTitle: "Počisti vnos",
+    locateMeTitle: "Usredotoči na mojo lokacijo",
+    toggleExitTitle: "Vključi ugodne bencinske servise na neposrednih izvozih z avtoceste (< 1,5 km)",
+    refRoutesToggleTitle: "Prikaži 52 referenčnih poti",
     refRoutesTitle: "52 Referenčnih poti",
     refRoutesSub: "4 koridorji na državo (13 evropskih držav)",
     refRoutesTest: "Preizkusi",
@@ -2509,7 +2492,13 @@ const I18N_DICT = {
     weatherLoading: "Vreme v živo",
     fuelUnavailable: "Ni na voljo"
   },
-  hr: {
+  hr: {    scrollRightTitle: "Pomakni udesno",
+    scrollLeftTitle: "Pomakni ulijevo",
+    actionEnterCity: "Unesite grad",
+    clearInputTitle: "Izbriši unos",
+    locateMeTitle: "Centriraj na moju lokaciju",
+    toggleExitTitle: "Uključi povoljne benzinske postaje na neposrednim izlazima s autoceste (< 1,5 km)",
+    refRoutesToggleTitle: "Prikaži 52 referentne rute",
     refRoutesTitle: "52 Referentnih ruta",
     refRoutesSub: "4 koridora po državi (13 europskih država)",
     refRoutesTest: "Testiraj",
@@ -2798,7 +2787,12 @@ function renderCountryBadgesOnMap() {
     { coords: [42.6, 12.8], flag: '🇮🇹', name: tr.countryIT, count: tr.areasCount(615) },
     { coords: [40.2, -3.6], flag: '🇪🇸', name: tr.countryES, count: tr.areasCount(833) },
     { coords: [39.5, -8.0], flag: '🇵🇹', name: tr.countryPT, count: tr.areasCount(65) },
-    { coords: [52.8, -1.8], flag: '🇬🇧', name: tr.countryGB, count: tr.areasCount(158) }
+    { coords: [52.8, -1.8], flag: '🇬🇧', name: tr.countryGB, count: tr.areasCount(158) },
+    { coords: [49.8, 6.1], flag: '🇱🇺', name: tr.countryLU, count: tr.areasCount(28) },
+    { coords: [47.5, 14.5], flag: '🇦🇹', name: tr.countryAT, count: tr.areasCount(86) },
+    { coords: [46.8, 8.2], flag: '🇨🇭', name: tr.countryCH, count: tr.areasCount(65) },
+    { coords: [46.15, 14.99], flag: '🇸🇮', name: tr.countrySI, count: tr.areasCount(42) },
+    { coords: [45.1, 15.5], flag: '🇭🇷', name: tr.countryHR, count: tr.areasCount(77) }
   ];
   countryLabels.forEach(c => {
     const icon = L.divIcon({
@@ -2811,7 +2805,6 @@ function renderCountryBadgesOnMap() {
   });
 }
 
-// Enforce the exact flag order in #lang-bar: France, Germany, Italy, Spain, United Kingdom
 function ensureLangBarOrder() {
   const bar = document.getElementById('lang-bar');
   if (!bar) return;
@@ -2976,6 +2969,64 @@ function setAppLanguage(lang, isManual = false) {
 
   const covEl = document.querySelector('.coverage-text');
   if (covEl) covEl.textContent = tr.coverage;
+
+  // Update Reference Routes Drawer Header & Subtitle
+  const refTitleEl = document.getElementById('i18n-ref-routes-title');
+  if (refTitleEl && tr.refRoutesTitle) refTitleEl.textContent = tr.refRoutesTitle;
+  const refSubEl = document.getElementById('i18n-ref-routes-sub');
+  if (refSubEl && tr.refRoutesSub) refSubEl.textContent = tr.refRoutesSub;
+  const refToggleBtn = document.getElementById('btn-ref-routes-toggle');
+  if (refToggleBtn && tr.refRoutesToggleTitle) refToggleBtn.title = tr.refRoutesToggleTitle;
+
+  // Localize Country Tabs in Reference Routes Drawer
+  const countryTabNames = {
+    FR: tr.countryFR, ES: tr.countryES, IT: tr.countryIT, GB: tr.countryGB,
+    BE: tr.countryBE, DE: tr.countryDE, PT: tr.countryPT, NL: tr.countryNL,
+    LU: tr.countryLU, AT: tr.countryAT, CH: tr.countryCH, SI: tr.countrySI, HR: tr.countryHR
+  };
+  document.querySelectorAll('#ref-country-tabs .ref-tab-btn').forEach(tab => {
+    const cCode = tab.dataset.refCountry;
+    if (cCode && countryTabNames[cCode]) {
+      tab.title = countryTabNames[cCode];
+    }
+  });
+
+  // Re-render reference corridors to update test button labels
+  if (typeof renderReferenceCorridors === 'function') {
+    renderReferenceCorridors(currentRefCountry || 'FR');
+  }
+
+  // Update Exit Stations Filter Checkbox and Label Title
+  const exitChk = document.getElementById('chk-exit-stations');
+  if (exitChk && tr.toggleExitTitle) {
+    exitChk.title = tr.toggleExitTitle;
+    if (exitChk.parentElement) exitChk.parentElement.title = tr.toggleExitTitle;
+  }
+
+  // Update Locate Me Button Tooltip
+  const locateBtn = document.getElementById('btn-locate-me');
+  if (locateBtn && tr.locateMeTitle) {
+    locateBtn.title = tr.locateMeTitle;
+    locateBtn.setAttribute('aria-label', tr.locateMeTitle);
+  }
+
+  // Update Clear Input Buttons
+  const clearStart = document.getElementById('btn-clear-start');
+  if (clearStart && tr.clearInputTitle) {
+    clearStart.title = tr.clearInputTitle;
+    clearStart.setAttribute('aria-label', tr.clearInputTitle);
+  }
+  const clearEnd = document.getElementById('btn-clear-end');
+  if (clearEnd && tr.clearInputTitle) {
+    clearEnd.title = tr.clearInputTitle;
+    clearEnd.setAttribute('aria-label', tr.clearInputTitle);
+  }
+
+  // Update Fuel Info Modal Scroll Buttons
+  const fuelLeft = document.getElementById('fuel-scroll-left');
+  if (fuelLeft && tr.scrollLeftTitle) fuelLeft.setAttribute('aria-label', tr.scrollLeftTitle);
+  const fuelRight = document.getElementById('fuel-scroll-right');
+  if (fuelRight && tr.scrollRightTitle) fuelRight.setAttribute('aria-label', tr.scrollRightTitle);
 
   renderCountryBadgesOnMap();
   updateMapLayerControlLabels();
@@ -6479,13 +6530,18 @@ function isStandalonePwaMode() {
 function formatGeolocationErrorMessage(err) {
   const code = err && err.code;
   const lang = currentLang || 'fr';
-  const actionBtn = ' <a href="javascript:void(0)" onclick="const inp=document.getElementById(\'start-input\');if(inp){inp.focus();inp.click();}" style="color:#93c5fd;text-decoration:underline;font-weight:700;margin-left:6px;cursor:pointer;">Saisir ma ville</a>';
+  const tr = t();
+  const enterCityLabel = tr.actionEnterCity || 'Saisir ma ville';
+  const actionBtn = ` <a href="javascript:void(0)" onclick="const inp=document.getElementById('input-start')||document.getElementById('start-input');if(inp){inp.focus();inp.click();}" style="color:#93c5fd;text-decoration:underline;font-weight:700;margin-left:6px;cursor:pointer;">${enterCityLabel}</a>`;
   if (code === 1) { // PERMISSION_DENIED
     if (lang === 'nl') return "📍 Locatie geblokkeerd: tik op het 🔒-pictogram links van fuelcopilot.fr en kies 'Precieze locatie'." + actionBtn;
     if (lang === 'de') return "📍 Standort blockiert: Tippen Sie auf das 🔒-Symbol links neben fuelcopilot.fr und wählen Sie 'Genaue Position'." + actionBtn;
     if (lang === 'en') return "📍 Location blocked: tap the 🔒 icon left of fuelcopilot.fr and ensure 'Precise location' is ON." + actionBtn;
     if (lang === 'it') return "📍 Posizione bloccata: tocca l'icona 🔒 a sinistra di fuelcopilot.fr e attiva 'Posizione precisa'." + actionBtn;
     if (lang === 'es') return "📍 Ubicación bloqueada: toca el icono 🔒 a la izquierda de fuelcopilot.fr y activa 'Ubicación precisa'." + actionBtn;
+    if (lang === 'pt') return "📍 Localização bloqueada: toque no ícone 🔒 à esquerda de fuelcopilot.fr e ative 'Localização precisa'." + actionBtn;
+    if (lang === 'sl') return "📍 Lokacija blokirana: dotaknite se ikone 🔒 levo od fuelcopilot.fr in omogočite 'Natančna lokacija'." + actionBtn;
+    if (lang === 'hr') return "📍 Lokacija blokirana: dodirnite ikonu 🔒 lijevo od fuelcopilot.fr i omogućite 'Točna lokacija'." + actionBtn;
     return "📍 Position bloquée : touchez l'icône 🔒 à gauche de fuelcopilot.fr et vérifiez que 'Position' est autorisée." + actionBtn;
   } else if (code === 2) { // POSITION_UNAVAILABLE
     if (lang === 'nl') return "📍 Gps-signaal niet beschikbaar: activeer 'Locatie' in het snelmenu van uw telefoon." + actionBtn;
@@ -6493,6 +6549,9 @@ function formatGeolocationErrorMessage(err) {
     if (lang === 'en') return "📍 GPS unavailable: please turn on 'Location' in your phone's top swipe-down menu." + actionBtn;
     if (lang === 'it') return "📍 Segnale GPS non disponibile: attiva 'Posizione' nel menu a discesa del telefono." + actionBtn;
     if (lang === 'es') return "📍 Señal GPS no disponible: activa 'Ubicación' en el menú superior del teléfono." + actionBtn;
+    if (lang === 'pt') return "📍 Sinal GPS indisponível: ative 'Localização' no menu rápido do seu telemóvel." + actionBtn;
+    if (lang === 'sl') return "📍 GPS signal ni na voljo: vklopite 'Lokacija' v hitrem meniju telefona." + actionBtn;
+    if (lang === 'hr') return "📍 GPS signal nije dostupan: uključite 'Lokacija' u brzom izborniku telefona." + actionBtn;
     return "📍 Position non fournie par le smartphone : vérifiez que le bouton 'Position' est activé dans le volet du haut (glisser depuis le haut)." + actionBtn;
   } else if (code === 3) { // TIMEOUT
     if (lang === 'nl') return "📍 Gps-signaal te traag: controleer 'Precieze locatie' in Chrome of voer uw stad in." + actionBtn;
@@ -6500,20 +6559,13 @@ function formatGeolocationErrorMessage(err) {
     if (lang === 'en') return "📍 GPS search timed out: check 'Precise location' in Chrome or type your departure city." + actionBtn;
     if (lang === 'it') return "📍 Ricerca GPS scaduta: verifica la posizione in Chrome o digita la tua città." + actionBtn;
     if (lang === 'es') return "📍 Búsqueda GPS agotada: verifique la ubicación en Chrome o escriba su ciudad." + actionBtn;
+    if (lang === 'pt') return "📍 Procura de GPS expirou: verifique as definições de localização no Chrome ou introduza a sua cidade." + actionBtn;
+    if (lang === 'sl') return "📍 Iskanje GPS je poteklo: preverite natančno lokacijo v Chromu ali vnesite svoje mesto." + actionBtn;
+    if (lang === 'hr') return "📍 Traženje GPS-a je isteklo: provjerite točnu lokaciju u Chromeu ili unesite svoj grad." + actionBtn;
     return "📍 Aucun signal GPS reçu : vérifiez le bouton 'Position' dans le volet du haut et 'Position précise' dans Chrome." + actionBtn;
   }
-  return (t().locationError || "Signal GPS en cours d'acquisition.") + actionBtn;
+  return (tr.locationError || "Signal GPS en cours d'acquisition.") + actionBtn;
 }
-
-// ============================================================================
-// Satellite GPS Engine (High-Accuracy GNSS with Unified Watch & Adaptive Fallback)
-// ============================================================================
-let pendingLocationResolvers = [];
-let isAcquiringLocation = false;
-let backgroundGpsWatchId = null;
-let bestCandidatePos = null;
-let candidateTimer = null;
-let globalGpsSafetyTimer = null;
 
 function resolvePendingLocation(pos, err) {
   const cbs = [...pendingLocationResolvers];
