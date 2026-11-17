@@ -1360,6 +1360,8 @@ const I18N_DICT = {
     actionEnterCity: "Saisir ma ville",
     clearInputTitle: "Effacer la saisie",
     locateMeTitle: "Centrer sur ma position",
+    navFollowPaused: "📍 Suivi automatique en pause. Touchez l'icône GPS pour recentrer.",
+    navFollowing: "🎯 Suivi automatique actif",
     toggleExitTitle: "Inclure les stations à prix discount situées aux sorties immédiates de l'autoroute (< 1,5 km)",
     refRoutesTest: "Tester",
     refRoutesToggleTitle: "Afficher les 52 itinéraires de référence",
@@ -1501,6 +1503,8 @@ const I18N_DICT = {
     actionEnterCity: "Stadt eingeben",
     clearInputTitle: "Eingabe löschen",
     locateMeTitle: "Auf meine Position zentrieren",
+    navFollowPaused: "📍 Automatische Verfolgung pausiert. Tippen Sie auf das GPS-Symbol zum Zentrieren.",
+    navFollowing: "🎯 Automatische Verfolgung aktiv",
     toggleExitTitle: "Günstige Tankstellen an unmittelbaren Autobahnausfahrten (< 1,5 km) einbeziehen",
     refRoutesTest: "Testen",
     refRoutesToggleTitle: "52 Referenzrouten anzeigen",
@@ -1641,6 +1645,8 @@ const I18N_DICT = {
     actionEnterCity: "Enter city",
     clearInputTitle: "Clear input",
     locateMeTitle: "Center on my location",
+    navFollowPaused: "📍 Auto-follow paused. Tap the GPS icon to recenter.",
+    navFollowing: "🎯 Auto-follow active",
     toggleExitTitle: "Include discount stations at immediate motorway exits (< 1.5 km)",
     refRoutesTest: "Test",
     refRoutesToggleTitle: "Show 52 reference routes",
@@ -1781,6 +1787,8 @@ const I18N_DICT = {
     actionEnterCity: "Inserisci città",
     clearInputTitle: "Cancella inserimento",
     locateMeTitle: "Centra sulla mia posizione",
+    navFollowPaused: "📍 Inseguimento automatico in pausa. Tocca l'icona GPS per ricentrare.",
+    navFollowing: "🎯 Inseguimento automatico attivo",
     toggleExitTitle: "Includi distributori economici alle uscite autostradali immediate (< 1,5 km)",
     refRoutesTest: "Testa",
     refRoutesToggleTitle: "Mostra 52 itinerari di riferimento",
@@ -1921,6 +1929,8 @@ const I18N_DICT = {
     actionEnterCity: "Voer stad in",
     clearInputTitle: "Invoer wissen",
     locateMeTitle: "Centreren op mijn locatie",
+    navFollowPaused: "📍 Automatisch volgen gepauzeerd. Tik op het GPS-icoon om te hercentreren.",
+    navFollowing: "🎯 Automatisch volgen actief",
     toggleExitTitle: "Inclusief voordelige stations bij afritten (< 1,5 km van de snelweg)",
     refRoutesTest: "Testen",
     refRoutesToggleTitle: "Toon 52 referentieroutes",
@@ -2062,6 +2072,8 @@ const I18N_DICT = {
     actionEnterCity: "Escribir ciudad",
     clearInputTitle: "Borrar entrada",
     locateMeTitle: "Centrar en mi ubicación",
+    navFollowPaused: "📍 Seguimiento automático en pausa. Toque el icono GPS para recentrar.",
+    navFollowing: "🎯 Seguimiento automático activo",
     toggleExitTitle: "Incluir gasolineras económicas en salidas inmediatas de autopista (< 1,5 km)",
     refRoutesTest: "Probar",
     refRoutesToggleTitle: "Mostrar 52 itinerarios de referencia",
@@ -2202,6 +2214,8 @@ const I18N_DICT = {
     actionEnterCity: "Introduzir cidade",
     clearInputTitle: "Limpar campo",
     locateMeTitle: "Centrar na minha localização",
+    navFollowPaused: "📍 Acompanhamento automático em pausa. Toque no ícone GPS para recentrar.",
+    navFollowing: "🎯 Acompanhamento automático ativo",
     toggleExitTitle: "Incluir postos económicos nas saídas imediatas da autoestrada (< 1,5 km)",
     refRoutesToggleTitle: "Mostrar 52 itinerários de referência",
     refRoutesTitle: "52 Itinerários de referência",
@@ -2343,6 +2357,8 @@ const I18N_DICT = {
     actionEnterCity: "Vnesite mesto",
     clearInputTitle: "Počisti vnos",
     locateMeTitle: "Usredotoči na mojo lokacijo",
+    navFollowPaused: "📍 Samodejno sledenje začasno ustavljeno. Dotaknite se ikone GPS za ponovno centriranje.",
+    navFollowing: "🎯 Samodejno sledenje aktivno",
     toggleExitTitle: "Vključi ugodne bencinske servise na neposrednih izvozih z avtoceste (< 1,5 km)",
     refRoutesToggleTitle: "Prikaži 52 referenčnih poti",
     refRoutesTitle: "52 Referenčnih poti",
@@ -2497,6 +2513,8 @@ const I18N_DICT = {
     actionEnterCity: "Unesite grad",
     clearInputTitle: "Izbriši unos",
     locateMeTitle: "Centriraj na moju lokaciju",
+    navFollowPaused: "📍 Automatsko praćenje pauzirano. Dodirnite GPS ikonu za ponovno centriranje.",
+    navFollowing: "🎯 Automatsko praćenje aktivno",
     toggleExitTitle: "Uključi povoljne benzinske postaje na neposrednim izlazima s autoceste (< 1,5 km)",
     refRoutesToggleTitle: "Prikaži 52 referentne rute",
     refRoutesTitle: "52 Referentnih ruta",
@@ -3471,6 +3489,15 @@ function initMap() {
   map.getPane('gpsUserPane').style.zIndex = '9999';
 
   L.control.zoom({ position: 'topright' }).addTo(map);
+
+  // Débrayage tactile intelligent du suivi de caméra : si l'utilisateur déplace la carte au doigt, on suspend le suivi
+  map.on('dragstart', () => {
+    if (isGpsNavActive && isGpsAutoFollow) {
+      isGpsAutoFollow = false;
+      updateLocateButtonNavState();
+      showToast(t().navFollowPaused || "📍 Suivi automatique en pause. Touchez l'icône GPS pour recentrer.", { isInfo: true, duration: 3000 });
+    }
+  });
 
   // Basemap 1: OpenStreetMap France (optimisé pour les autoroutes et routes françaises, 100% gratuit, sans filigrane ni clé)
   const osmFr = L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
@@ -6513,6 +6540,19 @@ window.getCurrentRouteStations = () => currentRouteStations;
 // ==========================================================================
 let hasSeenListTabAfterRoute = false;
 let isGpsNavActive = false;
+let isGpsAutoFollow = false;
+
+function updateLocateButtonNavState() {
+  const btnLocate = document.getElementById('btn-locate-me');
+  if (!btnLocate) return;
+  if (isGpsNavActive && isGpsAutoFollow) {
+    btnLocate.classList.add('active-follow');
+    btnLocate.title = t().navFollowing || "Suivi automatique actif (centré)";
+  } else {
+    btnLocate.classList.remove('active-follow');
+    btnLocate.title = t().locateMeTitle || "Centrer sur ma position";
+  }
+}
 let liveGpsWatchId = null;
 let gpsWatchId = null; // Legacy alias
 let userGpsPosition = null; // { lat, lon, accuracy, heading, speed, timestamp, city, isHighAccuracy }
@@ -6526,6 +6566,10 @@ let lastGpsAcqStart = 0;
 try {
   Object.defineProperty(window, 'userGpsPosition', { get: () => userGpsPosition, set: (v) => { userGpsPosition = v; }, configurable: true });
   Object.defineProperty(window, 'userGpsMarker', { get: () => userGpsMarker, set: (v) => { userGpsMarker = v; }, configurable: true });
+  Object.defineProperty(window, 'activeRouteData', { get: () => activeRouteData, set: (v) => { activeRouteData = v; }, configurable: true });
+  Object.defineProperty(window, 'currentRouteStations', { get: () => currentRouteStations, set: (v) => { currentRouteStations = v; }, configurable: true });
+  Object.defineProperty(window, 'isGpsNavActive', { get: () => isGpsNavActive, set: (v) => { isGpsNavActive = v; }, configurable: true });
+  Object.defineProperty(window, 'isGpsAutoFollow', { get: () => isGpsAutoFollow, set: (v) => { isGpsAutoFollow = v; }, configurable: true });
 } catch(e) {}
 
 function toggleGpsNavigation() {
@@ -7045,6 +7089,10 @@ function requestUserGeolocation(onSuccess, onError, forceFresh = false) {
 
 // Centrage de la carte sur la position de l'utilisateur (Garantie Anti-Blocage et Anti-Freeze)
 function centerMapOnUser() {
+  if (isGpsNavActive) {
+    isGpsAutoFollow = true;
+    updateLocateButtonNavState();
+  }
   const btnLocate = document.getElementById('btn-locate-me');
   if (btnLocate) btnLocate.classList.add('locating');
 
@@ -7130,10 +7178,15 @@ function startGpsNavigation() {
   }
 
   isGpsNavActive = true;
+  isGpsAutoFollow = true;
   updateNavButtonUI();
+  updateLocateButtonNavState();
 
-  // Si une position récente existe, la traiter immédiatement
+  // Si une position récente existe, centrer immédiatement la carte sur la voiture
   if (userGpsPosition) {
+    if (map) {
+      map.flyTo([userGpsPosition.lat, userGpsPosition.lon], Math.max(map.getZoom(), 15), { animate: true, duration: 0.8 });
+    }
     onGpsLocationUpdate(userGpsPosition);
   }
 
@@ -7149,9 +7202,11 @@ function startGpsNavigation() {
 
 function stopGpsNavigation() {
   isGpsNavActive = false;
+  isGpsAutoFollow = false;
   userProgressionKmOnRoute = 0;
   releaseNavWakeLock();
   updateNavButtonUI();
+  updateLocateButtonNavState();
   renderCurrentRouteStations();
 }
 
@@ -7161,6 +7216,11 @@ function onGpsLocationUpdate(coords) {
 
   // 1. Mise à jour de la broche GPS sur la carte
   updateUserGpsMarker(latitude, longitude);
+
+  // 2. Recentrage permanent fluide si le suivi automatique est engagé
+  if (isGpsAutoFollow && map) {
+    map.panTo([latitude, longitude], { animate: true, duration: 0.8 });
+  }
 
   // 2. Projection de la position de l'utilisateur sur le tracé de l'itinéraire
   const routeCoords = activeRouteData.geometry.coordinates; // [[lon, lat], ...]
