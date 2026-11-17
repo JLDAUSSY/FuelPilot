@@ -177,8 +177,10 @@ function setMobileView(view) {
     setTimeout(() => {
       if (map) {
         map.invalidateSize();
-        // If no station popup is actively open, re-fit to show the entire route & stations
-        if (!map._popup || !map._popup.isOpen()) {
+        // If navigation is active, preserve follow zoom on car
+        if (isGpsNavActive && userGpsPosition) {
+          safeMapPanTo(userGpsPosition.lat, userGpsPosition.lon, Math.max(map.getZoom(), 15));
+        } else if (!map._popup || !map._popup.isOpen()) {
           fitMapToRouteAndStations();
         }
       }
@@ -1266,7 +1268,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.6';
+const APP_VERSION = '9.9.7';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -3490,14 +3492,56 @@ function initMap() {
 
   L.control.zoom({ position: 'topright' }).addTo(map);
 
-  // Débrayage tactile intelligent du suivi de caméra : si l'utilisateur déplace la carte au doigt, on suspend le suivi
+  // Débrayage tactile intelligent du suivi de caméra : si l'utilisateur déplace ou zoome la carte au doigt, on suspend le suivi
+  const pauseAutoFollow = () => {
+    if (isGpsNavActive && isGpsAutoFollow && !isProgrammaticPan) {
+      isGpsAutoFollow = false;
+      updateLocateButtonNavState();
+      showToast(t().navFollowPaused || "📍 Suivi automatique en pause. Touchez l'icône GPS pour recentrer.", { isInfo: true, duration: 3500 });
+    }
+  };
+
+  // dragstart n'est JAMAIS déclenché par flyTo ou panTo dans Leaflet, uniquement par le doigt ou la souris
   map.on('dragstart', () => {
     if (isGpsNavActive && isGpsAutoFollow) {
       isGpsAutoFollow = false;
       updateLocateButtonNavState();
-      showToast(t().navFollowPaused || "📍 Suivi automatique en pause. Touchez l'icône GPS pour recentrer.", { isInfo: true, duration: 3000 });
+      showToast(t().navFollowPaused || "📍 Suivi automatique en pause. Touchez l'icône GPS pour recentrer.", { isInfo: true, duration: 3500 });
     }
   });
+
+  // zoomstart est protégé par !isProgrammaticPan pour éviter que le zoom initial (flyTo à 15) ne désactive le suivi !
+  map.on('zoomstart', () => {
+    if (!isProgrammaticPan) {
+      pauseAutoFollow();
+    }
+  });
+
+  const mapContainer = map.getContainer();
+  if (mapContainer) {
+    let touchStartX = 0;
+    let touchStartY = 0;
+    mapContainer.addEventListener('touchstart', (e) => {
+      if (e.touches && e.touches[0]) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+    mapContainer.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        const dx = Math.abs(e.touches[0].clientX - touchStartX);
+        const dy = Math.abs(e.touches[0].clientY - touchStartY);
+        if (dx > 12 || dy > 12) {
+          // Glissement tactile d'au moins 12px = manipulation délibérée par l'utilisateur
+          if (isGpsNavActive && isGpsAutoFollow) {
+            isGpsAutoFollow = false;
+            updateLocateButtonNavState();
+            showToast(t().navFollowPaused || "📍 Suivi automatique en pause. Touchez l'icône GPS pour recentrer.", { isInfo: true, duration: 3500 });
+          }
+        }
+      }
+    }, { passive: true });
+  }
 
   // Basemap 1: OpenStreetMap France (optimisé pour les autoroutes et routes françaises, 100% gratuit, sans filigrane ni clé)
   const osmFr = L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
@@ -6541,6 +6585,19 @@ window.getCurrentRouteStations = () => currentRouteStations;
 let hasSeenListTabAfterRoute = false;
 let isGpsNavActive = false;
 let isGpsAutoFollow = false;
+let isProgrammaticPan = false;
+let needsFirstNavZoom = false;
+
+function safeMapPanTo(lat, lon, zoom = null) {
+  if (!map) return;
+  isProgrammaticPan = true;
+  if (zoom !== null) {
+    map.flyTo([lat, lon], zoom, { animate: true, duration: 0.8 });
+  } else {
+    map.panTo([lat, lon], { animate: true, duration: 0.8 });
+  }
+  setTimeout(() => { isProgrammaticPan = false; }, 950);
+}
 
 function updateLocateButtonNavState() {
   const btnLocate = document.getElementById('btn-locate-me');
@@ -6904,6 +6961,12 @@ function handleGpsFix(pos, source = 'watch') {
   // Mettre à jour le marqueur GPS et le halo sur la carte Leaflet
   updateUserGpsMarker(latitude, longitude, acc, false);
 
+  // Si on vient de démarrer la navigation et qu'on attendait le premier fix pour cadrer
+  if (needsFirstNavZoom && isGpsNavActive && map) {
+    needsFirstNavZoom = false;
+    safeMapPanTo(latitude, longitude, 15);
+  }
+
   // Sauvegarder dans le cache local pour repère au démarrage
   if (acc <= 1500) {
     saveCachedUserPosition(userGpsPosition);
@@ -7113,7 +7176,7 @@ function centerMapOnUser() {
     stopSpinner();
     const currentZoom = map.getZoom();
     const targetZoom = (userGpsPosition.accuracy <= 500) ? Math.max(currentZoom, 15) : Math.max(currentZoom, 13);
-    map.flyTo([userGpsPosition.lat, userGpsPosition.lon], targetZoom, { animate: true, duration: 0.8 });
+    safeMapPanTo(userGpsPosition.lat, userGpsPosition.lon, targetZoom);
     updateUserGpsMarker(userGpsPosition.lat, userGpsPosition.lon, userGpsPosition.accuracy || 25, false);
     if (userGpsMarker) userGpsMarker.openTooltip();
     showToast(`🎯 Position : ${userGpsPosition.city || 'Centré'} (±${userGpsPosition.accuracy || 25}m)`, { isSuccess: true, duration: 3000 });
@@ -7133,7 +7196,7 @@ function centerMapOnUser() {
       if (map) {
         const currentZoom = map.getZoom();
         const targetZoom = (acc <= 500) ? Math.max(currentZoom, 15) : Math.max(currentZoom, 13);
-        map.flyTo([latitude, longitude], targetZoom, { animate: true, duration: 0.8 });
+        safeMapPanTo(latitude, longitude, targetZoom);
         updateUserGpsMarker(latitude, longitude, acc, false);
         if (userGpsMarker) userGpsMarker.openTooltip();
       }
@@ -7151,7 +7214,7 @@ function centerMapOnUser() {
       if (userGpsPosition && userGpsPosition.lat && userGpsPosition.lon) {
         if (map) {
           const currentZoom = map.getZoom();
-          map.flyTo([userGpsPosition.lat, userGpsPosition.lon], Math.max(currentZoom, 13), { animate: true, duration: 0.8 });
+          safeMapPanTo(userGpsPosition.lat, userGpsPosition.lon, Math.max(currentZoom, 13));
           updateUserGpsMarker(userGpsPosition.lat, userGpsPosition.lon, userGpsPosition.accuracy || 25, false);
         }
         showToast("📍 Dernière position GPS retenue (" + (userGpsPosition.city || "locale") + ")", { isInfo: true, duration: 3500 });
@@ -7182,12 +7245,19 @@ function startGpsNavigation() {
   updateNavButtonUI();
   updateLocateButtonNavState();
 
-  // Si une position récente existe, centrer immédiatement la carte sur la voiture
-  if (userGpsPosition) {
-    if (map) {
-      map.flyTo([userGpsPosition.lat, userGpsPosition.lon], Math.max(map.getZoom(), 15), { animate: true, duration: 0.8 });
-    }
+  // Si on est sur l'onglet Liste, basculer immédiatement sur l'onglet Carte pour voir la conduite
+  if (document.body.classList.contains('mobile-view-list') && typeof setMobileView === 'function') {
+    setMobileView('map');
+  }
+
+  // Si une position récente existe, zoomer immédiatement à l'échelle de conduite (zoom 15)
+  if (userGpsPosition && map) {
+    needsFirstNavZoom = false;
+    safeMapPanTo(userGpsPosition.lat, userGpsPosition.lon, Math.max(map.getZoom(), 15));
     onGpsLocationUpdate(userGpsPosition);
+  } else {
+    needsFirstNavZoom = true;
+    showToast(t().locating || "📍 Recherche des satellites GPS...", { isInfo: true, duration: 3500 });
   }
 
   // Activer le watcher continu en direct
@@ -7219,7 +7289,7 @@ function onGpsLocationUpdate(coords) {
 
   // 2. Recentrage permanent fluide si le suivi automatique est engagé
   if (isGpsAutoFollow && map) {
-    map.panTo([latitude, longitude], { animate: true, duration: 0.8 });
+    safeMapPanTo(latitude, longitude);
   }
 
   // 2. Projection de la position de l'utilisateur sur le tracé de l'itinéraire

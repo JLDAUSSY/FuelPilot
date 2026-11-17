@@ -6172,7 +6172,7 @@ header {
 /* TOAST NOTIFICATIONS (Non-intrusives & Fluides) */
 .toast-notification {
   position: fixed;
-  bottom: 80px;
+  bottom: 125px;
   left: 50%;
   transform: translateX(-50%) translateY(30px);
   background: #1e293b;
