@@ -5463,19 +5463,19 @@ function drawRoutesOnMap(activeIdx) {
     const coords = alternativeRoutes[activeIdx].geometry.coordinates;
     const fullLatLngs = coords.map(c => [c[1], c[0]]);
 
-    // 1. Tronçon déjà parcouru (Gris discret semi-transparent, en arrière-plan)
+    // 1. Tronçon déjà parcouru (Gris ardoise visible mais secondaire, en arrière-plan)
     activeRoutePassedOutline = L.polyline([], {
-      color: '#090d16',
-      weight: 9,
-      opacity: 0.35,
+      color: '#0f172a',
+      weight: 8.5,
+      opacity: 0.45,
       lineJoin: 'round'
     }).addTo(map);
     routeLayers.push(activeRoutePassedOutline);
 
     activeRoutePassedLine = L.polyline([], {
-      color: '#94a3b8',
-      weight: 6,
-      opacity: 0.65,
+      color: '#64748b',
+      weight: 6.5,
+      opacity: 0.8,
       lineJoin: 'round'
     }).addTo(map);
     routeLayers.push(activeRoutePassedLine);
@@ -5605,7 +5605,7 @@ function ensureRouteDistances(route) {
 }
 
 // Mise à jour dynamique du tracé actif façon GPS / Waze (Option B) :
-// - Le tronçon déjà parcouru passe en gris discret semi-transparent (#94a3b8)
+// - Le tronçon déjà parcouru passe en gris ardoise discret (#64748b)
 // - Le tronçon restant à parcourir reste en bleu cyan éclatant haute visibilité (#0284c7)
 function updateActiveRoutePolylines() {
   if (!activeRouteData || !activeRouteRemainingLine) return;
@@ -5617,8 +5617,8 @@ function updateActiveRoutePolylines() {
   const cumDistances = activeRouteData._cumDistances;
   const totalKm = activeRouteData._totalKm || (cumDistances ? cumDistances[cumDistances.length - 1] : 0);
 
-  // Si la navigation n'est pas active ou si l'on est tout au début (< 50m)
-  if (!isGpsNavActive || userProgressionKmOnRoute <= 0.05) {
+  // Si la navigation n'est pas active ou si l'on est tout au début (< 150m)
+  if (!isGpsNavActive || userProgressionKmOnRoute <= 0.15) {
     const fullLatLngs = coords.map(c => [c[1], c[0]]);
     if (activeRoutePassedOutline) activeRoutePassedOutline.setLatLngs([]);
     if (activeRoutePassedLine) activeRoutePassedLine.setLatLngs([]);
@@ -5628,7 +5628,7 @@ function updateActiveRoutePolylines() {
   }
 
   // Si la destination a été atteinte
-  if (userProgressionKmOnRoute >= totalKm - 0.05) {
+  if (userProgressionKmOnRoute >= totalKm - 0.15) {
     const fullLatLngs = coords.map(c => [c[1], c[0]]);
     if (activeRoutePassedOutline) activeRoutePassedOutline.setLatLngs(fullLatLngs);
     if (activeRoutePassedLine) activeRoutePassedLine.setLatLngs(fullLatLngs);
@@ -7276,6 +7276,20 @@ function requestUserGeolocation(onSuccess, onError, forceFresh = false) {
   );
 }
 
+// Distance approximative entre une coordonnée et l'itinéraire actif
+function getRouteDistKm(lat, lon) {
+  if (!activeRouteData?.geometry?.coordinates) return null;
+  const coords = activeRouteData.geometry.coordinates;
+  let minD = 99999;
+  const step = Math.max(1, Math.floor(coords.length / 60));
+  for (let i = 0; i < coords.length; i += step) {
+    const p = coords[i];
+    const d = getDistanceKm(lat, lon, p[1], p[0]);
+    if (d < minD) minD = d;
+  }
+  return minD;
+}
+
 // Centrage de la carte sur la position de l'utilisateur (Garantie Anti-Blocage et Anti-Freeze)
 function centerMapOnUser() {
   if (isGpsNavActive) {
@@ -7305,7 +7319,13 @@ function centerMapOnUser() {
     safeMapPanTo(userGpsPosition.lat, userGpsPosition.lon, targetZoom);
     updateUserGpsMarker(userGpsPosition.lat, userGpsPosition.lon, userGpsPosition.accuracy || 25, false);
     if (userGpsMarker) userGpsMarker.openTooltip();
-    showToast(`🎯 Position : ${userGpsPosition.city || 'Centré'} (±${userGpsPosition.accuracy || 25}m)`, { isSuccess: true, duration: 3000 });
+    
+    const rDist = getRouteDistKm(userGpsPosition.lat, userGpsPosition.lon);
+    if (rDist !== null && rDist > 10) {
+      showToast(`🎯 Position centrée (${userGpsPosition.city || 'locale'}) • Itinéraire à ${Math.round(rDist)} km`, { isInfo: true, duration: 4500 });
+    } else {
+      showToast(`🎯 Position : ${userGpsPosition.city || 'Centré'} (±${userGpsPosition.accuracy || 25}m)`, { isSuccess: true, duration: 3000 });
+    }
     return;
   }
 
@@ -7327,7 +7347,10 @@ function centerMapOnUser() {
         if (userGpsMarker) userGpsMarker.openTooltip();
       }
 
-      if (acc <= 500) {
+      const rDist = getRouteDistKm(latitude, longitude);
+      if (rDist !== null && rDist > 10) {
+        showToast(`🎯 Position GPS centrée (${userGpsPosition?.city || 'locale'}) • Itinéraire à ${Math.round(rDist)} km`, { isInfo: true, duration: 4500 });
+      } else if (acc <= 500) {
         const locLabel = userGpsPosition?.city ? `${userGpsPosition.city} (±${acc}m)` : `±${acc}m`;
         showToast(`🎯 Position GPS actualisée : ${locLabel}`, { isSuccess: true, duration: 4000 });
       } else {
@@ -7376,11 +7399,18 @@ function startGpsNavigation() {
     setMobileView('map');
   }
 
-  // Si une position récente existe, zoomer immédiatement à l'échelle de conduite (zoom 15)
+  // Si une position récente existe
   if (userGpsPosition && map) {
-    needsFirstNavZoom = false;
-    safeMapPanTo(userGpsPosition.lat, userGpsPosition.lon, Math.max(map.getZoom(), 15));
-    onGpsLocationUpdate(userGpsPosition);
+    const rDist = (typeof getRouteDistKm === 'function') ? getRouteDistKm(userGpsPosition.lat, userGpsPosition.lon) : null;
+    if (rDist !== null && rDist > 15) {
+      // Conducteur distant de l'itinéraire : garder la vue globale de l'itinéraire
+      needsFirstNavZoom = false;
+      showToast(`📍 Suivi actif • Vous êtes à ${Math.round(rDist)} km de l'itinéraire`, { isInfo: true, duration: 4500 });
+    } else {
+      needsFirstNavZoom = false;
+      safeMapPanTo(userGpsPosition.lat, userGpsPosition.lon, Math.max(map.getZoom(), 15));
+      onGpsLocationUpdate(userGpsPosition);
+    }
   } else {
     needsFirstNavZoom = true;
     showToast(t().locating || "📍 Recherche des satellites GPS...", { isInfo: true, duration: 3500 });
@@ -7408,8 +7438,10 @@ function stopGpsNavigation() {
 }
 
 function onGpsLocationUpdate(coords) {
-  if (!isGpsNavActive || !activeRouteData) return;
-  const { latitude, longitude, heading, speed } = coords;
+  if (!isGpsNavActive || !activeRouteData || !coords) return;
+  const latitude = coords.latitude ?? coords.lat;
+  const longitude = coords.longitude ?? coords.lon;
+  if (typeof latitude !== 'number' || typeof longitude !== 'number' || isNaN(latitude) || isNaN(longitude)) return;
 
   // 1. Mise à jour de la broche GPS sur la carte
   updateUserGpsMarker(latitude, longitude);
@@ -7440,10 +7472,19 @@ function onGpsLocationUpdate(coords) {
     }
   }
 
-  // Progression monotone avec tolérance de 0.5km pour le bruit GPS (si < 15km de l'axe routier)
-  if (minDist <= 15) {
-    if (currentKm > userProgressionKmOnRoute - 0.5) {
-      userProgressionKmOnRoute = Math.max(userProgressionKmOnRoute, currentKm);
+  // Vérification de proximité stricte : l'utilisateur doit être sur l'axe routier (< 1.5 km)
+  // Si l'utilisateur est hors itinéraire (> 1.5 km), on ne fait PAS progresser le tracé et on ne masque rien !
+  if (minDist <= 1.5) {
+    if (userProgressionKmOnRoute === 0) {
+      // Au début de l'itinéraire : on n'engage la progression que si le conducteur est proche du départ (< 3 km)
+      if (currentKm <= 3.0) {
+        userProgressionKmOnRoute = Math.max(0, currentKm);
+      }
+    } else {
+      // En cours de route : progression monotone continue et réaliste (ne peut pas sauter de plus de 4 km d'un coup)
+      if (currentKm >= userProgressionKmOnRoute - 0.4 && currentKm <= userProgressionKmOnRoute + 4.0) {
+        userProgressionKmOnRoute = Math.max(userProgressionKmOnRoute, currentKm);
+      }
     }
   }
 
