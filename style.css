@@ -6279,3 +6279,177 @@ header {
   white-space: nowrap;
   box-shadow: 0 2px 8px rgba(14, 165, 233, 0.35);
 }
+
+
+/* ==========================================================================
+   REFERENCE ROUTES CARD (32 CORRIDORS / 8 COUNTRIES)
+   ========================================================================== */
+.ref-routes-card {
+  margin-top: 10px;
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.ref-routes-card:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+.btn-ref-routes-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  color: #f1f5f9;
+  cursor: pointer;
+  text-align: left;
+  user-select: none;
+}
+
+.ref-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ref-header-icon {
+  font-size: 1.15rem;
+}
+
+.ref-header-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.ref-header-main {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #38bdf8;
+  letter-spacing: 0.2px;
+}
+
+.ref-header-sub {
+  font-size: 0.68rem;
+  color: #94a3b8;
+}
+
+.ref-header-arrow {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  transition: transform 0.2s ease;
+}
+
+.btn-ref-routes-header[aria-expanded="true"] .ref-header-arrow {
+  transform: rotate(180deg);
+}
+
+.ref-routes-body {
+  padding: 8px 10px 10px;
+  border-top: 1px solid rgba(148, 163, 184, 0.15);
+  background: rgba(15, 23, 42, 0.85);
+}
+
+.ref-country-tabs {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
+}
+
+.ref-tab-btn {
+  flex-shrink: 0;
+  padding: 4px 8px;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 6px;
+  color: #cbd5e1;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ref-tab-btn:hover {
+  background: rgba(51, 65, 85, 0.9);
+  color: #ffffff;
+}
+
+.ref-tab-btn.active {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  border-color: #38bdf8;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.35);
+}
+
+.ref-corridors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 6px;
+}
+
+.ref-corridor-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  color: inherit;
+  transition: all 0.15s ease;
+}
+
+.ref-corridor-item:hover, .ref-corridor-item:focus {
+  background: rgba(14, 165, 233, 0.15);
+  border-color: #38bdf8;
+  transform: translateX(2px);
+}
+
+.ref-corridor-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ref-corridor-dir {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #38bdf8;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.ref-corridor-route {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.ref-corridor-meta {
+  font-size: 0.65rem;
+  color: #94a3b8;
+}
+
+.ref-corridor-btn-tag {
+  flex-shrink: 0;
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+}

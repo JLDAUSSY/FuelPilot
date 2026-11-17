@@ -779,6 +779,10 @@ function getAmenityBadgeIcon(name, fallbackEmoji) {
 
 const AMENITY_TRANSLATIONS = {
   de: {
+    refRoutesTitle: "32 Referenzrouten",
+    refRoutesSub: "4 Korridore pro Land (8 europäische Länder)",
+    refRoutesTest: "Testen",
+
     'douches chaudes': 'Warme Duschen',
     'espace bébé': 'Wickelraum',
     'gonflage pneus': 'Reifendruck',
@@ -801,6 +805,10 @@ const AMENITY_TRANSLATIONS = {
     'relais colis': 'Paketstation'
   },
   en: {
+    refRoutesTitle: "32 Reference Routes",
+    refRoutesSub: "4 corridors per country (8 European countries)",
+    refRoutesTest: "Test",
+
     'douches chaudes': 'Hot showers',
     'espace bébé': 'Baby care',
     'gonflage pneus': 'Tyre pressure',
@@ -823,6 +831,10 @@ const AMENITY_TRANSLATIONS = {
     'relais colis': 'Parcel pickup'
   },
   nl: {
+    refRoutesTitle: "32 Referentieroutes",
+    refRoutesSub: "4 corridors per land (8 Europese landen)",
+    refRoutesTest: "Testen",
+
     'douches chaudes': 'Warme douches',
     'espace bébé': 'Babyverzorging',
     'gonflage pneus': 'Bandenspanning',
@@ -845,6 +857,10 @@ const AMENITY_TRANSLATIONS = {
     'relais colis': 'Pakketpunt'
   },
   it: {
+    refRoutesTitle: "32 Itinerari di riferimento",
+    refRoutesSub: "4 corridoi per paese (8 paesi europei)",
+    refRoutesTest: "Testare",
+
     'douches chaudes': 'Docce calde',
     'espace bébé': 'Fasciatoio bebè',
     'gonflage pneus': 'Gonfiaggio pneumatici',
@@ -867,6 +883,10 @@ const AMENITY_TRANSLATIONS = {
     'relais colis': 'Ritiro pacchi'
   },
   es: {
+    refRoutesTitle: "32 Itinerarios de referencia",
+    refRoutesSub: "4 corredores por país (8 países europeos)",
+    refRoutesTest: "Probar",
+
     'douches chaudes': 'Duchas calientes',
     'espace bébé': 'Cambiador bebé',
     'gonflage pneus': 'Presión neumáticos',
@@ -958,6 +978,10 @@ function getWeatherInfo(code, isDay = 1) {
   const lang = currentLang || 'fr';
   const descMap = {
     fr: {
+    refRoutesTitle: "32 Itinéraires de référence",
+    refRoutesSub: "4 corridors par pays (8 pays d'Europe)",
+    refRoutesTest: "Tester",
+
       clearDay: 'Ensoleillé', clearNight: 'Nuit claire',
       partlyDay: 'Éclaircies', partlyNight: 'Partiellement nuageux',
       overcast: 'Couvert', fog: 'Brouillard', drizzle: 'Bruine',
@@ -1124,7 +1148,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.3';
+const APP_VERSION = '9.9.4';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -1251,7 +1275,7 @@ const I18N_DICT = {
     sortDist: "Tri : Distance",
     tabMap: "Carte",
     tabList: "Liste & Filtres",
-    coverage: "Réseau couvert : 🇫🇷 France • 🇩🇪 Allemagne • 🇧🇪 Belgique • 🇮🇹 Italie • 🇪🇸 Espagne • 🇬🇧 Royaume-Uni",
+    coverage: "Réseau couvert : 🇫🇷 France • 🇩🇪 Allemagne • 🇧🇪 Belgique • 🇮🇹 Italie • 🇪🇸 Espagne • 🇬🇧 Royaume-Uni • 🇵🇹 Portugal • 🇳🇱 Pays-Bas",
     recentHdr: "🕒 10 dernières localités",
     bestPrice: "⭐ PRIX LE PLUS BAS",
     fromStart: (km) => `🎯 Dans ${km} km`,
@@ -1972,6 +1996,10 @@ const I18N_DICT = {
     fuelUnavailable: "No disp."
   },
   pt: {
+    refRoutesTitle: "32 Itinerários de referência",
+    refRoutesSub: "4 corredores por país (8 países europeus)",
+    refRoutesTest: "Testar",
+
     pageTitle: "FuelPilot • Combustível Autoestrada & Marcos PK",
     tagline: "Preços de combustível & áreas de serviço na autoestrada",
     privacy: "Privacidade",
@@ -2771,6 +2799,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initMap();
   initPermanentGpsTracking();
   detectCountryAndSetLanguage();
+  if (typeof initReferenceRoutesUI === 'function') initReferenceRoutesUI();
 
   const startInput = document.getElementById('input-start');
   const endInput = document.getElementById('input-end');
@@ -3986,6 +4015,123 @@ function applyPreset(startLabel, startCoords, endLabel, endCoords) {
   calculateItinerary();
 }
 
+
+// ==============================================================================
+// 32 ITINÉRAIRES DE RÉFÉRENCE (4 CORRIDORS PAR PAYS x 8 PAYS COUVERTS)
+// Nord ➔ Sud, Est ➔ Ouest, Nord-Est ➔ Sud-Ouest, Nord-Ouest ➔ Sud-Est
+// ==============================================================================
+const REFERENCE_ROUTES_32 = {
+  FR: [
+    { dir: 'Nord ➔ Sud', icon: '⬇️', label: 'Lille ➔ Marseille', start: 'Lille', startCoords: [3.0573, 50.6292], end: 'Marseille', endCoords: [5.3698, 43.2965], motorway: 'A1 • A6 • A7', desc: 'Corridor Nord-Sud majeur' },
+    { dir: 'Est ➔ Ouest', icon: '⬅️', label: 'Strasbourg ➔ Brest', start: 'Strasbourg', startCoords: [7.7521, 48.5734], end: 'Brest', endCoords: [-4.4861, 48.3904], motorway: 'A4 • A11 • N12', desc: 'Corridor transversal Est-Ouest' },
+    { dir: 'Nord-Est ➔ Sud-Ouest', icon: '↙️', label: 'Metz ➔ Bayonne', start: 'Metz', startCoords: [6.1757, 49.1193], end: 'Bayonne', endCoords: [-1.4748, 43.4929], motorway: 'A31 • A6 • A89 • A63', desc: 'Diagonale Nord-Est vers Espagne' },
+    { dir: 'Nord-Ouest ➔ Sud-Est', icon: '↘️', label: 'Le Havre ➔ Nice', start: 'Le Havre', startCoords: [0.1079, 49.4944], end: 'Nice', endCoords: [7.2620, 43.7102], motorway: 'A13 • A6 • A7 • A8', desc: 'Diagonale Manche vers Méditerranée' },
+  ],
+  ES: [
+    { dir: 'Nord ➔ Sud', icon: '⬇️', label: 'Santander ➔ Sevilla', start: 'Santander', startCoords: [-3.8099, 43.4623], end: 'Sevilla', endCoords: [-5.9845, 37.3891], motorway: 'A-67 • A-66', desc: 'Ruta de la Plata Nord-Sud' },
+    { dir: 'Est ➔ Ouest', icon: '⬅️', label: 'Barcelona ➔ Madrid', start: 'Barcelona', startCoords: [2.1734, 41.3851], end: 'Madrid', endCoords: [-3.7038, 40.4168], motorway: 'AP-7 • A-2', desc: 'Axe majeur Catalogne - Capitale' },
+    { dir: 'Nord-Est ➔ Sud-Ouest', icon: '↙️', label: 'Girona ➔ Huelva', start: 'Girona', startCoords: [2.8249, 41.9794], end: 'Huelva', endCoords: [-6.9447, 37.2614], motorway: 'AP-7 • A-4', desc: 'Grande diagonale frontière FR vers Atlantique' },
+    { dir: 'Nord-Ouest ➔ Sud-Est', icon: '↘️', label: 'A Coruña ➔ Valencia', start: 'A Coruña', startCoords: [-8.4115, 43.3623], end: 'Valencia', endCoords: [-0.3763, 39.4699], motorway: 'A-6 • A-3', desc: 'Diagonale Galice - Levant' },
+  ],
+  IT: [
+    { dir: 'Nord ➔ Sud', icon: '⬇️', label: 'Milano ➔ Napoli', start: 'Milano', startCoords: [9.1900, 45.4642], end: 'Napoli', endCoords: [14.2681, 40.8518], motorway: 'A1', desc: 'Autostrada del Sole' },
+    { dir: 'Est ➔ Ouest', icon: '⬅️', label: 'Trieste ➔ Torino', start: 'Trieste', startCoords: [13.7768, 45.6495], end: 'Torino', endCoords: [7.6869, 45.0703], motorway: 'A4', desc: 'Autostrada Serenissima' },
+    { dir: 'Nord-Est ➔ Sud-Ouest', icon: '↙️', label: 'Venezia ➔ Genova', start: 'Venezia', startCoords: [12.3155, 45.4408], end: 'Genova', endCoords: [8.9463, 44.4056], motorway: 'A4 • A21 • A7', desc: 'Adriatique vers Mer Ligure' },
+    { dir: 'Nord-Ouest ➔ Sud-Est', icon: '↘️', label: 'Torino ➔ Bari', start: 'Torino', startCoords: [7.6869, 45.0703], end: 'Bari', endCoords: [16.8719, 41.1171], motorway: 'A21 • A1 • A14', desc: 'Dorsale Adriatique' },
+  ],
+  GB: [
+    { dir: 'Nord ➔ Sud', icon: '⬇️', label: 'Edinburgh ➔ London', start: 'Edinburgh', startCoords: [-3.1883, 55.9533], end: 'London', endCoords: [-0.1278, 51.5074], motorway: 'A1(M) • M1', desc: 'Écosse vers Londres' },
+    { dir: 'Est ➔ Ouest', icon: '⬅️', label: 'Norwich ➔ Cardiff', start: 'Norwich', startCoords: [1.2974, 52.6309], end: 'Cardiff', endCoords: [-3.1791, 51.4816], motorway: 'A11 • M4', desc: 'East Anglia vers Pays de Galles' },
+    { dir: 'Nord-Est ➔ Sud-Ouest', icon: '↙️', label: 'Newcastle ➔ Bristol', start: 'Newcastle upon Tyne', startCoords: [-1.6178, 54.9783], end: 'Bristol', endCoords: [-2.5879, 51.4545], motorway: 'A1(M) • M1 • M42 • M5', desc: 'Tyne & Wear vers West Country' },
+    { dir: 'Nord-Ouest ➔ Sud-Est', icon: '↘️', label: 'Liverpool ➔ Brighton', start: 'Liverpool', startCoords: [-2.9916, 53.4084], end: 'Brighton', endCoords: [-0.1372, 50.8225], motorway: 'M6 • M1 • M25 • M23', desc: 'Merseyside vers Côte Sud' },
+  ],
+  BE: [
+    { dir: 'Nord ➔ Sud', icon: '⬇️', label: 'Antwerpen ➔ Arlon', start: 'Antwerpen', startCoords: [4.4025, 51.2194], end: 'Arlon', endCoords: [5.8137, 49.6833], motorway: 'E19 • R0 • E411', desc: 'Flandre vers frontière Luxembourg' },
+    { dir: 'Est ➔ Ouest', icon: '⬅️', label: 'Liège ➔ Ostende', start: 'Liège', startCoords: [5.5797, 50.6326], end: 'Oostende', endCoords: [2.9287, 51.2154], motorway: 'E40', desc: 'Transversale Wallonie - Mer du Nord' },
+    { dir: 'Nord-Est ➔ Sud-Ouest', icon: '↙️', label: 'Genk ➔ Mons', start: 'Genk', startCoords: [5.5008, 50.9655], end: 'Mons', endCoords: [3.9523, 50.4541], motorway: 'E314 • E40 • E19', desc: 'Limbourg vers Hainaut' },
+    { dir: 'Nord-Ouest ➔ Sud-Est', icon: '↘️', label: 'Brugge ➔ Arlon', start: 'Brugge', startCoords: [3.2247, 51.2093], end: 'Arlon', endCoords: [5.8137, 49.6833], motorway: 'E40 • E411', desc: 'Venise du Nord vers Ardennes' },
+  ],
+  DE: [
+    { dir: 'Nord ➔ Sud', icon: '⬇️', label: 'Hamburg ➔ München', start: 'Hamburg', startCoords: [9.9937, 53.5511], end: 'München', endCoords: [11.5820, 48.1351], motorway: 'A7 • A9', desc: 'Axe Nord-Sud Allemagne' },
+    { dir: 'Est ➔ Ouest', icon: '⬅️', label: 'Dresden ➔ Köln', start: 'Dresden', startCoords: [13.7373, 51.0504], end: 'Köln', endCoords: [6.9603, 50.9375], motorway: 'A4', desc: 'Transversale Saxe - Rhénanie' },
+    { dir: 'Nord-Est ➔ Sud-Ouest', icon: '↙️', label: 'Berlin ➔ Frankfurt', start: 'Berlin', startCoords: [13.4050, 52.5200], end: 'Frankfurt am Main', endCoords: [8.6821, 50.1109], motorway: 'A9 • A4 • A5', desc: 'Capitale vers Hesse' },
+    { dir: 'Nord-Ouest ➔ Sud-Est', icon: '↘️', label: 'Bremen ➔ München', start: 'Bremen', startCoords: [8.8017, 53.0793], end: 'München', endCoords: [11.5820, 48.1351], motorway: 'A27 • A7 • A9', desc: 'Nord-Ouest vers Bavière' },
+  ],
+  PT: [
+    { dir: 'Nord ➔ Sud', icon: '⬇️', label: 'Porto ➔ Faro', start: 'Porto', startCoords: [-8.6291, 41.1579], end: 'Faro', endCoords: [-7.9304, 37.0194], motorway: 'A1 • A2', desc: 'Corridor Atlantique complet Nord-Sud' },
+    { dir: 'Est ➔ Ouest', icon: '⬅️', label: 'Elvas ➔ Lisboa', start: 'Elvas', startCoords: [-7.1628, 38.8817], end: 'Lisboa', endCoords: [-9.1393, 38.7223], motorway: 'A6 • A2', desc: 'Frontière espagnole vers Capitale' },
+    { dir: 'Nord-Est ➔ Sud-Ouest', icon: '↙️', label: 'Bragança ➔ Setúbal', start: 'Bragança', startCoords: [-6.7570, 41.8061], end: 'Setúbal', endCoords: [-8.8882, 38.5244], motorway: 'A4 • A1 • A2', desc: 'Trás-os-Montes vers Péninsule de Setúbal' },
+    { dir: 'Nord-Ouest ➔ Sud-Est', icon: '↘️', label: 'Viana do Castelo ➔ Évora', start: 'Viana do Castelo', startCoords: [-8.8329, 41.6918], end: 'Évora', endCoords: [-7.9135, 38.5714], motorway: 'A28 • A1 • A6', desc: 'Minho vers Alentejo' },
+  ],
+  NL: [
+    { dir: 'Nord ➔ Sud', icon: '⬇️', label: 'Amsterdam ➔ Maastricht', start: 'Amsterdam', startCoords: [4.9041, 52.3676], end: 'Maastricht', endCoords: [5.6910, 50.8514], motorway: 'A2', desc: 'Corridor A2 Randstad - Limburg' },
+    { dir: 'Est ➔ Ouest', icon: '⬅️', label: 'Hengelo ➔ Den Haag', start: 'Hengelo', startCoords: [6.7933, 52.2657], end: 'Den Haag', endCoords: [4.3007, 52.0705], motorway: 'A1 • A12', desc: 'Frontière allemande vers Mer du Nord' },
+    { dir: 'Nord-Est ➔ Sud-Ouest', icon: '↙️', label: 'Groningen ➔ Breda', start: 'Groningen', startCoords: [6.5665, 53.2194], end: 'Breda', endCoords: [4.7756, 51.5719], motorway: 'A28 • A27', desc: 'Nord vers Brabant-Septentrional' },
+    { dir: 'Nord-Ouest ➔ Sud-Est', icon: '↘️', label: 'Alkmaar ➔ Eindhoven', start: 'Alkmaar', startCoords: [4.7593, 52.6324], end: 'Eindhoven', endCoords: [5.4697, 51.4416], motorway: 'A9 • A2', desc: 'Hollande-Septentrionale vers Brainport' },
+  ]
+};
+
+let currentRefCountry = 'FR';
+
+function renderReferenceCorridors(country) {
+  currentRefCountry = country || 'FR';
+  const container = document.getElementById('ref-corridors-list');
+  if (!container) return;
+  
+  const list = REFERENCE_ROUTES_32[currentRefCountry] || [];
+  const testLabel = (typeof t === 'function' && t() && t().refRoutesTest) ? t().refRoutesTest : 'Tester';
+  
+  container.innerHTML = list.map((item, idx) => `
+    <button type="button" class="ref-corridor-item" onclick="applyReferenceRoute('${currentRefCountry}', ${idx})">
+      <div class="ref-corridor-left">
+        <span class="ref-corridor-dir">${item.icon} ${item.dir}</span>
+        <span class="ref-corridor-route">${item.label}</span>
+        <span class="ref-corridor-meta">${item.motorway} • ${item.desc}</span>
+      </div>
+      <span class="ref-corridor-btn-tag">${testLabel}</span>
+    </button>
+  `).join('');
+
+  document.querySelectorAll('.ref-tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.refCountry === currentRefCountry);
+  });
+}
+
+function applyReferenceRoute(country, index) {
+  const list = REFERENCE_ROUTES_32[country];
+  if (!list || !list[index]) return;
+  const item = list[index];
+  applyPreset(item.start, item.startCoords, item.end, item.endCoords);
+}
+
+function initReferenceRoutesUI() {
+  const toggleBtn = document.getElementById('btn-ref-routes-toggle');
+  const panel = document.getElementById('ref-routes-body');
+  if (toggleBtn && panel) {
+    toggleBtn.addEventListener('click', () => {
+      const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+      toggleBtn.setAttribute('aria-expanded', !isExpanded);
+      panel.style.display = isExpanded ? 'none' : 'block';
+      if (!isExpanded) {
+        renderReferenceCorridors(currentRefCountry);
+      }
+    });
+  }
+
+  document.querySelectorAll('.ref-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const c = btn.dataset.refCountry;
+      renderReferenceCorridors(c);
+    });
+  });
+
+  renderReferenceCorridors(currentRefCountry);
+}
+
+window.REFERENCE_ROUTES_32 = REFERENCE_ROUTES_32;
+window.applyReferenceRoute = applyReferenceRoute;
+window.initReferenceRoutesUI = initReferenceRoutesUI;
+
 // Add a waypoint input dynamically
 function addWaypointInput() {
   const container = document.getElementById('waypoints-container');
@@ -4559,6 +4705,7 @@ function processStationsOnRoute(route) {
   });
 
   currentRouteStations = matched;
+  window.currentRouteStations = currentRouteStations;
   populateBrandFilter();
   renderCurrentRouteStations();
   fitMapToRouteAndStations();

@@ -7,7 +7,7 @@
         "name": "France",
         "code": "FR",
         "flag": "🇫🇷",
-        "stationsCount": 438,
+        "stationsCount": 635,
         "description": "France • Réseau autoroutier & Prix officiels en direct"
       },
       "geometry": {
@@ -67393,7 +67393,7 @@
         "name": "Allemagne",
         "code": "DE",
         "flag": "🇩🇪",
-        "stationsCount": 218,
+        "stationsCount": 198,
         "description": "Réseau autoroutier allemand (Autobahnraststätten A1-A99) & prix MTS-K en direct"
       },
       "geometry": {
@@ -79604,7 +79604,7 @@
         "code": "BE",
         "name": "Belgique",
         "flag": "🇧🇪",
-        "stationsCount": 76
+        "stationsCount": 80
       },
       "geometry": {
         "type": "Polygon",
@@ -79708,7 +79708,7 @@
         "code": "PT",
         "name": "Portugal",
         "flag": "🇵🇹",
-        "stationsCount": 65,
+        "stationsCount": 70,
         "description": "Portugal • Rede de autoestradas & Preços em tempo real"
       },
       "geometry": {
@@ -79805,7 +79805,7 @@
         "code": "NL",
         "name": "Pays-Bas",
         "flag": "🇳🇱",
-        "stationsCount": 57,
+        "stationsCount": 93,
         "description": "Nederland • Snelwegennet & Actuele brandstofprijzen"
       },
       "geometry": {

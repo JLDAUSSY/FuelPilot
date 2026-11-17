@@ -75,7 +75,7 @@
 
 
 
-  <link rel="stylesheet" href="style.css?v=9.9.3">
+  <link rel="stylesheet" href="style.css?v=9.9.4">
 
 </head>
 
@@ -96,7 +96,7 @@
     <div class="header-status">
       <div class="header-status-top">
         <button type="button" class="btn-fuel-info" id="btn-fuel-info" title="Correspondance des carburants par pays" aria-label="Correspondance des carburants par pays">i</button>
-        <div class="badge-jld" title="JLDApps 2026 • Version 9.9.3"><span class="jld-prefix">JLDApps </span><span class="badge-app-version" id="app-version-badge">v9.9.3</span></div>
+        <div class="badge-jld" title="JLDApps 2026 • Version 9.9.4"><span class="jld-prefix">JLDApps </span><span class="badge-app-version" id="app-version-badge">v9.9.4</span></div>
         <div class="badge-live" title="Données officielles en direct 24/7" aria-label="Prix en direct">
           <div class="gem-3d-button">
             <span class="gem-glare"></span>
@@ -351,6 +351,35 @@
 
             </button>
 
+          </div>
+
+          <!-- Reference Routes Drawer (32 Corridors / 8 Countries) -->
+          <div class="ref-routes-card" id="ref-routes-card">
+            <button type="button" class="btn-ref-routes-header" id="btn-ref-routes-toggle" aria-expanded="false" title="Afficher les 32 itinéraires de référence">
+              <div class="ref-header-left">
+                <span class="ref-header-icon">🧭</span>
+                <div class="ref-header-titles">
+                  <span class="ref-header-main" id="i18n-ref-routes-title">32 Itinéraires de référence</span>
+                  <span class="ref-header-sub" id="i18n-ref-routes-sub">4 corridors par pays (8 pays d'Europe)</span>
+                </div>
+              </div>
+              <span class="ref-header-arrow" id="ref-header-arrow">▼</span>
+            </button>
+
+            <div class="ref-routes-body" id="ref-routes-body" style="display: none;">
+              <div class="ref-country-tabs" id="ref-country-tabs">
+                <button type="button" class="ref-tab-btn active" data-ref-country="FR" title="France">🇫🇷 FR</button>
+                <button type="button" class="ref-tab-btn" data-ref-country="ES" title="Espagne">🇪🇸 ES</button>
+                <button type="button" class="ref-tab-btn" data-ref-country="IT" title="Italie">🇮🇹 IT</button>
+                <button type="button" class="ref-tab-btn" data-ref-country="GB" title="Royaume-Uni">🇬🇧 GB</button>
+                <button type="button" class="ref-tab-btn" data-ref-country="BE" title="Belgique">🇧🇪 BE</button>
+                <button type="button" class="ref-tab-btn" data-ref-country="DE" title="Allemagne">🇩🇪 DE</button>
+                <button type="button" class="ref-tab-btn" data-ref-country="PT" title="Portugal">🇵🇹 PT</button>
+                <button type="button" class="ref-tab-btn" data-ref-country="NL" title="Pays-Bas">🇳🇱 NL</button>
+              </div>
+
+              <div class="ref-corridors-list" id="ref-corridors-list"></div>
+            </div>
           </div>
 
           <!-- Live GPS Drive Mode Button (shown once route is calculated) -->
@@ -610,7 +639,7 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-  <script src="app.js?v=9.9.3"></script>
+  <script src="app.js?v=9.9.4"></script>
 
 </body>
 
