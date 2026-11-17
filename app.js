@@ -273,6 +273,26 @@ const FUEL_LABELS_BY_COUNTRY = {
     elec: '⚡ Elettrico (kWh)',
     all: 'Tutti i carburanti'
   },
+  SI: {
+    e10: 'Eurosuper 95 (E10)',
+    gazole: 'Dizel (B7)',
+    sp98: 'Eurosuper 100 / Plus',
+    sp95: 'Eurosuper 95',
+    e85: 'Bioetanol E85',
+    gplc: 'Avtoplin (LPG)',
+    elec: '⚡ Elektrika (kWh)',
+    all: 'Vsa goriva'
+  },
+  HR: {
+    e10: 'Eurosuper 95 (E10)',
+    gazole: 'Eurodiesel (B7)',
+    sp98: 'Eurosuper 100 (Class Plus)',
+    sp95: 'Eurosuper 95',
+    e85: 'Bioetanol E85',
+    gplc: 'Autoplin (LPG)',
+    elec: '⚡ Struja (kWh)',
+    all: 'Sva goriva'
+  },
   LU: {
     e10: 'Super 95 (E10)',
     gazole: 'Diesel (B7)',
@@ -339,7 +359,7 @@ function getServedFuelLabel(prices, requestedFuel, pays) {
 function getDistinctCountryFuels(pays) {
   if (pays === 'GB' || pays === 'BE') return ['gazole', 'e10', 'sp98', 'gplc'];
   if (pays === 'DE' || pays === 'AT' || pays === 'LU') return ['gazole', 'e10', 'sp95', 'sp98', 'gplc'];
-  if (pays === 'CH') return ['gazole', 'sp95', 'sp98', 'gplc'];
+  if (pays === 'CH' || pays === 'SI' || pays === 'HR') return ['gazole', 'sp95', 'sp98', 'gplc'];
   if (pays === 'ES') return ['gazole', 'sp95', 'sp98', 'gplc', 'e85'];
   if (pays === 'IT') return ['gazole', 'sp95', 'sp98', 'gplc', 'metano'];
   return ['gazole', 'e10', 'sp98', 'sp95', 'e85', 'gplc'];
@@ -809,9 +829,61 @@ function getAmenityBadgeIcon(name, fallbackEmoji) {
 }
 
 const AMENITY_TRANSLATIONS = {
+  sl: {
+    refRoutesTitle: "52 Referenčnih poti",
+    refRoutesSub: "4 koridorji na državo (13 evropskih držav)",
+    refRoutesTest: "Preizkusi",
+
+    'douches chaudes': 'Topli tuši',
+    'espace bébé': 'Previjalnica',
+    'gonflage pneus': 'Tlak v pnevmatikah',
+    'wi-fi gratuit': 'Brezplačen Wi-Fi',
+    'distributeur dab': 'Bančni avtomat (ATM)',
+    'aire camping-cars': 'Postajališče za avtodome',
+    'parking pl': 'Parkirišče za tovornjake',
+    'sanitaires 24/7': 'Sanitarije 24/7',
+    'toilettes publiques': 'Javna stranišča',
+    'boutique alimentaire': 'Trgovina z živili',
+    'boutique non alimentaire': 'Trgovina',
+    'restauration sur place': 'Restavracija',
+    'restauration à emporter': 'Hrana za s seboj',
+    'lavage automatique': 'Avtopralnica',
+    'lavage haute pression': 'Visokotlačno pranje',
+    'lavage manuel': 'Ročno pranje',
+    'bornes électriques': 'E-polnilnice',
+    'automate cb 24/24': 'Plačilni avtomat 24/7',
+    'bar': 'Kavarna / Bar',
+    'relais colis': 'Prevzem paketov'
+  },
+  hr: {
+    refRoutesTitle: "52 Referentnih ruta",
+    refRoutesSub: "4 koridora po državi (13 europskih država)",
+    refRoutesTest: "Testiraj",
+
+    'douches chaudes': 'Topli tuševi',
+    'espace bébé': 'Prostor za prematanje',
+    'gonflage pneus': 'Pumpe za gume',
+    'wi-fi gratuit': 'Besplatni Wi-Fi',
+    'distributeur dab': 'Bankomat (ATM)',
+    'aire camping-cars': 'Kamp kućice / Autodomovi',
+    'parking pl': 'Parkiralište za teretna vozila',
+    'sanitaires 24/7': 'Sanitarni čvor 24/7',
+    'toilettes publiques': 'Javni WC',
+    'boutique alimentaire': 'Trgovina prehrambenih proizvoda',
+    'boutique non alimentaire': 'Trgovina',
+    'restauration sur place': 'Restoran',
+    'restauration à emporter': 'Hrana za van',
+    'lavage automatique': 'Automatska autopraonica',
+    'lavage haute pression': 'Pranje pod visokim tlakom',
+    'lavage manuel': 'Ručno pranje',
+    'bornes électriques': 'Punionice za električna vozila',
+    'automate cb 24/24': 'Automatsko plaćanje karticom 24/7',
+    'bar': 'Kafić / Bar',
+    'relais colis': 'Preuzimanje paketa'
+  },
   de: {
-    refRoutesTitle: "44 Referenzrouten",
-    refRoutesSub: "4 Korridore pro Land (11 europäische Länder)",
+    refRoutesTitle: "52 Referenzrouten",
+    refRoutesSub: "4 Korridore pro Land (13 europäische Länder)",
     refRoutesTest: "Testen",
 
     'douches chaudes': 'Warme Duschen',
@@ -836,8 +908,8 @@ const AMENITY_TRANSLATIONS = {
     'relais colis': 'Paketstation'
   },
   en: {
-    refRoutesTitle: "44 Reference Routes",
-    refRoutesSub: "4 corridors per country (11 European countries)",
+    refRoutesTitle: "52 Reference Routes",
+    refRoutesSub: "4 corridors per country (13 European countries)",
     refRoutesTest: "Test",
 
     'douches chaudes': 'Hot showers',
@@ -862,8 +934,8 @@ const AMENITY_TRANSLATIONS = {
     'relais colis': 'Parcel pickup'
   },
   nl: {
-    refRoutesTitle: "44 Referentieroutes",
-    refRoutesSub: "4 corridors per land (11 Europese landen)",
+    refRoutesTitle: "52 Referentieroutes",
+    refRoutesSub: "4 corridors per land (13 Europese landen)",
     refRoutesTest: "Testen",
 
     'douches chaudes': 'Warme douches',
@@ -888,8 +960,8 @@ const AMENITY_TRANSLATIONS = {
     'relais colis': 'Pakketpunt'
   },
   it: {
-    refRoutesTitle: "44 Itinerari di riferimento",
-    refRoutesSub: "4 corridoi per paese (11 paesi europei)",
+    refRoutesTitle: "52 Itinerari di riferimento",
+    refRoutesSub: "4 corridoi per paese (13 paesi europei)",
     refRoutesTest: "Testare",
 
     'douches chaudes': 'Docce calde',
@@ -914,8 +986,8 @@ const AMENITY_TRANSLATIONS = {
     'relais colis': 'Ritiro pacchi'
   },
   es: {
-    refRoutesTitle: "44 Itinerarios de referencia",
-    refRoutesSub: "4 corredores por país (11 países europeos)",
+    refRoutesTitle: "52 Itinerarios de referencia",
+    refRoutesSub: "4 corredores por país (13 países europeos)",
     refRoutesTest: "Probar",
 
     'douches chaudes': 'Duchas calientes',
@@ -1009,8 +1081,8 @@ function getWeatherInfo(code, isDay = 1) {
   const lang = currentLang || 'fr';
   const descMap = {
     fr: {
-    refRoutesTitle: "44 Itinéraires de référence",
-    refRoutesSub: "4 corridors par pays (11 pays d'Europe)",
+    refRoutesTitle: "52 Itinéraires de référence",
+    refRoutesSub: "4 corridors par pays (13 pays d'Europe)",
     refRoutesTest: "Tester",
 
       clearDay: 'Ensoleillé', clearNight: 'Nuit claire',
@@ -1018,7 +1090,59 @@ function getWeatherInfo(code, isDay = 1) {
       overcast: 'Couvert', fog: 'Brouillard', drizzle: 'Bruine',
       rain: 'Pluie', snow: 'Neige', storm: 'Orages'
     },
-    de: {
+    sl: {
+    refRoutesTitle: "52 Referenčnih poti",
+    refRoutesSub: "4 koridorji na državo (13 evropskih držav)",
+    refRoutesTest: "Preizkusi",
+
+    'douches chaudes': 'Topli tuši',
+    'espace bébé': 'Previjalnica',
+    'gonflage pneus': 'Tlak v pnevmatikah',
+    'wi-fi gratuit': 'Brezplačen Wi-Fi',
+    'distributeur dab': 'Bančni avtomat (ATM)',
+    'aire camping-cars': 'Postajališče za avtodome',
+    'parking pl': 'Parkirišče za tovornjake',
+    'sanitaires 24/7': 'Sanitarije 24/7',
+    'toilettes publiques': 'Javna stranišča',
+    'boutique alimentaire': 'Trgovina z živili',
+    'boutique non alimentaire': 'Trgovina',
+    'restauration sur place': 'Restavracija',
+    'restauration à emporter': 'Hrana za s seboj',
+    'lavage automatique': 'Avtopralnica',
+    'lavage haute pression': 'Visokotlačno pranje',
+    'lavage manuel': 'Ročno pranje',
+    'bornes électriques': 'E-polnilnice',
+    'automate cb 24/24': 'Plačilni avtomat 24/7',
+    'bar': 'Kavarna / Bar',
+    'relais colis': 'Prevzem paketov'
+  },
+  hr: {
+    refRoutesTitle: "52 Referentnih ruta",
+    refRoutesSub: "4 koridora po državi (13 europskih država)",
+    refRoutesTest: "Testiraj",
+
+    'douches chaudes': 'Topli tuševi',
+    'espace bébé': 'Prostor za prematanje',
+    'gonflage pneus': 'Pumpe za gume',
+    'wi-fi gratuit': 'Besplatni Wi-Fi',
+    'distributeur dab': 'Bankomat (ATM)',
+    'aire camping-cars': 'Kamp kućice / Autodomovi',
+    'parking pl': 'Parkiralište za teretna vozila',
+    'sanitaires 24/7': 'Sanitarni čvor 24/7',
+    'toilettes publiques': 'Javni WC',
+    'boutique alimentaire': 'Trgovina prehrambenih proizvoda',
+    'boutique non alimentaire': 'Trgovina',
+    'restauration sur place': 'Restoran',
+    'restauration à emporter': 'Hrana za van',
+    'lavage automatique': 'Automatska autopraonica',
+    'lavage haute pression': 'Pranje pod visokim tlakom',
+    'lavage manuel': 'Ručno pranje',
+    'bornes électriques': 'Punionice za električna vozila',
+    'automate cb 24/24': 'Automatsko plaćanje karticom 24/7',
+    'bar': 'Kafić / Bar',
+    'relais colis': 'Preuzimanje paketa'
+  },
+  de: {
       clearDay: 'Sonnig', clearNight: 'Klare Nacht',
       partlyDay: 'Heiter', partlyNight: 'Teilweise bewölkt',
       overcast: 'Bedeckt', fog: 'Nebel', drizzle: 'Nieselregen',
@@ -1179,7 +1303,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.5';
+const APP_VERSION = '9.9.6';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -1306,7 +1430,7 @@ const I18N_DICT = {
     sortDist: "Tri : Distance",
     tabMap: "Carte",
     tabList: "Liste & Filtres",
-    coverage: "Réseau couvert : 🇫🇷 France • 🇩🇪 Allemagne • 🇧🇪 Belgique • 🇮🇹 Italie • 🇪🇸 Espagne • 🇬🇧 Royaume-Uni • 🇵🇹 Portugal • 🇳🇱 Pays-Bas • 🇱🇺 Luxembourg • 🇦🇹 Autriche • 🇨🇭 Suisse",
+    coverage: "Réseau couvert : 🇫🇷 France • 🇩🇪 Allemagne • 🇧🇪 Belgique • 🇮🇹 Italie • 🇪🇸 Espagne • 🇬🇧 Royaume-Uni • 🇵🇹 Portugal • 🇳🇱 Pays-Bas • 🇱🇺 Luxembourg • 🇦🇹 Autriche • 🇨🇭 Suisse • 🇸🇮 Slovénie • 🇭🇷 Croatie",
     recentHdr: "🕒 10 dernières localités",
     bestPrice: "⭐ PRIX LE PLUS BAS",
     fromStart: (km) => `🎯 Dans ${km} km`,
@@ -1331,6 +1455,8 @@ const I18N_DICT = {
     countryNL: "Pays-Bas",
     countryLU: "Luxembourg",
     countryAT: "Autriche",
+    countrySI: "Slovénie",
+    countryHR: "Croatie",
     areasCount: (n) => `${n} aires`,
     areasListed: (n) => `${n} aires répertoriées • Prix en direct`,
     kmMarker: (hw, pk) => `${hw || 'Autoroute'} • Borne km ${pk}`,
@@ -1397,6 +1523,58 @@ const I18N_DICT = {
     weatherLoading: "Météo en direct",
     fuelUnavailable: "Indispo"
   },
+  sl: {
+    refRoutesTitle: "52 Referenčnih poti",
+    refRoutesSub: "4 koridorji na državo (13 evropskih držav)",
+    refRoutesTest: "Preizkusi",
+
+    'douches chaudes': 'Topli tuši',
+    'espace bébé': 'Previjalnica',
+    'gonflage pneus': 'Tlak v pnevmatikah',
+    'wi-fi gratuit': 'Brezplačen Wi-Fi',
+    'distributeur dab': 'Bančni avtomat (ATM)',
+    'aire camping-cars': 'Postajališče za avtodome',
+    'parking pl': 'Parkirišče za tovornjake',
+    'sanitaires 24/7': 'Sanitarije 24/7',
+    'toilettes publiques': 'Javna stranišča',
+    'boutique alimentaire': 'Trgovina z živili',
+    'boutique non alimentaire': 'Trgovina',
+    'restauration sur place': 'Restavracija',
+    'restauration à emporter': 'Hrana za s seboj',
+    'lavage automatique': 'Avtopralnica',
+    'lavage haute pression': 'Visokotlačno pranje',
+    'lavage manuel': 'Ročno pranje',
+    'bornes électriques': 'E-polnilnice',
+    'automate cb 24/24': 'Plačilni avtomat 24/7',
+    'bar': 'Kavarna / Bar',
+    'relais colis': 'Prevzem paketov'
+  },
+  hr: {
+    refRoutesTitle: "52 Referentnih ruta",
+    refRoutesSub: "4 koridora po državi (13 europskih država)",
+    refRoutesTest: "Testiraj",
+
+    'douches chaudes': 'Topli tuševi',
+    'espace bébé': 'Prostor za prematanje',
+    'gonflage pneus': 'Pumpe za gume',
+    'wi-fi gratuit': 'Besplatni Wi-Fi',
+    'distributeur dab': 'Bankomat (ATM)',
+    'aire camping-cars': 'Kamp kućice / Autodomovi',
+    'parking pl': 'Parkiralište za teretna vozila',
+    'sanitaires 24/7': 'Sanitarni čvor 24/7',
+    'toilettes publiques': 'Javni WC',
+    'boutique alimentaire': 'Trgovina prehrambenih proizvoda',
+    'boutique non alimentaire': 'Trgovina',
+    'restauration sur place': 'Restoran',
+    'restauration à emporter': 'Hrana za van',
+    'lavage automatique': 'Automatska autopraonica',
+    'lavage haute pression': 'Pranje pod visokim tlakom',
+    'lavage manuel': 'Ručno pranje',
+    'bornes électriques': 'Punionice za električna vozila',
+    'automate cb 24/24': 'Automatsko plaćanje karticom 24/7',
+    'bar': 'Kafić / Bar',
+    'relais colis': 'Preuzimanje paketa'
+  },
   de: {
     pageTitle: "FuelPilot • Autobahn-Tankstellen & Kraftstoffpreise",
     tagline: "Kraftstoffpreise & Autobahnraststätten",
@@ -1459,6 +1637,8 @@ const I18N_DICT = {
     countryNL: "Niederlande",
     countryLU: "Luxemburg",
     countryAT: "Österreich",
+    countrySI: "Slowenien",
+    countryHR: "Kroatien",
     areasCount: (n) => `${n} Raststätten`,
     areasListed: (n) => `${n} Autobahnraststätten • Live-Preise`,
     kmMarker: (hw, pk) => `${hw || 'Autobahn'} • km ${pk}`,
@@ -1587,6 +1767,8 @@ const I18N_DICT = {
     countryNL: "Netherlands",
     countryLU: "Luxembourg",
     countryAT: "Austria",
+    countrySI: "Slovenia",
+    countryHR: "Croatia",
     areasCount: (n) => `${n} areas`,
     areasListed: (n) => `${n} service areas • Live prices`,
     kmMarker: (hw, pk) => `${hw || 'Motorway'} • Marker km ${pk}`,
@@ -1715,6 +1897,8 @@ const I18N_DICT = {
     countryNL: "Paesi Bassi",
     countryLU: "Lussemburgo",
     countryAT: "Austria",
+    countrySI: "Slovenia",
+    countryHR: "Croatia",
     areasCount: (n) => `${n} aree`,
     areasListed: (n) => `${n} aree di servizio • Prezzi live`,
     kmMarker: (hw, pk) => `${hw || 'Autostrada'} • Km ${pk}`,
@@ -1844,6 +2028,8 @@ const I18N_DICT = {
     countryNL: "Nederland",
     countryLU: "Luxemburg",
     countryAT: "Oostenrijk",
+    countrySI: "Slovenië",
+    countryHR: "Kroatië",
     areasCount: (n) => `${n} verzorgingsplaatsen`,
     areasListed: (n) => `${n} verzorgingsplaatsen geregistreerd • Actuele prijzen`,
     kmMarker: (hw, pk) => `${hw || 'Snelweg'} • Kilometerpaal ${pk}`,
@@ -1972,6 +2158,8 @@ const I18N_DICT = {
     countryNL: "Países Baixos",
     countryLU: "Luxemburgo",
     countryAT: "Áustria",
+    countrySI: "Eslovénia",
+    countryHR: "Croácia",
     areasCount: (n) => `${n} áreas`,
     areasListed: (n) => `${n} áreas de servicio • Precios en vivo`,
     kmMarker: (hw, pk) => `${hw || 'Autopista'} • PK km ${pk}`,
@@ -2039,8 +2227,8 @@ const I18N_DICT = {
     fuelUnavailable: "No disp."
   },
   pt: {
-    refRoutesTitle: "44 Itinerários de referência",
-    refRoutesSub: "4 corredores por país (11 países europeus)",
+    refRoutesTitle: "52 Itinerários de referência",
+    refRoutesSub: "4 corredores por país (13 países europeus)",
     refRoutesTest: "Testar",
 
     pageTitle: "FuelPilot • Combustível Autoestrada & Marcos PK",
@@ -2105,6 +2293,8 @@ const I18N_DICT = {
     countryNL: "Países Baixos",
     countryLU: "Luxemburgo",
     countryAT: "Áustria",
+    countrySI: "Eslovénia",
+    countryHR: "Croácia",
     areasCount: (n) => `${n} áreas`,
     areasListed: (n) => `${n} áreas de serviço registadas • Preços em direto`,
     kmMarker: (hw, pk) => `${hw || 'Autoestrada'} • Marco km ${pk}`,
@@ -2171,6 +2361,302 @@ const I18N_DICT = {
     weatherLoading: "Meteorologia em direto",
     fuelUnavailable: "Indisp."
   },
+  sl: {
+    refRoutesTitle: "52 Referenčnih poti",
+    refRoutesSub: "4 koridorji na državo (13 evropskih držav)",
+    refRoutesTest: "Preizkusi",
+
+    pageTitle: "FuelPilot • Cene goriv na avtocestah & Postajališča",
+    tagline: "Primerjava cen goriv & avtocestna počivališča v živo",
+    privacy: "Zasebnost",
+    guide: "Vodnik",
+    guideTitle: "Navodila za uporabo & Vodnik",
+    live: "Cene v živo",
+    refreshTitle: "Osveži FuelCoPilot",
+    sec1: "1. Izbira poti",
+    startPlaceholder: "Mesto ali naslov odhoda...",
+    endPlaceholder: "Mesto ali cilj...",
+    stepPlaceholder: (n) => `Vmesni postanek ${n} (npr. Maribor, Celje...)`,
+    removeStepTitle: "Odstrani postanek",
+    addStep: "+ Postanek",
+    calcBtn: "<span>🚀</span> Izračunaj pot",
+    calcInProgress: "Računanje poti...",
+    startNav: "Začni",
+    stopNav: "Ustavi",
+    navFollowing: "Začni",
+    currentPos: "📍 Moja trenutna lokacija",
+    estimatedPos: "📍 Moja ocenjena lokacija",
+    locating: "Iskanje vaše lokacije...",
+    locationError: "GPS lokacije ni bilo mogoče pridobiti.",
+    fromCurrentPos: (km) => `🎯 Čez ${km} km`,
+    upcomingStationsCount: (n) => `${n} naslednj${n === 1 ? 'e' : 'ih'} počivališč`,
+    editBtn: "<span>✏️</span> Spremeni",
+    closeBtn: "<span>✖</span> Zapri",
+    editBtnTitle: "Spremeni pot",
+    allBrands: "🏢 Vse znamke",
+    filterBrandTitle: "Filtriraj po znamki",
+    filterFuelTitle: "Filtriraj po gorivu",
+    sortTitle: "Razvrščanje",
+    sec3: "3. Bencinski servisi na avtocesti",
+    sortRoute: "Vrstni red: Na poti",
+    sortPrice: "Vrstni red: Najcenejše prej",
+    sortDist: "Vrstni red: Razdalja",
+    tabMap: "Zemljevid",
+    tabList: "Seznam & Filtri",
+    coverage: "Pokrito omrežje: 🇫🇷 Francija • 🇩🇪 Nemčija • 🇧🇪 Belgija • 🇳🇱 Nizozemska • 🇮🇹 Italija • 🇪🇸 Španija • 🇵🇹 Portugalska • 🇬🇧 Združeno kraljestvo • 🇱🇺 Luksemburg • 🇦🇹 Avstrija • 🇨🇭 Švica • 🇸🇮 Slovenija • 🇭🇷 Hrvaška",
+    recentHdr: "🕒 Zadnjih 10 lokacij",
+    bestPrice: "⭐ NAJNIŽJA CENA",
+    fromStart: (km) => `🎯 Čez ${km} km`,
+    stationsCount: (n) => `${n} postajališč${n === 1 ? 'e' : ''} na poti`,
+    unavail: "⚠️ Ni na voljo",
+    noPrice: "Ni podatka",
+    priceLbl: "Cena",
+    outOfStock: "⚠️ Zmanjkalo:",
+    estimatedPrice: "ℹ️ Okvirna cena (ni v živo)",
+    recommended: "🔵 Priporočeno",
+    optionN: (n) => `🟠 Možnost ${n}`,
+    directRoute: "Neposredna pot",
+    countryCH: "Švica",
+    countryFR: "Francija",
+    countryDE: "Nemčija",
+    countryES: "Španija",
+    countryIT: "Italija",
+    countryGB: "Združeno kraljestvo",
+    countryIE: "Irska",
+    countryBE: "Belgija",
+    countryPT: "Portugalska",
+    countryNL: "Nizozemska",
+    countryLU: "Luksemburg",
+    countryAT: "Avstrija",
+    countrySI: "Slovenija",
+    countryHR: "Hrvaška",
+    areasCount: (n) => `${n} počivališč`,
+    areasListed: (n) => `${n} zabeleženih počivališč • Cene v živo`,
+    kmMarker: (hw, pk) => `${hw || 'Avtocesta'} • Km ${pk}`,
+    popupDirDist: (dir, km) => `Smer: ${dir} • Čez ${km} km`,
+    sensDirect: "Smer vožnje",
+    sensInverse: "Nasprotna smer",
+    sensDouble: "Obe smeri",
+    wazeTitle: "Navigiraj z Waze",
+    gmapsTitle: "Navigiraj z Google Maps",
+    mapRoad: "🗺️ Cestni zemljevid",
+    mapSat: "🛰️ Satelit",
+    mapHybrid: "🌍 Hibrid",
+    modalClose: "Zapri",
+    step: "Postanek",
+    destination: "Cilj",
+    distance: "Razdalja",
+    duration: "Trajanje",
+    openNow: "Odprto zdaj",
+    closed: "Zaprto",
+    services: "Storitve",
+    fuelChoiceTitle: "Izbira goriva",
+    fuelGazole: "Dizel (B7)",
+    fuelSp95: "Eurosuper 95 (E10/E5)",
+    fuelSp98: "Eurosuper 100 / Plus",
+    fuelGplc: "Avtoplin (LPG)",
+    fuelElec: "Elektrika (kWh)",
+    fuelAll: "Vsa goriva",
+    noStationsOnRoute: "Na tem odseku ni bilo najdenih bencinskih servisov.",
+    alertMissingPoints: "Prosimo, vnesite začetno in končno točko.",
+    alertNoRoute: "Cestne poti ni bilo mogoče najti.",
+    alertServerError: "Povezava s strežnikom za poti ni uspela. Poskusite znova.",
+    amazonBadge: "🛒 PRIPOROČENA POTOVALNA OPREMA",
+    amazonView: "Poglej ➔",
+    amazonDisclosure: "Kot partner podjetja Amazon prejemamo prihodke od ustreznih nakupov.",
+    amazonItems: [
+      { icon: "📱", name: "Avto nosilec za telefon / MagSafe", sub: "Stabilna pritrditev za varno GPS vodenje", url: "https://www.amazon.de/s?k=handyhalterung+auto+lueftung&tag=watermetrics-21" },
+      { icon: "⚡", name: "Hitri avto polnilec USB-C 65W", sub: "Hitro polnjenje med vožnjo", url: "https://www.amazon.de/s?k=kfz+ladegeraet+usb+c+schnellladen&tag=watermetrics-21" }
+    ],
+    evdanceBadge: "⚡ PARTNER ZA EV POLNJENJE • EVDANCE",
+    evdanceTitle: "Prenosni polnilniki in kabli tipa 2 EVDANCE",
+    evdanceSub: "Do -20% v celotni trgovini EU • Koda:",
+    evdanceCta: "Poglej -20% ➔",
+    evdanceDisclosure: "Partnerska povezava • Promocijska koda EVEU20 velja na eu.evdances.com",
+    fuelInfoBtnTitle: "Tabela primerjave poimenovanj goriv po državah",
+    fuelInfoTitle: "⛽ Primerjava goriv po evropskih državah",
+    fuelInfoSubtitle: "Uradna poimenovanja na točilnih avtomatih (Evropski standard EN 16942)",
+    fuelColNorm: "Standard EU",
+    fuelCatE10: "Eurosuper 95 (E10)",
+    fuelCatE5: "Eurosuper 95 (E5)",
+    fuelCatSp98: "Eurosuper 100 / Plus",
+    fuelCatDiesel: "Dizel (B7)",
+    fuelCatLpg: "Avtoplin (LPG)",
+    fuelCatE85: "Bioetanol / CNG",
+    defaultCountry: "SI",
+    today: "Danes",
+    yesterday: "Včeraj",
+    atTime: "ob",
+    verifiedAt: "Posodobljeno:",
+    toggleExit: "🚪 Bencinski servisi ob izvozih (< 1,5 km)",
+    statusOpen: "🟢 Restavracija odprta",
+    statusClosing: "🟡 Restavracija se kmalu zapre",
+    statusNight: "🌙 Gorivo 24/7 · Restavracija zaprta",
+    statusScheduleOpen: "🟢 Restavracija odprta (06:30 - 21:30)",
+    statusScheduleClosing: "🟡 Kmalu se zapre (zaprtje ob 22:00)",
+    statusScheduleNight: "🌙 Restavracija zaprta (odpre se ob 06:30)",
+    pumps247: "Točilna mesta & Plačilni avtomat: 24h/24",
+    foodLabel: "Gostinska ponudba:",
+    amenitiesBrandsTitle: "☕ Blagovne znamke & Restavracije",
+    amenitiesServicesTitle: "🛠️ Storitve počivališča",
+    moreBrands: (n) => `+${n} znamk`,
+    hoursTitle: "🕒 OBRATOVALNI ČAS",
+    offMotorwayBadge: (d, exitNum) => exitNum ? `${d} od izvoza št. ${exitNum}` : `${d} od avtocestnega izvoza`,
+    offMotorwayPopupTitle: "Servis izven avtoceste",
+    offMotorwayPopupDesc: (d, exitNum) => exitNum ? `Dostopno na izvozu št. ${exitNum} (~${d})` : `Dostopno na avtocestnem izvozu (~${d})`,
+    offMotorwayTooltip: "Servis se nahaja tik ob avtocestnem izvozu",
+    defaultHighway: "Avtocesta",
+    weatherLoading: "Vreme v živo",
+    fuelUnavailable: "Ni na voljo"
+  },
+  hr: {
+    refRoutesTitle: "52 Referentnih ruta",
+    refRoutesSub: "4 koridora po državi (13 europskih država)",
+    refRoutesTest: "Testiraj",
+
+    pageTitle: "FuelPilot • Cijene goriva na autocesti & Odmorišta",
+    tagline: "Usporedba cijena goriva & odmorišta na autocesti uživo",
+    privacy: "Privatnost",
+    guide: "Vodič",
+    guideTitle: "Upute za uporabu & Vodič",
+    live: "Cijene uživo",
+    refreshTitle: "Osvježi FuelCoPilot",
+    sec1: "1. Odabir rute",
+    startPlaceholder: "Mjesto ili adresa polaska...",
+    endPlaceholder: "Grad ili odredište...",
+    stepPlaceholder: (n) => `Međutočka ${n} (npr. Karlovac, Zadar...)`,
+    removeStepTitle: "Ukloni međutočku",
+    addStep: "+ Međutočka",
+    calcBtn: "<span>🚀</span> Izračunaj rutu",
+    calcInProgress: "Izračun rute u tijeku...",
+    startNav: "Pokreni",
+    stopNav: "Zaustavi",
+    navFollowing: "Pokreni",
+    currentPos: "📍 Moja trenutna lokacija",
+    estimatedPos: "📍 Moja procijenjena lokacija",
+    locating: "Traženje vaše lokacije...",
+    locationError: "Nije moguće dohvatiti GPS lokaciju.",
+    fromCurrentPos: (km) => `🎯 Za ${km} km`,
+    upcomingStationsCount: (n) => `${n} sljedeć${n === 1 ? 'e' : 'ih'} odmorišta`,
+    editBtn: "<span>✏️</span> Uredi",
+    closeBtn: "<span>✖</span> Zatvori",
+    editBtnTitle: "Uredi rutu",
+    allBrands: "🏢 Sve marke",
+    filterBrandTitle: "Filtriraj po marki",
+    filterFuelTitle: "Filtriraj po gorivu",
+    sortTitle: "Poredak",
+    sec3: "3. Benzinske postaje na autocesti",
+    sortRoute: "Poredak: Na ruti",
+    sortPrice: "Poredak: Prvo najjeftinije",
+    sortDist: "Poredak: Udaljenost",
+    tabMap: "Karta",
+    tabList: "Popis & Filtri",
+    coverage: "Pokrivena mreža: 🇫🇷 Francuska • 🇩🇪 Njemačka • 🇧🇪 Belgija • 🇳🇱 Nizozemska • 🇮🇹 Italija • 🇪🇸 Španjolska • 🇵🇹 Portugal • 🇬🇧 Ujedinjeno Kraljevstvo • 🇱🇺 Luksemburg • 🇦🇹 Austrija • 🇨🇭 Švicarska • 🇸🇮 Slovenija • 🇭🇷 Hrvatska",
+    recentHdr: "🕒 Zadnjih 10 lokacija",
+    bestPrice: "⭐ NAJPOVOLJNIJA CIJENA",
+    fromStart: (km) => `🎯 Za ${km} km`,
+    stationsCount: (n) => `${n} odmorišt${n === 1 ? 'e' : 'a'} na ruti`,
+    unavail: "⚠️ Nije dostupno",
+    noPrice: "Nema podataka",
+    priceLbl: "Cijena",
+    outOfStock: "⚠️ Nema na zalihi:",
+    estimatedPrice: "ℹ️ Okvirna cijena (nije uživo)",
+    recommended: "🔵 Preporučeno",
+    optionN: (n) => `🟠 Opcija ${n}`,
+    directRoute: "Izravna ruta",
+    countryCH: "Švicarska",
+    countryFR: "Francuska",
+    countryDE: "Njemačka",
+    countryES: "Španjolska",
+    countryIT: "Italija",
+    countryGB: "Ujedinjeno Kraljevstvo",
+    countryIE: "Irska",
+    countryBE: "Belgija",
+    countryPT: "Portugal",
+    countryNL: "Nizozemska",
+    countryLU: "Luksemburg",
+    countryAT: "Austrija",
+    countrySI: "Slovenija",
+    countryHR: "Hrvatska",
+    areasCount: (n) => `${n} odmorišta`,
+    areasListed: (n) => `${n} evidentiranih odmorišta • Cijene uživo`,
+    kmMarker: (hw, pk) => `${hw || 'Autocesta'} • Km ${pk}`,
+    popupDirDist: (dir, km) => `Smjer: ${dir} • Za ${km} km`,
+    sensDirect: "Smjer vožnje",
+    sensInverse: "Suprotan smjer",
+    sensDouble: "Oba smjera",
+    wazeTitle: "Navigiraj pomoću Waze",
+    gmapsTitle: "Navigiraj pomoću Google Maps",
+    mapRoad: "🗺️ Cestovna karta",
+    mapSat: "🛰️ Satelit",
+    mapHybrid: "🌍 Hibrid",
+    modalClose: "Zatvori",
+    step: "Međutočka",
+    destination: "Odredište",
+    distance: "Udaljenost",
+    duration: "Trajanje",
+    openNow: "Otvoreno sada",
+    closed: "Zatvoreno",
+    services: "Usluge",
+    fuelChoiceTitle: "Odabir goriva",
+    fuelGazole: "Eurodiesel (B7)",
+    fuelSp95: "Eurosuper 95 (E10/E5)",
+    fuelSp98: "Eurosuper 100 (Class Plus)",
+    fuelGplc: "Autoplin (LPG)",
+    fuelElec: "Struja (kWh)",
+    fuelAll: "Sva goriva",
+    noStationsOnRoute: "Na ovoj dionici nisu pronađene benzinske postaje.",
+    alertMissingPoints: "Molimo unesite polazište i odredište.",
+    alertNoRoute: "Nije pronađena cestovna ruta.",
+    alertServerError: "Nije moguće povezati se s poslužiteljem rute. Pokušajte ponovno.",
+    amazonBadge: "🛒 PREPORUČENA OPREMA ZA PUTOVANJE",
+    amazonView: "Pogledaj ➔",
+    amazonDisclosure: "Kao partner Amazona ostvarujemo prihod od kvalificiranih kupnji.",
+    amazonItems: [
+      { icon: "📱", name: "Auto držač za mobitel / MagSafe", sub: "Stabilno držanje za sigurnu GPS navigaciju", url: "https://www.amazon.de/s?k=handyhalterung+auto+lueftung&tag=watermetrics-21" },
+      { icon: "⚡", name: "Brzi auto punjač USB-C 65W", sub: "Brzo punjenje tijekom vašeg putovanja", url: "https://www.amazon.de/s?k=kfz+ladegeraet+usb+c+schnellladen&tag=watermetrics-21" }
+    ],
+    evdanceBadge: "⚡ PARTNER ZA PUNJENJE ELEKTRIČNIH VOZILA • EVDANCE",
+    evdanceTitle: "Prijenosni punjači i kabeli tipa 2 EVDANCE",
+    evdanceSub: "Do -20% u cijeloj EU trgovini • Kod:",
+    evdanceCta: "Pogledaj -20% ➔",
+    evdanceDisclosure: "Partnerska poveznica • Promo kod EVEU20 vrijedi na eu.evdances.com",
+    fuelInfoBtnTitle: "Tablica usporedbe naziva goriva po zemljama",
+    fuelInfoTitle: "⛽ Usporedba naziva goriva po europskim zemljama",
+    fuelInfoSubtitle: "Službeni nazivi na crpkama (Europska norma EN 16942)",
+    fuelColNorm: "Norma EU",
+    fuelCatE10: "Eurosuper 95 (E10)",
+    fuelCatE5: "Eurosuper 95 (E5)",
+    fuelCatSp98: "Eurosuper 100 (Class Plus)",
+    fuelCatDiesel: "Eurodiesel (B7)",
+    fuelCatLpg: "Autoplin (LPG)",
+    fuelCatE85: "Bioetanol / CNG",
+    defaultCountry: "HR",
+    today: "Danas",
+    yesterday: "Jučer",
+    atTime: "u",
+    verifiedAt: "Ažurirano:",
+    toggleExit: "🚪 Postaje na izlazima (< 1,5 km)",
+    statusOpen: "🟢 Restoran otvoren",
+    statusClosing: "🟡 Restoran se uskoro zatvara",
+    statusNight: "🌙 Gorivo 24/7 · Restoran zatvoren",
+    statusScheduleOpen: "🟢 Restoran otvoren (06:30 - 21:30)",
+    statusScheduleClosing: "🟡 Uskoro zatvaranje (zatvara u 22:00)",
+    statusScheduleNight: "🌙 Restoran zatvoren (otvara u 06:30)",
+    pumps247: "Crpke & Automatsko plaćanje: 24h/24",
+    foodLabel: "Ugostiteljstvo:",
+    amenitiesBrandsTitle: "☕ Brendovi & Restorani",
+    amenitiesServicesTitle: "🛠️ Usluge odmorišta",
+    moreBrands: (n) => `+${n} brendova`,
+    hoursTitle: "🕒 RADNO VRIJEME",
+    offMotorwayBadge: (d, exitNum) => exitNum ? `${d} od izlaza br. ${exitNum}` : `${d} od izlaza s autoceste`,
+    offMotorwayPopupTitle: "Postaja izvan autoceste",
+    offMotorwayPopupDesc: (d, exitNum) => exitNum ? `Dostupno na izlazu br. ${exitNum} (~${d})` : `Dostupno na izlazu s autoceste / naplatnoj postaji (~${d})`,
+    offMotorwayTooltip: "Postaja se nalazi neposredno uz izlaz s autoceste",
+    defaultHighway: "Autocesta",
+    weatherLoading: "Vrijeme uživo",
+    fuelUnavailable: "Nije dostupno"
+  },
 };
 
 function t() {
@@ -2193,6 +2679,8 @@ function translateCountryName(rawName) {
   if (n === 'pays-bas' || n === 'netherlands' || n === 'nederland' || n === 'paesi bassi' || n === 'países baixos' || n === 'niederlande') return tr.countryNL;
   if (n === 'luxembourg' || n === 'luxemburg' || n === 'lussemburgo' || n === 'luxemburgo') return tr.countryLU;
   if (n === 'autriche' || n === 'austria' || n === 'österreich' || n === 'oostenrijk' || n === 'áustria') return tr.countryAT;
+  if (n === 'slovénie' || n === 'slovenia' || n === 'slovenija' || n === 'slowenien' || n === 'eslovenia' || n === 'eslovénia') return tr.countrySI;
+  if (n === 'croatie' || n === 'croatia' || n === 'hrvatska' || n === 'kroatien' || n === 'croacia' || n === 'croazia') return tr.countryHR;
   return rawName;
 }
 
@@ -2337,7 +2825,7 @@ function ensureLangBarOrder() {
     deBtn.innerHTML = `<svg class="lang-flag-svg" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="12" fill="#000000"/><rect y="12" width="60" height="12" fill="#DD0000"/><rect y="24" width="60" height="12" fill="#FFCE00"/></svg>`;
     bar.appendChild(deBtn);
   }
-  const desiredOrder = ['fr', 'be', 'nl', 'de', 'it', 'es', 'pt', 'en'];
+  const desiredOrder = ['fr', 'be', 'nl', 'de', 'it', 'es', 'pt', 'sl', 'hr', 'en'];
   desiredOrder.forEach(code => {
     const el = (code === 'be')
       ? (document.getElementById('belgium-lang-container') || bar.querySelector('[data-lang="be"]'))
@@ -2641,6 +3129,8 @@ function renderFuelInfoModal() {
           <th>🇱🇺 ${tr.countryLU}</th>
           <th>🇦🇹 ${tr.countryAT}</th>
           <th>🇨🇭 ${tr.countryCH}</th>
+          <th>🇸🇮 ${tr.countrySI}</th>
+          <th>🇭🇷 ${tr.countryHR}</th>
           <th>🇬🇧 ${tr.countryGB}</th>
         </tr>
       </thead>
@@ -2657,6 +3147,8 @@ function renderFuelInfoModal() {
           <td><b>Super 95 (E10)</b></td>
           <td><b>Super 95 (E10)</b></td>
           <td><b>Bleifrei 95 (E10)</b></td>
+          <td><b>Eurosuper 95 (E10)</b></td>
+          <td><b>Eurosuper 95 (E10)</b></td>
           <td><b>Unleaded (E10)</b></td>
         </tr>
         <tr>
@@ -2671,6 +3163,8 @@ function renderFuelInfoModal() {
           <td>Super 95 (E5)</td>
           <td>Super 95</td>
           <td>Sans plomb 95</td>
+          <td>Eurosuper 95</td>
+          <td>Eurosuper 95</td>
           <td>Unleaded 95</td>
         </tr>
         <tr>
@@ -2685,6 +3179,8 @@ function renderFuelInfoModal() {
           <td><b>Diesel (B7)</b></td>
           <td><b>Diesel (B7)</b></td>
           <td><b>Diesel</b></td>
+          <td><b>Dizel (B7)</b></td>
+          <td><b>Eurodiesel (B7)</b></td>
           <td><b>Diesel (B7)</b></td>
         </tr>
         <tr>
@@ -2699,6 +3195,8 @@ function renderFuelInfoModal() {
           <td><b>Super 98 (E5)</b></td>
           <td><b>Super Plus (98)</b></td>
           <td><b>Super Plus 98</b></td>
+          <td><b>Eurosuper 100</b></td>
+          <td><b>Eurosuper 100</b></td>
           <td><b>Super Unleaded (E5)</b></td>
         </tr>
         <tr>
@@ -2713,6 +3211,8 @@ function renderFuelInfoModal() {
           <td><b>GPL / Autogas</b></td>
           <td><b>Autogas (LPG)</b></td>
           <td><b>Autogas / GPL</b></td>
+          <td><b>Avtoplin (LPG)</b></td>
+          <td><b>Autoplin (LPG)</b></td>
           <td><b>LPG Autogas</b></td>
         </tr>
         <tr>
@@ -2727,6 +3227,8 @@ function renderFuelInfoModal() {
           <td>Bioéthanol E85</td>
           <td>Bioethanol E85</td>
           <td>Bioethanol E85</td>
+          <td>Bioetanol E85</td>
+          <td>Bioetanol E85</td>
           <td>Bioethanol E85</td>
         </tr>
       </tbody>
@@ -2800,7 +3302,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
   ensureLangBarOrder();
-  const langCountryMap = { fr: 'FR', de: 'DE', it: 'IT', es: 'ES', en: 'GB', nl: 'NL', pt: 'PT', be: 'BE' };
+  const langCountryMap = { fr: 'FR', de: 'DE', it: 'IT', es: 'ES', en: 'GB', nl: 'NL', pt: 'PT', be: 'BE', sl: 'SI', hr: 'HR' };
   document.querySelectorAll('#lang-bar .lang-flag-btn').forEach(btn => {
     if (btn.dataset.lang === 'be') {
       btn.addEventListener('click', (e) => {
@@ -2828,7 +3330,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             IT: [[42.6, 12.8], 6],
             ES: [[40.2, -3.6], 6],
             PT: [[39.5, -8.0], 7],
-            GB: [[52.8, -1.8], 6]
+            GB: [[52.8, -1.8], 6],
+            SI: [[46.15, 14.99], 8],
+            HR: [[45.1, 15.2], 7]
           };
           const target = centers[userSelectedCountry];
           if (target) map.setView(target[0], target[1], { animate: true });
@@ -4154,6 +4658,18 @@ const REFERENCE_ROUTES_32 = {
     { dir: 'Est ➔ Ouest', icon: '⬅️', label: 'St. Gallen ➔ Genève', start: 'St. Gallen', startCoords: [9.3767, 47.4245], end: 'Genève', endCoords: [6.1432, 46.2044], motorway: 'A1 Autoroute', desc: 'Transversale suisse Lac de Constance - Léman' },
     { dir: 'Nord-Est ➔ Sud-Ouest', icon: '↙️', label: 'Zürich ➔ Lausanne', start: 'Zürich', startCoords: [8.5417, 47.3769], end: 'Lausanne', endCoords: [6.6323, 46.5197], motorway: 'A1 Autoroute', desc: 'Centre financier vers Romandie' },
     { dir: 'Nord-Ouest ➔ Sud-Est', icon: '↘️', label: 'Basel ➔ Lugano', start: 'Basel', startCoords: [7.5886, 47.5596], end: 'Lugano', endCoords: [8.9511, 46.0037], motorway: 'A2 Gotthard', desc: 'Rhin vers Tessin' },
+  ],
+  SI: [
+    { dir: 'Nord ➔ Sud', icon: '⬇️', label: 'Maribor ➔ Koper', start: 'Maribor', startCoords: [15.6459, 46.5547], end: 'Koper', endCoords: [13.7302, 45.5481], motorway: 'A1 Avtocesta', desc: 'Glavni koridor Maribor - Ljubljana - Obala' },
+    { dir: 'Est ➔ Ouest', icon: '⬅️', label: 'Murska Sobota ➔ Nova Gorica', start: 'Murska Sobota', startCoords: [16.1664, 46.6625], end: 'Nova Gorica', endCoords: [13.6484, 45.9560], motorway: 'A5 • A1 • H4', desc: 'Prekmurje skozi prestolnico do Goriške' },
+    { dir: 'Nord-Est ➔ Sud-Ouest', icon: '↙️', label: 'Celje ➔ Koper', start: 'Celje', startCoords: [15.2677, 46.2360], end: 'Koper', endCoords: [13.7302, 45.5481], motorway: 'A1 Avtocesta', desc: 'Štajerska do Jadranskega morja' },
+    { dir: 'Nord-Ouest ➔ Sud-Est', icon: '↘️', label: 'Jesenice ➔ Novo Mesto', start: 'Jesenice', startCoords: [14.0560, 46.4367], end: 'Novo Mesto', endCoords: [15.1689, 45.8038], motorway: 'A2 Dolenjska & Gorenjska', desc: 'Alpe proti hrvaški meji' },
+  ],
+  HR: [
+    { dir: 'Nord ➔ Sud', icon: '⬇️', label: 'Zagreb ➔ Split', start: 'Zagreb', startCoords: [15.9819, 45.8150], end: 'Split', endCoords: [16.4402, 43.5081], motorway: 'A1 Dalmatina', desc: 'Glavni koridor Zagreb - Jadransko more' },
+    { dir: 'Est ➔ Ouest', icon: '⬅️', label: 'Slavonski Brod ➔ Rijeka', start: 'Slavonski Brod', startCoords: [18.0156, 45.1603], end: 'Rijeka', endCoords: [14.4422, 45.3271], motorway: 'A3 • A1 • A6', desc: 'Slavonija preko Gorskog kotara do Kvarnera' },
+    { dir: 'Nord-Est ➔ Sud-Ouest', icon: '↙️', label: 'Varaždin ➔ Zadar', start: 'Varaždin', startCoords: [16.3366, 46.3057], end: 'Zadar', endCoords: [15.2314, 44.1194], motorway: 'A4 • A1', desc: 'Sjeverna Hrvatska prema Dalmaciji' },
+    { dir: 'Nord-Ouest ➔ Sud-Est', icon: '↘️', label: 'Karlovac ➔ Ploče', start: 'Karlovac', startCoords: [15.5553, 45.4929], end: 'Ploče', endCoords: [17.4333, 43.0531], motorway: 'A1 Dalmatina Jug', desc: 'Središnja Hrvatska prema jugu Dalmacije' },
   ]
 };
 
@@ -4216,6 +4732,7 @@ function initReferenceRoutesUI() {
 
 window.REFERENCE_ROUTES_32 = REFERENCE_ROUTES_32;
 window.REFERENCE_ROUTES_44 = REFERENCE_ROUTES_32;
+window.REFERENCE_ROUTES_52 = REFERENCE_ROUTES_32;
 window.applyReferenceRoute = applyReferenceRoute;
 window.initReferenceRoutesUI = initReferenceRoutesUI;
 
