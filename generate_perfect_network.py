@@ -346,23 +346,28 @@ CORRIDORS = [
         (0.81, 430, "Raststätte Osterfeld", "Aral", "TotalEnergies", "Osterfeld", False),
         (0.92, 490, "Raststätte Fläming", "Shell", "Aral", "Niemegk", False),
     ]),
-    ("DE_A3", "DE", "A3", (13.4319, 48.5667), (6.8500, 51.5000), [ # Passau -> Oberhausen
-        (0.05, 35, "Raststätte Donautal", "Aral", "Shell", "Passau", False),
-        (0.13, 95, "Raststätte Bayerischer Wald", "Shell", "Aral", "Straubing", False),
-        (0.20, 145, "Raststätte Jura", "TotalEnergies", "Shell", "Velburg", False),
-        (0.25, 190, "Raststätte Aurach", "Aral", "Shell", "Aurach", False),
-        (0.28, 216, "Raststätte Steigerwald", "Shell", "Aral", "Schlüsselfeld", False),
-        (0.36, 278, "Raststätte Würzburg", "TotalEnergies", "Aral", "Würzburg", False),
-        (0.43, 332, "Raststätte Spessart", "Aral", "Shell", "Rohrbrunn", False),
-        (0.48, 372, "Raststätte Weiskirchen", "Shell", "TotalEnergies", "Rodgau", False),
-        (0.54, 415, "Raststätte Medenbach", "Aral", "Shell", "Wiesbaden", False),
-        (0.58, 445, "Raststätte Bad Camberg", "Shell", "Aral", "Bad Camberg", False),
-        (0.62, 470, "Raststätte Limburg", "TotalEnergies", "Aral", "Limburg an der Lahn", False),
-        (0.66, 500, "Raststätte Montabaur", "Aral", "Shell", "Montabaur", False),
-        (0.70, 535, "Raststätte Fernthal", "Shell", "Aral", "Neustadt (Wied)", False),
-        (0.75, 570, "Raststätte Siegburg", "Aral", "TotalEnergies", "Siegburg", False),
-        (0.83, 630, "Raststätte Ohligser Heide", "Shell", "Aral", "Solingen", False),
-        (0.90, 680, "Raststätte Hünxe", "Aral", "Shell", "Hünxe", False),
+    ("DE_A3", "DE", "A3", (13.4319, 48.5667), (6.2200, 51.8600), [ # Passau -> Emmerich am Rhein (Grenze NL)
+        (0.007, 5, "Raststätte Donautal", "Aral", "Shell", "Passau", False),
+        (0.093, 70, "Raststätte Bayerischer Wald", "Shell", "Aral", "Straubing", False),
+        (0.226, 170, "Raststätte Jura", "TotalEnergies", "Shell", "Velburg", False),
+        (0.316, 237, "Raststätte Aurach", "Aral", "Shell", "Aurach", False),
+        (0.352, 263, "Raststätte Steigerwald", "Shell", "Aral", "Schlüsselfeld", False),
+        (0.435, 325, "Raststätte Würzburg", "TotalEnergies", "Aral", "Würzburg", False),
+        (0.507, 379, "Raststätte Spessart", "Aral", "Shell", "Rohrbrunn", False),
+        (0.561, 419, "Raststätte Weiskirchen", "Shell", "TotalEnergies", "Rodgau", False),
+        (0.620, 464, "Raststätte Medenbach", "Aral", "Shell", "Wiesbaden", False),
+        (0.652, 488, "Raststätte Bad Camberg", "Shell", "Aral", "Bad Camberg", False),
+        (0.674, 504, "Raststätte Limburg", "TotalEnergies", "Aral", "Limburg an der Lahn", False),
+        (0.705, 527, "Raststätte Montabaur", "Aral", "Shell", "Montabaur", False),
+        (0.749, 560, "Raststätte Fernthal", "Shell", "Aral", "Neustadt (Wied)", False),
+        (0.791, 591, "Raststätte Siegburg", "Aral", "TotalEnergies", "Siegburg", False),
+        (0.810, 606, "Raststätte Königsforst", "Shell", "TotalEnergies", "Köln / Rösrath", False),
+        (0.854, 639, "Raststätte Ohligser Heide", "Shell", "Aral", "Solingen", False),
+        (0.883, 660, "Raststätte Hösel", "Aral", "Shell", "Ratingen", False),
+        (0.936, 700, "Raststätte Hünxe", "Aral", "Shell", "Hünxe", False),
+        (0.956, 715, "Autohof Hamminkeln", "TotalEnergies", "TotalEnergies", "Hamminkeln", True),
+        (0.975, 729, "Autohof Rees", "Shell", "Shell", "Rees", True),
+        (0.995, 745, "Autohof Emmerich", "Aral", "Aral", "Emmerich am Rhein", True),
     ]),
     ("DE_A7", "DE", "A7", (10.7000, 47.5700), (9.4300, 54.7800), [ # Füssen -> Flensburg
         (0.05, 45, "Raststätte Allgäuer Tor", "Shell", "Aral", "Dietmannsried", False),
@@ -465,9 +470,10 @@ def main():
     with open(STATIONS_PATH, 'r', encoding='utf-8') as f:
         existing_stations = json.load(f)
 
-    # Keep FR, ES, IT, GB intact!
-    clean_stations = [s for s in existing_stations if s.get('pays') in ['FR', 'ES', 'IT', 'GB']]
-    print(f"Retained core networks: FR/ES/IT/GB -> {len(clean_stations)} stations")
+    # Keep FR, ES, IT, GB, LU, AT, CH, SI, HR intact!
+    core_countries = ['FR', 'ES', 'IT', 'GB', 'LU', 'AT', 'CH', 'SI', 'HR']
+    clean_stations = [s for s in existing_stations if s.get('pays') in core_countries]
+    print(f"Retained core networks: {core_countries} -> {len(clean_stations)} stations")
 
     new_stations = []
     station_counters = {'PT': 1, 'NL': 1, 'BE': 1, 'DE': 1}

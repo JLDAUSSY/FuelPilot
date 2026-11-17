@@ -4986,34 +4986,38 @@ function renderRouteAlternatives() {
   const container = document.getElementById('routes-container');
   const mapBar = document.getElementById('map-routes-bar');
 
-  if (alternativeRoutes.length <= 1) {
+  if (!alternativeRoutes || alternativeRoutes.length === 0) {
     if (container) container.style.display = 'none';
     if (mapBar) mapBar.style.display = 'none';
     return;
   }
 
-  // 1. Sidebar Container (Mode Liste)
+  // 1. Sidebar Container (Mode Liste) - shown whenever an itinerary is calculated
   if (container) {
     container.style.display = 'flex';
     container.innerHTML = '';
   }
 
-  // 2. Floating Map Bar (Mode Carte)
+  // 2. Floating Map Bar (Mode Carte) - shown when multiple route choices exist
   if (mapBar) {
-    mapBar.style.display = 'flex';
-    mapBar.innerHTML = '';
-    if (window.innerWidth <= 1080) {
-      mapBar.style.position = 'fixed';
-      mapBar.style.zIndex = '1950';
-      if (typeof ensureMobileNavBarVisible === 'function') {
-        ensureMobileNavBarVisible();
+    if (alternativeRoutes.length > 1) {
+      mapBar.style.display = 'flex';
+      mapBar.innerHTML = '';
+      if (window.innerWidth <= 1080) {
+        mapBar.style.position = 'fixed';
+        mapBar.style.zIndex = '1950';
+        if (typeof ensureMobileNavBarVisible === 'function') {
+          ensureMobileNavBarVisible();
+        } else {
+          mapBar.style.bottom = 'calc(84px + env(safe-area-inset-bottom, 0px))';
+        }
       } else {
-        mapBar.style.bottom = 'calc(84px + env(safe-area-inset-bottom, 0px))';
+        mapBar.style.position = '';
+        mapBar.style.bottom = '';
+        mapBar.style.zIndex = '';
       }
     } else {
-      mapBar.style.position = '';
-      mapBar.style.bottom = '';
-      mapBar.style.zIndex = '';
+      mapBar.style.display = 'none';
     }
   }
 
@@ -5049,8 +5053,8 @@ function renderRouteAlternatives() {
       container.appendChild(card);
     }
 
-    // B. Floating Button on Map
-    if (mapBar) {
+    // B. Floating Button on Map (only when multiple choices available)
+    if (mapBar && alternativeRoutes.length > 1) {
       const btn = document.createElement('div');
       const btnColorClass = idx === 0 ? 'map-route-btn-blue' : 'map-route-btn-orange';
       btn.className = `map-route-btn ${btnColorClass} ${idx === 0 ? 'active' : ''}`;
@@ -5543,10 +5547,16 @@ function renderCurrentRouteStations() {
     filtered.sort((a, b) => a.distOnRoute - b.distOnRoute);
   }
 
-  // Update counter
+  // Update counter (with total route mileage when an active route is computed)
   const countLabel = document.getElementById('stations-count-label');
   if (countLabel) {
-    countLabel.textContent = t().stationsCount(filtered.length);
+    const baseCount = t().stationsCount(filtered.length);
+    if (activeRouteData && activeRouteData.distance) {
+      const distKm = (activeRouteData.distance / 1000).toFixed(0);
+      countLabel.textContent = `${baseCount} • ${distKm} km`;
+    } else {
+      countLabel.textContent = baseCount;
+    }
   }
 
   const mobileBadge = document.getElementById('mobile-badge-count');
