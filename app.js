@@ -42,12 +42,19 @@ let routeLayers = [];
 let stationMarkers = [];
 let activeRouteData = null;
 let alternativeRoutes = [];
+let activeRoutePassedOutline = null;
+let activeRoutePassedLine = null;
+let activeRouteRemainingOutline = null;
+let activeRouteRemainingLine = null;
 let currentWaypoints = []; // [{ id, text, coords: [lon, lat] }]
 let startPoint = null;
 let endPoint = null;
 try {
   Object.defineProperty(window, 'map', { get: () => map, set: (v) => { map = v; }, configurable: true });
   Object.defineProperty(window, 'startPoint', { get: () => startPoint, set: (v) => { startPoint = v; }, configurable: true });
+  Object.defineProperty(window, 'activeRoutePassedLine', { get: () => activeRoutePassedLine, set: (v) => { activeRoutePassedLine = v; }, configurable: true });
+  Object.defineProperty(window, 'activeRouteRemainingLine', { get: () => activeRouteRemainingLine, set: (v) => { activeRouteRemainingLine = v; }, configurable: true });
+  Object.defineProperty(window, 'updateActiveRoutePolylines', { get: () => updateActiveRoutePolylines, configurable: true });
 } catch(e) {}
 let selectedFuel = 'e10'; // Default to SP95
 let selectedBrand = 'all';
@@ -5375,6 +5382,7 @@ function renderRouteAlternatives() {
 // Select an active route and compute stations along it
 function selectRoute(routeIndex) {
   activeRouteData = alternativeRoutes[routeIndex];
+  userProgressionKmOnRoute = 0;
 
   // Update active state in sidebar cards and map floating pills
   document.querySelectorAll('.route-card').forEach((c, idx) => {
@@ -5403,6 +5411,10 @@ function drawRoutesOnMap(activeIdx) {
   // Clear old route polylines and markers
   routeLayers.forEach(l => map.removeLayer(l));
   routeLayers = [];
+  activeRoutePassedOutline = null;
+  activeRoutePassedLine = null;
+  activeRouteRemainingOutline = null;
+  activeRouteRemainingLine = null;
 
   // Draw alternative routes first (behind active route)
   alternativeRoutes.forEach((route, idx) => {
@@ -5446,27 +5458,46 @@ function drawRoutesOnMap(activeIdx) {
     routeLayers.push(altPolyline);
   });
 
-  // Draw active route with high-contrast outline (like Waze)
+  // Draw active route with high-contrast outline (Option B: passé grisé, restant cyan éclatant)
   if (alternativeRoutes[activeIdx]) {
-    const latlngs = alternativeRoutes[activeIdx].geometry.coordinates.map(c => [c[1], c[0]]);
+    const coords = alternativeRoutes[activeIdx].geometry.coordinates;
+    const fullLatLngs = coords.map(c => [c[1], c[0]]);
 
-    // Outline
-    const outline = L.polyline(latlngs, {
+    // 1. Tronçon déjà parcouru (Gris discret semi-transparent, en arrière-plan)
+    activeRoutePassedOutline = L.polyline([], {
+      color: '#090d16',
+      weight: 9,
+      opacity: 0.35,
+      lineJoin: 'round'
+    }).addTo(map);
+    routeLayers.push(activeRoutePassedOutline);
+
+    activeRoutePassedLine = L.polyline([], {
+      color: '#94a3b8',
+      weight: 6,
+      opacity: 0.65,
+      lineJoin: 'round'
+    }).addTo(map);
+    routeLayers.push(activeRoutePassedLine);
+
+    // 2. Tronçon restant à parcourir (Bleu cyan vibrant avec contour sombre haute lisibilité)
+    activeRouteRemainingOutline = L.polyline(fullLatLngs, {
       color: '#090d16',
       weight: 12,
       opacity: 0.9,
       lineJoin: 'round'
     }).addTo(map);
-    routeLayers.push(outline);
+    routeLayers.push(activeRouteRemainingOutline);
 
-    // Main line (vibrant cyan)
-    const mainLine = L.polyline(latlngs, {
+    activeRouteRemainingLine = L.polyline(fullLatLngs, {
       color: '#0284c7',
       weight: 7.5,
       opacity: 1.0,
       lineJoin: 'round'
     }).addTo(map);
-    routeLayers.push(mainLine);
+    routeLayers.push(activeRouteRemainingLine);
+
+    updateActiveRoutePolylines();
 
     fitMapToRouteAndStations();
   }
@@ -5548,6 +5579,103 @@ function distPointToSegment(px, py, x1, y1, x2, y2) {
   return { dist, t, cross };
 }
 
+// Pre-compute and cache cumulative distances along route geometry for instantaneous projections and polyline slicing
+function ensureRouteDistances(route) {
+  if (!route || !route.geometry || !route.geometry.coordinates) return null;
+  if (route._segDistances && route._cumDistances) return route;
+
+  const coords = route.geometry.coordinates;
+  const n = coords.length;
+  const segDistances = new Float64Array(Math.max(0, n - 1));
+  const cumDistances = new Float64Array(n);
+  cumDistances[0] = 0;
+
+  for (let i = 0; i < n - 1; i++) {
+    const p1 = coords[i];
+    const p2 = coords[i + 1];
+    const d = getDistanceKm(p1[1], p1[0], p2[1], p2[0]);
+    segDistances[i] = d;
+    cumDistances[i + 1] = cumDistances[i] + d;
+  }
+
+  route._segDistances = segDistances;
+  route._cumDistances = cumDistances;
+  route._totalKm = cumDistances[n - 1] || 0;
+  return route;
+}
+
+// Mise à jour dynamique du tracé actif façon GPS / Waze (Option B) :
+// - Le tronçon déjà parcouru passe en gris discret semi-transparent (#94a3b8)
+// - Le tronçon restant à parcourir reste en bleu cyan éclatant haute visibilité (#0284c7)
+function updateActiveRoutePolylines() {
+  if (!activeRouteData || !activeRouteRemainingLine) return;
+  const coords = activeRouteData.geometry?.coordinates;
+  if (!coords || coords.length < 2) return;
+
+  ensureRouteDistances(activeRouteData);
+  const segDistances = activeRouteData._segDistances;
+  const cumDistances = activeRouteData._cumDistances;
+  const totalKm = activeRouteData._totalKm || (cumDistances ? cumDistances[cumDistances.length - 1] : 0);
+
+  // Si la navigation n'est pas active ou si l'on est tout au début (< 50m)
+  if (!isGpsNavActive || userProgressionKmOnRoute <= 0.05) {
+    const fullLatLngs = coords.map(c => [c[1], c[0]]);
+    if (activeRoutePassedOutline) activeRoutePassedOutline.setLatLngs([]);
+    if (activeRoutePassedLine) activeRoutePassedLine.setLatLngs([]);
+    if (activeRouteRemainingOutline) activeRouteRemainingOutline.setLatLngs(fullLatLngs);
+    if (activeRouteRemainingLine) activeRouteRemainingLine.setLatLngs(fullLatLngs);
+    return;
+  }
+
+  // Si la destination a été atteinte
+  if (userProgressionKmOnRoute >= totalKm - 0.05) {
+    const fullLatLngs = coords.map(c => [c[1], c[0]]);
+    if (activeRoutePassedOutline) activeRoutePassedOutline.setLatLngs(fullLatLngs);
+    if (activeRoutePassedLine) activeRoutePassedLine.setLatLngs(fullLatLngs);
+    if (activeRouteRemainingOutline) activeRouteRemainingOutline.setLatLngs([]);
+    if (activeRouteRemainingLine) activeRouteRemainingLine.setLatLngs([]);
+    return;
+  }
+
+  // Recherche rapide du segment contenant userProgressionKmOnRoute
+  let splitIdx = 0;
+  let splitT = 0;
+  for (let i = 0; i < coords.length - 1; i++) {
+    const segEnd = cumDistances[i + 1];
+    if (userProgressionKmOnRoute <= segEnd) {
+      splitIdx = i;
+      const segLen = segDistances[i];
+      splitT = segLen > 0 ? (userProgressionKmOnRoute - cumDistances[i]) / segLen : 0;
+      splitT = Math.max(0, Math.min(1, splitT));
+      break;
+    }
+  }
+
+  const p1 = coords[splitIdx];
+  const p2 = coords[splitIdx + 1];
+  const splitLon = p1[0] + splitT * (p2[0] - p1[0]);
+  const splitLat = p1[1] + splitT * (p2[1] - p1[1]);
+  const splitLatLng = [splitLat, splitLon];
+
+  // Tronçon passé (départ -> point de progression actuel)
+  const passedLatLngs = [];
+  for (let i = 0; i <= splitIdx; i++) {
+    passedLatLngs.push([coords[i][1], coords[i][0]]);
+  }
+  passedLatLngs.push(splitLatLng);
+
+  // Tronçon restant (point de progression actuel -> arrivée)
+  const remainingLatLngs = [splitLatLng];
+  for (let i = splitIdx + 1; i < coords.length; i++) {
+    remainingLatLngs.push([coords[i][1], coords[i][0]]);
+  }
+
+  if (activeRoutePassedOutline) activeRoutePassedOutline.setLatLngs(passedLatLngs);
+  if (activeRoutePassedLine) activeRoutePassedLine.setLatLngs(passedLatLngs);
+  if (activeRouteRemainingOutline) activeRouteRemainingOutline.setLatLngs(remainingLatLngs);
+  if (activeRouteRemainingLine) activeRouteRemainingLine.setLatLngs(remainingLatLngs);
+}
+
 // Find all highway stations along the route, ordered chronologically
 let currentRouteStations = [];
 
@@ -5555,13 +5683,9 @@ function processStationsOnRoute(route) {
   const coords = route.geometry.coordinates; // [[lon, lat], ...]
 
   // Pre-calculate cumulative distance along the route polyline
-  const cumDist = [0];
-  let totalKm = 0;
-  for (let i = 1; i < coords.length; i++) {
-    const d = getDistanceKm(coords[i-1][1], coords[i-1][0], coords[i][1], coords[i][0]);
-    totalKm += d;
-    cumDist.push(totalKm);
-  }
+  ensureRouteDistances(route);
+  const cumDist = route._cumDistances;
+  const totalKm = route._totalKm;
 
   // Route bounding box for fast pre-filtering
   let minLon = 180, maxLon = -180, minLat = 90, maxLat = -90;
@@ -6624,9 +6748,11 @@ try {
   Object.defineProperty(window, 'userGpsPosition', { get: () => userGpsPosition, set: (v) => { userGpsPosition = v; }, configurable: true });
   Object.defineProperty(window, 'userGpsMarker', { get: () => userGpsMarker, set: (v) => { userGpsMarker = v; }, configurable: true });
   Object.defineProperty(window, 'activeRouteData', { get: () => activeRouteData, set: (v) => { activeRouteData = v; }, configurable: true });
+  Object.defineProperty(window, 'alternativeRoutes', { get: () => alternativeRoutes, set: (v) => { alternativeRoutes = v; }, configurable: true });
   Object.defineProperty(window, 'currentRouteStations', { get: () => currentRouteStations, set: (v) => { currentRouteStations = v; }, configurable: true });
   Object.defineProperty(window, 'isGpsNavActive', { get: () => isGpsNavActive, set: (v) => { isGpsNavActive = v; }, configurable: true });
   Object.defineProperty(window, 'isGpsAutoFollow', { get: () => isGpsAutoFollow, set: (v) => { isGpsAutoFollow = v; }, configurable: true });
+  Object.defineProperty(window, 'userProgressionKmOnRoute', { get: () => userProgressionKmOnRoute, set: (v) => { userProgressionKmOnRoute = v; }, configurable: true });
 } catch(e) {}
 
 function toggleGpsNavigation() {
@@ -7277,6 +7403,7 @@ function stopGpsNavigation() {
   releaseNavWakeLock();
   updateNavButtonUI();
   updateLocateButtonNavState();
+  updateActiveRoutePolylines();
   renderCurrentRouteStations();
 }
 
@@ -7292,30 +7419,38 @@ function onGpsLocationUpdate(coords) {
     safeMapPanTo(latitude, longitude);
   }
 
-  // 2. Projection de la position de l'utilisateur sur le tracé de l'itinéraire
+  // 3. Projection de la position de l'utilisateur sur le tracé de l'itinéraire
   const routeCoords = activeRouteData.geometry.coordinates; // [[lon, lat], ...]
+  ensureRouteDistances(activeRouteData);
+  const segDistances = activeRouteData._segDistances;
+  const cumDistances = activeRouteData._cumDistances;
+
   let minDist = 99999;
   let currentKm = 0;
-  let cumKm = 0;
 
   for (let i = 0; i < routeCoords.length - 1; i++) {
     const p1 = routeCoords[i];
     const p2 = routeCoords[i+1];
-    const segLen = getDistanceKm(p1[1], p1[0], p2[1], p2[0]);
+    const segLen = segDistances ? segDistances[i] : getDistanceKm(p1[1], p1[0], p2[1], p2[0]);
     const res = distPointToSegment(longitude, latitude, p1[0], p1[1], p2[0], p2[1]);
     if (res.dist < minDist) {
       minDist = res.dist;
-      currentKm = cumKm + (res.t * segLen);
+      const baseKm = cumDistances ? cumDistances[i] : 0;
+      currentKm = baseKm + (res.t * segLen);
     }
-    cumKm += segLen;
   }
 
-  // Progression monotone avec tolérance de 0.5km pour le bruit GPS
-  if (currentKm > userProgressionKmOnRoute - 0.5) {
-    userProgressionKmOnRoute = Math.max(userProgressionKmOnRoute, currentKm);
+  // Progression monotone avec tolérance de 0.5km pour le bruit GPS (si < 15km de l'axe routier)
+  if (minDist <= 15) {
+    if (currentKm > userProgressionKmOnRoute - 0.5) {
+      userProgressionKmOnRoute = Math.max(userProgressionKmOnRoute, currentKm);
+    }
   }
 
-  // 3. Réactualisation des stations et des compteurs kilométriques
+  // 4. Mise à jour dynamique du tracé (tronçon parcouru en gris, restant en cyan)
+  updateActiveRoutePolylines();
+
+  // 5. Réactualisation des stations et des compteurs kilométriques
   renderCurrentRouteStations();
 }
 
