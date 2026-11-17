@@ -53,7 +53,7 @@ export default {
 
     if (!resp) {
       const upstream = `https://creativecommons.tankerkoenig.de/json/list.php?lat=${latR}&lng=${lngR}&rad=${rad}&sort=dist&type=all&apikey=${env.TANKERKOENIG_API_KEY}`;
-      const r = await fetch(upstream, { headers: { 'User-Agent': 'FuelPilot (JLDApps) - contact.fuelpilot@gmail.com' } });
+      const r = await fetch(upstream, { headers: { 'User-Agent': 'FuelPilot (JLDApps) - aquacheckjld@gmail.com' } });
       const body = await r.text();
       resp = new Response(body, {
         status: r.status,
