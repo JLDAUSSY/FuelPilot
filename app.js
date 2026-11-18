@@ -1275,7 +1275,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.7';
+const APP_VERSION = '9.9.10';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
