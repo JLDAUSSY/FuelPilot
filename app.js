@@ -54,6 +54,7 @@ try {
   Object.defineProperty(window, 'startPoint', { get: () => startPoint, set: (v) => { startPoint = v; }, configurable: true });
   Object.defineProperty(window, 'activeRoutePassedLine', { get: () => activeRoutePassedLine, set: (v) => { activeRoutePassedLine = v; }, configurable: true });
   Object.defineProperty(window, 'activeRouteRemainingLine', { get: () => activeRouteRemainingLine, set: (v) => { activeRouteRemainingLine = v; }, configurable: true });
+  Object.defineProperty(window, 'allStations', { get: () => allStations, set: (v) => { allStations = v; }, configurable: true });
   Object.defineProperty(window, 'updateActiveRoutePolylines', { get: () => updateActiveRoutePolylines, configurable: true });
 } catch(e) {}
 let selectedFuel = 'e10'; // Default to SP95
@@ -1275,7 +1276,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.10';
+const APP_VERSION = '9.9.11';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -5790,6 +5791,7 @@ function processStationsOnRoute(route) {
   renderCurrentRouteStations();
   fitMapToRouteAndStations();
   maybeLoadGermanLivePrices(route, coords, cumDist);
+  maybeLoadFrenchCorridorStations(route, coords, cumDist);
 }
 
 // Charge à la demande les stations allemandes et leurs prix réels le long du trajet
@@ -5848,6 +5850,108 @@ async function maybeLoadGermanLivePrices(route, coords, cumDist) {
         prix,
         ruptures: [],
         services: []
+      });
+      added++;
+    });
+  });
+
+  if (added > 0 && activeRouteData === route) {
+    processStationsOnRoute(route);
+  }
+}
+
+// Charge à la demande les stations françaises officielles le long du trajet (nationales / routes secondaires / sorties)
+// Interroge l'API officielle de Bercy (data.economie.gouv.fr) par échantillons géographiques le long du couloir
+async function maybeLoadFrenchCorridorStations(route, coords, cumDist) {
+  if (!route || route._frCorridorRequested) return;
+  route._frCorridorRequested = true;
+
+  // Délimitation géographique de la France métropolitaine
+  const inFrance = (lat, lon) => lat >= 42.3 && lat <= 51.1 && lon >= -5.2 && lon <= 9.6;
+
+  const samples = [];
+  let nextKm = 0;
+  for (let i = 0; i < coords.length && samples.length < 12; i++) {
+    const [lon, lat] = coords[i];
+    if (cumDist[i] >= nextKm && inFrance(lat, lon)) {
+      samples.push([lat, lon]);
+      nextKm = cumDist[i] + 35; // Échantillonnage régulier tous les 35 km
+    }
+  }
+  if (samples.length === 0) return;
+
+  const knownIds = new Set(allStations.map(s => String(s.id)));
+  const responses = await Promise.allSettled(samples.map(([lat, lon]) => {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 4500);
+    const url = `https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?where=within_distance(geom%2C%20geom'POINT(${lon.toFixed(3)}%20${lat.toFixed(3)})'%2C%203km)&limit=15`;
+    return fetch(url, { signal: ctrl.signal })
+      .then(r => r.json())
+      .finally(() => clearTimeout(timer));
+  }));
+
+  let added = 0;
+  responses.forEach(res => {
+    if (res.status !== 'fulfilled' || !res.value || !Array.isArray(res.value.results)) return;
+    res.value.results.forEach(r => {
+      if (!r || !r.id || !r.geom || typeof r.geom.lat !== 'number' || typeof r.geom.lon !== 'number') return;
+      const id = `FR-${r.id}`;
+      if (knownIds.has(id)) return;
+      knownIds.add(id);
+
+      const prix = {};
+      if (typeof r.gazole_prix === 'number' && r.gazole_prix > 0) prix.gazole = r.gazole_prix;
+      if (typeof r.sp95_prix === 'number' && r.sp95_prix > 0) prix.sp95 = r.sp95_prix;
+      if (typeof r.e10_prix === 'number' && r.e10_prix > 0) prix.e10 = r.e10_prix;
+      if (typeof r.sp98_prix === 'number' && r.sp98_prix > 0) prix.sp98 = r.sp98_prix;
+      if (typeof r.e85_prix === 'number' && r.e85_prix > 0) prix.e85 = r.e85_prix;
+      if (typeof r.gplc_prix === 'number' && r.gplc_prix > 0) prix.gplc = r.gplc_prix;
+
+      if (Object.keys(prix).length === 0) return;
+
+      const addr = (r.adresse || '').trim();
+      const ville = (r.ville || '').trim();
+      const nom = r.nom ? r.nom.trim() : `Station ${ville}`;
+      let enseigne = 'Station';
+      const fullText = `${nom} ${addr} ${(r.services_service || []).join(' ')}`.toLowerCase();
+      if (fullText.includes('total')) enseigne = 'TotalEnergies';
+      else if (fullText.includes('leclerc')) enseigne = 'E.Leclerc';
+      else if (fullText.includes('carrefour')) enseigne = 'Carrefour';
+      else if (fullText.includes('intermarch')) enseigne = 'Intermarché';
+      else if (fullText.includes('super u') || fullText.includes('système u')) enseigne = 'Système U';
+      else if (fullText.includes('esso')) enseigne = 'Esso';
+      else if (fullText.includes('bp')) enseigne = 'BP';
+      else if (fullText.includes('shell')) enseigne = 'Shell';
+      else if (fullText.includes('avia')) enseigne = 'Avia';
+      else if (fullText.includes('auchan')) enseigne = 'Auchan';
+      else if (fullText.includes('casino')) enseigne = 'Casino';
+      else if (fullText.includes('eni')) enseigne = 'Eni';
+
+      const ruptures = [];
+      ['gazole', 'sp95', 'e10', 'sp98', 'e85', 'gplc'].forEach(f => {
+        if (r[`${f}_rupture_type`] === 'definitive' || r[`${f}_rupture_type`] === 'temporaire') {
+          ruptures.push(f.toUpperCase());
+        }
+      });
+
+      allStations.push({
+        id,
+        pays: 'FR',
+        live: true,
+        enseigne,
+        nom,
+        autoroute: 'Route',
+        sens: 'Double sens',
+        adresse: addr,
+        cp: r.cp ? String(r.cp) : '',
+        ville,
+        departement: r.departement || '',
+        lat: r.geom.lat,
+        lon: r.geom.lon,
+        pk_text: null,
+        prix,
+        ruptures,
+        services: Array.isArray(r.services_service) ? r.services_service : []
       });
       added++;
     });
