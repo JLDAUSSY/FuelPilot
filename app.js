@@ -1276,7 +1276,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.13';
+const APP_VERSION = '9.9.14';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -3488,11 +3488,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Initialize Leaflet Map
 function initMap() {
-  // Center to encompass France, Spain, Italy & UK coverage
-  const initialZoom = window.innerWidth <= 768 ? 4.5 : 5.0;
+  // Architecture RandoTracker : Centrage immédiat sur la dernière position connue de l'utilisateur
+  const savedLat = parseFloat(localStorage.getItem('fuelpilot_last_lat'));
+  const savedLon = parseFloat(localStorage.getItem('fuelpilot_last_lon'));
+  const hasSavedPos = !isNaN(savedLat) && !isNaN(savedLon) && (savedLat >= 35 && savedLat <= 60 && savedLon >= -11 && savedLon <= 25);
+  const initialCenter = hasSavedPos ? [savedLat, savedLon] : [46.2, 3.0];
+  const initialZoom = hasSavedPos ? 14 : (window.innerWidth <= 768 ? 4.5 : 5.0);
+
   map = L.map('map', {
     zoomControl: false
-  }).setView([46.2, 3.0], initialZoom);
+  }).setView(initialCenter, initialZoom);
 
   // Dedicated custom pane for user GPS pastille to keep it above all routes and markers
   map.createPane('gpsUserPane');
@@ -4671,67 +4676,34 @@ async function reverseGeocodeCoords(lat, lon) {
   return '';
 }
 
-// Handler for "Ma position actuelle" as departure (Strict High-Accuracy GPS)
+let isWaitingGpsForStart = false;
+
+// Handler for "Ma position actuelle" as departure (Architecture Pure RandoTracker)
 function useCurrentGpsLocationAsStart() {
   const startInput = document.getElementById('input-start');
-  const isRecent = userGpsPosition && (Date.now() - (userGpsPosition.timestamp || 0) < 30000);
+  const isRecent = userGpsPosition && (typeof userGpsPosition.lat === 'number') && (Date.now() - (userGpsPosition.timestamp || 0) < 60000);
 
-  // 1. Réactivité instantanée si on a un point récent (< 30s)
+  // 1. Réactivité instantanée si on a un point récent (< 60s)
   if (isRecent) {
     applyGpsAsStartPoint(userGpsPosition.lat, userGpsPosition.lon, userGpsPosition.city);
     updateUserGpsMarker(userGpsPosition.lat, userGpsPosition.lon, userGpsPosition.accuracy || 25, false);
     if (typeof updateAllClearButtons === 'function') updateAllClearButtons();
+    showToast(`🎯 Position actuelle sélectionnée : ${userGpsPosition.city || 'Départ défini'}`, { isSuccess: true, duration: 2500 });
     return;
   }
 
-  // 2. Sinon, indiquer l'acquisition en cours
+  // 2. Sinon, engager l'attente du signal GPS réactif sans minuteur d'échec bloquant
+  isWaitingGpsForStart = true;
   if (startInput) {
     startInput.value = '📍 ' + (t().locating || 'Recherche de votre position GPS...');
     startInput.classList.remove('input-attention-pulse');
   }
+  showToast('📍 En attente du signal GPS pour définir le départ...', { isInfo: true, duration: 3500 });
 
-  // Activer le watcher GPS direct
-  startGpsWatch(true);
-
-  // 3. Acquisition directe
-  getFreshUserLocation(
-    (pos) => {
-      if (!pos || !pos.coords) return;
-      const { latitude, longitude, accuracy } = pos.coords;
-      const acc = Math.round(accuracy || 15);
-
-      applyGpsAsStartPoint(latitude, longitude, userGpsPosition?.city || '');
-      updateUserGpsMarker(latitude, longitude, acc, false);
-      if (typeof updateAllClearButtons === 'function') updateAllClearButtons();
-
-      const locLabel = userGpsPosition?.city ? `${userGpsPosition.city} (±${acc}m)` : `±${acc}m`;
-      if (acc <= 500) {
-        showToast(`🎯 Position GPS validée : ${locLabel}`, { isSuccess: true, duration: 3500 });
-      } else {
-        showToast(`📍 Position approximative retenue : ${locLabel}`, { isInfo: true, duration: 3500 });
-      }
-
-      // Rafraîchir la commune en tâche de fond de façon non bloquante si pas encore connue
-      if (!userGpsPosition?.city) {
-        reverseGeocodeCoords(latitude, longitude).then(city => {
-          if (city && userGpsPosition) {
-            userGpsPosition.city = city;
-            applyGpsAsStartPoint(latitude, longitude, city);
-            if (typeof updateAllClearButtons === 'function') updateAllClearButtons();
-          }
-        }).catch(() => {});
-      }
-    },
-    (err) => {
-      console.warn('Erreur rafraîchissement GPS départ:', err);
-      showToast(formatGeolocationErrorMessage(err), { isWarning: (err && err.code === 1), isInfo: (err && err.code !== 1), duration: 6000 });
-      if (startInput) {
-        startInput.value = '';
-        startInput.placeholder = (t().inputStartPlaceholder || t().startPlaceholder || 'Adresse, lieu, parking, ville...');
-      }
-      if (typeof updateAllClearButtons === 'function') updateAllClearButtons();
-    }
-  );
+  // S'assurer que le watcher GPS direct tourne
+  if (!isTrackingGps) {
+    startGpsWatch(true);
+  }
 }
 
 function applyGpsAsStartPoint(lat, lon, knownCity) {
@@ -6892,10 +6864,6 @@ let gpsWatchId = null; // Legacy alias
 let userGpsPosition = null; // { lat, lon, accuracy, heading, speed, timestamp, city, isHighAccuracy }
 let userGpsMarker = null;
 let userProgressionKmOnRoute = 0;
-let pendingLocationResolvers = [];
-let isAcquiringLocation = false;
-let globalGpsSafetyTimer = null;
-let lastGpsAcqStart = 0;
 
 try {
   Object.defineProperty(window, 'userGpsPosition', { get: () => userGpsPosition, set: (v) => { userGpsPosition = v; }, configurable: true });
@@ -7040,32 +7008,158 @@ function showToast(msg, options = {}) {
 }
 
 // ============================================================================
-// GPS Caching & Satellite Positioning Engine (Pure High-Accuracy GNSS)
-// ============================================================================
-
-// Nettoyage immédiat au chargement : purger tout résidu ou cache IP / approximatif (> 500m)
-try {
-  const staleRaw = localStorage.getItem('fuelpilot_last_known_gps');
-  if (staleRaw) {
-    localStorage.removeItem('fuelpilot_last_known_gps');
-  }
-} catch (e) {}
-
-// ============================================================================
 // GPS ENGINE & SATELLITE POSITIONING (PURE RANDOTRACKER DUAL-ENGINE ARCHITECTURE)
 // ============================================================================
-
-// Nettoyage immédiat : purger impérativement tout ancien cache pour garantir que la position réelle prévaut
-try {
-  localStorage.removeItem('fuelpilot_last_known_gps');
-  console.log('[GPS Engine] Purge de tout résidu de cache GPS effectuée');
-} catch (e) {}
 
 let isTrackingGps = false;
 let lastGpsTimestamp = null;
 let hasAutoCenteredGps = false;
 let gpsHeartbeatWorker = null;
-let gpsHeartbeatInterval = null;
+let gpsForcedInterval = null;
+
+// ============================================================================
+// MAINTIEN D'ARRIÈRE-PLAN AUDIO & MEDIASESSION (POCHE ÉCRAN ÉTEINT / DOZE MODE)
+// Architecture RandoTracker pour empêcher Android et iOS de suspendre le GPS
+// ============================================================================
+let silentAudioKeeper = null;
+let silentAudioBlobUrl = null;
+let audioContextKeeper = null;
+let audioOscillator = null;
+let isAudioUnlocked = false;
+
+function createSilentAudioBlobUrl() {
+  if (silentAudioBlobUrl) return silentAudioBlobUrl;
+  try {
+    const sampleRate = 8000;
+    const numSamples = sampleRate * 2;
+    const buffer = new ArrayBuffer(44 + numSamples);
+    const view = new DataView(buffer);
+
+    function writeString(offset, string) {
+      for (let i = 0; i < string.length; i++) {
+        view.setUint8(offset + i, string.charCodeAt(i));
+      }
+    }
+    writeString(0, 'RIFF');
+    view.setUint32(4, 36 + numSamples, true);
+    writeString(8, 'WAVE');
+    writeString(12, 'fmt ');
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true); // PCM Format
+    view.setUint16(22, 1, true); // Mono
+    view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate, true);
+    view.setUint16(32, 1, true);
+    view.setUint16(34, 8, true); // 8-bit
+    writeString(36, 'data');
+    view.setUint32(40, numSamples, true);
+    for (let i = 0; i < numSamples; i++) {
+      view.setUint8(44 + i, 128);
+    }
+    const blob = new Blob([buffer], { type: 'audio/wav' });
+    silentAudioBlobUrl = URL.createObjectURL(blob);
+    return silentAudioBlobUrl;
+  } catch (e) {
+    return 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';
+  }
+}
+
+function unlockAndStartKeepAlive() {
+  if (isAudioUnlocked) {
+    if (audioContextKeeper && audioContextKeeper.state === 'suspended') {
+      audioContextKeeper.resume().catch(() => {});
+    }
+    if (silentAudioKeeper && silentAudioKeeper.paused) {
+      silentAudioKeeper.play().catch(() => {});
+    }
+    return;
+  }
+
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (AudioCtx) {
+      if (!audioContextKeeper) {
+        audioContextKeeper = new AudioCtx();
+      }
+      if (audioContextKeeper.state === 'suspended') {
+        audioContextKeeper.resume().catch(() => {});
+      }
+      if (!audioOscillator) {
+        try {
+          audioOscillator = audioContextKeeper.createOscillator();
+          const gainNode = audioContextKeeper.createGain();
+          gainNode.gain.value = 0.00001; // Inaudible mais actif pour le système
+          audioOscillator.connect(gainNode);
+          gainNode.connect(audioContextKeeper.destination);
+          audioOscillator.start();
+        } catch (e) {}
+      }
+    }
+
+    if (!silentAudioKeeper) {
+      const audioUrl = createSilentAudioBlobUrl();
+      silentAudioKeeper = new Audio(audioUrl);
+      silentAudioKeeper.loop = true;
+      silentAudioKeeper.volume = 0.001;
+    }
+    const playPromise = silentAudioKeeper.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {});
+    }
+
+    isAudioUnlocked = true;
+
+    if ('mediaSession' in navigator) {
+      try {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: 'FuelCoPilot • Navigation & Prix Carburant',
+          artist: 'GPS en direct & Alertes Stations',
+          album: 'Guidage actif autoroute',
+          artwork: [
+            { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
+            { src: 'icon-512.png', sizes: '512x512', type: 'image/png' }
+          ]
+        });
+        navigator.mediaSession.playbackState = 'playing';
+
+        navigator.mediaSession.setActionHandler('play', () => {
+          if (silentAudioKeeper) silentAudioKeeper.play().catch(() => {});
+          if (audioContextKeeper && audioContextKeeper.state === 'suspended') audioContextKeeper.resume().catch(() => {});
+          navigator.mediaSession.playbackState = 'playing';
+        });
+        navigator.mediaSession.setActionHandler('pause', () => {
+          if (silentAudioKeeper) silentAudioKeeper.play().catch(() => {});
+          navigator.mediaSession.playbackState = 'playing';
+        });
+      } catch (e) {}
+    }
+  } catch (e) {}
+}
+
+// Auto-déverrouillage instantané sur le moindre toucher ou interaction utilisateur
+['click', 'touchstart', 'touchend', 'pointerdown', 'keydown'].forEach(evt => {
+  window.addEventListener(evt, unlockAndStartKeepAlive, { passive: true });
+});
+
+function startBackgroundKeepAlive() {
+  unlockAndStartKeepAlive();
+}
+
+function stopBackgroundKeepAlive() {
+  if (silentAudioKeeper) {
+    try { silentAudioKeeper.pause(); } catch (e) {}
+  }
+  if (audioContextKeeper && audioContextKeeper.state === 'running') {
+    try { audioContextKeeper.suspend().catch(() => {}); } catch (e) {}
+  }
+  if ('mediaSession' in navigator) {
+    try { navigator.mediaSession.playbackState = 'none'; } catch (e) {}
+  }
+}
+
+// ============================================================================
+// CHRONOMÈTRE D'ARRIÈRE-PLAN WEB WORKER & DUAL-ENGINE GPS WATCHDOG (RANDOTRACKER)
+// ============================================================================
 
 function stopGpsWorkerHeartbeat() {
   if (gpsHeartbeatWorker) {
@@ -7075,10 +7169,7 @@ function stopGpsWorkerHeartbeat() {
     } catch (e) {}
     gpsHeartbeatWorker = null;
   }
-  if (gpsHeartbeatInterval) {
-    clearInterval(gpsHeartbeatInterval);
-    gpsHeartbeatInterval = null;
-  }
+  stopGpsForcedWatchdog();
 }
 
 function startGpsWorkerHeartbeat(onSuccessCallback) {
@@ -7107,7 +7198,7 @@ function startGpsWorkerHeartbeat(onSuccessCallback) {
         const now = Date.now();
         const lastTime = lastGpsTimestamp || 0;
 
-        // 1. Interrogation matérielle GPS si aucun point récent (< 7s)
+        // Interrogation matérielle GPS si aucun point récent (< 7s)
         if (now - lastTime >= 7000 && navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(
             onSuccessCallback,
@@ -7115,36 +7206,67 @@ function startGpsWorkerHeartbeat(onSuccessCallback) {
             { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
           );
         }
+
+        // Maintien Audio
+        if (audioContextKeeper && audioContextKeeper.state === 'suspended') {
+          audioContextKeeper.resume().catch(() => {});
+        }
+        if (silentAudioKeeper && silentAudioKeeper.paused) {
+          silentAudioKeeper.play().catch(() => {});
+        }
+
+        // Gardien WakeLock
+        if (document.visibilityState === 'visible' && !navScreenWakeLock) {
+          requestNavWakeLock();
+        }
       }
     };
     gpsHeartbeatWorker.postMessage('start');
   } catch (e) {
-    console.warn('[GPS Worker Heartbeat] Web Worker non disponible, fallback interval:', e);
-    gpsHeartbeatInterval = setInterval(() => {
-      if (!isTrackingGps) return;
+    console.warn('[GPS Worker Heartbeat] Fallback watchdog standard:', e);
+  }
+
+  // Fallback thread principal à 7000ms
+  startGpsForcedWatchdog(onSuccessCallback);
+}
+
+function startGpsForcedWatchdog(onSuccessCallback) {
+  if (gpsForcedInterval) clearInterval(gpsForcedInterval);
+
+  gpsForcedInterval = setInterval(() => {
+    if (isTrackingGps && navigator.geolocation) {
       const now = Date.now();
       const lastTime = lastGpsTimestamp || 0;
-      if (now - lastTime >= 7000 && navigator.geolocation) {
+      if (now - lastTime >= 7000) {
         navigator.geolocation.getCurrentPosition(
           onSuccessCallback,
-          () => {},
+          (e) => { console.warn('[GPS Watchdog] Polling passif:', e ? e.code : 'err'); },
           { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
         );
       }
-    }, 7000);
+    }
+  }, 7000);
+}
+
+function stopGpsForcedWatchdog() {
+  if (gpsForcedInterval) {
+    clearInterval(gpsForcedInterval);
+    gpsForcedInterval = null;
   }
 }
 
 let navScreenWakeLock = null;
+let isWakeLockRequested = false;
 
 async function requestNavWakeLock() {
+  isWakeLockRequested = true;
   if ('wakeLock' in navigator) {
     try {
       if (navScreenWakeLock && !navScreenWakeLock.released) return;
       navScreenWakeLock = await navigator.wakeLock.request('screen');
       navScreenWakeLock.addEventListener('release', () => {
         navScreenWakeLock = null;
-        if ((isGpsNavActive || isTrackingGps) && document.visibilityState === 'visible') {
+        if (isWakeLockRequested && (isGpsNavActive || isTrackingGps) && document.visibilityState === 'visible') {
           setTimeout(requestNavWakeLock, 500);
         }
       });
@@ -7156,6 +7278,7 @@ async function requestNavWakeLock() {
 }
 
 function releaseNavWakeLock() {
+  isWakeLockRequested = false;
   if (navScreenWakeLock) {
     try { navScreenWakeLock.release(); } catch (e) {}
     navScreenWakeLock = null;
@@ -7171,6 +7294,7 @@ function stopGpsWatch() {
   }
   stopGpsWorkerHeartbeat();
   releaseNavWakeLock();
+  stopBackgroundKeepAlive();
 }
 
 function stopLiveGpsWatch() {
@@ -7198,47 +7322,13 @@ function formatGeolocationErrorMessage(err) {
     if (lang === 'de') return "📍 Kein GPS-Signal: Bitte 'Standort' im Schnelleinstellungs-Menü aktivieren." + actionBtn;
     if (lang === 'en') return "📍 GPS unavailable: please turn on 'Location' in your phone's top swipe-down menu." + actionBtn;
     if (lang === 'it') return "📍 Segnale GPS non disponibile: attiva 'Posizione' nel menu a discesa del telefono." + actionBtn;
-    if (lang === 'es') return "📍 Señal GPS no disponible: activa 'Ubicación' en el menú superior del téléphone." + actionBtn;
+    if (lang === 'es') return "📍 Señal GPS no disponible: activa 'Ubicación' en el menú superior del teléfono." + actionBtn;
     if (lang === 'pt') return "📍 Sinal GPS indisponível: ative 'Localização' no menu rápido do seu telemóvel." + actionBtn;
     if (lang === 'sl') return "📍 GPS signal ni na voljo: vklopite 'Lokacija' v hitrem meniju telefona." + actionBtn;
     if (lang === 'hr') return "📍 GPS signal nije dostupan: uključite 'Lokacija' u brzom izborniku telefona." + actionBtn;
     return "📍 Signal GPS indisponible : activez 'Position' dans le volet du haut de votre téléphone." + actionBtn;
-  } else if (code === 3) { // TIMEOUT
-    if (lang === 'nl') return "📍 Gps-signaal te traag: controleer 'Precieze locatie' in Chrome of voer uw stad in." + actionBtn;
-    if (lang === 'de') return "📍 GPS-Suche zu lange: Prüfen Sie die Positionseinstellungen oder geben Sie Ihre Stadt ein." + actionBtn;
-    if (lang === 'en') return "📍 GPS search timed out: check 'Precise location' in Chrome or type your departure city." + actionBtn;
-    if (lang === 'it') return "📍 Ricerca GPS scaduta: verifica la posizione in Chrome o digita la tua città." + actionBtn;
-    if (lang === 'es') return "📍 Búsqueda GPS agotada: verifique la ubicación en Chrome o escriba su ciudad." + actionBtn;
-    if (lang === 'pt') return "📍 Procura de GPS expirou: verifique as definições de localização no Chrome ou introduza a sua cidade." + actionBtn;
-    if (lang === 'sl') return "📍 Iskanje GPS je poteklo: preverite natančno lokacijo v Chromu ali vnesite svoje mesto." + actionBtn;
-    if (lang === 'hr') return "📍 Traženje GPS-a je isteklo: provjerite točnu lokaciju u Chromeu ili unesite svoj grad." + actionBtn;
-    return "📍 Délai de réponse GPS dépassé : activez 'Position précise' dans le navigateur ou saisissez votre ville." + actionBtn;
   }
   return (tr.locationError || "Signal GPS en cours d'acquisition.") + actionBtn;
-}
-
-function resolvePendingLocation(pos, err) {
-  const cbs = [...pendingLocationResolvers];
-  pendingLocationResolvers = [];
-  isAcquiringLocation = false;
-  if (globalGpsSafetyTimer) {
-    clearTimeout(globalGpsSafetyTimer);
-    globalGpsSafetyTimer = null;
-  }
-
-  if (pos) {
-    cbs.forEach(cb => {
-      if (cb.onSuccess) {
-        try { cb.onSuccess(pos); } catch (e) { console.error(e); }
-      }
-    });
-  } else {
-    cbs.forEach(cb => {
-      if (cb.onError) {
-        try { cb.onError(err); } catch (e) { console.error(e); }
-      }
-    });
-  }
 }
 
 function startGpsWatch(useHighAccuracy = true) {
@@ -7274,6 +7364,12 @@ function startGpsWatch(useHighAccuracy = true) {
 
     lastGpsTimestamp = now;
 
+    // Persistance de la dernière position pour réouverture instantanée de la carte (Architecture RandoTracker)
+    try {
+      localStorage.setItem('fuelpilot_last_lat', String(lat));
+      localStorage.setItem('fuelpilot_last_lon', String(lon));
+    } catch (e) {}
+
     userGpsPosition = {
       lat,
       lon,
@@ -7289,10 +7385,22 @@ function startGpsWatch(useHighAccuracy = true) {
     // Mettre à jour le marqueur GPS et le halo sur Leaflet
     updateUserGpsMarker(lat, lon, acc, false);
 
-    // Auto-centrage fluide au 1er fix si aucun itinéraire actif
-    if (!hasAutoCenteredGps && map && !activeRouteData) {
+    // Auto-centrage fluide au 1er fix si aucun itinéraire actif (Architecture RandoTracker)
+    if (!hasAutoCenteredGps) {
+      if (map && !activeRouteData) {
+        map.setView([lat, lon], acc <= 500 ? 15 : 13, { animate: true });
+      }
       hasAutoCenteredGps = true;
-      map.setView([lat, lon], acc <= 500 ? 15 : 13, { animate: true });
+      showToast(`🎯 Position GPS trouvée (±${acc}m)`, { isSuccess: true, duration: 3000 });
+    }
+
+    // Si l'utilisateur attendait le GPS pour définir le point de départ
+    if (isWaitingGpsForStart) {
+      isWaitingGpsForStart = false;
+      applyGpsAsStartPoint(lat, lon, userGpsPosition.city || '');
+      updateUserGpsMarker(lat, lon, acc, false);
+      if (typeof updateAllClearButtons === 'function') updateAllClearButtons();
+      showToast(`🎯 Position GPS validée comme point de départ (±${acc}m)`, { isSuccess: true, duration: 3000 });
     }
 
     // Si on vient de démarrer la navigation et qu'on attendait le premier fix pour cadrer
@@ -7312,6 +7420,10 @@ function startGpsWatch(useHighAccuracy = true) {
         if (city && userGpsPosition) {
           userGpsPosition.city = city;
           if (userGpsMarker) updateUserGpsMarker(lat, lon, acc, false);
+          const startInp = document.getElementById('input-start');
+          if (startPoint && startPoint.label && startPoint.label.includes('Ma position actuelle') && startInp) {
+            applyGpsAsStartPoint(lat, lon, city);
+          }
         }
       }).catch(() => {});
     }
@@ -7319,18 +7431,13 @@ function startGpsWatch(useHighAccuracy = true) {
     // Arrêter le spinner du bouton "Me localiser"
     const btnLocate = document.getElementById('btn-locate-me');
     if (btnLocate) btnLocate.classList.remove('locating');
-
-    // Notifier immédiatement les requêtes en attente
-    if (pendingLocationResolvers.length > 0) {
-      resolvePendingLocation(pos, null);
-    }
   };
 
   const onPositionError = (err) => {
     console.warn(`[GPS Engine] Erreur (highAcc=${useHighAccuracy}):`, err ? err.code : 'err', err ? err.message : '');
 
     // CŒUR ABSOLU DU SYSTÈME RANDOTRACKER :
-    // Si la haute précision satellite tarde (>10s) ou échoue (code 3 TIMEOUT ou code 2 UNAVAILABLE),
+    // Si la haute précision satellite tarde ou échoue,
     // basculer IMMÉDIATEMENT sur la géolocalisation rapide réseau/antennes relais (highAcc=false).
     // Sur smartphone, le réseau répond en 200 à 400ms !
     if (useHighAccuracy) {
@@ -7343,9 +7450,10 @@ function startGpsWatch(useHighAccuracy = true) {
     const btnLocate = document.getElementById('btn-locate-me');
     if (btnLocate) btnLocate.classList.remove('locating');
 
-    // Notifier les résolveurs en attente
-    if (pendingLocationResolvers.length > 0) {
-      resolvePendingLocation(null, err);
+    // N'afficher de notification d'erreur QUE si permission explicitement refusée (code 1)
+    // Jamais de faux toast de timeout intempestif !
+    if (err && err.code === 1) {
+      showToast(formatGeolocationErrorMessage(err), { isWarning: true, duration: 6000 });
     }
   };
 
@@ -7353,8 +7461,8 @@ function startGpsWatch(useHighAccuracy = true) {
   try {
     navigator.geolocation.getCurrentPosition(onPositionSuccess, onPositionError, {
       enableHighAccuracy: useHighAccuracy,
-      timeout: useHighAccuracy ? 10000 : 7000,
-      maximumAge: 0
+      timeout: useHighAccuracy ? 10000 : 8000,
+      maximumAge: useHighAccuracy ? 0 : 60000
     });
   } catch (e) {
     console.warn('[GPS Engine] getCurrentPosition erreur:', e);
@@ -7364,18 +7472,19 @@ function startGpsWatch(useHighAccuracy = true) {
   try {
     liveGpsWatchId = navigator.geolocation.watchPosition(onPositionSuccess, onPositionError, {
       enableHighAccuracy: useHighAccuracy,
-      timeout: useHighAccuracy ? 12000 : 9000,
-      maximumAge: 0
+      timeout: useHighAccuracy ? 12000 : 10000,
+      maximumAge: useHighAccuracy ? 0 : 60000
     });
     gpsWatchId = liveGpsWatchId;
   } catch (e) {
     console.warn('[GPS Engine] watchPosition erreur:', e);
   }
 
-  // 3. Activer le battement de cœur d'arrière-plan Web Worker & Forçage matériel 7s (comme RandoTracker)
+  // 3. Activer le battement de cœur d'arrière-plan Web Worker & Forçage matériel 7s (Architecture RandoTracker)
   startGpsWorkerHeartbeat(onPositionSuccess);
 
-  // 4. Activer le maintien d'écran allumé WakeLock si en navigation
+  // 4. Activer le maintien d'activité média système et WakeLock
+  startBackgroundKeepAlive();
   if (isGpsNavActive) {
     requestNavWakeLock();
   }
@@ -7405,53 +7514,6 @@ if (typeof document !== 'undefined' && document.addEventListener) {
   });
 }
 
-function getFreshUserLocation(onSuccess, onError) {
-  if (onSuccess || onError) {
-    pendingLocationResolvers.push({ onSuccess, onError });
-  }
-
-  // 1. Réactivité immédiate : si un relevé ultra-récent (< 4s) existe déjà
-  if (userGpsPosition && (Date.now() - (userGpsPosition.timestamp || 0) < 4000)) {
-    const freshPos = {
-      coords: {
-        latitude: userGpsPosition.lat,
-        longitude: userGpsPosition.lon,
-        accuracy: userGpsPosition.accuracy || 15,
-        heading: userGpsPosition.heading,
-        speed: userGpsPosition.speed
-      },
-      city: userGpsPosition.city,
-      timestamp: userGpsPosition.timestamp
-    };
-    resolvePendingLocation(freshPos, null);
-    return;
-  }
-
-  // 2. S'assurer que le watcher est actif
-  if (!isTrackingGps || liveGpsWatchId === null) {
-    startGpsWatch(true);
-  }
-
-  // Minuteur de sécurité global (11s max pour laisser le temps au fallback réseau d'agir)
-  if (globalGpsSafetyTimer) clearTimeout(globalGpsSafetyTimer);
-  globalGpsSafetyTimer = setTimeout(() => {
-    console.warn('[GPS Engine] Sécurité globale acquisition dépassée (11s)');
-    resolvePendingLocation(null, { code: 3, message: 'Délai acquisition GPS dépassé' });
-  }, 11000);
-}
-
-function requestUserGeolocation(onSuccess, onError, forceFresh = false) {
-  if (!forceFresh && userGpsPosition && userGpsPosition.lat && userGpsPosition.lon && (userGpsPosition.accuracy <= 500) && (Date.now() - (userGpsPosition.timestamp || 0) < 5000)) {
-    if (onSuccess) onSuccess({ coords: { latitude: userGpsPosition.lat, longitude: userGpsPosition.lon, heading: userGpsPosition.heading, speed: userGpsPosition.speed, accuracy: userGpsPosition.accuracy } });
-    return;
-  }
-
-  getFreshUserLocation(
-    (pos) => { if (onSuccess) onSuccess(pos); },
-    (err) => { if (onError) onError(err); }
-  );
-}
-
 // Distance approximative entre une coordonnée et l'itinéraire actif
 function getRouteDistKm(lat, lon) {
   if (!activeRouteData?.geometry?.coordinates) return null;
@@ -7466,7 +7528,7 @@ function getRouteDistKm(lat, lon) {
   return minD;
 }
 
-// Centrage de la carte sur la position de l'utilisateur (Garantie Anti-Blocage et Anti-Freeze)
+// Centrage de la carte sur la position de l'utilisateur (Architecture Pure RandoTracker)
 function centerMapOnUser() {
   if (isGpsNavActive) {
     isGpsAutoFollow = true;
@@ -7474,21 +7536,11 @@ function centerMapOnUser() {
   }
   const btnLocate = document.getElementById('btn-locate-me');
   if (btnLocate) btnLocate.classList.add('locating');
-
-  let locateSafetyTimer = setTimeout(() => {
+  setTimeout(() => {
     if (btnLocate) btnLocate.classList.remove('locating');
-  }, 8000);
+  }, 1200);
 
-  const stopSpinner = () => {
-    if (locateSafetyTimer) { clearTimeout(locateSafetyTimer); locateSafetyTimer = null; }
-    if (btnLocate) btnLocate.classList.remove('locating');
-  };
-
-  const isRecent = userGpsPosition && (Date.now() - (userGpsPosition.timestamp || 0) < 30000);
-
-  // 1. Si on dispose déjà d'un relevé récent (< 30 secondes)
-  if (isRecent && map) {
-    stopSpinner();
+  if (map && userGpsPosition && typeof userGpsPosition.lat === 'number' && typeof userGpsPosition.lon === 'number' && !isNaN(userGpsPosition.lat)) {
     const currentZoom = map.getZoom();
     const targetZoom = (userGpsPosition.accuracy <= 500) ? Math.max(currentZoom, 15) : Math.max(currentZoom, 13);
     safeMapPanTo(userGpsPosition.lat, userGpsPosition.lon, targetZoom);
@@ -7497,45 +7549,18 @@ function centerMapOnUser() {
 
     const rDist = getRouteDistKm(userGpsPosition.lat, userGpsPosition.lon);
     if (rDist !== null && rDist > 10) {
-      showToast(`🎯 Position centrée (${userGpsPosition.city || 'locale'}) • Itinéraire à ${Math.round(rDist)} km`, { isInfo: true, duration: 4000 });
+      showToast(`🎯 Position centrée (${userGpsPosition.city || 'locale'}) • Itinéraire à ${Math.round(rDist)} km`, { isInfo: true, duration: 3500 });
     } else {
-      showToast(`🎯 Position : ${userGpsPosition.city || 'Centré'} (±${userGpsPosition.accuracy || 25}m)`, { isSuccess: true, duration: 3000 });
+      showToast(`🎯 Carte recentrée sur votre position`, { isInfo: true, duration: 2500 });
     }
-    return;
+  } else {
+    if (!isTrackingGps) {
+      startGpsWatch(true);
+      showToast('📡 Recherche de votre signal GPS...', { isInfo: true, duration: 3000 });
+    } else {
+      showToast('📍 En attente du signal GPS...', { isInfo: true, duration: 3000 });
+    }
   }
-
-  // 2. Sinon, lancer l'acquisition directe
-  showToast(t().locating || "📍 Recherche du signal GPS...", { isInfo: true, duration: 4000 });
-
-  getFreshUserLocation(
-    (pos) => {
-      stopSpinner();
-      if (!pos || !pos.coords) return;
-      const { latitude, longitude, accuracy } = pos.coords;
-      const acc = Math.round(accuracy || 15);
-
-      if (map) {
-        const currentZoom = map.getZoom();
-        const targetZoom = (acc <= 500) ? Math.max(currentZoom, 15) : Math.max(currentZoom, 13);
-        safeMapPanTo(latitude, longitude, targetZoom);
-        updateUserGpsMarker(latitude, longitude, acc, false);
-        if (userGpsMarker) userGpsMarker.openTooltip();
-      }
-
-      const rDist = getRouteDistKm(latitude, longitude);
-      if (rDist !== null && rDist > 10) {
-        showToast(`🎯 Position GPS centrée (${userGpsPosition?.city || 'locale'}) • Itinéraire à ${Math.round(rDist)} km`, { isInfo: true, duration: 4000 });
-      } else {
-        const locLabel = userGpsPosition?.city ? `${userGpsPosition.city} (±${acc}m)` : `±${acc}m`;
-        showToast(`🎯 Position GPS actualisée : ${locLabel}`, { isSuccess: true, duration: 3500 });
-      }
-    },
-    (err) => {
-      stopSpinner();
-      console.warn('[GPS] Erreur centrage:', err);
-      showToast(formatGeolocationErrorMessage(err), { isWarning: (err && err.code === 1), isInfo: (err && err.code !== 1), duration: 5000 });
-    }
-  );
 }
 
 function getCachedUserPosition() { return null; }
