@@ -25119,8 +25119,8 @@
         "name": "Italie",
         "code": "IT",
         "flag": "🇮🇹",
-        "stationsCount": 615,
-        "description": "Réseau autoroutier et prix en direct d'Italie (MIMIT / Osservaprezzi)"
+        "stationsCount": 2236,
+        "description": "Réseau autoroutier italien (Autostrade & Tangenziali) et grands axes de transit (Strade Statali SS)"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -67393,8 +67393,8 @@
         "name": "Allemagne",
         "code": "DE",
         "flag": "🇩🇪",
-        "stationsCount": 205,
-        "description": "Réseau autoroutier allemand (Autobahnraststätten A1-A99) & prix MTS-K en direct"
+        "stationsCount": 257,
+        "description": "Réseau autoroutier allemand (Autobahnraststätten A1-A99) & grands Autohöfe de transit"
       },
       "geometry": {
         "type": "MultiPolygon",

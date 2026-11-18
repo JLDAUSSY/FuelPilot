@@ -5556,28 +5556,51 @@ function getDistanceKm(lat1, lon1, lat2, lon2) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
-// Project a point onto a line segment and return distance, progress t, and signed cross product
+// Project a point onto a line segment and return metric distance, progress t, signed perpendicular distance in meters, and heading
 function distPointToSegment(px, py, x1, y1, x2, y2) {
-  const dx = x2 - x1;
-  const dy = y2 - y1;
-  const lenSq = dx * dx + dy * dy;
+  const midLatRad = ((y1 + y2) * 0.5) * (Math.PI / 180);
+  const cosLat = Math.cos(midLatRad);
+  const dxM = (x2 - x1) * 111320 * cosLat;
+  const dyM = (y2 - y1) * 111320;
+  const segLenM = Math.hypot(dxM, dyM);
 
-  if (lenSq === 0) {
-    return { dist: getDistanceKm(py, px, y1, x1), t: 0, cross: 0 };
+  if (segLenM < 0.1) {
+    return {
+      dist: getDistanceKm(py, px, y1, x1),
+      t: 0,
+      cross: 0,
+      signedPerpM: 0,
+      headingDeg: 0,
+      dxM: 0,
+      dyM: 0
+    };
   }
 
-  let t = ((px - x1) * dx + (py - y1) * dy) / lenSq;
+  const sxM = (px - x1) * 111320 * cosLat;
+  const syM = (py - y1) * 111320;
+
+  let t = (sxM * dxM + syM * dyM) / (segLenM * segLenM);
   t = Math.max(0, Math.min(1, t));
 
-  const projX = x1 + t * dx;
-  const projY = y1 + t * dy;
-  const dist = getDistanceKm(py, px, projY, projX);
-  // Signed 2D cross product: dx*(py - y1) - dy*(px - x1)
-  // cross < 0 -> Station is on the RIGHT side (driver's lane in France/Spain)
-  // cross > 0 -> Station is on the LEFT side (opposing highway carriageway / sens inverse)
-  const cross = dx * (py - y1) - dy * (px - x1);
+  const projXM = t * dxM;
+  const projYM = t * dyM;
+  const dist = Math.hypot(sxM - projXM, syM - projYM) / 1000;
 
-  return { dist, t, cross };
+  // Signed metric perpendicular distance in meters:
+  // negative (< 0): Station is on the RIGHT side of the vehicle's direction of travel
+  // positive (> 0): Station is on the LEFT side of the vehicle's direction of travel (opposing carriageway)
+  const signedPerpM = (dxM * syM - dyM * sxM) / segLenM;
+  const headingDeg = Math.atan2(dxM, dyM) * (180 / Math.PI);
+
+  return {
+    dist,
+    t,
+    cross: signedPerpM, // replaces unnormalized cross with metric signedPerpM for backwards compatibility
+    signedPerpM,
+    headingDeg,
+    dxM,
+    dyM
+  };
 }
 
 // Pre-compute and cache cumulative distances along route geometry for instantaneous projections and polyline slicing
@@ -5710,9 +5733,10 @@ function processStationsOnRoute(route) {
     // Find nearest point on route polyline
     let minDist = 99999;
     let bestKmOnRoute = 0;
-    let bestCross = 0;
-    let bestDx = 0;
-    let bestDy = 0;
+    let bestSignedPerpM = 0;
+    let bestHeadingDeg = 0;
+    let bestDxM = 0;
+    let bestDyM = 0;
 
     for (let i = 0; i < coords.length - 1; i++) {
       const p1 = coords[i];
@@ -5722,9 +5746,10 @@ function processStationsOnRoute(route) {
         minDist = res.dist;
         const segLen = cumDist[i+1] - cumDist[i];
         bestKmOnRoute = cumDist[i] + res.t * segLen;
-        bestCross = res.cross;
-        bestDx = p2[0] - p1[0];
-        bestDy = p2[1] - p1[1];
+        bestSignedPerpM = res.signedPerpM;
+        bestHeadingDeg = res.headingDeg;
+        bestDxM = res.dxM;
+        bestDyM = res.dyM;
       }
     }
 
@@ -5751,22 +5776,37 @@ function processStationsOnRoute(route) {
       // and bidirectional service areas across Europe (ambos, beide, double, nord/süd, etc.)
       const isDoubleSens = /double|deux sens|2 sens|ambos|beide|entrambi|both|tous sens|nord\/süd|ost\/west/i.test(sensLow) || isExit;
 
-      if (s.pays === 'GB') {
-        // UK Motorway Service Areas (MSAs): check cardinal direction if directional twin site
-        if (!isDoubleSens) {
-          if (sensLow.includes('northbound') && bestDy < -0.0001) return;
-          if (sensLow.includes('southbound') && bestDy > 0.0001) return;
-          if (sensLow.includes('eastbound') && bestDx < -0.0001) return;
-          if (sensLow.includes('westbound') && bestDx > 0.0001) return;
-          if (sensLow.includes('clockwise') && !sensLow.includes('anti') && bestCross < 0) return;
-          if (sensLow.includes('anti-clockwise') && bestCross > 0) return;
+      const isUk = s.pays === 'GB';
+      // In Continental Europe (right-hand drive):
+      // - Right side of road: bestSignedPerpM < 0 (accessible)
+      // - Opposite side (left): bestSignedPerpM > 0 (inaccessible across central median barrier)
+      // A small +12m tolerance accommodates stations right on the edge of the carriageway or interchange entries
+      // In the UK (left-hand drive):
+      // - Left side of road: bestSignedPerpM > 0 (accessible)
+      // - Opposite side (right): bestSignedPerpM < 0 (inaccessible)
+      if (!isDoubleSens) {
+        if (isUk) {
+          if (bestSignedPerpM < -12.0) return;
+        } else {
+          if (bestSignedPerpM > 12.0) return;
         }
-      } else {
-        // Directional check: in France/Spain/Italy/Portugal/Netherlands/Germany, vehicles drive on the right.
-        // Add small numerical epsilon (2e-6) so stations right on the centerline or in slight curves aren't discarded
-        const isRightSide = bestCross < 0.000002;
-        if (!isRightSide && !isDoubleSens) {
-          // Exclude twin station on opposing carriageway
+
+        // Secondary layer: Cardinal direction consistency check
+        const isHeadingSouth = Math.abs(bestHeadingDeg) >= 135;
+        const isHeadingNorth = Math.abs(bestHeadingDeg) <= 45;
+        const isHeadingEast = bestHeadingDeg > 45 && bestHeadingDeg < 135;
+        const isHeadingWest = bestHeadingDeg < -45 && bestHeadingDeg > -135;
+
+        if (isHeadingSouth && /nord|north|norte|noord/i.test(sensLow) && !/sud|south|sur|zuid/i.test(sensLow)) {
+          return;
+        }
+        if (isHeadingNorth && /sud|south|sur|zuid/i.test(sensLow) && !/nord|north|norte|noord/i.test(sensLow)) {
+          return;
+        }
+        if (isHeadingEast && /ouest|west|oeste/i.test(sensLow) && !/est|east|este|ost/i.test(sensLow)) {
+          return;
+        }
+        if (isHeadingWest && /est|east|este|ost/i.test(sensLow) && !/ouest|west|oeste/i.test(sensLow)) {
           return;
         }
       }
@@ -5780,12 +5820,51 @@ function processStationsOnRoute(route) {
         displayedPk: displayedPk,
         minDistToAxisM: Math.round(minDist * 1000),
         isExitStation: isExit,
-        exitDistanceM: Math.round(minDist * 1000)
+        exitDistanceM: Math.round(minDist * 1000),
+        signedPerpM: bestSignedPerpM,
+        _isDoubleSens: isDoubleSens
       });
     }
   });
 
-  currentRouteStations = matched;
+  // Tertiary layer: Twin station pair mutual exclusion
+  // If two service areas on the same highway (autoroute) are within 800m of each other along the route,
+  // they are opposite twin service areas. Strictly keep only the one on the driver's accessible side!
+  matched.sort((a, b) => a.distOnRoute - b.distOnRoute);
+  const dedupedMatched = [];
+  const skipIndices = new Set();
+  const isUkRoute = Boolean(activeRouteData && activeRouteData.pays === 'GB');
+
+  for (let i = 0; i < matched.length; i++) {
+    if (skipIndices.has(i)) continue;
+    const s1 = matched[i];
+    for (let j = i + 1; j < matched.length; j++) {
+      if (skipIndices.has(j)) continue;
+      const s2 = matched[j];
+      if (s2.distOnRoute - s1.distOnRoute > 0.8) break; // beyond 800m
+      if (s1.autoroute && s2.autoroute && s1.autoroute === s2.autoroute && s1.autoroute !== 'Route' &&
+          !s1.isExitStation && !s2.isExitStation && !s1._isDoubleSens && !s2._isDoubleSens) {
+        if (!isUkRoute) {
+          if (s1.signedPerpM <= s2.signedPerpM) {
+            skipIndices.add(j);
+          } else {
+            skipIndices.add(i);
+          }
+        } else {
+          if (s1.signedPerpM >= s2.signedPerpM) {
+            skipIndices.add(j);
+          } else {
+            skipIndices.add(i);
+          }
+        }
+      }
+    }
+    if (!skipIndices.has(i)) {
+      dedupedMatched.push(s1);
+    }
+  }
+
+  currentRouteStations = dedupedMatched;
   window.currentRouteStations = currentRouteStations;
   populateBrandFilter();
   renderCurrentRouteStations();
