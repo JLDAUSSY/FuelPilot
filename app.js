@@ -7562,8 +7562,8 @@ function initPermanentGpsTracking() {
 }
 
 function startGpsNavigation() {
-  if (!activeRouteData || !currentRouteStations || currentRouteStations.length === 0) {
-    alert(t().alertNoRoute || "Veuillez d'abord calculer un itinéraire.");
+  if (!activeRouteData) {
+    alert(t().alertMissingPoints || "Veuillez d'abord calculer un itinéraire.");
     return;
   }
 
