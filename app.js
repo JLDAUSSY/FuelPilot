@@ -1276,7 +1276,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.16';
+const APP_VERSION = '9.9.17';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -7684,6 +7684,16 @@ async function geolocateCurrentLocation(onFoundCallback) {
     }
   };
 
+  // Mode 0 (Application Android Native FuelCoPilot - Technologie RandoTracker)
+  if (window.AndroidBridge && typeof window.AndroidBridge.requestNativeLocation === 'function') {
+    window._pendingNativeLocateHandler = (posObj) => {
+      handleSuccess({ coords: { latitude: posObj.lat, longitude: posObj.lon, accuracy: posObj.accuracy, speed: posObj.speed ? posObj.speed / 3.6 : null, heading: posObj.heading } }, 'high');
+    };
+    try {
+      window.AndroidBridge.requestNativeLocation(true);
+    } catch (e) {}
+  }
+
   // Mode 1 (Rapide / Réseau-WiFi / Android NETWORK_PROVIDER) : répond en < 300ms même en intérieur
   try {
     navigator.geolocation.getCurrentPosition(
@@ -7706,6 +7716,101 @@ async function geolocateCurrentLocation(onFoundCallback) {
     handleError(e, 'high');
   }
 }
+
+/**
+ * Récepteur natif Android LocationManager (Fused + GPS + Network) - Architecture RandoTracker
+ */
+window.onNativeAndroidLocation = function(lat, lon, accuracy, speedMps, headingDeg, forceCenter) {
+  if (typeof lat !== 'number' || typeof lon !== 'number' || isNaN(lat) || isNaN(lon)) return;
+  const now = Date.now();
+  const acc = Math.round(accuracy || 15);
+  const speedKmh = (typeof speedMps === 'number' && !isNaN(speedMps) && speedMps >= 0) ? (speedMps * 3.6) : null;
+  const heading = (typeof headingDeg === 'number' && !isNaN(headingDeg) && headingDeg >= 0) ? headingDeg : null;
+
+  lastGpsTimestamp = now;
+  isTrackingGps = true;
+
+  try {
+    localStorage.setItem('fuelpilot_last_lat', String(lat));
+    localStorage.setItem('fuelpilot_last_lon', String(lon));
+  } catch (e) {}
+
+  userGpsPosition = {
+    lat,
+    lon,
+    accuracy: acc,
+    heading,
+    speed: speedKmh,
+    isHighAccuracy: (acc <= 150),
+    isIpFallback: false,
+    timestamp: now,
+    city: (userGpsPosition && userGpsPosition.city) || ''
+  };
+
+  // Arrêter le spinner de localisation
+  const btnLocate = document.getElementById('btn-locate-me');
+  if (btnLocate) btnLocate.classList.remove('locating');
+
+  // Mettre à jour le marqueur GPS
+  updateUserGpsMarker(lat, lon, acc, false);
+
+  // Si un clic utilisateur attendait le fix natif
+  if (typeof window._pendingNativeLocateHandler === 'function') {
+    const cb = window._pendingNativeLocateHandler;
+    window._pendingNativeLocateHandler = null;
+    try { cb(userGpsPosition); } catch (e) {}
+  }
+
+  // Auto-centrage au 1er fix ou sur demande explicite
+  if (forceCenter || !hasAutoCenteredGps) {
+    if (map) {
+      const targetZoom = (acc <= 500) ? Math.max(map.getZoom(), 16) : Math.max(map.getZoom(), 14);
+      map.setView([lat, lon], targetZoom, { animate: true });
+    }
+    hasAutoCenteredGps = true;
+    if (forceCenter) {
+      showToast(`🎯 Position GPS trouvée (±${acc}m)`, { isSuccess: true, duration: 2500 });
+    }
+  }
+
+  // Suivi caméra en navigation active
+  if (isGpsNavActive && isGpsAutoFollow && map) {
+    safeMapPanTo(lat, lon);
+  }
+
+  // Départ en attente
+  if (isWaitingGpsForStart) {
+    isWaitingGpsForStart = false;
+    applyGpsAsStartPoint(lat, lon, userGpsPosition.city || '');
+    if (typeof updateAllClearButtons === 'function') updateAllClearButtons();
+  }
+
+  // Progression kilométrique continue sur l'itinéraire actif
+  if (activeRouteData) {
+    updateUserProgressionOnRoute(lat, lon);
+  }
+
+  // Reverse-géocodage non bloquant
+  if (!userGpsPosition.city) {
+    reverseGeocodeCoords(lat, lon).then(city => {
+      if (city && userGpsPosition) {
+        userGpsPosition.city = city;
+        if (userGpsMarker) updateUserGpsMarker(lat, lon, acc, false);
+        const startInp = document.getElementById('input-start');
+        if (startPoint && startPoint.label && startPoint.label.includes('Ma position actuelle') && startInp) {
+          applyGpsAsStartPoint(lat, lon, city);
+        }
+      }
+    }).catch(() => {});
+  }
+};
+
+window.onNativePermissionsGranted = function() {
+  startGpsWatch(true);
+  if (window.AndroidBridge && typeof window.AndroidBridge.requestNativeLocation === 'function') {
+    try { window.AndroidBridge.requestNativeLocation(true); } catch (e) {}
+  }
+};
 
 /**
  * Centrage de la carte sur la position de l'utilisateur (RandoTracker lines 3569-3578)
