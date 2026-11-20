@@ -1276,7 +1276,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.17';
+const APP_VERSION = '9.9.18';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -3505,25 +3505,29 @@ function initMap() {
 
   L.control.zoom({ position: 'topright' }).addTo(map);
 
-  // Débrayage tactile intelligent du suivi de caméra : si l'utilisateur déplace ou zoome la carte au doigt, on suspend le suivi
+  // Débrayage tactile intelligent du centrage permanent : si l'utilisateur déplace la carte au doigt, on met en pause le recentrage jusqu'au prochain clic sur la cible GPS
   const pauseAutoFollow = () => {
-    if (isGpsNavActive && isGpsAutoFollow && !isProgrammaticPan) {
+    if (isGpsAutoFollow && !isProgrammaticPan) {
       isGpsAutoFollow = false;
       updateLocateButtonNavState();
-      showToast(t().navFollowPaused || "📍 Suivi automatique en pause. Touchez l'icône GPS pour recentrer.", { isInfo: true, duration: 3500 });
+      if (isGpsNavActive) {
+        showToast(t().navFollowPaused || "📍 Suivi automatique en pause. Touchez l'icône GPS pour recentrer.", { isInfo: true, duration: 3000 });
+      }
     }
   };
 
   // dragstart n'est JAMAIS déclenché par flyTo ou panTo dans Leaflet, uniquement par le doigt ou la souris
   map.on('dragstart', () => {
-    if (isGpsNavActive && isGpsAutoFollow) {
+    if (isGpsAutoFollow) {
       isGpsAutoFollow = false;
       updateLocateButtonNavState();
-      showToast(t().navFollowPaused || "📍 Suivi automatique en pause. Touchez l'icône GPS pour recentrer.", { isInfo: true, duration: 3500 });
+      if (isGpsNavActive) {
+        showToast(t().navFollowPaused || "📍 Suivi automatique en pause. Touchez l'icône GPS pour recentrer.", { isInfo: true, duration: 3000 });
+      }
     }
   });
 
-  // zoomstart est protégé par !isProgrammaticPan pour éviter que le zoom initial (flyTo à 15) ne désactive le suivi !
+  // zoomstart est protégé par !isProgrammaticPan pour éviter que le zoom initial ne désactive le centrage
   map.on('zoomstart', () => {
     if (!isProgrammaticPan) {
       pauseAutoFollow();
@@ -3546,10 +3550,12 @@ function initMap() {
         const dy = Math.abs(e.touches[0].clientY - touchStartY);
         if (dx > 12 || dy > 12) {
           // Glissement tactile d'au moins 12px = manipulation délibérée par l'utilisateur
-          if (isGpsNavActive && isGpsAutoFollow) {
+          if (isGpsAutoFollow) {
             isGpsAutoFollow = false;
             updateLocateButtonNavState();
-            showToast(t().navFollowPaused || "📍 Suivi automatique en pause. Touchez l'icône GPS pour recentrer.", { isInfo: true, duration: 3500 });
+            if (isGpsNavActive) {
+              showToast(t().navFollowPaused || "📍 Suivi automatique en pause. Touchez l'icône GPS pour recentrer.", { isInfo: true, duration: 3000 });
+            }
           }
         }
       }
@@ -5046,14 +5052,17 @@ function addWaypointInput() {
   });
 }
 
-// Calculate Itinerary with OSRM (supports alternatives)
-async function calculateItinerary() {
-  hasSeenListTabAfterRoute = false;
+// Calculate Itinerary with OSRM (supports alternatives and automatic off-route recalculation)
+async function calculateItinerary(options = {}) {
+  const isAutoRecalc = !!(options && options.isAutoRecalc);
+  if (!isAutoRecalc) {
+    hasSeenListTabAfterRoute = false;
+  }
   const startInput = document.getElementById('input-start');
   const endInput = document.getElementById('input-end');
 
   // Auto-resolve typed text (e.g. "London", "Folkestone") if user didn't click the dropdown
-  if (startInput && startInput.value.trim().length >= 2) {
+  if (!isAutoRecalc && startInput && startInput.value.trim().length >= 2) {
     const typedStart = startInput.value.trim();
     if (!startPoint || startPoint.label.toLowerCase() !== typedStart.toLowerCase()) {
       const matches = await searchLocationsBilingual(typedStart);
@@ -5063,7 +5072,7 @@ async function calculateItinerary() {
       }
     }
   }
-  if (endInput && endInput.value.trim().length >= 2) {
+  if (!isAutoRecalc && endInput && endInput.value.trim().length >= 2) {
     const typedEnd = endInput.value.trim();
     if (!endPoint || endPoint.label.toLowerCase() !== typedEnd.toLowerCase()) {
       const matches = await searchLocationsBilingual(typedEnd);
@@ -5075,30 +5084,36 @@ async function calculateItinerary() {
   }
 
   // Auto-resolve any waypoint typed without clicking dropdown
-  for (const wp of currentWaypoints) {
-    const wpInput = document.getElementById(`input-${wp.id}`);
-    if (wpInput && wpInput.value.trim().length >= 2 && (!wp.coords || (wp.label || '').toLowerCase() !== wpInput.value.trim().toLowerCase())) {
-      const matches = await searchLocationsBilingual(wpInput.value.trim());
-      if (matches.length > 0) {
-        wp.coords = matches[0].coords;
-        wp.label = matches[0].cleanName;
-        wpInput.value = matches[0].cleanName;
+  if (!isAutoRecalc) {
+    for (const wp of currentWaypoints) {
+      const wpInput = document.getElementById(`input-${wp.id}`);
+      if (wpInput && wpInput.value.trim().length >= 2 && (!wp.coords || (wp.label || '').toLowerCase() !== wpInput.value.trim().toLowerCase())) {
+        const matches = await searchLocationsBilingual(wpInput.value.trim());
+        if (matches.length > 0) {
+          wp.coords = matches[0].coords;
+          wp.label = matches[0].cleanName;
+          wpInput.value = matches[0].cleanName;
+        }
       }
     }
   }
 
   if (!startPoint || !endPoint) {
-    alert(t().alertMissingPoints);
+    if (!isAutoRecalc) alert(t().alertMissingPoints);
     return;
   }
 
   // Save both departure and arrival in the 10 recent localities memory
-  saveRecentLocation(startPoint.label, startPoint.coords, startPoint.label);
-  saveRecentLocation(endPoint.label, endPoint.coords, endPoint.label);
+  if (!isAutoRecalc) {
+    saveRecentLocation(startPoint.label, startPoint.coords, startPoint.label);
+    saveRecentLocation(endPoint.label, endPoint.coords, endPoint.label);
+  }
 
   const btn = document.getElementById('btn-calculate');
-  btn.innerHTML = `<span class="pulse-dot" style="background:#fff"></span> ${t().calcInProgress}`;
-  btn.disabled = true;
+  if (!isAutoRecalc && btn) {
+    btn.innerHTML = `<span class="pulse-dot" style="background:#fff"></span> ${t().calcInProgress}`;
+    btn.disabled = true;
+  }
 
   try {
     // Construct coordinate list: start ; [waypoints] ; end
@@ -5133,15 +5148,26 @@ async function calculateItinerary() {
     }
 
     if (!data || !data.routes || data.routes.length === 0) {
-      alert(t().alertNoRoute);
+      if (!isAutoRecalc) alert(t().alertNoRoute);
       return;
     }
 
     alternativeRoutes = data.routes;
-    selectRoute(0);
+    selectRoute(0, { skipFitBounds: isAutoRecalc });
     renderRouteAlternatives();
     updateNavButtonUI();
 
+    if (isAutoRecalc) {
+      const distKm = (data.routes[0].distance / 1000).toFixed(0);
+      showToast(`🔄 Nouvel itinéraire calculé (${distKm} km)`, { isSuccess: true, duration: 3500 });
+      if (userGpsPosition && isGpsAutoFollow && map) {
+        safeMapPanTo(userGpsPosition.lat, userGpsPosition.lon, Math.max(map.getZoom(), 15));
+      }
+    } else {
+      // Vue globale de l'itinéraire calculé : suspendre temporairement le centrage permanent pour laisser voir tout le trajet
+      isGpsAutoFollow = false;
+      updateLocateButtonNavState();
+    }
 
     // Afficher l'encart Amazon Équipement Route
     const amazonCard = document.getElementById('partner-amazon-card');
@@ -5160,27 +5186,31 @@ async function calculateItinerary() {
       metaLbl.textContent = `• ${dist} km`;
     }
     // Switch to map view to display full route overview and stations on mobile
-    if (window.innerWidth <= 1080) {
+    if (!isAutoRecalc && window.innerWidth <= 1080) {
       document.body.classList.add('mobile-route-collapsed');
       const btnToggle = document.getElementById('btn-toggle-route-edit');
       if (btnToggle) btnToggle.innerHTML = t().editBtn;
       setMobileView('map');
     }
     // Faire clignoter l'onglet Liste & Filtres pour inviter l'utilisateur à voir les prix et stations
-    setTimeout(() => {
-      if (!hasSeenListTabAfterRoute) {
-        const btnList = document.getElementById('btn-tab-list');
-        if (btnList) {
-          btnList.classList.add('tab-attention-pulse');
+    if (!isAutoRecalc) {
+      setTimeout(() => {
+        if (!hasSeenListTabAfterRoute) {
+          const btnList = document.getElementById('btn-tab-list');
+          if (btnList) {
+            btnList.classList.add('tab-attention-pulse');
+          }
         }
-      }
-    }, 200);
+      }, 200);
+    }
   } catch (err) {
     console.error("Erreur calcul d'itinéraire:", err);
-    alert(t().alertServerError);
+    if (!isAutoRecalc) alert(t().alertServerError);
   } finally {
-    btn.innerHTML = t().calcBtn;
-    btn.disabled = false;
+    if (!isAutoRecalc && btn) {
+      btn.innerHTML = t().calcBtn;
+      btn.disabled = false;
+    }
   }
 }
 
@@ -5313,9 +5343,11 @@ function renderRouteAlternatives() {
 }
 
 // Select an active route and compute stations along it
-function selectRoute(routeIndex) {
+function selectRoute(routeIndex, options = {}) {
   activeRouteData = alternativeRoutes[routeIndex];
   userProgressionKmOnRoute = 0;
+  lastRenderedProgressionKm = -1;
+  window._skipNextRouteFitBounds = !!(options && options.skipFitBounds);
 
   // Update active state in sidebar cards and map floating pills
   document.querySelectorAll('.route-card').forEach((c, idx) => {
@@ -5439,6 +5471,10 @@ function drawRoutesOnMap(activeIdx) {
 // Fit map to show the entire route, alternative routes, departure, arrival, and all stations along it
 function fitMapToRouteAndStations() {
   if (!map) return;
+  if (window._skipNextRouteFitBounds) {
+    window._skipNextRouteFitBounds = false;
+    return;
+  }
 
   const bounds = L.latLngBounds();
 
@@ -6131,33 +6167,33 @@ function renderCurrentRouteStations() {
 
   let partnerInserted = false;
 
-  // Dynamically adapt Fuel Selector dropdown labels according to the route's country/countries
+  // Dynamically adapt Fuel Selector dropdown labels ONLY when countries or language actually change (prevents Android WebView select flicker)
   const routeCountries = [...new Set(currentRouteStations.map(s => s.pays || 'FR'))];
   const fuelSelectEl = document.getElementById('select-fuel');
-  if (fuelSelectEl && routeCountries.length > 0) {
+  const fuelDropdownKey = `${currentLang}:${routeCountries.slice().sort().join(',')}`;
+  if (fuelSelectEl && routeCountries.length > 0 && window._lastFuelDropdownKey !== fuelDropdownKey) {
+    window._lastFuelDropdownKey = fuelDropdownKey;
     const singleCountry = routeCountries.length === 1 ? routeCountries[0] : null;
     const hasSeparateSp95 = routeCountries.includes('FR') || routeCountries.includes('DE');
     const langCountryDict = FUEL_LABELS_BY_COUNTRY[t().defaultCountry] || FUEL_LABELS_BY_COUNTRY.FR;
     Array.from(fuelSelectEl.options).forEach(opt => {
       const fKey = opt.value;
-      // Hide separate SP95 (E5) option when route does not include France or Germany (since ES, IT, GB have a single Unleaded 95 category)
       if (fKey === 'sp95') {
         opt.style.display = hasSeparateSp95 ? '' : 'none';
       }
       const prefix = fKey === 'elec' ? '' : '⛽ ';
+      let nextText = opt.textContent;
       if (fKey === 'all') {
-        opt.textContent = `${prefix}${langCountryDict.all}`;
+        nextText = `${prefix}${langCountryDict.all}`;
       } else if (singleCountry) {
         const dict = FUEL_LABELS_BY_COUNTRY[singleCountry] || FUEL_LABELS_BY_COUNTRY.FR;
-        if (dict[fKey]) {
-          opt.textContent = `${prefix}${dict[fKey]}`;
-        }
+        if (dict[fKey]) nextText = `${prefix}${dict[fKey]}`;
       } else {
-        // Cross-border route: combine unique official names across the traversed countries
         const names = [...new Set(routeCountries.map(c => (FUEL_LABELS_BY_COUNTRY[c] || FUEL_LABELS_BY_COUNTRY.FR)[fKey]).filter(Boolean))];
-        if (names.length > 0) {
-          opt.textContent = `${prefix}${names.join(' / ')}`;
-        }
+        if (names.length > 0) nextText = `${prefix}${names.join(' / ')}`;
+      }
+      if (opt.textContent !== nextText) {
+        opt.textContent = nextText;
       }
     });
   }
@@ -6172,12 +6208,14 @@ function renderCurrentRouteStations() {
     const fuelPrice = (selectedFuel !== 'all') ? getFuelPrice(st.prix, selectedFuel) : (st.prix ? Object.values(st.prix)[0] : null);
     const isCheapest = fuelPrice && fuelPrice === lowestPrice;
     const brandClass = getBrandClass(st.enseigne);
-    const unavailText = tr.fuelUnavailable || 'Indispo';
+    const shortUnavailFuel = (selectedFuel && selectedFuel !== 'all')
+      ? getFuelLabel(selectedFuel, st.pays).replace(/^[⚡⛽]\s*/, '')
+      : (tr.fuelUnavailable || 'Indispo');
     const pinPriceDisplay = fuelPrice 
       ? (isElec 
           ? `${fuelPrice.toFixed(3)}${isUK ? '£' : (isCH ? ' CHF' : '€')}/kWh` 
           : (isUK ? `£${fuelPrice.toFixed(3)}` : (isCH ? `${fuelPrice.toFixed(3)} CHF` : `${fuelPrice.toFixed(3)}€`))) 
-      : unavailText;
+      : renderCrossedFuelHtml(shortUnavailFuel, true);
 
     const exitPinClass = st.isExitStation ? 'exit-pin' : '';
     const exitPinIcon = st.isExitStation ? '🚪 ' : '';
@@ -6444,6 +6482,13 @@ function formatPriceMaj(majStr) {
 }
 
 // Render fuel prices inside card
+// Helper : affiche le nom du carburant barré d'une croix rouge en travers lorsqu'il est indisponible
+function renderCrossedFuelHtml(fuelName, compact = false) {
+  const safeName = fuelName || 'Carburant';
+  const cls = compact ? 'fuel-crossed-badge compact' : 'fuel-crossed-badge';
+  return `<span class="${cls}" title="${safeName} non disponible"><span class="fuel-crossed-text">${safeName}</span><svg class="fuel-red-cross-svg" viewBox="0 0 100 32" preserveAspectRatio="none" aria-hidden="true"><line x1="4" y1="4" x2="96" y2="28" stroke="#ef4444" stroke-width="5.5" stroke-linecap="round"/><line x1="96" y1="4" x2="4" y2="28" stroke="#ef4444" stroke-width="5.5" stroke-linecap="round"/></svg></span>`;
+}
+
 function renderCardPrices(prices, featuredFuel, isCheapest, pays, maj) {
   const isUK = pays === 'GB';
   const isElec = featuredFuel === 'elec';
@@ -6488,7 +6533,7 @@ function renderCardPrices(prices, featuredFuel, isCheapest, pays, maj) {
         <div class="prices-single-row unavailable">
           <div class="single-fuel-label">
             <span class="fuel-icon">${fuelIcon}</span>
-            <span class="fuel-name">${fuelName}</span>
+            ${renderCrossedFuelHtml(fuelName, false)}
           </div>
           <div class="single-fuel-price">
             <span class="price-val-unavail">${t().unavail}</span>
@@ -6551,8 +6596,8 @@ function renderPopupPrices(prices, featuredFuel, pays, maj) {
       `;
     } else {
       return `
-        <div style="grid-column: span 2; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; padding: 6px 10px; border-radius: 6px; text-align:center; color:#fca5a5; font-size:0.8rem;">
-          ${fuelIcon} ${fuelName} : ${t().unavail}
+        <div style="grid-column: span 2; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.5); padding: 6px 10px; border-radius: 6px; display:flex; align-items:center; justify-content:center; gap:8px; color:#fca5a5; font-size:0.8rem;">
+          <span>${fuelIcon}</span> ${renderCrossedFuelHtml(fuelName, false)}
         </div>
       `;
     }
@@ -6823,17 +6868,29 @@ window.getCurrentRouteStations = () => currentRouteStations;
 // ==========================================================================
 let hasSeenListTabAfterRoute = false;
 let isGpsNavActive = false;
-let isGpsAutoFollow = false;
+let isGpsAutoFollow = true; // Centrage permanent actif par défaut dès réception du GPS
 let isProgrammaticPan = false;
 let needsFirstNavZoom = false;
+let lastRenderedProgressionKm = -1;
+let offRouteConsecutiveCount = 0;
+let lastAutoRecalcTimestamp = 0;
+let isAutoRecalculatingRoute = false;
 
 function safeMapPanTo(lat, lon, zoom = null) {
-  if (!map) return;
+  if (!map || typeof lat !== 'number' || typeof lon !== 'number' || isNaN(lat) || isNaN(lon)) return;
   isProgrammaticPan = true;
-  if (zoom !== null) {
-    map.flyTo([lat, lon], zoom, { animate: true, duration: 0.8 });
-  } else {
-    map.panTo([lat, lon], { animate: true, duration: 0.8 });
+  try {
+    const sz = map.getSize();
+    const isVisible = sz && sz.x > 0 && sz.y > 0;
+    if (!isVisible) {
+      map.setView([lat, lon], zoom !== null ? zoom : map.getZoom(), { animate: false });
+    } else if (zoom !== null) {
+      map.flyTo([lat, lon], zoom, { animate: true, duration: 0.8 });
+    } else {
+      map.panTo([lat, lon], { animate: true, duration: 0.8 });
+    }
+  } catch (e) {
+    try { map.setView([lat, lon], zoom !== null ? zoom : (map.getZoom() || 15), { animate: false }); } catch (_) {}
   }
   setTimeout(() => { isProgrammaticPan = false; }, 950);
 }
@@ -6841,9 +6898,9 @@ function safeMapPanTo(lat, lon, zoom = null) {
 function updateLocateButtonNavState() {
   const btnLocate = document.getElementById('btn-locate-me');
   if (!btnLocate) return;
-  if (isGpsNavActive && isGpsAutoFollow) {
+  if (isGpsAutoFollow) {
     btnLocate.classList.add('active-follow');
-    btnLocate.title = t().navFollowing || "Suivi automatique actif (centré)";
+    btnLocate.title = t().navFollowing || "Centrage permanent actif";
   } else {
     btnLocate.classList.remove('active-follow');
     btnLocate.title = t().locateMeTitle || "Centrer sur ma position";
@@ -7326,8 +7383,32 @@ function formatGeolocationErrorMessage(err) {
 // ============================================================================
 
 /**
- * Calcul dynamique et progression kilométrique continue sur l'itinéraire actif
- * Permet de suivre le véhicule sur l'autoroute sans restriction bloquante
+ * Recalcul automatique de l'itinéraire lorsque le conducteur s'écarte du tracé (> 400 m)
+ */
+async function triggerOffRouteRecalculation(latitude, longitude) {
+  if (isAutoRecalculatingRoute || !endPoint || !endPoint.coords) return;
+  isAutoRecalculatingRoute = true;
+  lastAutoRecalcTimestamp = Date.now();
+  offRouteConsecutiveCount = 0;
+
+  showToast('🔄 Écart détecté : recalcul de l\'itinéraire...', { isInfo: true, duration: 3500 });
+
+  const cityLabel = (userGpsPosition && userGpsPosition.city) ? `Ma position actuelle (${userGpsPosition.city})` : 'Ma position actuelle';
+  startPoint = { coords: [longitude, latitude], label: cityLabel, isIpFallback: false };
+  const startInp = document.getElementById('input-start');
+  if (startInp) startInp.value = cityLabel;
+
+  try {
+    await calculateItinerary({ isAutoRecalc: true });
+  } catch (e) {
+    console.warn('[Off-Route Recalc] Erreur:', e);
+  } finally {
+    isAutoRecalculatingRoute = false;
+  }
+}
+
+/**
+ * Calcul dynamique, progression kilométrique continue et détection d'écart hors itinéraire
  */
 function updateUserProgressionOnRoute(latitude, longitude) {
   if (!activeRouteData || !activeRouteData.geometry || !activeRouteData.geometry.coordinates) return;
@@ -7351,6 +7432,17 @@ function updateUserProgressionOnRoute(latitude, longitude) {
     }
   }
 
+  // Détection d'écart hors itinéraire (> 400 m sur 2 points consécutifs, cooldown 20 s)
+  if (minDist > 0.4 && endPoint && endPoint.coords) {
+    offRouteConsecutiveCount++;
+    if (offRouteConsecutiveCount >= 2 && (Date.now() - lastAutoRecalcTimestamp > 20000) && !isAutoRecalculatingRoute) {
+      triggerOffRouteRecalculation(latitude, longitude);
+      return;
+    }
+  } else if (minDist <= 0.3) {
+    offRouteConsecutiveCount = 0;
+  }
+
   // Corridor d'autoroute étendu (jusqu'à 3 km)
   if (minDist <= 3.0) {
     if (userProgressionKmOnRoute === 0) {
@@ -7362,9 +7454,12 @@ function updateUserProgressionOnRoute(latitude, longitude) {
       }
     }
 
-    // Mise à jour dynamique du tracé (parcouru vs restant) et des décomptes des stations à venir
-    updateActiveRoutePolylines();
-    renderCurrentRouteStations();
+    // Ne redessiner les cartes/stations que si la progression a réellement évolué (>= 100 m) pour éviter tout clignotement UI
+    if (lastRenderedProgressionKm < 0 || Math.abs(userProgressionKmOnRoute - lastRenderedProgressionKm) >= 0.1) {
+      lastRenderedProgressionKm = userProgressionKmOnRoute;
+      updateActiveRoutePolylines();
+      renderCurrentRouteStations();
+    }
   }
 }
 
@@ -7429,14 +7524,13 @@ function startGpsWatch(useHighAccuracy = true) {
     // 2. Auto-centrage fluide au 1er fix (RandoTracker lines 3862-3867)
     if (!hasAutoCenteredGps) {
       if (map) {
-        map.setView([lat, lon], acc <= 500 ? 16 : 14, { animate: true });
+        safeMapPanTo(lat, lon, acc <= 500 ? 16 : 14);
       }
       hasAutoCenteredGps = true;
+      updateLocateButtonNavState();
       showToast(`🎯 Position GPS trouvée (±${acc}m)`, { isSuccess: true, duration: 3000 });
-    }
-
-    // 3. Suivi de caméra en direct si le guidage automatique est actif
-    if (isGpsNavActive && isGpsAutoFollow && map) {
+    } else if (isGpsAutoFollow && map) {
+      // 3. Recentrage permanent de la position au centre de l'écran
       safeMapPanTo(lat, lon);
     }
 
@@ -7765,16 +7859,16 @@ window.onNativeAndroidLocation = function(lat, lon, accuracy, speedMps, headingD
   if (forceCenter || !hasAutoCenteredGps) {
     if (map) {
       const targetZoom = (acc <= 500) ? Math.max(map.getZoom(), 16) : Math.max(map.getZoom(), 14);
-      map.setView([lat, lon], targetZoom, { animate: true });
+      safeMapPanTo(lat, lon, targetZoom);
     }
     hasAutoCenteredGps = true;
+    isGpsAutoFollow = true;
+    updateLocateButtonNavState();
     if (forceCenter) {
       showToast(`🎯 Position GPS trouvée (±${acc}m)`, { isSuccess: true, duration: 2500 });
     }
-  }
-
-  // Suivi caméra en navigation active
-  if (isGpsNavActive && isGpsAutoFollow && map) {
+  } else if (isGpsAutoFollow && map) {
+    // Recentrage permanent de la position au centre de l'écran
     safeMapPanTo(lat, lon);
   }
 
@@ -7816,10 +7910,8 @@ window.onNativePermissionsGranted = function() {
  * Centrage de la carte sur la position de l'utilisateur (RandoTracker lines 3569-3578)
  */
 function centerMapOnUser() {
-  if (isGpsNavActive) {
-    isGpsAutoFollow = true;
-    updateLocateButtonNavState();
-  }
+  isGpsAutoFollow = true;
+  updateLocateButtonNavState();
 
   const isFresh = isTrackingGps && userGpsPosition && typeof userGpsPosition.lat === 'number' && typeof userGpsPosition.lon === 'number' && !isNaN(userGpsPosition.lat) && (Date.now() - (userGpsPosition.timestamp || 0) < 30000);
 
