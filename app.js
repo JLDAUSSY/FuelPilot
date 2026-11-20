@@ -1276,7 +1276,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.19';
+const APP_VERSION = '9.9.20';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -5058,6 +5058,8 @@ async function calculateItinerary(options = {}) {
   const isAutoRecalc = !!(options && options.isAutoRecalc);
   if (!isAutoRecalc) {
     hasSeenListTabAfterRoute = false;
+    selectedAlertStationIds.clear();
+    triggeredAlertStationIds.clear();
   }
   const startInput = document.getElementById('input-start');
   const endInput = document.getElementById('input-end');
@@ -5960,20 +5962,33 @@ async function maybeLoadFrenchCorridorStations(route, coords, cumDist) {
       const addr = (r.adresse || '').trim();
       const ville = (r.ville || '').trim();
       const nom = r.nom ? r.nom.trim() : `Station ${ville}`;
-      let enseigne = 'Station';
-      const fullText = `${nom} ${addr} ${(r.services_service || []).join(' ')}`.toLowerCase();
+      const rawBrand = (r.enseigne || r.marque || '').trim();
+      let enseigne = rawBrand || '';
+      const fullText = `${rawBrand} ${nom} ${addr} ${(r.services_service || []).join(' ')}`.toLowerCase();
       if (fullText.includes('total')) enseigne = 'TotalEnergies';
       else if (fullText.includes('leclerc')) enseigne = 'E.Leclerc';
       else if (fullText.includes('carrefour')) enseigne = 'Carrefour';
       else if (fullText.includes('intermarch')) enseigne = 'Intermarché';
-      else if (fullText.includes('super u') || fullText.includes('système u')) enseigne = 'Système U';
+      else if (fullText.includes('super u') || fullText.includes('hyper u') || fullText.includes('u express') || fullText.includes('système u') || fullText.includes('systeme u')) enseigne = 'Système U';
       else if (fullText.includes('esso')) enseigne = 'Esso';
       else if (fullText.includes('bp')) enseigne = 'BP';
       else if (fullText.includes('shell')) enseigne = 'Shell';
       else if (fullText.includes('avia')) enseigne = 'Avia';
       else if (fullText.includes('auchan')) enseigne = 'Auchan';
       else if (fullText.includes('casino')) enseigne = 'Casino';
-      else if (fullText.includes('eni')) enseigne = 'Eni';
+      else if (fullText.includes('eni') || fullText.includes('agip')) enseigne = 'Eni';
+      else if (fullText.includes('dyneff')) enseigne = 'Dyneff';
+      else if (fullText.includes('elan') || fullText.includes('élan')) enseigne = 'Élan';
+      else if (fullText.includes('fulli')) enseigne = 'Fulli';
+      else if (fullText.includes('cora')) enseigne = 'Cora';
+      else if (fullText.includes('netto')) enseigne = 'Netto';
+      else if (fullText.includes('gulf')) enseigne = 'Gulf';
+      else if (fullText.includes('q8')) enseigne = 'Q8';
+      else if (fullText.includes('vito')) enseigne = 'Vito';
+      else if (fullText.includes('spar')) enseigne = 'Spar';
+      else if (!enseigne || enseigne.toLowerCase() === 'station') {
+        enseigne = ville ? formatProperName(ville) : 'Indépendant';
+      }
 
       const ruptures = [];
       ['gazole', 'sp95', 'e10', 'sp98', 'e85', 'gplc'].forEach(f => {
@@ -6220,11 +6235,12 @@ function renderCurrentRouteStations() {
 
     const exitPinClass = st.isExitStation ? 'exit-pin' : '';
     const exitPinIcon = st.isExitStation ? '🚪 ' : '';
+    const pinBrandLabel = formatPinBrandLabel(st);
 
-    // Create Map Marker Pin
+    // Create Map Marker Pin (full brand name, auto-width pill, never truncated to "Stati")
     const pinHtml = `
       <div class="custom-station-pin ${isCheapest ? 'cheapest' : ''} ${isElec ? 'electric-pin' : ''} ${exitPinClass}" id="pin-${st.id}">
-        <span class="brand-badge ${brandClass}" style="padding:1px 4px; font-size:0.65rem;">${exitPinIcon}${isElec ? '⚡' : ''} ${(st.enseigne || st.marque || 'Station').substring(0, 5)}</span>
+        <span class="brand-badge ${brandClass}" style="padding:1px 5px; font-size:0.65rem;">${exitPinIcon}${isElec ? '⚡' : ''}${pinBrandLabel}</span>
         <span>${pinPriceDisplay}</span>
       </div>
     `;
@@ -6232,8 +6248,8 @@ function renderCurrentRouteStations() {
     const customIcon = L.divIcon({
       html: pinHtml,
       className: 'station-div-icon',
-      iconSize: isElec ? [116, 26] : [104, 26],
-      iconAnchor: isElec ? [58, 13] : [52, 13]
+      iconSize: null,
+      iconAnchor: [0, 0]
     });
 
     const marker = L.marker([st.lat, st.lon], { icon: customIcon }).addTo(map);
@@ -6328,8 +6344,13 @@ function renderCurrentRouteStations() {
     // Create Sidebar Card
     const card = document.createElement('div');
     const exitCardClass = st.isExitStation ? 'exit-station-card' : '';
-    card.className = `station-card ${exitCardClass} ${isCheapest ? 'highlighted' : ''}`;
+    const isAlertArmed = selectedAlertStationIds.has(String(st.id));
+    card.className = `station-card ${exitCardClass} ${isCheapest ? 'highlighted' : ''} ${isAlertArmed ? 'alert-armed' : ''}`;
     card.id = `card-${st.id}`;
+
+    const alertLabelText = isAlertArmed
+      ? `🔔 Alerte 2 km active (${selectedAlertStationIds.size}/${MAX_STATION_ALERTS})`
+      : `🔔 M'avertir 2 km avant`;
 
     card.innerHTML = `
       ${isCheapest ? `<div class="best-price-ribbon">${t().bestPrice}</div>` : ''}
@@ -6343,14 +6364,14 @@ function renderCurrentRouteStations() {
         <div style="display:flex; align-items:center; gap:4px; flex-wrap:wrap;">
           <span class="station-rank">#${idx + 1}</span>
           <span class="flag-icon">${flag}</span>
-          <span class="brand-badge ${brandClass}">${st.enseigne}</span>
+          <span class="brand-badge ${brandClass}">${pinBrandLabel}</span>
           ${st.isExitStation ? `<span class="station-type-badge exit-badge" title="${tr.offMotorwayTooltip || ''}">🚪 ${offMotorwayBadgeText}</span>` : ''}
         </div>
         <div class="card-top-right">
           <span class="station-weather-pill" id="weather-card-${st.id}" title="${cachedWeather ? cachedWeather.desc : 'Météo en direct'}">
             ${cachedWeather ? `${cachedWeather.icon} ${cachedWeather.temp}°C` : '🌤️ --°C'}
           </span>
-          <div class="station-logo-badge" title="${st.enseigne}">
+          <div class="station-logo-badge" title="${pinBrandLabel}">
             ${getBrandLogoSvg(st.enseigne)}
           </div>
           ${!st.isExitStation && pkBadgeLabel ? `
@@ -6383,6 +6404,16 @@ function renderCurrentRouteStations() {
       </div>
       ${(st.pays === 'BE' || (st.pays === 'DE' && !st.live)) ? `<div style="font-size:0.68rem; color:#94a3b8; margin-top:3px;">${t().estimatedPrice}</div>` : ''}
       ${(st.pays === 'DE' && st.live) ? `<div style="font-size:0.66rem; color:#94a3b8; margin-top:3px;">MTS-K · <a href="https://www.tankerkoenig.de" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" style="color:#7dd3fc;">Tankerkönig</a> (CC BY 4.0)</div>` : ''}
+
+      <div class="station-alert-row" onclick="event.stopPropagation();">
+        <label class="station-alert-toggle ${isAlertArmed ? 'active' : ''}" id="alert-toggle-${st.id}">
+          <input type="checkbox" ${isAlertArmed ? 'checked' : ''} onchange="window.toggleStationAlertSelection('${String(st.id).replace(/'/g, "\\'")}', this)">
+          <span class="station-alert-label">${alertLabelText}</span>
+        </label>
+        <button type="button" class="btn-test-station-voice" onclick="window.testStationVoiceAlert('${String(st.id).replace(/'/g, "\\'")}')" title="Écouter l'alerte vocale">
+          🔊 Tester
+        </button>
+      </div>
 
       ${(() => {
         if (selectedFuel !== 'all' || !st.ruptures || st.ruptures.length === 0) return '';
@@ -6483,6 +6514,219 @@ function formatPriceMaj(majStr) {
 }
 
 // Render fuel prices inside card
+// Helper : libellé propre d'enseigne pour les pastilles carte & fiches (jamais tronqué en "Stati")
+function formatPinBrandLabel(st) {
+  if (!st) return 'Station';
+  const raw = (st.enseigne || st.marque || st.brand || '').trim();
+  const low = raw.toLowerCase();
+  const isGeneric = !raw || low === 'station' || low === 'station-service' || low === 'station service' || low === 'independant' || low === 'indépendant';
+
+  let candidate = raw;
+  if (isGeneric) {
+    const searchStr = `${st.nom || ''} ${st.adresse || ''}`.toLowerCase();
+    if (searchStr.includes('total')) candidate = 'TotalEnergies';
+    else if (searchStr.includes('leclerc')) candidate = 'E.Leclerc';
+    else if (searchStr.includes('carrefour')) candidate = 'Carrefour';
+    else if (searchStr.includes('intermarch')) candidate = 'Intermarché';
+    else if (searchStr.includes('super u') || searchStr.includes('hyper u') || searchStr.includes('système u')) candidate = 'Super U';
+    else if (searchStr.includes('esso')) candidate = 'Esso';
+    else if (searchStr.includes('shell')) candidate = 'Shell';
+    else if (searchStr.includes('bp')) candidate = 'BP';
+    else if (searchStr.includes('avia')) candidate = 'Avia';
+    else if (searchStr.includes('auchan')) candidate = 'Auchan';
+    else if (searchStr.includes('eni') || searchStr.includes('agip')) candidate = 'Eni';
+    else if (searchStr.includes('dyneff')) candidate = 'Dyneff';
+    else if (searchStr.includes('elan') || searchStr.includes('élan')) candidate = 'Élan';
+    else if (searchStr.includes('fulli')) candidate = 'Fulli';
+    else if (searchStr.includes('casino')) candidate = 'Casino';
+    else if (st.ville) candidate = formatProperName(st.ville);
+    else if (st.nom) candidate = formatProperName(st.nom).replace(/^Station\s+/i, '').trim();
+    else candidate = 'Station';
+  }
+
+  const cLow = candidate.toLowerCase();
+  if (cLow === 'totalenergies' || cLow === 'total energies' || cLow.startsWith('total access')) return 'Total';
+  if (cLow === 'e.leclerc' || cLow === 'leclerc') return 'Leclerc';
+  if (cLow === 'système u' || cLow === 'systeme u') return 'Super U';
+  if (cLow.startsWith('esso')) return 'Esso';
+  if (cLow.startsWith('carrefour')) return 'Carrefour';
+  if (cLow.startsWith('intermarch')) return 'Intermarché';
+  return candidate.length > 12 ? candidate.substring(0, 11) + '…' : candidate;
+}
+
+// ============================================================================
+// ALERTES SONORES & VOCALES (MAX 3 STATIONS FAVORITES) - MAQUETTE VALIDÉE
+// ============================================================================
+const MAX_STATION_ALERTS = 3;
+let selectedAlertStationIds = new Set();
+let triggeredAlertStationIds = new Set();
+
+const I18N_VOICE_ALERTS = {
+  fr: { lang: 'fr-FR', kicker: 'Alerte carburant imminente (2 km)', alert: (name) => `Dans 2 kilomètres, vous arriverez à la station ${name}.` },
+  en: { lang: 'en-GB', kicker: 'Upcoming fuel alert (2 km)', alert: (name) => `In 2 kilometers, you will arrive at ${name} station.` },
+  de: { lang: 'de-DE', kicker: 'Tankstellen-Warnung (2 km)', alert: (name) => `In 2 Kilometern erreichen Sie die Tankstelle ${name}.` },
+  it: { lang: 'it-IT', kicker: 'Avviso carburante imminente (2 km)', alert: (name) => `Tra 2 chilometri arriverai alla stazione ${name}.` },
+  es: { lang: 'es-ES', kicker: 'Alerta de gasolinera inminente (2 km)', alert: (name) => `En 2 kilómetros, llegará a la estación ${name}.` },
+  nl: { lang: 'nl-NL', kicker: 'Tankstation melding (2 km)', alert: (name) => `Over 2 kilometer komt u aan bij het tankstation ${name}.` },
+  pt: { lang: 'pt-PT', kicker: 'Alerta de posto iminente (2 km)', alert: (name) => `Em 2 quilómetros chegará à estação ${name}.` },
+  sl: { lang: 'sl-SI', kicker: 'Opozorilo za črpalko (2 km)', alert: (name) => `Čez 2 kilometra boste prispeli do črpalke ${name}.` },
+  hr: { lang: 'hr-HR', kicker: 'Upozorenje za postaju (2 km)', alert: (name) => `Za 2 kilometra stižete na postaju ${name}.` }
+};
+
+function playAlertChime() {
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const now = ctx.currentTime;
+    const notes = [880, 1174.66]; // La5 -> Ré6 (carillon doux et net)
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now + i * 0.16);
+      gain.gain.setValueAtTime(0.001, now + i * 0.16);
+      gain.gain.exponentialRampToValueAtTime(0.22, now + i * 0.16 + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.16 + 0.35);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now + i * 0.16);
+      osc.stop(now + i * 0.16 + 0.38);
+    });
+  } catch (e) {}
+}
+
+function speakFuelAlertText(text) {
+  try {
+    if (!('speechSynthesis' in window)) return;
+    const cfg = I18N_VOICE_ALERTS[currentLang] || I18N_VOICE_ALERTS.fr;
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = cfg.lang;
+    utter.rate = 1.0;
+    utter.pitch = 1.0;
+    const voices = window.speechSynthesis.getVoices() || [];
+    const match = voices.find(v => v.lang && v.lang.toLowerCase().startsWith(cfg.lang.slice(0, 2).toLowerCase()));
+    if (match) utter.voice = match;
+    window.speechSynthesis.speak(utter);
+  } catch (e) {}
+}
+
+function showStationVoiceAlertBanner(st, voiceMsg) {
+  const existing = document.getElementById('voice-alert-banner');
+  if (existing) existing.remove();
+  const cfg = I18N_VOICE_ALERTS[currentLang] || I18N_VOICE_ALERTS.fr;
+  const brand = formatPinBrandLabel(st);
+  const titleText = `${brand} — ${formatProperName(st.nom || st.ville || '')}`;
+
+  const banner = document.createElement('div');
+  banner.id = 'voice-alert-banner';
+  banner.className = 'voice-alert-banner';
+  banner.innerHTML = `
+    <div class="voice-alert-banner-left">
+      <div class="voice-alert-icon">⛽</div>
+      <div style="min-width:0;">
+        <div class="voice-alert-kicker">${cfg.kicker}</div>
+        <div class="voice-alert-title">${titleText}</div>
+        <div class="voice-alert-sub">« ${voiceMsg} »</div>
+      </div>
+    </div>
+    <div class="voice-alert-actions">
+      <button type="button" class="voice-alert-replay-btn" id="btn-voice-replay">🔊</button>
+      <button type="button" class="voice-alert-close-btn" id="btn-voice-close">✖</button>
+    </div>
+  `;
+  document.body.appendChild(banner);
+
+  const btnReplay = document.getElementById('btn-voice-replay');
+  if (btnReplay) btnReplay.addEventListener('click', () => { playAlertChime(); speakFuelAlertText(voiceMsg); });
+  const btnClose = document.getElementById('btn-voice-close');
+  if (btnClose) btnClose.addEventListener('click', () => banner.remove());
+
+  setTimeout(() => {
+    const b = document.getElementById('voice-alert-banner');
+    if (b) b.remove();
+  }, 15000);
+}
+
+function triggerStationVoiceAlert(st) {
+  if (!st) return;
+  const cfg = I18N_VOICE_ALERTS[currentLang] || I18N_VOICE_ALERTS.fr;
+  const brand = formatPinBrandLabel(st);
+  const cleanName = formatProperName(st.nom || st.ville || '');
+  const spokenName = cleanName.toLowerCase().includes(brand.toLowerCase()) ? cleanName : `${brand} ${cleanName}`;
+  const msg = cfg.alert(spokenName);
+  playAlertChime();
+  setTimeout(() => speakFuelAlertText(msg), 280);
+  showStationVoiceAlertBanner(st, msg);
+}
+
+function toggleStationAlertSelection(stationId, checkboxEl) {
+  const sid = String(stationId);
+  if (selectedAlertStationIds.has(sid)) {
+    selectedAlertStationIds.delete(sid);
+    triggeredAlertStationIds.delete(sid);
+  } else {
+    if (selectedAlertStationIds.size >= MAX_STATION_ALERTS) {
+      if (checkboxEl) checkboxEl.checked = false;
+      showToast(`🔔 Maximum ${MAX_STATION_ALERTS} stations d'alerte atteintes — décochez-en une pour en choisir une autre.`, { isWarning: true, duration: 4000 });
+      return;
+    }
+    selectedAlertStationIds.add(sid);
+    triggeredAlertStationIds.delete(sid);
+    playAlertChime();
+    showToast(`🔔 Alerte sonore 2 km activée (${selectedAlertStationIds.size}/${MAX_STATION_ALERTS})`, { isSuccess: true, duration: 2500 });
+  }
+
+  // Mettre à jour visuellement toutes les cartes sans re-rendre toute la liste
+  document.querySelectorAll('.station-alert-toggle').forEach(lbl => {
+    const id = lbl.id.replace('alert-toggle-', '');
+    const armed = selectedAlertStationIds.has(id);
+    lbl.classList.toggle('active', armed);
+    const span = lbl.querySelector('.station-alert-label');
+    if (span) {
+      span.textContent = armed
+        ? `🔔 Alerte 2 km active (${selectedAlertStationIds.size}/${MAX_STATION_ALERTS})`
+        : `🔔 M'avertir 2 km avant`;
+    }
+    const cardEl = document.getElementById(`card-${id}`);
+    if (cardEl) cardEl.classList.toggle('alert-armed', armed);
+  });
+}
+
+function testStationVoiceAlert(stationId) {
+  const sid = String(stationId);
+  const st = (currentRouteStations || []).find(s => String(s.id) === sid) || (allStations || []).find(s => String(s.id) === sid);
+  if (st) triggerStationVoiceAlert(st);
+}
+
+function checkStationProximityAlerts(latitude, longitude) {
+  if (!selectedAlertStationIds || selectedAlertStationIds.size === 0) return;
+  if (!currentRouteStations || currentRouteStations.length === 0) return;
+
+  currentRouteStations.forEach(st => {
+    const sid = String(st.id);
+    if (!selectedAlertStationIds.has(sid) || triggeredAlertStationIds.has(sid)) return;
+
+    let remKm = null;
+    if (typeof st.distOnRoute === 'number' && userProgressionKmOnRoute > 0) {
+      remKm = st.distOnRoute - userProgressionKmOnRoute;
+    } else if (typeof latitude === 'number' && typeof longitude === 'number') {
+      remKm = getDistanceKm(latitude, longitude, st.lat, st.lon);
+    }
+
+    if (remKm !== null && remKm <= 2.2 && remKm >= 0.05) {
+      triggeredAlertStationIds.add(sid);
+      triggerStationVoiceAlert(st);
+    }
+  });
+}
+
+window.toggleStationAlertSelection = toggleStationAlertSelection;
+window.testStationVoiceAlert = testStationVoiceAlert;
+window.formatPinBrandLabel = formatPinBrandLabel;
+window.checkStationProximityAlerts = checkStationProximityAlerts;
+
 // Helper : affiche le nom du carburant barré d'une croix rouge en travers lorsqu'il est indisponible
 function renderCrossedFuelHtml(fuelName, compact = false) {
   const safeName = fuelName || 'Carburant';
@@ -7462,6 +7706,9 @@ function updateUserProgressionOnRoute(latitude, longitude) {
       renderCurrentRouteStations();
     }
   }
+
+  // Vérifier les alertes sonores & vocales des stations cochées (à 2 km)
+  checkStationProximityAlerts(latitude, longitude);
 }
 
 /**
