@@ -1276,7 +1276,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.27';
+const APP_VERSION = '9.9.28';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -3968,11 +3968,16 @@ async function searchLocationsBilingual(q) {
   const results = [];
 
   const hasDigits = /\d/.test(qNorm);
-  const streetKeywords = ['rue', 'av', 'avenue', 'bd', 'boulevard', 'chemin', 'allee', 'place', 'impasse', 'route', 'cours', 'quai', 'square', 'street', 'road', 'st', 'rd', 'str', 'strasse', 'straße', 'via', 'calle', 'rua', 'plein', 'straat'];
+  const streetKeywords = ['rue', 'av', 'avenue', 'bd', 'boulevard', 'chemin', 'allee', 'place', 'impasse', 'route', 'cours', 'quai', 'square', 'esplanade', 'street', 'road', 'st', 'rd', 'str', 'strasse', 'straße', 'via', 'calle', 'rua', 'plein', 'straat'];
   const hasStreetKeyword = streetKeywords.some(kw => new RegExp(`\\b${kw}\\b`, 'i').test(qNorm));
-  const poiKeywords = ['parking', 'parkhaus', 'aparcamiento', 'parcheggio', 'car park', 'gare', 'station', 'aeroport', 'airport', 'flughafen', 'mairie', 'rathaus', 'hotel de ville', 'hopital', 'hospital', 'universite', 'university', 'ecole', 'school', 'tribunal', 'courthouse', 'police', 'poste', 'stade', 'stadium', 'centre commercial', 'expo', 'congre'];
+  const poiKeywords = ['parking', 'parkhaus', 'aparcamiento', 'parcheggio', 'car park', 'gare', 'station', 'aeroport', 'airport', 'flughafen', 'mairie', 'rathaus', 'hotel de ville', 'hopital', 'hospital', 'clinique', 'pharmacie', 'pharmacy', 'apotheke', 'farmacia', 'boulangerie', 'restaurant', 'brasserie', 'pizzeria', 'cafe', 'hotel', 'camping', 'plage', 'port', 'marche', 'medecin', 'dentiste', 'garage', 'supermarche', 'hypermarche', 'carrefour', 'leclerc', 'intermarche', 'auchan', 'lidl', 'banque', 'piscine', 'cinema', 'musee', 'chateau', 'universite', 'university', 'ecole', 'school', 'tribunal', 'courthouse', 'police', 'poste', 'stade', 'stadium', 'centre commercial', 'expo', 'congre'];
   const hasPoiKeyword = poiKeywords.some(kw => qNorm.includes(kw));
-  const isSpecificSearch = hasDigits || hasStreetKeyword || hasPoiKeyword;
+  const isSpecificSearch = hasDigits || hasStreetKeyword || hasPoiKeyword || qNorm.split(/\s+/).length >= 2;
+
+  // Position de référence (GPS temps réel ou centre carte) pour biaiser les résultats à proximité comme Waze / Maps
+  const refLat = (userGpsPosition && typeof userGpsPosition.lat === 'number') ? userGpsPosition.lat : (map ? map.getCenter().lat : null);
+  const refLon = (userGpsPosition && typeof userGpsPosition.lon === 'number') ? userGpsPosition.lon : (map ? map.getCenter().lng : null);
+  const hasRefPos = (typeof refLat === 'number' && typeof refLon === 'number' && !isNaN(refLat) && !isNaN(refLon));
 
   const fetchWithTimeout = (url, opts = {}, ms = 2200) => {
     const ctrl = new AbortController();
@@ -4002,19 +4007,27 @@ async function searchLocationsBilingual(q) {
     }
   });
 
-  // 2. Query European Photon (bounded to Western & Central Europe), Nominatim OSM, & French BAN in parallel
+  // 2. Requêtes multi-sources en parallèle avec biais géographique GPS (BAN + Photon + Nominatim + IGN Géoplateforme + Annuaire Entreprises)
   const qNormalizedVariant = q
     .replace(/\btechnical\s+cent(er|re)\b/gi, 'Technology Centre')
     .replace(/\btech\s+cent(er|re)\b/gi, 'Technology Centre')
     .replace(/\bcenter\b/gi, 'Centre');
 
   const euroBbox = '-11.0,35.0,19.5,61.0';
+  const banBias = hasRefPos ? `&lat=${refLat.toFixed(4)}&lon=${refLon.toFixed(4)}` : '';
+  const photonBias = hasRefPos ? `&lat=${refLat.toFixed(4)}&lon=${refLon.toFixed(4)}&location_bias_scale=0.15` : '';
+  const nomViewbox = hasRefPos ? `&viewbox=${(refLon - 0.5).toFixed(3)},${(refLat + 0.5).toFixed(3)},${(refLon + 0.5).toFixed(3)},${(refLat - 0.5).toFixed(3)}` : '';
+
   const queriesToRun = [
-    fetchWithTimeout(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(q)}&limit=6`, {}, 2200),
-    fetchWithTimeout(`https://photon.komoot.io/api/?q=${encodeURIComponent(qNormalizedVariant)}&bbox=${euroBbox}&limit=8`, {}, 3000),
-    fetchWithTimeout(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(qNormalizedVariant)}&countrycodes=fr,es,it,de,gb,be,nl,pt,lu,at,ch,si,hr&addressdetails=1&extratags=1&limit=6`, {}, 3200)
+    fetchWithTimeout(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(q)}&limit=6${banBias}`, {}, 2200),
+    fetchWithTimeout(`https://photon.komoot.io/api/?q=${encodeURIComponent(qNormalizedVariant)}&bbox=${euroBbox}${photonBias}&limit=10`, {}, 2800),
+    fetchWithTimeout(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(qNormalizedVariant)}${nomViewbox}&countrycodes=fr,es,it,de,gb,be,nl,pt,lu,at,ch,si,hr&addressdetails=1&extratags=1&limit=6`, {}, 3000),
+    fetchWithTimeout(`https://data.geopf.fr/geocodage/completion/?text=${encodeURIComponent(q)}&type=PositionOfInterest,StreetAddress&maximumResponses=10`, {}, 3000),
+    (isSpecificSearch && q.trim().length >= 4)
+      ? fetchWithTimeout(`https://recherche-entreprises.api.gouv.fr/search?q=${encodeURIComponent(q)}&per_page=5`, {}, 3200)
+      : Promise.resolve(null)
   ];
-  const [banRes, photonDefaultRes, nominatimRes] = await Promise.allSettled(queriesToRun);
+  const [banRes, photonDefaultRes, nominatimRes, ignPoiRes, entrepriseRes] = await Promise.allSettled(queriesToRun);
 
   const getCountryFlag = (cc, countryStr) => {
     const code = (cc || '').toUpperCase();
@@ -4040,9 +4053,10 @@ async function searchLocationsBilingual(q) {
     const itemNameNorm = (item.cleanName || '').toLowerCase().trim();
     const isDup = results.some(r => {
       const rNameNorm = (r.cleanName || '').toLowerCase().trim();
-      const sameCoordsExact = Math.abs(r.coords[0] - item.coords[0]) < 0.001 && Math.abs(r.coords[1] - item.coords[1]) < 0.001;
       const sameName = rNameNorm === itemNameNorm;
-      return sameCoordsExact || sameName;
+      const veryClose = Math.abs(r.coords[0] - item.coords[0]) < 0.00025 && Math.abs(r.coords[1] - item.coords[1]) < 0.00025;
+      const sharesWord = rNameNorm.split(/\W+/).some(w => w.length >= 4 && itemNameNorm.includes(w));
+      return sameName || (veryClose && sharesWord);
     });
     if (!isDup) {
       results.push(item);
@@ -4358,6 +4372,65 @@ async function searchLocationsBilingual(q) {
     });
   }
 
+  // 2d. IGN Géoplateforme (Parkings, POI officiels français, plages, monuments, adresses)
+  if (ignPoiRes && ignPoiRes.status === 'fulfilled' && ignPoiRes.value && Array.isArray(ignPoiRes.value.results)) {
+    ignPoiRes.value.results.forEach(item => {
+      if (typeof item.x !== 'number' || typeof item.y !== 'number') return;
+      const fulltext = (item.fulltext || '').trim();
+      if (!fulltext) return;
+      const kind = (item.kind || '').toLowerCase();
+      const poiInfo = getPoiInfo(kind, kind, fulltext);
+      const icon = poiInfo.isPoi ? poiInfo.icon : (kind.includes('parking') ? '🅿️ ' : (kind.includes('plage') || kind.includes('baie') ? '🏖️ ' : '📍 '));
+      const ftNorm = fulltext.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      const startsMatch = ftNorm.startsWith(qNorm);
+      let prio = 95;
+      if (isSpecificSearch) {
+        prio = (poiInfo.isPoi || kind.includes('parking')) ? 138 : 108;
+      } else {
+        // Recherche de ville simple (ex: "Sanary") : prioriser la commune elle-même avant les monuments/églises
+        prio = (kind === 'municipality' || kind === 'administratif') ? 145 : (startsMatch ? 120 : 72);
+      }
+      addResultIfUnique({
+        label: `🇫🇷 ${icon}${fulltext}`,
+        cleanName: fulltext,
+        coords: [item.x, item.y],
+        priority: prio
+      });
+    });
+  }
+
+  // 2e. Annuaire des Entreprises (Pharmacies, commerces, restaurants, cliniques, garages en France)
+  if (entrepriseRes && entrepriseRes.status === 'fulfilled' && entrepriseRes.value && Array.isArray(entrepriseRes.value.results)) {
+    entrepriseRes.value.results.forEach(ent => {
+      const siege = ent && ent.siege;
+      if (!siege) return;
+      const lat = parseFloat(siege.latitude);
+      const lon = parseFloat(siege.longitude);
+      if (isNaN(lat) || isNaN(lon)) return;
+      const rawNom = (ent.nom_complet || ent.nom_raison_sociale || '').trim();
+      const addr = (siege.adresse || '').trim();
+      if (!rawNom) return;
+      const nomFmt = formatProperName(rawNom);
+      const addrFmt = addr ? formatProperName(addr) : '';
+      const lowNom = rawNom.toLowerCase();
+      let icon = '🏪 ';
+      if (lowNom.includes('pharmac')) icon = '💊 ';
+      else if (lowNom.includes('restaur') || lowNom.includes('brasser') || lowNom.includes('pizza') || lowNom.includes('cafe') || lowNom.includes('café')) icon = '🍽️ ';
+      else if (lowNom.includes('boulang') || lowNom.includes('patiss')) icon = '🥖 ';
+      else if (lowNom.includes('hotel') || lowNom.includes('hôtel')) icon = '🏨 ';
+      else if (lowNom.includes('garage') || lowNom.includes('auto')) icon = '🔧 ';
+      else if (lowNom.includes('clinic') || lowNom.includes('clinique') || lowNom.includes('medecin') || lowNom.includes('dentist')) icon = '🏥 ';
+      else if (lowNom.includes('parking')) icon = '🅿️ ';
+      const fullLabel = addrFmt ? `${nomFmt} — ${addrFmt}` : nomFmt;
+      addResultIfUnique({
+        label: `🇫🇷 ${icon}${fullLabel}`,
+        cleanName: addrFmt ? `${nomFmt}, ${addrFmt}` : nomFmt,
+        coords: [lon, lat],
+        priority: hasPoiKeyword ? 160 : 128
+      });
+    });
+  }
+
   // 3. Fallback: if a multi-word query (e.g. "McLaren Technical Center") returned no result matching the primary distinctive word ("mclaren"),
   // query the primary distinctive word directly so approximate POI names still work like Google Maps / Waze
   const primaryTokens = qNorm.split(/\s+/).filter(t => t.length >= 3 && !['rue', 'street', 'road', 'avenue', 'boulevard', 'place', 'saint', 'sainte', 'the', 'les', 'des'].includes(t));
@@ -4367,7 +4440,7 @@ async function searchLocationsBilingual(q) {
   );
   if (firstDistinctive && primaryTokens.length >= 2 && !hasPrimaryMatch) {
     try {
-      const fallbackData = await fetchWithTimeout(`https://photon.komoot.io/api/?q=${encodeURIComponent(firstDistinctive)}&bbox=${euroBbox}&limit=5`, {}, 1800);
+      const fallbackData = await fetchWithTimeout(`https://photon.komoot.io/api/?q=${encodeURIComponent(firstDistinctive)}&bbox=${euroBbox}${photonBias}&limit=5`, {}, 1800);
       if (fallbackData && fallbackData.features) {
         parsePhotonFeatures(fallbackData.features);
       }
@@ -4380,6 +4453,27 @@ async function searchLocationsBilingual(q) {
       const rNorm = (r.label || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
       if (rNorm.includes(firstDistinctive)) {
         r.priority += 35;
+      }
+    });
+  }
+
+  // Bonus de proximité géographique Waze / Google Maps (priorise les lieux proches de l'utilisateur)
+  if (hasRefPos) {
+    results.forEach(r => {
+      if (!r.coords || r.coords.length < 2) return;
+      const distKm = getDistanceKm(refLat, refLon, r.coords[1], r.coords[0]);
+      if (distKm <= 5) {
+        r.priority += 65;
+        if (!r.label.includes(' km)') && isSpecificSearch) {
+          r.label += ` (${distKm < 1 ? Math.round(distKm * 1000) + ' m' : distKm.toFixed(1) + ' km'})`;
+        }
+      } else if (distKm <= 25) {
+        r.priority += 40;
+        if (!r.label.includes(' km)') && isSpecificSearch) {
+          r.label += ` (${distKm.toFixed(1)} km)`;
+        }
+      } else if (distKm <= 80) {
+        r.priority += 18;
       }
     });
   }
@@ -5127,27 +5221,43 @@ async function calculateItinerary(options = {}) {
     points.push(endPoint.coords);
 
     const coordsStr = points.map(p => `${p[0]},${p[1]}`).join(';');
-    const url = `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&alternatives=3&steps=true`;
+    const fetchRouteWithTimeout = (routeUrl, timeoutMs = 4500) => {
+      const ctrl = new AbortController();
+      const tmr = setTimeout(() => ctrl.abort(), timeoutMs);
+      return fetch(routeUrl, { signal: ctrl.signal })
+        .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .then(json => { if (json && json.routes && json.routes.length > 0) return json; throw new Error('No routes'); })
+        .finally(() => clearTimeout(tmr));
+    };
 
     let data = null;
-    for (let attempt = 0; attempt < 3; attempt++) {
+    if (isAutoRecalc) {
+      // Recalcul ultra-rapide style Waze / Maps : course en parallèle entre 2 serveurs OSRM sans alternatives (réponse ~300-600 ms)
+      const fastUrl1 = `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&alternatives=false&steps=true`;
+      const fastUrl2 = `https://routing.openstreetmap.de/routed-car/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&alternatives=false&steps=true`;
       try {
-        // En cas d'échec ou saturation du serveur public, repli sans alternatives multiples
-        const fetchUrl = (attempt === 2)
-          ? `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&steps=true`
-          : url;
-        const res = await fetch(fetchUrl);
-        if (res.ok) {
-          const json = await res.json();
-          if (json && json.routes && json.routes.length > 0) {
-            data = json;
-            break;
-          }
-        }
-      } catch (eFetch) {
-        console.warn(`[OSRM Router] Tentative ${attempt + 1}/3 échouée:`, eFetch);
+        data = await Promise.any([
+          fetchRouteWithTimeout(fastUrl1, 3500),
+          fetchRouteWithTimeout(fastUrl2, 3500)
+        ]);
+      } catch (eFast) {
+        console.warn('[Fast Off-Route Recalc] Échec des 2 serveurs OSRM:', eFast);
       }
-      if (attempt < 2) await new Promise(r => setTimeout(r, 1000));
+    } else {
+      const urls = [
+        `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&alternatives=3&steps=true`,
+        `https://routing.openstreetmap.de/routed-car/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&alternatives=3&steps=true`,
+        `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&steps=true`
+      ];
+      for (let attempt = 0; attempt < urls.length; attempt++) {
+        try {
+          data = await fetchRouteWithTimeout(urls[attempt], 6000);
+          if (data) break;
+        } catch (eFetch) {
+          console.warn(`[OSRM Router] Tentative ${attempt + 1}/${urls.length} échouée:`, eFetch);
+        }
+        if (attempt < urls.length - 1) await new Promise(r => setTimeout(r, 400));
+      }
     }
 
     if (!data || !data.routes || data.routes.length === 0) {
@@ -7815,14 +7925,23 @@ function updateUserProgressionOnRoute(latitude, longitude) {
     }
   }
 
-  // Détection d'écart hors itinéraire (> 400 m sur 2 points consécutifs, cooldown 20 s)
-  if (minDist > 0.4 && endPoint && endPoint.coords) {
+  // Détection d'écart hors itinéraire adaptative style Waze / Google Maps :
+  // - En ville / basse vitesse (< 70 km/h) ou trajet court (< 30 km) : seuil 90 m
+  // - Sur autoroute (>= 70 km/h) : seuil 200 m (tolère les aires et bretelles)
+  // - Déclenchement immédiat si > 250 m ou après 2 points consécutifs (~3-5 s), cooldown 7 s
+  const speedKmh = (userGpsPosition && typeof userGpsPosition.speed === 'number') ? userGpsPosition.speed : 0;
+  const routeTotalKm = (activeRouteData.distance || 0) / 1000;
+  const offRouteThresholdKm = (speedKmh >= 70 && routeTotalKm >= 30) ? 0.20 : 0.09;
+  const distToDestKm = (endPoint && endPoint.coords) ? getDistanceKm(latitude, longitude, endPoint.coords[1], endPoint.coords[0]) : 999;
+
+  if (minDist > offRouteThresholdKm && endPoint && endPoint.coords && distToDestKm > 0.15) {
     offRouteConsecutiveCount++;
-    if (offRouteConsecutiveCount >= 2 && (Date.now() - lastAutoRecalcTimestamp > 20000) && !isAutoRecalculatingRoute) {
+    const isLargeDeviation = minDist > 0.25;
+    if ((offRouteConsecutiveCount >= 2 || isLargeDeviation) && (Date.now() - lastAutoRecalcTimestamp > 7000) && !isAutoRecalculatingRoute) {
       triggerOffRouteRecalculation(latitude, longitude);
       return;
     }
-  } else if (minDist <= 0.3) {
+  } else if (minDist <= offRouteThresholdKm * 0.75) {
     offRouteConsecutiveCount = 0;
   }
 
