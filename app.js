@@ -1276,7 +1276,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.24';
+const APP_VERSION = '9.9.25';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -6774,6 +6774,11 @@ function toggleStationAlertSelection(stationId, checkboxEl) {
       const cfg = I18N_VOICE_ALERTS[currentLang] || I18N_VOICE_ALERTS.fr;
       const fuelLabel = getFuelLabel(selectedFuel, st.pays).replace(/^[⚡⛽]\s*/, '');
       const warnMsg = cfg.unavailFuel(fuelLabel);
+      window._lastVoiceSpeechTimestamp = Date.now();
+      // Si l'utilisateur est déjà à moins de 2,2 km de cette station, ne pas superposer l'annonce "Dans 2 km"
+      if (userGpsPosition && getDistanceKm(userGpsPosition.lat, userGpsPosition.lon, st.lat, st.lon) <= 2.2) {
+        triggeredAlertStationIds.add(sid);
+      }
       setTimeout(() => speakFuelAlertText(warnMsg), 260);
       showToast(`⚠️ ${warnMsg}`, { isWarning: true, duration: 5500 });
     } else {
@@ -6806,6 +6811,8 @@ function testStationVoiceAlert(stationId) {
 function checkStationProximityAlerts(latitude, longitude) {
   if (!selectedAlertStationIds || selectedAlertStationIds.size === 0) return;
   if (!currentRouteStations || currentRouteStations.length === 0) return;
+  // Empêcher toute superposition avec une annonce vocale en cours (délai minimum 6,5 s)
+  if (window._lastVoiceSpeechTimestamp && (Date.now() - window._lastVoiceSpeechTimestamp < 6500)) return;
 
   currentRouteStations.forEach(st => {
     const sid = String(st.id);
