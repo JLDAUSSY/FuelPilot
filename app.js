@@ -1276,7 +1276,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.20';
+const APP_VERSION = '9.9.21';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -5997,11 +5997,13 @@ async function maybeLoadFrenchCorridorStations(route, coords, cumDist) {
         }
       });
 
+      const needsOsmBrand = (!enseigne || enseigne === formatProperName(ville) || enseigne === 'Indépendant' || enseigne === 'Station');
       allStations.push({
         id,
         pays: 'FR',
         live: true,
         enseigne,
+        _needsOsmBrand: needsOsmBrand,
         nom,
         autoroute: 'Route',
         sens: 'Double sens',
@@ -6022,6 +6024,84 @@ async function maybeLoadFrenchCorridorStations(route, coords, cumDist) {
 
   if (added > 0 && activeRouteData === route) {
     processStationsOnRoute(route);
+    enrichFrenchBrandsFromOsm(route);
+  }
+}
+
+/**
+ * Enrichit l'enseigne réelle (Total, Esso, Intermarché, Shell, Avia...) des stations françaises
+ * dont la base Bercy ne fournit pas la marque, via OpenStreetMap Overpass (requête légère ciblée)
+ */
+async function enrichFrenchBrandsFromOsm(route) {
+  if (!route || activeRouteData !== route || !currentRouteStations || currentRouteStations.length === 0) return;
+  const targets = currentRouteStations.filter(s => s.pays === 'FR' && s._needsOsmBrand && !s._osmBrandChecked);
+  if (targets.length === 0) return;
+
+  targets.forEach(s => { s._osmBrandChecked = true; });
+  const batch = targets.slice(0, 12); // max 12 stations ciblées par trajet
+
+  try {
+    const clauses = batch.map(s => `nwr["amenity"="fuel"](around:160,${s.lat.toFixed(5)},${s.lon.toFixed(5)});`).join('');
+    const q = `[out:json][timeout:5];(${clauses});out center tags;`;
+    const res = await fetch('https://overpass-api.de/api/interpreter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'data=' + encodeURIComponent(q)
+    });
+    if (!res.ok) return;
+    const json = await res.json();
+    const els = Array.isArray(json.elements) ? json.elements : [];
+    if (els.length === 0) return;
+
+    let updatedAny = false;
+    batch.forEach(st => {
+      let bestBrand = '';
+      let bestDist = 0.2; // 200 m max
+      els.forEach(el => {
+        const elLat = el.lat || (el.center && el.center.lat);
+        const elLon = el.lon || (el.center && el.center.lon);
+        if (!elLat || !elLon || !el.tags) return;
+        const d = getDistanceKm(st.lat, st.lon, elLat, elLon);
+        if (d < bestDist) {
+          const b = (el.tags.brand || el.tags.operator || el.tags.name || '').trim();
+          if (b && b.toLowerCase() !== 'station' && b.toLowerCase() !== 'fuel') {
+            bestDist = d;
+            bestBrand = b;
+          }
+        }
+      });
+      if (bestBrand) {
+        const low = bestBrand.toLowerCase();
+        let norm = bestBrand;
+        if (low.includes('total')) norm = 'TotalEnergies';
+        else if (low.includes('leclerc')) norm = 'E.Leclerc';
+        else if (low.includes('carrefour')) norm = 'Carrefour';
+        else if (low.includes('intermarch')) norm = 'Intermarché';
+        else if (low.includes('super u') || low.includes('hyper u') || low.includes('système u')) norm = 'Système U';
+        else if (low.includes('esso')) norm = 'Esso';
+        else if (low.includes('shell')) norm = 'Shell';
+        else if (low.includes('avia')) norm = 'Avia';
+        else if (low.includes('bp')) norm = 'BP';
+        else if (low.includes('auchan')) norm = 'Auchan';
+        else if (low.includes('eni') || low.includes('agip')) norm = 'Eni';
+        else if (low.includes('dyneff')) norm = 'Dyneff';
+        else if (low.includes('elan') || low.includes('élan')) norm = 'Élan';
+
+        st.enseigne = norm;
+        st._needsOsmBrand = false;
+        if (st.nom && st.nom.toLowerCase().startsWith('station ')) {
+          st.nom = `${norm === 'TotalEnergies' ? 'Total' : norm} — ${formatProperName(st.ville || '')}`.replace(/\s+—\s*$/, '');
+        }
+        updatedAny = true;
+      }
+    });
+
+    if (updatedAny && activeRouteData === route) {
+      populateBrandFilter();
+      renderCurrentRouteStations();
+    }
+  } catch (e) {
+    console.warn('[OSM Brand Enrich]', e);
   }
 }
 
@@ -6597,9 +6677,18 @@ function playAlertChime() {
 }
 
 function speakFuelAlertText(text) {
+  if (!text) return;
+  const cfg = I18N_VOICE_ALERTS[currentLang] || I18N_VOICE_ALERTS.fr;
+  // 1. Synthèse vocale native Android (TextToSpeech via AndroidBridge) — 100% fiable dans Android WebView
+  if (window.AndroidBridge && typeof window.AndroidBridge.speakText === 'function') {
+    try {
+      window.AndroidBridge.speakText(text, cfg.lang);
+      return;
+    } catch (e) {}
+  }
+  // 2. Fallback navigateur Web Speech API (Chrome / Safari / Desktop)
   try {
     if (!('speechSynthesis' in window)) return;
-    const cfg = I18N_VOICE_ALERTS[currentLang] || I18N_VOICE_ALERTS.fr;
     window.speechSynthesis.cancel();
     const utter = new SpeechSynthesisUtterance(text);
     utter.lang = cfg.lang;
@@ -6612,53 +6701,18 @@ function speakFuelAlertText(text) {
   } catch (e) {}
 }
 
-function showStationVoiceAlertBanner(st, voiceMsg) {
-  const existing = document.getElementById('voice-alert-banner');
-  if (existing) existing.remove();
-  const cfg = I18N_VOICE_ALERTS[currentLang] || I18N_VOICE_ALERTS.fr;
-  const brand = formatPinBrandLabel(st);
-  const titleText = `${brand} — ${formatProperName(st.nom || st.ville || '')}`;
-
-  const banner = document.createElement('div');
-  banner.id = 'voice-alert-banner';
-  banner.className = 'voice-alert-banner';
-  banner.innerHTML = `
-    <div class="voice-alert-banner-left">
-      <div class="voice-alert-icon">⛽</div>
-      <div style="min-width:0;">
-        <div class="voice-alert-kicker">${cfg.kicker}</div>
-        <div class="voice-alert-title">${titleText}</div>
-        <div class="voice-alert-sub">« ${voiceMsg} »</div>
-      </div>
-    </div>
-    <div class="voice-alert-actions">
-      <button type="button" class="voice-alert-replay-btn" id="btn-voice-replay">🔊</button>
-      <button type="button" class="voice-alert-close-btn" id="btn-voice-close">✖</button>
-    </div>
-  `;
-  document.body.appendChild(banner);
-
-  const btnReplay = document.getElementById('btn-voice-replay');
-  if (btnReplay) btnReplay.addEventListener('click', () => { playAlertChime(); speakFuelAlertText(voiceMsg); });
-  const btnClose = document.getElementById('btn-voice-close');
-  if (btnClose) btnClose.addEventListener('click', () => banner.remove());
-
-  setTimeout(() => {
-    const b = document.getElementById('voice-alert-banner');
-    if (b) b.remove();
-  }, 15000);
-}
-
 function triggerStationVoiceAlert(st) {
   if (!st) return;
   const cfg = I18N_VOICE_ALERTS[currentLang] || I18N_VOICE_ALERTS.fr;
   const brand = formatPinBrandLabel(st);
-  const cleanName = formatProperName(st.nom || st.ville || '');
-  const spokenName = cleanName.toLowerCase().includes(brand.toLowerCase()) ? cleanName : `${brand} ${cleanName}`;
+  const cleanName = formatProperName(st.nom || st.ville || '').replace(/^Station\s+/i, '').trim();
+  const spokenName = (!cleanName || cleanName.toLowerCase().includes(brand.toLowerCase()))
+    ? (cleanName || brand)
+    : `${brand} ${cleanName}`;
   const msg = cfg.alert(spokenName);
   playAlertChime();
-  setTimeout(() => speakFuelAlertText(msg), 280);
-  showStationVoiceAlertBanner(st, msg);
+  setTimeout(() => speakFuelAlertText(msg), 260);
+  showToast(`🔔 ${msg}`, { isInfo: true, duration: 5000 });
 }
 
 function toggleStationAlertSelection(stationId, checkboxEl) {
