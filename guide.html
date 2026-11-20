@@ -213,6 +213,46 @@
     }
     .callout p { margin: 0; color: #cbd5e1; font-size: 0.92rem; }
 
+
+    /* Screenshots Gallery */
+    .screenshots-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 18px 0 26px;
+    }
+    .screenshot-card {
+      background: var(--bg-subcard);
+      border: 1px solid rgba(56, 189, 248, 0.22);
+      border-radius: 16px;
+      padding: 10px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      break-inside: avoid;
+    }
+    .screenshot-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+      display: block;
+    }
+    .screenshot-caption {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin: 0;
+    }
+    .screenshot-caption strong {
+      display: block;
+      color: #38bdf8;
+      font-size: 0.86rem;
+      margin-bottom: 2px;
+    }
+
     /* Footer Buttons */
     .footer-actions {
       display: flex;
@@ -254,6 +294,7 @@
       .container { padding: 22px 16px; border-radius: 16px; }
       h1 { font-size: 1.25rem; }
       .features-grid { grid-template-columns: 1fr; }
+      .screenshots-gallery { grid-template-columns: 1fr; }
       .footer-actions { flex-direction: column; align-items: stretch; text-align: center; }
       .btn-back { justify-content: center; }
     }
@@ -351,6 +392,31 @@
         color: #166534 !important;
         border: 1px solid #86efac !important;
       }
+      .screenshots-gallery {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 10px !important;
+        break-inside: avoid;
+        margin: 12px 0 18px !important;
+      }
+      .screenshot-card {
+        background: #f8fafc !important;
+        border: 1px solid #cbd5e1 !important;
+        padding: 8px !important;
+        break-inside: avoid;
+      }
+      .screenshot-card img {
+        border: 1px solid #94a3b8 !important;
+        box-shadow: none !important;
+      }
+      .screenshot-caption {
+        color: #334155 !important;
+        font-size: 0.76rem !important;
+      }
+      .screenshot-caption strong {
+        color: #0369a1 !important;
+        font-size: 0.82rem !important;
+      }
       .status-ref {
         background: #fef3c7 !important;
         color: #92400e !important;
@@ -368,7 +434,7 @@
         <div>
           <h1 id="title-main">FuelCo<span>Pilot</span> • Mode d'emploi</h1>
           <div class="author-tag" style="font-size:0.82rem; color:#38bdf8; font-weight:600; margin-top:-2px; margin-bottom:4px;">by JLDApps</div>
-          <div class="badge-tag" id="badge-version">Guide officiel d'utilisation • v9.9.29 (Novembre 2026)</div>
+          <div class="badge-tag" id="badge-version">Guide officiel d'utilisation • v9.9.30 (Novembre 2026)</div>
         </div>
       </div>
       <div class="lang-switcher" id="lang-switcher">
@@ -401,11 +467,11 @@
       fr: {
         docTitle: "Mode d'emploi & Guide • FuelCoPilot",
         headerTitle: "FuelCo<span>Pilot</span> • Mode d'emploi",
-        badgeVersion: "Guide officiel d'utilisation • v9.9.29 (Novembre 2026)",
+        badgeVersion: "Guide officiel d'utilisation • v9.9.30 (Novembre 2026)",
         backBtn: "Retourner à l'application",
         privacyLink: "Politique de Confidentialité",
         html: `
-          <h2>✨ Nouveautés v9.9.29 — Conduite & Alertes Vocales</h2>
+          <h2>✨ Nouveautés v9.9.30 — Conduite & Alertes Vocales</h2>
           <div class="features-grid">
             <div class="feature-card">
               <span class="feature-icon">🔔</span>
@@ -434,6 +500,23 @@
           <div class="callout">
             <p>💡 <strong>Le saviez-vous ?</strong> Sur un plein de 50 litres, faire le choix de la bonne station sur autoroute permet d'économiser entre <strong>10 € et 18 €</strong> sur un seul trajet !</p>
           </div>
+
+          <h2>📸 Aperçu de l'interface</h2>
+          <div class="screenshots-gallery">
+            <div class="screenshot-card">
+              <img src="guide_img_search.png" alt="1. Choix de l'itinéraire & Filtres">
+              <p class="screenshot-caption"><strong>1. Choix de l'itinéraire & Filtres</strong>Saisie d'adresse/POI, Ma position actuelle, 52 corridors de référence (13 pays), filtre enseigne et carburant.</p>
+            </div>
+            <div class="screenshot-card">
+              <img src="guide_img_map.png" alt="2. Carte interactive & 13 pays">
+              <p class="screenshot-caption"><strong>2. Carte interactive & 13 pays</strong>Visualisation des 13 pays couverts, prix en direct sur le trajet, suivi GPS bleu et boutons de centrage.</p>
+            </div>
+            <div class="screenshot-card">
+              <img src="guide_img_list.png" alt="3. Liste chronologique & Alertes 2 km">
+              <p class="screenshot-caption"><strong>3. Liste chronologique & Alertes 2 km</strong>Stations classées dans l'ordre du trajet, météo locale, guidage Waze/Maps et alerte vocale 2 km (1/3).</p>
+            </div>
+          </div>
+
 
           <h2>🚀 2. Fonctionnalités et Utilisation pas-à-pas</h2>
           
@@ -499,63 +582,90 @@
             </div>
 
           </div>
-
-          <h2>🌍 3. Pays et Réseau autoroutier couverts (2 337 aires)</h2>
-          <p>FuelCoPilot répertorie l'intégralité des réseaux autoroutiers à péage et voies rapides de <strong>8 pays européens majeurs</strong> :</p>
-          
+          <h2>🌍 3. Les 13 Pays et Réseaux couverts (8 443 stations + temps réel)</h2>
+          <p>FuelCoPilot couvre <strong>13 pays européens</strong> (<strong>8 443 stations</strong> en base + chargement dynamique en temps réel sur tout le couloir de votre trajet) :</p>
           <div class="table-container">
             <table>
               <thead>
                 <tr>
                   <th>Pays</th>
-                  <th>Aires répertoriées</th>
-                  <th>Réseaux autoroutiers</th>
+                  <th>Stations</th>
+                  <th>Réseaux autoroutiers & couverture dynamique</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>🇫🇷 <strong>France</strong></td>
-                  <td><strong>437 aires</strong></td>
-                  <td>A1 à A89 (APRR, AREA, Vinci Autoroutes, Sanef, SAPN, ATMB, SFTRF...)</td>
-                </tr>
-                <tr>
                   <td>🇪🇸 <strong>Espagne</strong></td>
-                  <td><strong>833 aires</strong></td>
-                  <td>Autovías et Autopistas (A-1 à A-8, AP-7 Méditerranée, A-31, AP-68...)</td>
+                  <td><strong>4 740</strong></td>
+                  <td>Autovías & Autopistas (A-1 à A-8, AP-7, A-31, AP-68…) + réseau routier MITECO</td>
                 </tr>
                 <tr>
                   <td>🇮🇹 <strong>Italie</strong></td>
-                  <td><strong>615 aires</strong></td>
-                  <td>Autostrade (A1 Milan-Rome-Naples, A4 Turin-Trieste, A14 Adriatique, A22...)</td>
+                  <td><strong>2 236</strong></td>
+                  <td>Autostrade (A1, A4, A14, A22…) + réseau national MIMIT</td>
+                </tr>
+                <tr>
+                  <td>🇫🇷 <strong>France</strong></td>
+                  <td><strong>635 + live</strong></td>
+                  <td>A1 à A89 (Vinci, APRR, Sanef, AREA…) + toutes les stations routières en direct (Bercy / 2aaz)</td>
                 </tr>
                 <tr>
                   <td>🇩🇪 <strong>Allemagne</strong></td>
-                  <td><strong>218 aires</strong></td>
-                  <td>Autobahn-Raststätten officielles (A1, A3, A7, A8, A9, A10 Berliner Ring...)</td>
+                  <td><strong>257 + live</strong></td>
+                  <td>Autobahn-Raststätten (A1, A3, A5, A7, A8, A9…) + prix live Tankerkönig / MTS-K</td>
                 </tr>
                 <tr>
                   <td>🇬🇧 <strong>Royaume-Uni</strong></td>
-                  <td><strong>158 aires</strong></td>
-                  <td>Motorway Service Areas MSAs (M1, M4, M5, M6, M20, M25, M40, M90...)</td>
-                </tr>
-                <tr>
-                  <td>🇧🇪 <strong>Belgique</strong></td>
-                  <td><strong>76 aires</strong></td>
-                  <td>E19, E40, E411, E42, E25...</td>
-                </tr>
-                <tr>
-                  <td>🇵🇹 <strong>Portugal</strong></td>
-                  <td><strong>65 aires</strong></td>
-                  <td>Rede de Autoestradas Brisa & Ascendi (A1 Lisboa-Porto, A2 Algarve, A3, A6, A22, A25...)</td>
+                  <td><strong>158</strong></td>
+                  <td>Motorway Service Areas MSAs (M1, M4, M5, M6, M20, M25, M40…)</td>
                 </tr>
                 <tr>
                   <td>🇳🇱 <strong>Pays-Bas</strong></td>
-                  <td><strong>57 aires</strong></td>
-                  <td>Rijkswaterstaat Verzorgingsplaatsen (A1, A2, A4, A12, A16, A27...)</td>
+                  <td><strong>93</strong></td>
+                  <td>Rijkswaterstaat Verzorgingsplaatsen (A1, A2, A4, A12, A16, A27…)</td>
+                </tr>
+                <tr>
+                  <td>🇧🇪 <strong>Belgique</strong></td>
+                  <td><strong>80</strong></td>
+                  <td>Autoroutes E19, E40, E411, E42, E25, E17…</td>
+                </tr>
+                <tr>
+                  <td>🇵🇹 <strong>Portugal</strong></td>
+                  <td><strong>70</strong></td>
+                  <td>Autoestradas Brisa & Ascendi (A1, A2, A3, A6, A22, A25…)</td>
+                </tr>
+                <tr>
+                  <td>🇦🇹 <strong>Autriche</strong></td>
+                  <td><strong>56 + live</strong></td>
+                  <td>ASFINAG Autobahnen (A1, A2, A9, A10, A12, A13…) + stations en direct E-Control</td>
+                </tr>
+                <tr>
+                  <td>🇭🇷 <strong>Croatie</strong></td>
+                  <td><strong>44</strong></td>
+                  <td>Autoceste HAC / Bina-Istra (A1 Dalmatina, A3, A4, A6, A8…)</td>
+                </tr>
+                <tr>
+                  <td>🇨🇭 <strong>Suisse</strong></td>
+                  <td><strong>36</strong></td>
+                  <td>Autoroutes nationales (A1, A2 Gothard, A3, A9, A13…)</td>
+                </tr>
+                <tr>
+                  <td>🇸🇮 <strong>Slovénie</strong></td>
+                  <td><strong>30</strong></td>
+                  <td>Avtoceste DARS (A1 Štajerska-Primorska, A2 Karavanke-Obrežje, A5…)</td>
+                </tr>
+                <tr>
+                  <td>🇱🇺 <strong>Luxembourg</strong></td>
+                  <td><strong>8</strong></td>
+                  <td>Aires autoroutières Berchem, Aire de Capellen, Wasserbillig (A1, A3, A6, A7…)</td>
                 </tr>
               </tbody>
             </table>
           </div>
+          <div class="callout">
+            <p>🌐 <strong>Couloir européen universel (v9.9.30) :</strong> En plus des 8 443 stations intégrées, FuelCoPilot interroge dynamiquement les API officielles en direct (France Bercy/2aaz, Allemagne Tankerkönig, Autriche E-Control) et le complément cartographique européen pour couvrir aussi les stations de sortie (< 1,5 km) sur tous vos trajets.</p>
+          </div>
+
 
           <h2>🔄 4. Fréquence et Sources officielles d'actualisation des prix</h2>
           <p>Pour vous garantir des informations fiables, FuelCoPilot utilise un robot automatisé relié aux flux ministériels et sources officielles de chaque pays :</p>
@@ -587,8 +697,8 @@
                 </tr>
                 <tr>
                   <td>🇩🇪 <strong>Allemagne</strong></td>
-                  <td><span class="status-badge status-ref">Prix de référence autoroutiers</span></td>
-                  <td>Barèmes autoroutiers indicatifs (MTS-K / Bundeskartellamt)</td>
+                  <td><span class="status-badge status-live">Temps réel (API Live)</span></td>
+                  <td>Flux officiel MTS-K / Tankerkönig en direct (<em>creativecommons.tankerkoenig.de</em>)</td>
                 </tr>
                 <tr>
                   <td>🇧🇪 <strong>Belgique</strong></td>
@@ -610,13 +720,23 @@
                   <td><span class="status-badge status-ref">Prix de référence autoroutiers</span></td>
                   <td>Barèmes autoroutiers néerlandais (Brandstofprijzen Rijkswaterstaat)</td>
                 </tr>
+                <tr>
+                  <td>🇦🇹 <strong>Autriche</strong></td>
+                  <td><span class="status-badge status-live">Temps réel (API Live)</span></td>
+                  <td>Régulateur officiel E-Control Spritpreisrechner (<em>api.e-control.at</em>)</td>
+                </tr>
+                <tr>
+                  <td>🇨🇭 🇱🇺 🇸🇮 🇭🇷 <strong>Suisse, Luxembourg, Slovénie, Croatie</strong></td>
+                  <td><span class="status-badge status-ref">Prix officiels & barèmes nationaux</span></td>
+                  <td>Tarifs réglementés / barèmes nationaux actualisés + couverture dynamique du couloir</td>
+                </tr>
               </tbody>
             </table>
           </div>
           <p style="font-size:0.86rem; color:#94a3b8;"><em>Note : Sur autoroute, les compagnies pétrolières révisent leurs tarifs une fois par jour au petit matin. L'actualisation de 06h00 capture immédiatement ces nouveaux barèmes quotidiens avant vos départs.</em></p>
 
           <h2>🌐 5. Langues disponibles et Détection automatique</h2>
-          <p>FuelCoPilot est intégralement traduit et utilisable en <strong>7 langues</strong> :</p>
+          <p>FuelCoPilot est intégralement traduit et utilisable en <strong>9 langues</strong> :</p>
           <ul>
             <li>🇫🇷 <strong>Français</strong> (Langue par défaut)</li>
             <li>🇩🇪 <strong>Deutsch</strong> (Allemand)</li>
@@ -624,6 +744,8 @@
             <li>🇮🇹 <strong>Italiano</strong> (Italien)</li>
             <li>🇪🇸 <strong>Español</strong> (Espagnol)</li>
             <li>🇵🇹 <strong>Português</strong> (Portugais)</li>
+            <li>🇸🇮 <strong>Slovenščina</strong> (Slovène)</li>
+            <li>🇭🇷 <strong>Hrvatski</strong> (Croate)</li>
             <li>🇬🇧 <strong>English</strong> (Anglais)</li>
           </ul>
           <p>L'application détecte automatiquement votre langue dès l'ouverture selon votre position géographique. Vous pouvez également changer instantanément de langue d'un simple clic sur les drapeaux situés sous le logo en haut de l'écran.</p>
@@ -639,11 +761,11 @@
       de: {
         docTitle: "Bedienungsanleitung & Leitfaden • FuelCoPilot",
         headerTitle: "FuelCo<span>Pilot</span> • Bedienungsanleitung",
-        badgeVersion: "Offizieller Benutzerleitfaden • v9.9 (November 2026)",
+        badgeVersion: "Offizieller Benutzerleitfaden • v9.9.30 (November 2026)",
         backBtn: "Zurück zur Anwendung",
         privacyLink: "Datenschutzerklärung",
         html: `
-          <h2>✨ Neu in v9.9.29 — Sprachwarnungen & Schnelle Neuberechnung</h2>
+          <h2>✨ Neu in v9.9.30 — Sprachwarnungen & Schnelle Neuberechnung</h2>
           <div class="features-grid">
             <div class="feature-card">
               <span class="feature-icon">🔔</span>
@@ -670,6 +792,23 @@
           <h2>🎯 1. Was ist FuelCoPilot?</h2>
           <p><strong>FuelCoPilot</strong> ist Ihr intelligenter Autobahn-Copilot, der Ihnen hilft, auf langen Reisen durch Europa bares Geld zu sparen. Da die Kraftstoffpreise an Autobahnen von Raststätte zu Raststätte um mehr als <strong>0,20 € bis 0,35 € pro Liter</strong> variieren können, hilft Ihnen FuelCoPilot, Tankstopps vorausschauend und transparent zu planen.</p>
 
+          <h2>📸 Einblick in die Benutzeroberfläche</h2>
+          <div class="screenshots-gallery">
+            <div class="screenshot-card">
+              <img src="guide_img_search.png" alt="1. Routenwahl & Filter">
+              <p class="screenshot-caption"><strong>1. Routenwahl & Filter</strong>Adress-/POI-Suche, Mein Standort, 52 Referenzkorridore (13 Länder), Marken- und Kraftstofffilter.</p>
+            </div>
+            <div class="screenshot-card">
+              <img src="guide_img_map.png" alt="2. Interaktive Karte & 13 Länder">
+              <p class="screenshot-caption"><strong>2. Interaktive Karte & 13 Länder</strong>Live-Preise entlang Ihrer Route in 13 europäischen Ländern, GPS-Position und Schnellzentrierung.</p>
+            </div>
+            <div class="screenshot-card">
+              <img src="guide_img_list.png" alt="3. Chronologische Liste & 2-km-Alarm">
+              <p class="screenshot-caption"><strong>3. Chronologische Liste & 2-km-Alarm</strong>Raststätten in Fahrtrichtung, lokales Wetter, 1-Klick-Navigation (Waze/Maps) und 2-km-Sprachwarnung.</p>
+            </div>
+          </div>
+
+
           <h2>🚀 2. Wichtigste Funktionen</h2>
           <div class="features-grid">
             <div class="feature-card">
@@ -693,23 +832,90 @@
               <p class="feature-desc">Standortanzeige auf der Karte. Passierte Tankstellen werden automatisch ausgeblendet, damit Sie nur bevorstehende Raststätten sehen.</p>
             </div>
           </div>
-
-          <h2>🌍 3. Abgedeckte Länder (2.657 Raststätten)</h2>
+          <h2>🌍 3. Alle 13 abgedeckten europäischen Länder (8.443 Stationen + Live)</h2>
+          <p>FuelCoPilot deckt <strong>13 europäische Länder</strong> ab (<strong>8.443 integrierte Stationen</strong> + dynamische Live-Abfrage entlang Ihrer Route):</p>
           <div class="table-container">
             <table>
-              <thead><tr><th>Land</th><th>Raststätten</th><th>Netz</th></tr></thead>
+              <thead>
+                <tr>
+                  <th>Land</th>
+                  <th>Stationen</th>
+                  <th>Autobahnnetze & Live-Abdeckung</th>
+                </tr>
+              </thead>
               <tbody>
-                <tr><td>🇫🇷 <strong>Frankreich</strong></td><td>437 Raststätten</td><td>A1 bis A89 (APRR, Vinci, Sanef...)</td></tr>
-                <tr><td>🇪🇸 <strong>Spanien</strong></td><td>833 Raststätten</td><td>Autovías & Autopistas (A-1 bis AP-7...)</td></tr>
-                <tr><td>🇮🇹 <strong>Italien</strong></td><td>615 Raststätten</td><td>Autostrade (A1, A4, A14, A22...)</td></tr>
-                <tr><td>🇩🇪 <strong>Deutschland</strong></td><td>218 Raststätten</td><td>Offizielle Autobahn-Raststätten (A1, A3, A7, A8...)</td></tr>
-                <tr><td>🇬🇧 <strong>Großbritannien</strong></td><td>158 Raststätten</td><td>Motorway Service Areas (M1, M4, M6...)</td></tr>
-                <tr><td>🇧🇪 <strong>Belgien</strong></td><td>76 Raststätten</td><td>E19, E40, E411...</td></tr>
-                <tr><td>🇵🇹 <strong>Portugal</strong></td><td>65 Raststätten</td><td>Rede de Autoestradas Brisa & Ascendi (A1, A2...)</td></tr>
-                <tr><td>🇳🇱 <strong>Niederlande</strong></td><td>57 Raststätten</td><td>Rijkswaterstaat Verzorgingsplaatsen (A1, A2, A4...)</td></tr>
+                <tr>
+                  <td>🇪🇸 <strong>Spanien</strong></td>
+                  <td><strong>4 740</strong></td>
+                  <td>Autovías & Autopistas (A-1 à A-8, AP-7, A-31, AP-68…) + réseau routier MITECO</td>
+                </tr>
+                <tr>
+                  <td>🇮🇹 <strong>Italien</strong></td>
+                  <td><strong>2 236</strong></td>
+                  <td>Autostrade (A1, A4, A14, A22…) + réseau national MIMIT</td>
+                </tr>
+                <tr>
+                  <td>🇫🇷 <strong>Frankreich</strong></td>
+                  <td><strong>635 + live</strong></td>
+                  <td>A1 à A89 (Vinci, APRR, Sanef, AREA…) + toutes les stations routières en direct (Bercy / 2aaz)</td>
+                </tr>
+                <tr>
+                  <td>🇩🇪 <strong>Deutschland</strong></td>
+                  <td><strong>257 + live</strong></td>
+                  <td>Autobahn-Raststätten (A1, A3, A5, A7, A8, A9…) + prix live Tankerkönig / MTS-K</td>
+                </tr>
+                <tr>
+                  <td>🇬🇧 <strong>Vereinigtes Königreich</strong></td>
+                  <td><strong>158</strong></td>
+                  <td>Motorway Service Areas MSAs (M1, M4, M5, M6, M20, M25, M40…)</td>
+                </tr>
+                <tr>
+                  <td>🇳🇱 <strong>Niederlande</strong></td>
+                  <td><strong>93</strong></td>
+                  <td>Rijkswaterstaat Verzorgingsplaatsen (A1, A2, A4, A12, A16, A27…)</td>
+                </tr>
+                <tr>
+                  <td>🇧🇪 <strong>Belgien</strong></td>
+                  <td><strong>80</strong></td>
+                  <td>Autoroutes E19, E40, E411, E42, E25, E17…</td>
+                </tr>
+                <tr>
+                  <td>🇵🇹 <strong>Portugal</strong></td>
+                  <td><strong>70</strong></td>
+                  <td>Autoestradas Brisa & Ascendi (A1, A2, A3, A6, A22, A25…)</td>
+                </tr>
+                <tr>
+                  <td>🇦🇹 <strong>Österreich</strong></td>
+                  <td><strong>56 + live</strong></td>
+                  <td>ASFINAG Autobahnen (A1, A2, A9, A10, A12, A13…) + stations en direct E-Control</td>
+                </tr>
+                <tr>
+                  <td>🇭🇷 <strong>Kroatien</strong></td>
+                  <td><strong>44</strong></td>
+                  <td>Autoceste HAC / Bina-Istra (A1 Dalmatina, A3, A4, A6, A8…)</td>
+                </tr>
+                <tr>
+                  <td>🇨🇭 <strong>Schweiz</strong></td>
+                  <td><strong>36</strong></td>
+                  <td>Autoroutes nationales (A1, A2 Gothard, A3, A9, A13…)</td>
+                </tr>
+                <tr>
+                  <td>🇸🇮 <strong>Slowenien</strong></td>
+                  <td><strong>30</strong></td>
+                  <td>Avtoceste DARS (A1 Štajerska-Primorska, A2 Karavanke-Obrežje, A5…)</td>
+                </tr>
+                <tr>
+                  <td>🇱🇺 <strong>Luxemburg</strong></td>
+                  <td><strong>8</strong></td>
+                  <td>Aires autoroutières Berchem, Aire de Capellen, Wasserbillig (A1, A3, A6, A7…)</td>
+                </tr>
               </tbody>
             </table>
           </div>
+          <div class="callout">
+            <p>🌐 <strong>Universeller Europa-Korridor (v9.9.30):</strong> Zusätzlich zu den 8.443 Stationen lädt FuelCoPilot Live-Daten (Frankreich, Deutschland Tankerkönig, Österreich E-Control) und ergänzt Ausfahrt-Tankstellen (< 1,5 km) entlang der gesamten Route.</p>
+          </div>
+
 
           <h2>🔄 4. Preisaktualisierungs-Frequenz</h2>
           <ul>
@@ -730,11 +936,11 @@
       it: {
         docTitle: "Guida all'uso • FuelCoPilot",
         headerTitle: "FuelCo<span>Pilot</span> • Guida all'uso",
-        badgeVersion: "Guida ufficiale • v9.9.29 (Novembre 2026)",
+        badgeVersion: "Guida ufficiale • v9.9.30 (Novembre 2026)",
         backBtn: "Torna all'applicazione",
         privacyLink: "Informativa sulla Privacy",
         html: `
-          <h2>✨ Novità v9.9.29 — Avvisi Vocali & Ricalcolo Rapido</h2>
+          <h2>✨ Novità v9.9.30 — Avvisi Vocali & Ricalcolo Rapido</h2>
           <div class="features-grid">
             <div class="feature-card">
               <span class="feature-icon">🔔</span>
@@ -761,6 +967,23 @@
           <h2>🎯 1. Cos'è FuelCoPilot?</h2>
           <p><strong>FuelCoPilot</strong> è il tuo copilota autostradale intelligente, progettato per farti risparmiare sui lunghi viaggi in Europa. Poiché i prezzi del carburante in autostrada possono variare di oltre <strong>0,20 € - 0,35 € al litro</strong> da un'area di servizio all'altra, FuelCoPilot ti permette di pianificare i tuoi rifornimenti in totale serenità.</p>
 
+          <h2>📸 Anteprima dell'interfaccia</h2>
+          <div class="screenshots-gallery">
+            <div class="screenshot-card">
+              <img src="guide_img_search.png" alt="1. Scelta del percorso e filtri">
+              <p class="screenshot-caption"><strong>1. Scelta del percorso e filtri</strong>Ricerca indirizzi/POI, La mia posizione, 52 corridoi di riferimento (13 paesi), filtri marchio e carburante.</p>
+            </div>
+            <div class="screenshot-card">
+              <img src="guide_img_map.png" alt="2. Mappa interattiva e 13 paesi">
+              <p class="screenshot-caption"><strong>2. Mappa interattiva e 13 paesi</strong>Prezzi in diretta lungo il percorso in 13 paesi europei, tracciamento GPS e centraggio rapido.</p>
+            </div>
+            <div class="screenshot-card">
+              <img src="guide_img_list.png" alt="3. Lista cronologica e avvisi 2 km">
+              <p class="screenshot-caption"><strong>3. Lista cronologica e avvisi 2 km</strong>Stazioni in ordine di percorrenza, meteo locale, guida Waze/Maps in 1 clic e avviso vocale a 2 km.</p>
+            </div>
+          </div>
+
+
           <h2>🚀 2. Funzionalità principali</h2>
           <div class="features-grid">
             <div class="feature-card">
@@ -784,23 +1007,90 @@
               <p class="feature-desc">Posizione in diretta sulla mappa. Le stazioni già superate scompaiono automaticamente dall'elenco.</p>
             </div>
           </div>
-
-          <h2>🌍 3. Paesi coperti (2.657 aree di servizio)</h2>
+          <h2>🌍 3. Tutti i 13 Paesi europei coperti (8.443 stazioni + live)</h2>
+          <p>FuelCoPilot copre <strong>13 paesi europei</strong> (<strong>8.443 stazioni integrate</strong> + caricamento dinamico in tempo reale lungo il percorso):</p>
           <div class="table-container">
             <table>
-              <thead><tr><th>Paese</th><th>Aree</th><th>Rete</th></tr></thead>
+              <thead>
+                <tr>
+                  <th>Paese</th>
+                  <th>Stazioni</th>
+                  <th>Reti autostradali e copertura dinamica</th>
+                </tr>
+              </thead>
               <tbody>
-                <tr><td>🇫🇷 <strong>Francia</strong></td><td>437 aree</td><td>A1 - A89 (APRR, Vinci, Sanef...)</td></tr>
-                <tr><td>🇪🇸 <strong>Spagna</strong></td><td>833 aree</td><td>Autovías & Autopistas (A-1 - AP-7...)</td></tr>
-                <tr><td>🇮🇹 <strong>Italia</strong></td><td>615 aree</td><td>Autostrade (A1 Milano-Napoli, A4, A14, A22...)</td></tr>
-                <tr><td>🇩🇪 <strong>Germania</strong></td><td>218 aree</td><td>Autobahn-Raststätten ufficiali (A1, A3, A7, A8...)</td></tr>
-                <tr><td>🇬🇧 <strong>Regno Unito</strong></td><td>158 aree</td><td>Motorway Service Areas (M1, M4, M6...)</td></tr>
-                <tr><td>🇧🇪 <strong>Belgio</strong></td><td>76 aree</td><td>E19, E40, E411...</td></tr>
-                <tr><td>🇵🇹 <strong>Portogallo</strong></td><td>65 aree</td><td>Rede de Autoestradas Brisa & Ascendi (A1, A2...)</td></tr>
-                <tr><td>🇳🇱 <strong>Paesi Bassi</strong></td><td>57 aree</td><td>Rijkswaterstaat Verzorgingsplaatsen (A1, A2...)</td></tr>
+                <tr>
+                  <td>🇪🇸 <strong>Spagna</strong></td>
+                  <td><strong>4 740</strong></td>
+                  <td>Autovías & Autopistas (A-1 à A-8, AP-7, A-31, AP-68…) + réseau routier MITECO</td>
+                </tr>
+                <tr>
+                  <td>🇮🇹 <strong>Italia</strong></td>
+                  <td><strong>2 236</strong></td>
+                  <td>Autostrade (A1, A4, A14, A22…) + réseau national MIMIT</td>
+                </tr>
+                <tr>
+                  <td>🇫🇷 <strong>Francia</strong></td>
+                  <td><strong>635 + live</strong></td>
+                  <td>A1 à A89 (Vinci, APRR, Sanef, AREA…) + toutes les stations routières en direct (Bercy / 2aaz)</td>
+                </tr>
+                <tr>
+                  <td>🇩🇪 <strong>Germania</strong></td>
+                  <td><strong>257 + live</strong></td>
+                  <td>Autobahn-Raststätten (A1, A3, A5, A7, A8, A9…) + prix live Tankerkönig / MTS-K</td>
+                </tr>
+                <tr>
+                  <td>🇬🇧 <strong>Regno Unito</strong></td>
+                  <td><strong>158</strong></td>
+                  <td>Motorway Service Areas MSAs (M1, M4, M5, M6, M20, M25, M40…)</td>
+                </tr>
+                <tr>
+                  <td>🇳🇱 <strong>Paesi Bassi</strong></td>
+                  <td><strong>93</strong></td>
+                  <td>Rijkswaterstaat Verzorgingsplaatsen (A1, A2, A4, A12, A16, A27…)</td>
+                </tr>
+                <tr>
+                  <td>🇧🇪 <strong>Belgio</strong></td>
+                  <td><strong>80</strong></td>
+                  <td>Autoroutes E19, E40, E411, E42, E25, E17…</td>
+                </tr>
+                <tr>
+                  <td>🇵🇹 <strong>Portogallo</strong></td>
+                  <td><strong>70</strong></td>
+                  <td>Autoestradas Brisa & Ascendi (A1, A2, A3, A6, A22, A25…)</td>
+                </tr>
+                <tr>
+                  <td>🇦🇹 <strong>Austria</strong></td>
+                  <td><strong>56 + live</strong></td>
+                  <td>ASFINAG Autobahnen (A1, A2, A9, A10, A12, A13…) + stations en direct E-Control</td>
+                </tr>
+                <tr>
+                  <td>🇭🇷 <strong>Croazia</strong></td>
+                  <td><strong>44</strong></td>
+                  <td>Autoceste HAC / Bina-Istra (A1 Dalmatina, A3, A4, A6, A8…)</td>
+                </tr>
+                <tr>
+                  <td>🇨🇭 <strong>Svizzera</strong></td>
+                  <td><strong>36</strong></td>
+                  <td>Autoroutes nationales (A1, A2 Gothard, A3, A9, A13…)</td>
+                </tr>
+                <tr>
+                  <td>🇸🇮 <strong>Slovenia</strong></td>
+                  <td><strong>30</strong></td>
+                  <td>Avtoceste DARS (A1 Štajerska-Primorska, A2 Karavanke-Obrežje, A5…)</td>
+                </tr>
+                <tr>
+                  <td>🇱🇺 <strong>Lussemburgo</strong></td>
+                  <td><strong>8</strong></td>
+                  <td>Aires autoroutières Berchem, Aire de Capellen, Wasserbillig (A1, A3, A6, A7…)</td>
+                </tr>
               </tbody>
             </table>
           </div>
+          <div class="callout">
+            <p>🌐 <strong>Corridoio europeo universale (v9.9.30):</strong> Oltre alle 8.443 stazioni integrate, FuelCoPilot interroga le API live (Francia, Germania Tankerkönig, Austria E-Control) e completa le stazioni vicine alle uscite (< 1,5 km).</p>
+          </div>
+
 
           <h2>🔄 4. Frequenza di aggiornamento prezzi</h2>
           <ul>
@@ -821,11 +1111,11 @@
       es: {
         docTitle: "Guía de uso • FuelCoPilot",
         headerTitle: "FuelCo<span>Pilot</span> • Guía de uso",
-        badgeVersion: "Guía oficial de usuario • v9.9 (Noviembre 2026)",
+        badgeVersion: "Guía oficial de usuario • v9.9.30 (Noviembre 2026)",
         backBtn: "Volver a la aplicación",
         privacyLink: "Política de Privacidad",
         html: `
-          <h2>✨ Novedades v9.9.29 — Alertas Vocales y Recálculo Rápido</h2>
+          <h2>✨ Novedades v9.9.30 — Alertas Vocales y Recálculo Rápido</h2>
           <div class="features-grid">
             <div class="feature-card">
               <span class="feature-icon">🔔</span>
@@ -852,6 +1142,23 @@
           <h2>🎯 1. ¿Qué es FuelCoPilot?</h2>
           <p><strong>FuelCoPilot</strong> es tu copiloto inteligente de autopista, diseñado para ayudarte a ahorrar en tus viajes largos por Europa. Dado que los precios del combustible en autopista pueden variar en más de <strong>0,20 € a 0,35 € por litro</strong> de un área de servicio a otra, FuelCoPilot te permite anticipar tus paradas con total tranquilidad.</p>
 
+          <h2>📸 Vista previa de la interfaz</h2>
+          <div class="screenshots-gallery">
+            <div class="screenshot-card">
+              <img src="guide_img_search.png" alt="1. Elección de ruta y filtros">
+              <p class="screenshot-caption"><strong>1. Elección de ruta y filtros</strong>Búsqueda de direcciones/POI, Mi ubicación actual, 52 corredores de referencia (13 países), filtros.</p>
+            </div>
+            <div class="screenshot-card">
+              <img src="guide_img_map.png" alt="2. Mapa interactivo y 13 países">
+              <p class="screenshot-caption"><strong>2. Mapa interactivo y 13 países</strong>Precios en directo en tu trayecto por 13 países europeos, seguimiento GPS y recentrado rápido.</p>
+            </div>
+            <div class="screenshot-card">
+              <img src="guide_img_list.png" alt="3. Lista cronológica y alertas 2 km">
+              <p class="screenshot-caption"><strong>3. Lista cronológica y alertas 2 km</strong>Estaciones en orden de marcha, clima local, navegación Waze/Maps en 1 clic y alerta vocal a 2 km.</p>
+            </div>
+          </div>
+
+
           <h2>🚀 2. Características principales</h2>
           <div class="features-grid">
             <div class="feature-card">
@@ -875,23 +1182,90 @@
               <p class="feature-desc">Ubicación en el mapa en tiempo real. Las estaciones que vas dejando atrás se ocultan automáticamente de la lista.</p>
             </div>
           </div>
-
-          <h2>🌍 3. Países cubiertos (2.657 áreas de servicio)</h2>
+          <h2>🌍 3. Los 13 países europeos cubiertos (8.443 estaciones + directo)</h2>
+          <p>FuelCoPilot cubre <strong>13 países europeos</strong> (<strong>8.443 estaciones integradas</strong> + carga dinámica en tiempo real en toda tu ruta):</p>
           <div class="table-container">
             <table>
-              <thead><tr><th>País</th><th>Áreas</th><th>Red de autopistas</th></tr></thead>
+              <thead>
+                <tr>
+                  <th>País</th>
+                  <th>Estaciones</th>
+                  <th>Redes de autopistas y cobertura dinámica</th>
+                </tr>
+              </thead>
               <tbody>
-                <tr><td>🇫🇷 <strong>Francia</strong></td><td>437 áreas</td><td>A1 a A89 (APRR, Vinci, Sanef...)</td></tr>
-                <tr><td>🇪🇸 <strong>España</strong></td><td>833 áreas</td><td>Autovías y Autopistas (A-1 a A-8, AP-7, A-31...)</td></tr>
-                <tr><td>🇮🇹 <strong>Italia</strong></td><td>615 áreas</td><td>Autostrade (A1, A4, A14, A22...)</td></tr>
-                <tr><td>🇩🇪 <strong>Alemania</strong></td><td>218 áreas</td><td>Autobahn-Raststätten oficiales (A1, A3, A7, A8...)</td></tr>
-                <tr><td>🇬🇧 <strong>Reino Unido</strong></td><td>158 áreas</td><td>Motorway Service Areas (M1, M4, M6...)</td></tr>
-                <tr><td>🇧🇪 <strong>Bélgica</strong></td><td>76 áreas</td><td>E19, E40, E411...</td></tr>
-                <tr><td>🇵🇹 <strong>Portugal</strong></td><td>65 áreas</td><td>Rede de Autoestradas Brisa & Ascendi (A1, A2...)</td></tr>
-                <tr><td>🇳🇱 <strong>Países Bajos</strong></td><td>57 áreas</td><td>Rijkswaterstaat Verzorgingsplaatsen (A1, A2...)</td></tr>
+                <tr>
+                  <td>🇪🇸 <strong>España</strong></td>
+                  <td><strong>4 740</strong></td>
+                  <td>Autovías & Autopistas (A-1 à A-8, AP-7, A-31, AP-68…) + réseau routier MITECO</td>
+                </tr>
+                <tr>
+                  <td>🇮🇹 <strong>Italia</strong></td>
+                  <td><strong>2 236</strong></td>
+                  <td>Autostrade (A1, A4, A14, A22…) + réseau national MIMIT</td>
+                </tr>
+                <tr>
+                  <td>🇫🇷 <strong>Francia</strong></td>
+                  <td><strong>635 + live</strong></td>
+                  <td>A1 à A89 (Vinci, APRR, Sanef, AREA…) + toutes les stations routières en direct (Bercy / 2aaz)</td>
+                </tr>
+                <tr>
+                  <td>🇩🇪 <strong>Alemania</strong></td>
+                  <td><strong>257 + live</strong></td>
+                  <td>Autobahn-Raststätten (A1, A3, A5, A7, A8, A9…) + prix live Tankerkönig / MTS-K</td>
+                </tr>
+                <tr>
+                  <td>🇬🇧 <strong>Reino Unido</strong></td>
+                  <td><strong>158</strong></td>
+                  <td>Motorway Service Areas MSAs (M1, M4, M5, M6, M20, M25, M40…)</td>
+                </tr>
+                <tr>
+                  <td>🇳🇱 <strong>Países Bajos</strong></td>
+                  <td><strong>93</strong></td>
+                  <td>Rijkswaterstaat Verzorgingsplaatsen (A1, A2, A4, A12, A16, A27…)</td>
+                </tr>
+                <tr>
+                  <td>🇧🇪 <strong>Bélgica</strong></td>
+                  <td><strong>80</strong></td>
+                  <td>Autoroutes E19, E40, E411, E42, E25, E17…</td>
+                </tr>
+                <tr>
+                  <td>🇵🇹 <strong>Portugal</strong></td>
+                  <td><strong>70</strong></td>
+                  <td>Autoestradas Brisa & Ascendi (A1, A2, A3, A6, A22, A25…)</td>
+                </tr>
+                <tr>
+                  <td>🇦🇹 <strong>Austria</strong></td>
+                  <td><strong>56 + live</strong></td>
+                  <td>ASFINAG Autobahnen (A1, A2, A9, A10, A12, A13…) + stations en direct E-Control</td>
+                </tr>
+                <tr>
+                  <td>🇭🇷 <strong>Croacia</strong></td>
+                  <td><strong>44</strong></td>
+                  <td>Autoceste HAC / Bina-Istra (A1 Dalmatina, A3, A4, A6, A8…)</td>
+                </tr>
+                <tr>
+                  <td>🇨🇭 <strong>Suiza</strong></td>
+                  <td><strong>36</strong></td>
+                  <td>Autoroutes nationales (A1, A2 Gothard, A3, A9, A13…)</td>
+                </tr>
+                <tr>
+                  <td>🇸🇮 <strong>Eslovenia</strong></td>
+                  <td><strong>30</strong></td>
+                  <td>Avtoceste DARS (A1 Štajerska-Primorska, A2 Karavanke-Obrežje, A5…)</td>
+                </tr>
+                <tr>
+                  <td>🇱🇺 <strong>Luxemburgo</strong></td>
+                  <td><strong>8</strong></td>
+                  <td>Aires autoroutières Berchem, Aire de Capellen, Wasserbillig (A1, A3, A6, A7…)</td>
+                </tr>
               </tbody>
             </table>
           </div>
+          <div class="callout">
+            <p>🌐 <strong>Corredor europeo universal (v9.9.30):</strong> Además de las 8.443 estaciones integradas, FuelCoPilot consulta APIs en directo (Francia, Alemania Tankerkönig, Austria E-Control) y completa estaciones de salida (< 1,5 km).</p>
+          </div>
+
 
           <h2>🔄 4. Frecuencia de actualización de precios</h2>
           <ul>
@@ -912,11 +1286,11 @@
       sl: {
       docTitle: "Navodila za uporabo & Vodnik • FuelCoPilot",
       headerTitle: "FuelCo<span>Pilot</span> • Navodila za uporabo",
-      badgeVersion: "Uradni vodnik za uporabo • v9.9.29 (November 2026)",
+      badgeVersion: "Uradni vodnik za uporabo • v9.9.30 (November 2026)",
       backBtn: "Nazaj v aplikacijo",
       privacyLink: "Pravilnik o zasebnosti",
       html: `
-          <h2>✨ Novosti v9.9.29 — Glasovna opozorila & Hiter preračun</h2>
+          <h2>✨ Novosti v9.9.30 — Glasovna opozorila & Hiter preračun</h2>
           <div class="features-grid">
             <div class="feature-card">
               <span class="feature-icon">🔔</span>
@@ -946,6 +1320,23 @@
           <p>💡 <strong>Ali ste vedeli?</strong> Pri 50-litrskem rezervoarju lahko z izbiro pravega servisa na avtocesti prihranite med <strong>10 € in 18 €</strong> na posamezni poti!</p>
         </div>
 
+          <h2>📸 Predogled vmesnika</h2>
+          <div class="screenshots-gallery">
+            <div class="screenshot-card">
+              <img src="guide_img_search.png" alt="1. Izbira poti in filtri">
+              <p class="screenshot-caption"><strong>1. Izbira poti in filtri</strong>Iskanje naslovov/POI, Moja lokacija, 52 referenčnih koridorjev (13 držav), filtri znamk in goriv.</p>
+            </div>
+            <div class="screenshot-card">
+              <img src="guide_img_map.png" alt="2. Interaktivni zemljevid in 13 držav">
+              <p class="screenshot-caption"><strong>2. Interaktivni zemljevid in 13 držav</strong>Cene v živo ob vaši poti v 13 evropskih državah, sledenje GPS in hitro centriranje.</p>
+            </div>
+            <div class="screenshot-card">
+              <img src="guide_img_list.png" alt="3. Kronološki seznam in opozorila 2 km">
+              <p class="screenshot-caption"><strong>3. Kronološki seznam in opozorila 2 km</strong>Postaje po vrstnem redu vožnje, lokalno vreme, navigacija Waze/Maps in glasovno opozorilo 2 km.</p>
+            </div>
+          </div>
+
+
         <h2>🚀 2. Glavne funkcije in uporaba po korakih</h2>
         <div class="features-grid">
           <div class="feature-card">
@@ -969,20 +1360,100 @@
             <p class="feature-desc">Z enim klikom odprite katero koli postajo neposredno v navigacijskih aplikacijah <strong>Waze</strong> ali <strong>Google Maps</strong>.</p>
           </div>
         </div>
+          <h2>🌍 3. Vseh 13 pokritih evropskih držav (8.443 postaj + v živo)</h2>
+          <p>FuelCoPilot pokriva <strong>13 evropskih držav</strong> (<strong>8.443 vgrajenih postaj</strong> + dinamično nalaganje v živo ob vaši poti):</p>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Država</th>
+                  <th>Postaje</th>
+                  <th>Avtocestna omrežja in pokritost v živo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>🇪🇸 <strong>Španija</strong></td>
+                  <td><strong>4 740</strong></td>
+                  <td>Autovías & Autopistas (A-1 à A-8, AP-7, A-31, AP-68…) + réseau routier MITECO</td>
+                </tr>
+                <tr>
+                  <td>🇮🇹 <strong>Italija</strong></td>
+                  <td><strong>2 236</strong></td>
+                  <td>Autostrade (A1, A4, A14, A22…) + réseau national MIMIT</td>
+                </tr>
+                <tr>
+                  <td>🇫🇷 <strong>Francija</strong></td>
+                  <td><strong>635 + live</strong></td>
+                  <td>A1 à A89 (Vinci, APRR, Sanef, AREA…) + toutes les stations routières en direct (Bercy / 2aaz)</td>
+                </tr>
+                <tr>
+                  <td>🇩🇪 <strong>Nemčija</strong></td>
+                  <td><strong>257 + live</strong></td>
+                  <td>Autobahn-Raststätten (A1, A3, A5, A7, A8, A9…) + prix live Tankerkönig / MTS-K</td>
+                </tr>
+                <tr>
+                  <td>🇬🇧 <strong>Združeno kraljestvo</strong></td>
+                  <td><strong>158</strong></td>
+                  <td>Motorway Service Areas MSAs (M1, M4, M5, M6, M20, M25, M40…)</td>
+                </tr>
+                <tr>
+                  <td>🇳🇱 <strong>Nizozemska</strong></td>
+                  <td><strong>93</strong></td>
+                  <td>Rijkswaterstaat Verzorgingsplaatsen (A1, A2, A4, A12, A16, A27…)</td>
+                </tr>
+                <tr>
+                  <td>🇧🇪 <strong>Belgija</strong></td>
+                  <td><strong>80</strong></td>
+                  <td>Autoroutes E19, E40, E411, E42, E25, E17…</td>
+                </tr>
+                <tr>
+                  <td>🇵🇹 <strong>Portugalska</strong></td>
+                  <td><strong>70</strong></td>
+                  <td>Autoestradas Brisa & Ascendi (A1, A2, A3, A6, A22, A25…)</td>
+                </tr>
+                <tr>
+                  <td>🇦🇹 <strong>Avstrija</strong></td>
+                  <td><strong>56 + live</strong></td>
+                  <td>ASFINAG Autobahnen (A1, A2, A9, A10, A12, A13…) + stations en direct E-Control</td>
+                </tr>
+                <tr>
+                  <td>🇭🇷 <strong>Hrvaška</strong></td>
+                  <td><strong>44</strong></td>
+                  <td>Autoceste HAC / Bina-Istra (A1 Dalmatina, A3, A4, A6, A8…)</td>
+                </tr>
+                <tr>
+                  <td>🇨🇭 <strong>Švica</strong></td>
+                  <td><strong>36</strong></td>
+                  <td>Autoroutes nationales (A1, A2 Gothard, A3, A9, A13…)</td>
+                </tr>
+                <tr>
+                  <td>🇸🇮 <strong>Slovenija</strong></td>
+                  <td><strong>30</strong></td>
+                  <td>Avtoceste DARS (A1 Štajerska-Primorska, A2 Karavanke-Obrežje, A5…)</td>
+                </tr>
+                <tr>
+                  <td>🇱🇺 <strong>Luksemburg</strong></td>
+                  <td><strong>8</strong></td>
+                  <td>Aires autoroutières Berchem, Aire de Capellen, Wasserbillig (A1, A3, A6, A7…)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout">
+            <p>🌐 <strong>Univerzalni evropski koridor (v9.9.30):</strong> Poleg 8.443 postaj FuelCoPilot dinamično dopolnjuje podatke v živo (Francija, Nemčija Tankerkönig, Avstrija E-Control) in postaje ob izvozih (< 1,5 km).</p>
+          </div>
 
-        <h2>🌍 3. Pokrite države v Evropi (13 držav)</h2>
-        <p>FuelCoPilot pokriva avtocestna omrežja v <strong>13 evropskih državah</strong>:</p>
-        <p style="margin-top:8px;">🇫🇷 Francija • 🇩🇪 Nemčija • 🇧🇪 Belgija • 🇳🇱 Nizozemska • 🇮🇹 Italija • 🇪🇸 Španija • 🇵🇹 Portugalska • 🇬🇧 Združeno kraljestvo • 🇱🇺 Luksemburg • 🇦🇹 Avstrija • 🇨🇭 Švica • 🇸🇮 Slovenija • 🇭🇷 Hrvaška.</p>
       `
     },
     hr: {
       docTitle: "Upute za uporabu & Vodič • FuelCoPilot",
       headerTitle: "FuelCo<span>Pilot</span> • Upute za uporabu",
-      badgeVersion: "Službeni vodič za uporabu • v9.9.29 (Studeni 2026)",
+      badgeVersion: "Službeni vodič za uporabu • v9.9.30 (Studeni 2026)",
       backBtn: "Povratak na aplikaciju",
       privacyLink: "Politika privatnosti",
       html: `
-          <h2>✨ Novosti v9.9.29 — Glasovna upozorenja i Brzi preračun</h2>
+          <h2>✨ Novosti v9.9.30 — Glasovna upozorenja i Brzi preračun</h2>
           <div class="features-grid">
             <div class="feature-card">
               <span class="feature-icon">🔔</span>
@@ -1012,6 +1483,23 @@
           <p>💡 <strong>Jeste li znali?</strong> Na punom spremniku od 50 litara, odabir prave postaje na autocesti omogućuje uštedu između <strong>10 € i 18 €</strong> na samo jednom putovanju!</p>
         </div>
 
+          <h2>📸 Pregled sučelja</h2>
+          <div class="screenshots-gallery">
+            <div class="screenshot-card">
+              <img src="guide_img_search.png" alt="1. Odabir rute i filtri">
+              <p class="screenshot-caption"><strong>1. Odabir rute i filtri</strong>Pretraga adresa/POI, Moja lokacija, 52 referentna koridora (13 država), filtri marki i goriva.</p>
+            </div>
+            <div class="screenshot-card">
+              <img src="guide_img_map.png" alt="2. Interaktivna karta i 13 država">
+              <p class="screenshot-caption"><strong>2. Interaktivna karta i 13 država</strong>Cijene uživo duž vaše rute u 13 europskih država, GPS praćenje i brzo centriranje.</p>
+            </div>
+            <div class="screenshot-card">
+              <img src="guide_img_list.png" alt="3. Kronološki popis i upozorenja 2 km">
+              <p class="screenshot-caption"><strong>3. Kronološki popis i upozorenja 2 km</strong>Postaje redoslijedom vožnje, lokalno vrijeme, Waze/Maps navigacija i glasovno upozorenje 2 km.</p>
+            </div>
+          </div>
+
+
         <h2>🚀 2. Glavne značajke i uporaba korak po korak</h2>
         <div class="features-grid">
           <div class="feature-card">
@@ -1035,20 +1523,100 @@
             <p class="feature-desc">Jednim dodirom pokrenite vožnju do odabranog odmorišta u aplikacijama <strong>Waze</strong> ili <strong>Google Maps</strong>.</p>
           </div>
         </div>
+          <h2>🌍 3. Svih 13 pokrivenih europskih zemalja (8.443 postaje + uživo)</h2>
+          <p>FuelCoPilot pokriva <strong>13 europskih država</strong> (<strong>8.443 ugrađene postaje</strong> + dinamičko učitavanje uživo duž vaše rute):</p>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Država</th>
+                  <th>Postaje</th>
+                  <th>Mreže autocesta i pokrivenost uživo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>🇪🇸 <strong>Španjolska</strong></td>
+                  <td><strong>4 740</strong></td>
+                  <td>Autovías & Autopistas (A-1 à A-8, AP-7, A-31, AP-68…) + réseau routier MITECO</td>
+                </tr>
+                <tr>
+                  <td>🇮🇹 <strong>Italija</strong></td>
+                  <td><strong>2 236</strong></td>
+                  <td>Autostrade (A1, A4, A14, A22…) + réseau national MIMIT</td>
+                </tr>
+                <tr>
+                  <td>🇫🇷 <strong>Francuska</strong></td>
+                  <td><strong>635 + live</strong></td>
+                  <td>A1 à A89 (Vinci, APRR, Sanef, AREA…) + toutes les stations routières en direct (Bercy / 2aaz)</td>
+                </tr>
+                <tr>
+                  <td>🇩🇪 <strong>Njemačka</strong></td>
+                  <td><strong>257 + live</strong></td>
+                  <td>Autobahn-Raststätten (A1, A3, A5, A7, A8, A9…) + prix live Tankerkönig / MTS-K</td>
+                </tr>
+                <tr>
+                  <td>🇬🇧 <strong>Ujedinjeno Kraljevstvo</strong></td>
+                  <td><strong>158</strong></td>
+                  <td>Motorway Service Areas MSAs (M1, M4, M5, M6, M20, M25, M40…)</td>
+                </tr>
+                <tr>
+                  <td>🇳🇱 <strong>Nizozemska</strong></td>
+                  <td><strong>93</strong></td>
+                  <td>Rijkswaterstaat Verzorgingsplaatsen (A1, A2, A4, A12, A16, A27…)</td>
+                </tr>
+                <tr>
+                  <td>🇧🇪 <strong>Belgija</strong></td>
+                  <td><strong>80</strong></td>
+                  <td>Autoroutes E19, E40, E411, E42, E25, E17…</td>
+                </tr>
+                <tr>
+                  <td>🇵🇹 <strong>Portugal</strong></td>
+                  <td><strong>70</strong></td>
+                  <td>Autoestradas Brisa & Ascendi (A1, A2, A3, A6, A22, A25…)</td>
+                </tr>
+                <tr>
+                  <td>🇦🇹 <strong>Austrija</strong></td>
+                  <td><strong>56 + live</strong></td>
+                  <td>ASFINAG Autobahnen (A1, A2, A9, A10, A12, A13…) + stations en direct E-Control</td>
+                </tr>
+                <tr>
+                  <td>🇭🇷 <strong>Hrvatska</strong></td>
+                  <td><strong>44</strong></td>
+                  <td>Autoceste HAC / Bina-Istra (A1 Dalmatina, A3, A4, A6, A8…)</td>
+                </tr>
+                <tr>
+                  <td>🇨🇭 <strong>Švicarska</strong></td>
+                  <td><strong>36</strong></td>
+                  <td>Autoroutes nationales (A1, A2 Gothard, A3, A9, A13…)</td>
+                </tr>
+                <tr>
+                  <td>🇸🇮 <strong>Slovenija</strong></td>
+                  <td><strong>30</strong></td>
+                  <td>Avtoceste DARS (A1 Štajerska-Primorska, A2 Karavanke-Obrežje, A5…)</td>
+                </tr>
+                <tr>
+                  <td>🇱🇺 <strong>Luksemburg</strong></td>
+                  <td><strong>8</strong></td>
+                  <td>Aires autoroutières Berchem, Aire de Capellen, Wasserbillig (A1, A3, A6, A7…)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout">
+            <p>🌐 <strong>Univerzalni europski koridor (v9.9.30):</strong> Uz 8.443 postaje, FuelCoPilot dinamički učitava podatke uživo (Francuska, Njemačka Tankerkönig, Austrija E-Control) i postaje uz izlaze (< 1,5 km).</p>
+          </div>
 
-        <h2>🌍 3. Pokrivene europske zemlje (13 država)</h2>
-        <p>FuelCoPilot pokriva autoceste u <strong>13 europskih zemalja</strong>:</p>
-        <p style="margin-top:8px;">🇫🇷 Francuska • 🇩🇪 Njemačka • 🇧🇪 Belgija • 🇳🇱 Nizozemska • 🇮🇹 Italija • 🇪🇸 Španjolska • 🇵🇹 Portugal • 🇬🇧 Ujedinjeno Kraljevstvo • 🇱🇺 Luksemburg • 🇦🇹 Austrija • 🇨🇭 Švicarska • 🇸🇮 Slovenija • 🇭🇷 Hrvatska.</p>
       `
     },
     en: {
         docTitle: "User Guide • FuelCoPilot",
         headerTitle: "FuelCo<span>Pilot</span> • User Guide",
-        badgeVersion: "Official User Guide • v9.9 (November 2026)",
+        badgeVersion: "Official User Guide • v9.9.30 (November 2026)",
         backBtn: "Back to Application",
         privacyLink: "Privacy Policy",
         html: `
-          <h2>✨ What's New in v9.9.29 — Live Driving & Voice Alerts</h2>
+          <h2>✨ What's New in v9.9.30 — Live Driving & Voice Alerts</h2>
           <div class="features-grid">
             <div class="feature-card">
               <span class="feature-icon">🔔</span>
@@ -1074,6 +1642,23 @@
 
           <h2>🎯 1. What is FuelCoPilot?</h2>
           <p><strong>FuelCoPilot</strong> is your smart motorway driving companion, designed to save you money on long European road trips. Because motorway fuel prices can vary by more than <strong>€0.20 to €0.35 per litre</strong> from one service station to the next, FuelCoPilot allows you to anticipate your refuelling stops with total peace of mind.</p>
+
+          <h2>📸 Interface Preview</h2>
+          <div class="screenshots-gallery">
+            <div class="screenshot-card">
+              <img src="guide_img_search.png" alt="1. Route Planning & Filters">
+              <p class="screenshot-caption"><strong>1. Route Planning & Filters</strong>Address/POI search, My current location, 52 reference corridors (13 countries), brand & fuel filters.</p>
+            </div>
+            <div class="screenshot-card">
+              <img src="guide_img_map.png" alt="2. Interactive Map & 13 Countries">
+              <p class="screenshot-caption"><strong>2. Interactive Map & 13 Countries</strong>Live prices along your route across 13 European countries, blue GPS tracker and quick recenter controls.</p>
+            </div>
+            <div class="screenshot-card">
+              <img src="guide_img_list.png" alt="3. Chronological List & 2 km Alerts">
+              <p class="screenshot-caption"><strong>3. Chronological List & 2 km Alerts</strong>Stations in exact driving order, live weather, 1-click Waze/Maps guidance and 2 km voice alert (1/3).</p>
+            </div>
+          </div>
+
 
           <h2>🚀 2. Key Features & How to Use</h2>
           <div class="features-grid">
@@ -1108,23 +1693,90 @@
               <p class="feature-desc">The cheapest station along your entire route is highlighted with a gold <strong>⭐ LOWEST PRICE</strong> badge. Fuel outages are shown in red.</p>
             </div>
           </div>
-
-          <h2>🌍 3. Covered Countries & Motorway Networks (2,657 MSAs)</h2>
+          <h2>🌍 3. All 13 Covered European Countries (8,443 stations + live)</h2>
+          <p>FuelCoPilot covers <strong>13 European countries</strong> (<strong>8,443 built-in stations</strong> + real-time corridor loading along your route):</p>
           <div class="table-container">
             <table>
-              <thead><tr><th>Country</th><th>Service Areas</th><th>Motorway Networks</th></tr></thead>
+              <thead>
+                <tr>
+                  <th>Country</th>
+                  <th>Stations</th>
+                  <th>Motorway Networks & Live Coverage</th>
+                </tr>
+              </thead>
               <tbody>
-                <tr><td>🇫🇷 <strong>France</strong></td><td>437 MSAs</td><td>A1 to A89 (APRR, AREA, Vinci Autoroutes, Sanef...)</td></tr>
-                <tr><td>🇪🇸 <strong>Spain</strong></td><td>833 MSAs</td><td>Autovías & Autopistas (A-1 to A-8, AP-7 Mediterranean...)</td></tr>
-                <tr><td>🇮🇹 <strong>Italy</strong></td><td>615 MSAs</td><td>Autostrade (A1 Milan-Naples, A4, A14, A22...)</td></tr>
-                <tr><td>🇩🇪 <strong>Germany</strong></td><td>218 MSAs</td><td>Official Autobahn-Raststätten (A1, A3, A7, A8, A9...)</td></tr>
-                <tr><td>🇬🇧 <strong>United Kingdom</strong></td><td>158 MSAs</td><td>Motorway Service Areas (M1, M4, M5, M6, M20, M25...)</td></tr>
-                <tr><td>🇧🇪 <strong>Belgium</strong></td><td>76 MSAs</td><td>E19, E40, E411, E42...</td></tr>
-                <tr><td>🇵🇹 <strong>Portugal</strong></td><td>65 MSAs</td><td>Autoestradas Brisa & Ascendi (A1, A2 Algarve, A3...)</td></tr>
-                <tr><td>🇳🇱 <strong>Netherlands</strong></td><td>57 MSAs</td><td>Rijkswaterstaat Verzorgingsplaatsen (A1, A2, A4...)</td></tr>
+                <tr>
+                  <td>🇪🇸 <strong>Spain</strong></td>
+                  <td><strong>4 740</strong></td>
+                  <td>Autovías & Autopistas (A-1 à A-8, AP-7, A-31, AP-68…) + réseau routier MITECO</td>
+                </tr>
+                <tr>
+                  <td>🇮🇹 <strong>Italy</strong></td>
+                  <td><strong>2 236</strong></td>
+                  <td>Autostrade (A1, A4, A14, A22…) + réseau national MIMIT</td>
+                </tr>
+                <tr>
+                  <td>🇫🇷 <strong>France</strong></td>
+                  <td><strong>635 + live</strong></td>
+                  <td>A1 à A89 (Vinci, APRR, Sanef, AREA…) + toutes les stations routières en direct (Bercy / 2aaz)</td>
+                </tr>
+                <tr>
+                  <td>🇩🇪 <strong>Germany</strong></td>
+                  <td><strong>257 + live</strong></td>
+                  <td>Autobahn-Raststätten (A1, A3, A5, A7, A8, A9…) + prix live Tankerkönig / MTS-K</td>
+                </tr>
+                <tr>
+                  <td>🇬🇧 <strong>United Kingdom</strong></td>
+                  <td><strong>158</strong></td>
+                  <td>Motorway Service Areas MSAs (M1, M4, M5, M6, M20, M25, M40…)</td>
+                </tr>
+                <tr>
+                  <td>🇳🇱 <strong>Netherlands</strong></td>
+                  <td><strong>93</strong></td>
+                  <td>Rijkswaterstaat Verzorgingsplaatsen (A1, A2, A4, A12, A16, A27…)</td>
+                </tr>
+                <tr>
+                  <td>🇧🇪 <strong>Belgium</strong></td>
+                  <td><strong>80</strong></td>
+                  <td>Autoroutes E19, E40, E411, E42, E25, E17…</td>
+                </tr>
+                <tr>
+                  <td>🇵🇹 <strong>Portugal</strong></td>
+                  <td><strong>70</strong></td>
+                  <td>Autoestradas Brisa & Ascendi (A1, A2, A3, A6, A22, A25…)</td>
+                </tr>
+                <tr>
+                  <td>🇦🇹 <strong>Austria</strong></td>
+                  <td><strong>56 + live</strong></td>
+                  <td>ASFINAG Autobahnen (A1, A2, A9, A10, A12, A13…) + stations en direct E-Control</td>
+                </tr>
+                <tr>
+                  <td>🇭🇷 <strong>Croatia</strong></td>
+                  <td><strong>44</strong></td>
+                  <td>Autoceste HAC / Bina-Istra (A1 Dalmatina, A3, A4, A6, A8…)</td>
+                </tr>
+                <tr>
+                  <td>🇨🇭 <strong>Switzerland</strong></td>
+                  <td><strong>36</strong></td>
+                  <td>Autoroutes nationales (A1, A2 Gothard, A3, A9, A13…)</td>
+                </tr>
+                <tr>
+                  <td>🇸🇮 <strong>Slovenia</strong></td>
+                  <td><strong>30</strong></td>
+                  <td>Avtoceste DARS (A1 Štajerska-Primorska, A2 Karavanke-Obrežje, A5…)</td>
+                </tr>
+                <tr>
+                  <td>🇱🇺 <strong>Luxembourg</strong></td>
+                  <td><strong>8</strong></td>
+                  <td>Aires autoroutières Berchem, Aire de Capellen, Wasserbillig (A1, A3, A6, A7…)</td>
+                </tr>
               </tbody>
             </table>
           </div>
+          <div class="callout">
+            <p>🌐 <strong>Universal European Corridor (v9.9.30):</strong> In addition to the 8,443 built-in stations, FuelCoPilot dynamically queries official live APIs (France, Germany Tankerkönig, Austria E-Control) and European corridor gap-filling for motorway & exit stations (< 1.5 km).</p>
+          </div>
+
 
           <h2>🔄 4. Price Refresh Frequency & Official Sources</h2>
           <div class="table-container">
@@ -1150,11 +1802,11 @@
       nl: {
         docTitle: "Handleiding & Gebruikersgids • FuelCoPilot",
         headerTitle: "FuelCo<span>Pilot</span> • Handleiding",
-        badgeVersion: "Officiële gebruikershandleiding • v9.9 (November 2026)",
+        badgeVersion: "Officiële gebruikershandleiding • v9.9.30 (November 2026)",
         backBtn: "Terug naar de applicatie",
         privacyLink: "Privacybeleid",
         html: `
-          <h2>✨ Nieuw in v9.9.29 — Spraakmeldingen & Snel Herberekenen</h2>
+          <h2>✨ Nieuw in v9.9.30 — Spraakmeldingen & Snel Herberekenen</h2>
           <div class="features-grid">
             <div class="feature-card">
               <span class="feature-icon">🔔</span>
@@ -1183,6 +1835,23 @@
           <div class="callout">
             <p>💡 <strong>Wist u dat?</strong> Op een volle tank van 50 liter levert het kiezen van het juiste snelwegstation een besparing op van tussen de <strong>€ 10 en € 18</strong> op één enkele rit!</p>
           </div>
+
+          <h2>📸 Voorbeeld van de interface</h2>
+          <div class="screenshots-gallery">
+            <div class="screenshot-card">
+              <img src="guide_img_search.png" alt="1. Route kiezen & Filters">
+              <p class="screenshot-caption"><strong>1. Route kiezen & Filters</strong>Adres-/POI-zoekfunctie, Mijn locatie, 52 referentiecorridors (13 landen), merk- en brandstoffilters.</p>
+            </div>
+            <div class="screenshot-card">
+              <img src="guide_img_map.png" alt="2. Interactieve kaart & 13 landen">
+              <p class="screenshot-caption"><strong>2. Interactieve kaart & 13 landen</strong>Actuele prijzen langs uw route in 13 Europese landen, GPS-volgfunctie en snel centreren.</p>
+            </div>
+            <div class="screenshot-card">
+              <img src="guide_img_list.png" alt="3. Chronologische lijst & 2 km-melding">
+              <p class="screenshot-caption"><strong>3. Chronologische lijst & 2 km-melding</strong>Stations in rijvolgorde, lokaal weer, 1-klik Waze/Maps-navigatie en gesproken 2 km-melding (1/3).</p>
+            </div>
+          </div>
+
 
           <h2>🚀 2. Belangrijkste functies en stapsgewijs gebruik</h2>
           <div class="features-grid">
@@ -1237,29 +1906,90 @@
               <p class="feature-desc">Bekijk het actuele weer (Open-Meteo) per verzorgingsplaats, openingstijden en horecagelegenheden.</p>
             </div>
           </div>
-
-          <h2>🌍 3. Gedekte landen en snelwegnetwerken (2.657 verzorgingsplaatsen)</h2>
+          <h2>🌍 3. Alle 13 gedekte Europese landen (8.443 stations + live)</h2>
+          <p>FuelCoPilot dekt <strong>13 Europese landen</strong> (<strong>8.443 ingebouwde stations</strong> + live-lading langs uw hele route):</p>
           <div class="table-container">
             <table>
               <thead>
                 <tr>
                   <th>Land</th>
-                  <th>Aantal stations</th>
-                  <th>Snelwegnetwerken</th>
+                  <th>Stations</th>
+                  <th>Snelwegnetwerken & live-dekking</th>
                 </tr>
               </thead>
               <tbody>
-                <tr><td>🇫🇷 <strong>Frankrijk</strong></td><td><strong>437 stations</strong></td><td>A1 t/m A89 (APRR, AREA, Vinci Autoroutes, Sanef...)</td></tr>
-                <tr><td>🇪🇸 <strong>Spanje</strong></td><td><strong>833 stations</strong></td><td>Autovías & Autopistas (A-1 t/m A-8, AP-7...)</td></tr>
-                <tr><td>🇮🇹 <strong>Italië</strong></td><td><strong>615 stations</strong></td><td>Autostrade (A1 Milaan-Rome-Napels, A4, A14, A22...)</td></tr>
-                <tr><td>🇩🇪 <strong>Duitsland</strong></td><td><strong>218 stations</strong></td><td>Officiële Autobahn-Raststätten (A1, A3, A7, A8...)</td></tr>
-                <tr><td>🇬🇧 <strong>Verenigd Koninkrijk</strong></td><td><strong>158 stations</strong></td><td>Motorway Service Areas MSAs (M1, M4, M6...)</td></tr>
-                <tr><td>🇧🇪 <strong>België</strong></td><td><strong>76 stations</strong></td><td>E19, E40, E411, E42, E25...</td></tr>
-                <tr><td>🇵🇹 <strong>Portugal</strong></td><td><strong>65 stations</strong></td><td>Autoestradas Brisa & Ascendi (A1, A2 Algarve, A3, A6...)</td></tr>
-                <tr><td>🇳🇱 <strong>Nederland</strong></td><td><strong>57 stations</strong></td><td>Rijkswaterstaat Verzorgingsplaatsen (A1, A2, A4, A12, A16, A27...)</td></tr>
+                <tr>
+                  <td>🇪🇸 <strong>Spanje</strong></td>
+                  <td><strong>4 740</strong></td>
+                  <td>Autovías & Autopistas (A-1 à A-8, AP-7, A-31, AP-68…) + réseau routier MITECO</td>
+                </tr>
+                <tr>
+                  <td>🇮🇹 <strong>Italië</strong></td>
+                  <td><strong>2 236</strong></td>
+                  <td>Autostrade (A1, A4, A14, A22…) + réseau national MIMIT</td>
+                </tr>
+                <tr>
+                  <td>🇫🇷 <strong>Frankrijk</strong></td>
+                  <td><strong>635 + live</strong></td>
+                  <td>A1 à A89 (Vinci, APRR, Sanef, AREA…) + toutes les stations routières en direct (Bercy / 2aaz)</td>
+                </tr>
+                <tr>
+                  <td>🇩🇪 <strong>Duitsland</strong></td>
+                  <td><strong>257 + live</strong></td>
+                  <td>Autobahn-Raststätten (A1, A3, A5, A7, A8, A9…) + prix live Tankerkönig / MTS-K</td>
+                </tr>
+                <tr>
+                  <td>🇬🇧 <strong>Verenigd Koninkrijk</strong></td>
+                  <td><strong>158</strong></td>
+                  <td>Motorway Service Areas MSAs (M1, M4, M5, M6, M20, M25, M40…)</td>
+                </tr>
+                <tr>
+                  <td>🇳🇱 <strong>Nederland</strong></td>
+                  <td><strong>93</strong></td>
+                  <td>Rijkswaterstaat Verzorgingsplaatsen (A1, A2, A4, A12, A16, A27…)</td>
+                </tr>
+                <tr>
+                  <td>🇧🇪 <strong>België</strong></td>
+                  <td><strong>80</strong></td>
+                  <td>Autoroutes E19, E40, E411, E42, E25, E17…</td>
+                </tr>
+                <tr>
+                  <td>🇵🇹 <strong>Portugal</strong></td>
+                  <td><strong>70</strong></td>
+                  <td>Autoestradas Brisa & Ascendi (A1, A2, A3, A6, A22, A25…)</td>
+                </tr>
+                <tr>
+                  <td>🇦🇹 <strong>Oostenrijk</strong></td>
+                  <td><strong>56 + live</strong></td>
+                  <td>ASFINAG Autobahnen (A1, A2, A9, A10, A12, A13…) + stations en direct E-Control</td>
+                </tr>
+                <tr>
+                  <td>🇭🇷 <strong>Kroatië</strong></td>
+                  <td><strong>44</strong></td>
+                  <td>Autoceste HAC / Bina-Istra (A1 Dalmatina, A3, A4, A6, A8…)</td>
+                </tr>
+                <tr>
+                  <td>🇨🇭 <strong>Zwitserland</strong></td>
+                  <td><strong>36</strong></td>
+                  <td>Autoroutes nationales (A1, A2 Gothard, A3, A9, A13…)</td>
+                </tr>
+                <tr>
+                  <td>🇸🇮 <strong>Slovenië</strong></td>
+                  <td><strong>30</strong></td>
+                  <td>Avtoceste DARS (A1 Štajerska-Primorska, A2 Karavanke-Obrežje, A5…)</td>
+                </tr>
+                <tr>
+                  <td>🇱🇺 <strong>Luxemburg</strong></td>
+                  <td><strong>8</strong></td>
+                  <td>Aires autoroutières Berchem, Aire de Capellen, Wasserbillig (A1, A3, A6, A7…)</td>
+                </tr>
               </tbody>
             </table>
           </div>
+          <div class="callout">
+            <p>🌐 <strong>Universele Europese corridor (v9.9.30):</strong> Naast de 8.443 stations laadt FuelCoPilot live-gegevens (Frankrijk, Duitsland Tankerkönig, Oostenrijk E-Control) en vult afritstations (< 1,5 km) aan.</p>
+          </div>
+
 
           <h2>🔄 4. Updatefrequentie en officiële databronnen</h2>
           <div class="table-container">
@@ -1301,11 +2031,11 @@
       pt: {
         docTitle: "Instruções & Guia • FuelCoPilot",
         headerTitle: "FuelCo<span>Pilot</span> • Instruções de uso",
-        badgeVersion: "Guia oficial do utilizador • v9.9 (Novembro 2026)",
+        badgeVersion: "Guia oficial do utilizador • v9.9.30 (Novembro 2026)",
         backBtn: "Voltar à aplicação",
         privacyLink: "Política de Privacidade",
         html: `
-          <h2>✨ Novidades v9.9.29 — Alertas Vocais e Recálculo Rápido</h2>
+          <h2>✨ Novidades v9.9.30 — Alertas Vocais e Recálculo Rápido</h2>
           <div class="features-grid">
             <div class="feature-card">
               <span class="feature-icon">🔔</span>
@@ -1334,6 +2064,23 @@
           <div class="callout">
             <p>💡 <strong>Sabia que?</strong> Num depósito de 50 litros, escolher a estação certa na autoestrada permite poupar entre <strong>10 € e 18 €</strong> numa única viagem!</p>
           </div>
+
+          <h2>📸 Pré-visualização da interface</h2>
+          <div class="screenshots-gallery">
+            <div class="screenshot-card">
+              <img src="guide_img_search.png" alt="1. Escolha de percurso e filtros">
+              <p class="screenshot-caption"><strong>1. Escolha de percurso e filtros</strong>Pesquisa de moradas/POI, A minha localização, 52 corredores de referência (13 países), filtros.</p>
+            </div>
+            <div class="screenshot-card">
+              <img src="guide_img_map.png" alt="2. Mapa interativo e 13 países">
+              <p class="screenshot-caption"><strong>2. Mapa interativo e 13 países</strong>Preços em direto no seu trajeto em 13 países europeus, seguimento GPS e centragem rápida.</p>
+            </div>
+            <div class="screenshot-card">
+              <img src="guide_img_list.png" alt="3. Lista cronológica e alertas 2 km">
+              <p class="screenshot-caption"><strong>3. Lista cronológica e alertas 2 km</strong>Estações por ordem de viagem, meteorologia local, navegação Waze/Maps em 1 clique e alerta vocal 2 km.</p>
+            </div>
+          </div>
+
 
           <h2>🚀 2. Funcionalidades e Utilização passo a passo</h2>
           <div class="features-grid">
@@ -1388,29 +2135,90 @@
               <p class="feature-desc">Consulte o tempo em tempo real (Open-Meteo) em cada área de serviço, horários e restaurantes disponíveis.</p>
             </div>
           </div>
-
-          <h2>🌍 3. Países e Rede de autoestradas cobertos (2.657 áreas)</h2>
+          <h2>🌍 3. Os 13 países europeus cobertos (8.443 estações + direto)</h2>
+          <p>O FuelCoPilot cobre <strong>13 países europeus</strong> (<strong>8.443 estações integradas</strong> + carregamento dinâmico em tempo real no percurso):</p>
           <div class="table-container">
             <table>
               <thead>
                 <tr>
                   <th>País</th>
-                  <th>Áreas de serviço</th>
-                  <th>Rede de autoestradas</th>
+                  <th>Estações</th>
+                  <th>Redes de autoestradas e cobertura dinâmica</th>
                 </tr>
               </thead>
               <tbody>
-                <tr><td>🇫🇷 <strong>França</strong></td><td><strong>437 áreas</strong></td><td>A1 a A89 (APRR, AREA, Vinci Autoroutes, Sanef...)</td></tr>
-                <tr><td>🇪🇸 <strong>Espanha</strong></td><td><strong>833 áreas</strong></td><td>Autovías e Autopistas (A-1 a A-8, AP-7 Mediterrâneo...)</td></tr>
-                <tr><td>🇮🇹 <strong>Itália</strong></td><td><strong>615 áreas</strong></td><td>Autostrade (A1 Milão-Roma-Nápoles, A4, A14, A22...)</td></tr>
-                <tr><td>🇩🇪 <strong>Alemanha</strong></td><td><strong>218 áreas</strong></td><td>Autobahn-Raststätten oficiais (A1, A3, A7, A8, A9...)</td></tr>
-                <tr><td>🇬🇧 <strong>Reino Unido</strong></td><td><strong>158 áreas</strong></td><td>Motorway Service Areas MSAs (M1, M4, M5, M6...)</td></tr>
-                <tr><td>🇧🇪 <strong>Bélgica</strong></td><td><strong>76 áreas</strong></td><td>E19, E40, E411, E42, E25...</td></tr>
-                <tr><td>🇵🇹 <strong>Portugal</strong></td><td><strong>65 áreas</strong></td><td>Rede de Autoestradas Brisa & Ascendi (A1 Lisboa-Porto, A2 Algarve, A3, A6, A22, A25...)</td></tr>
-                <tr><td>🇳🇱 <strong>Países Baixos</strong></td><td><strong>57 áreas</strong></td><td>Rijkswaterstaat Verzorgingsplaatsen (A1, A2, A4, A12, A16, A27...)</td></tr>
+                <tr>
+                  <td>🇪🇸 <strong>Espanha</strong></td>
+                  <td><strong>4 740</strong></td>
+                  <td>Autovías & Autopistas (A-1 à A-8, AP-7, A-31, AP-68…) + réseau routier MITECO</td>
+                </tr>
+                <tr>
+                  <td>🇮🇹 <strong>Itália</strong></td>
+                  <td><strong>2 236</strong></td>
+                  <td>Autostrade (A1, A4, A14, A22…) + réseau national MIMIT</td>
+                </tr>
+                <tr>
+                  <td>🇫🇷 <strong>França</strong></td>
+                  <td><strong>635 + live</strong></td>
+                  <td>A1 à A89 (Vinci, APRR, Sanef, AREA…) + toutes les stations routières en direct (Bercy / 2aaz)</td>
+                </tr>
+                <tr>
+                  <td>🇩🇪 <strong>Alemanha</strong></td>
+                  <td><strong>257 + live</strong></td>
+                  <td>Autobahn-Raststätten (A1, A3, A5, A7, A8, A9…) + prix live Tankerkönig / MTS-K</td>
+                </tr>
+                <tr>
+                  <td>🇬🇧 <strong>Reino Unido</strong></td>
+                  <td><strong>158</strong></td>
+                  <td>Motorway Service Areas MSAs (M1, M4, M5, M6, M20, M25, M40…)</td>
+                </tr>
+                <tr>
+                  <td>🇳🇱 <strong>Países Baixos</strong></td>
+                  <td><strong>93</strong></td>
+                  <td>Rijkswaterstaat Verzorgingsplaatsen (A1, A2, A4, A12, A16, A27…)</td>
+                </tr>
+                <tr>
+                  <td>🇧🇪 <strong>Bélgica</strong></td>
+                  <td><strong>80</strong></td>
+                  <td>Autoroutes E19, E40, E411, E42, E25, E17…</td>
+                </tr>
+                <tr>
+                  <td>🇵🇹 <strong>Portugal</strong></td>
+                  <td><strong>70</strong></td>
+                  <td>Autoestradas Brisa & Ascendi (A1, A2, A3, A6, A22, A25…)</td>
+                </tr>
+                <tr>
+                  <td>🇦🇹 <strong>Áustria</strong></td>
+                  <td><strong>56 + live</strong></td>
+                  <td>ASFINAG Autobahnen (A1, A2, A9, A10, A12, A13…) + stations en direct E-Control</td>
+                </tr>
+                <tr>
+                  <td>🇭🇷 <strong>Croácia</strong></td>
+                  <td><strong>44</strong></td>
+                  <td>Autoceste HAC / Bina-Istra (A1 Dalmatina, A3, A4, A6, A8…)</td>
+                </tr>
+                <tr>
+                  <td>🇨🇭 <strong>Suíça</strong></td>
+                  <td><strong>36</strong></td>
+                  <td>Autoroutes nationales (A1, A2 Gothard, A3, A9, A13…)</td>
+                </tr>
+                <tr>
+                  <td>🇸🇮 <strong>Eslovénia</strong></td>
+                  <td><strong>30</strong></td>
+                  <td>Avtoceste DARS (A1 Štajerska-Primorska, A2 Karavanke-Obrežje, A5…)</td>
+                </tr>
+                <tr>
+                  <td>🇱🇺 <strong>Luxemburgo</strong></td>
+                  <td><strong>8</strong></td>
+                  <td>Aires autoroutières Berchem, Aire de Capellen, Wasserbillig (A1, A3, A6, A7…)</td>
+                </tr>
               </tbody>
             </table>
           </div>
+          <div class="callout">
+            <p>🌐 <strong>Corredor europeu universal (v9.9.30):</strong> Além das 8.443 estações integradas, o FuelCoPilot consulta APIs em direto (França, Alemanha Tankerkönig, Áustria E-Control) e completa estações junto às saídas (< 1,5 km).</p>
+          </div>
+
 
           <h2>🔄 4. Frequência e Fontes oficiais de atualização dos preços</h2>
           <div class="table-container">
