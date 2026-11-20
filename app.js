@@ -1276,7 +1276,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.23';
+const APP_VERSION = '9.9.24';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -6634,15 +6634,60 @@ let selectedAlertStationIds = new Set();
 let triggeredAlertStationIds = new Set();
 
 const I18N_VOICE_ALERTS = {
-  fr: { lang: 'fr-FR', kicker: 'Alerte carburant imminente (2 km)', alert: (name) => `Dans 2 kilomètres, vous arriverez à la station ${name}.` },
-  en: { lang: 'en-GB', kicker: 'Upcoming fuel alert (2 km)', alert: (name) => `In 2 kilometers, you will arrive at ${name} station.` },
-  de: { lang: 'de-DE', kicker: 'Tankstellen-Warnung (2 km)', alert: (name) => `In 2 Kilometern erreichen Sie die Tankstelle ${name}.` },
-  it: { lang: 'it-IT', kicker: 'Avviso carburante imminente (2 km)', alert: (name) => `Tra 2 chilometri arriverai alla stazione ${name}.` },
-  es: { lang: 'es-ES', kicker: 'Alerta de gasolinera inminente (2 km)', alert: (name) => `En 2 kilómetros, llegará a la estación ${name}.` },
-  nl: { lang: 'nl-NL', kicker: 'Tankstation melding (2 km)', alert: (name) => `Over 2 kilometer komt u aan bij het tankstation ${name}.` },
-  pt: { lang: 'pt-PT', kicker: 'Alerta de posto iminente (2 km)', alert: (name) => `Em 2 quilómetros chegará à estação ${name}.` },
-  sl: { lang: 'sl-SI', kicker: 'Opozorilo za črpalko (2 km)', alert: (name) => `Čez 2 kilometra boste prispeli do črpalke ${name}.` },
-  hr: { lang: 'hr-HR', kicker: 'Upozorenje za postaju (2 km)', alert: (name) => `Za 2 kilometra stižete na postaju ${name}.` }
+  fr: {
+    lang: 'fr-FR',
+    kicker: 'Alerte carburant imminente (2 km)',
+    alert: (name) => `Dans 2 kilomètres, vous arriverez à la station ${name}.`,
+    unavailFuel: (fuel) => `Attention, le ${fuel} n'est pas disponible aujourd'hui dans cette station.`
+  },
+  en: {
+    lang: 'en-GB',
+    kicker: 'Upcoming fuel alert (2 km)',
+    alert: (name) => `In 2 kilometers, you will arrive at ${name} station.`,
+    unavailFuel: (fuel) => `Warning, ${fuel} is not available today at this station.`
+  },
+  de: {
+    lang: 'de-DE',
+    kicker: 'Tankstellen-Warnung (2 km)',
+    alert: (name) => `In 2 Kilometern erreichen Sie die Tankstelle ${name}.`,
+    unavailFuel: (fuel) => `Achtung, ${fuel} ist heute an dieser Tankstelle nicht verfügbar.`
+  },
+  it: {
+    lang: 'it-IT',
+    kicker: 'Avviso carburante imminente (2 km)',
+    alert: (name) => `Tra 2 chilometri arriverai alla stazione ${name}.`,
+    unavailFuel: (fuel) => `Attenzione, ${fuel} non è disponibile oggi in questa stazione.`
+  },
+  es: {
+    lang: 'es-ES',
+    kicker: 'Alerta de gasolinera inminente (2 km)',
+    alert: (name) => `En 2 kilómetros, llegará a la estación ${name}.`,
+    unavailFuel: (fuel) => `Atención, ${fuel} no está disponible hoy en esta estación.`
+  },
+  nl: {
+    lang: 'nl-NL',
+    kicker: 'Tankstation melding (2 km)',
+    alert: (name) => `Over 2 kilometer komt u aan bij het tankstation ${name}.`,
+    unavailFuel: (fuel) => `Let op, ${fuel} is vandaag niet beschikbaar bij dit tankstation.`
+  },
+  pt: {
+    lang: 'pt-PT',
+    kicker: 'Alerta de posto iminente (2 km)',
+    alert: (name) => `Em 2 quilómetros chegará à estação ${name}.`,
+    unavailFuel: (fuel) => `Atenção, ${fuel} não está disponível hoje nesta estação.`
+  },
+  sl: {
+    lang: 'sl-SI',
+    kicker: 'Opozorilo za črpalko (2 km)',
+    alert: (name) => `Čez 2 kilometra boste prispeli do črpalke ${name}.`,
+    unavailFuel: (fuel) => `Pozor, ${fuel} danes ni na voljo na tej črpalki.`
+  },
+  hr: {
+    lang: 'hr-HR',
+    kicker: 'Upozorenje za postaju (2 km)',
+    alert: (name) => `Za 2 kilometra stižete na postaju ${name}.`,
+    unavailFuel: (fuel) => `Pažnja, ${fuel} danas nije dostupan na ovoj postaji.`
+  }
 };
 
 function playAlertChime() {
@@ -6721,7 +6766,19 @@ function toggleStationAlertSelection(stationId, checkboxEl) {
     selectedAlertStationIds.add(sid);
     triggeredAlertStationIds.delete(sid);
     playAlertChime();
-    showToast(`🔔 Alerte sonore 2 km activée (${selectedAlertStationIds.size}/${MAX_STATION_ALERTS})`, { isSuccess: true, duration: 2500 });
+
+    // Vérifier si le carburant choisi est disponible dans cette station
+    const st = (currentRouteStations || []).find(s => String(s.id) === sid) || (allStations || []).find(s => String(s.id) === sid);
+    const fuelPrice = (st && selectedFuel && selectedFuel !== 'all') ? getFuelPrice(st.prix, selectedFuel) : 1;
+    if (st && selectedFuel && selectedFuel !== 'all' && (!fuelPrice || fuelPrice <= 0)) {
+      const cfg = I18N_VOICE_ALERTS[currentLang] || I18N_VOICE_ALERTS.fr;
+      const fuelLabel = getFuelLabel(selectedFuel, st.pays).replace(/^[⚡⛽]\s*/, '');
+      const warnMsg = cfg.unavailFuel(fuelLabel);
+      setTimeout(() => speakFuelAlertText(warnMsg), 260);
+      showToast(`⚠️ ${warnMsg}`, { isWarning: true, duration: 5500 });
+    } else {
+      showToast(`🔔 Alerte sonore 2 km activée (${selectedAlertStationIds.size}/${MAX_STATION_ALERTS})`, { isSuccess: true, duration: 2500 });
+    }
   }
 
   // Mettre à jour visuellement toutes les cartes sans re-rendre toute la liste
