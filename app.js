@@ -1276,7 +1276,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.18';
+const APP_VERSION = '9.9.19';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -4511,13 +4511,14 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
   input.addEventListener('blur', () => setTimeout(updateClearBtnVisibility, 200));
 
   function renderDropdownItems(items, isRecentHeader = false) {
-    if (!items || items.length === 0) {
+    const safeItems = Array.isArray(items) ? items : [];
+    if (safeItems.length === 0 && inputId !== 'input-start') {
       dropdown.style.display = 'none';
       return;
     }
     dropdown.innerHTML = '';
 
-    // If input is start input, prepend "📍 Ma position actuelle"
+    // If input is start input, ALWAYS prepend "📍 Ma position actuelle" even when recent list is empty
     if (inputId === 'input-start') {
       const curPosItem = document.createElement('div');
       curPosItem.className = 'autocomplete-item autocomplete-curpos-item';
@@ -4534,14 +4535,14 @@ function setupAutocomplete(inputId, dropdownId, onSelect) {
       dropdown.appendChild(curPosItem);
     }
 
-    if (isRecentHeader) {
+    if (isRecentHeader && safeItems.length > 0) {
       const hdr = document.createElement('div');
       hdr.className = 'autocomplete-recent-header';
       hdr.textContent = t().recentHdr;
       dropdown.appendChild(hdr);
     }
     const maxItems = 10;
-    items.slice(0, maxItems).forEach(itemData => {
+    safeItems.slice(0, maxItems).forEach(itemData => {
       const item = document.createElement('div');
       item.className = 'autocomplete-item';
       item.textContent = isRecentHeader ? `🕒 ${itemData.label || itemData.cleanName}` : itemData.label;
