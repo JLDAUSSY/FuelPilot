@@ -1276,7 +1276,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.22';
+const APP_VERSION = '9.9.23';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -6043,7 +6043,7 @@ async function enrichFrenchBrandsFromOsm(route) {
 
   let updatedAny = false;
   await Promise.all(batch.map(async (st) => {
-    const rawId = String(st.id || '').replace(/^fr_/, '');
+    const rawId = String(st.id || '').replace(/^fr[-_]/i, '');
     if (!/^\d{6,10}$/.test(rawId)) return;
 
     let cached = window._frBrandCache[rawId];
