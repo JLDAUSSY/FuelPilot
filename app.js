@@ -1276,7 +1276,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.21';
+const APP_VERSION = '9.9.22';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -6029,8 +6029,8 @@ async function maybeLoadFrenchCorridorStations(route, coords, cumDist) {
 }
 
 /**
- * Enrichit l'enseigne réelle (Total, Esso, Intermarché, Shell, Avia...) des stations françaises
- * dont la base Bercy ne fournit pas la marque, via OpenStreetMap Overpass (requête légère ciblée)
+ * Enrichit l'enseigne réelle (Total, Esso, Intermarché, Shell, Avia...) et le nom officiel
+ * des stations françaises via l'API rapide 2aaz (par ID exact Bercy, réponse ~150 ms)
  */
 async function enrichFrenchBrandsFromOsm(route) {
   if (!route || activeRouteData !== route || !currentRouteStations || currentRouteStations.length === 0) return;
@@ -6038,70 +6038,62 @@ async function enrichFrenchBrandsFromOsm(route) {
   if (targets.length === 0) return;
 
   targets.forEach(s => { s._osmBrandChecked = true; });
-  const batch = targets.slice(0, 12); // max 12 stations ciblées par trajet
+  const batch = targets.slice(0, 15);
+  window._frBrandCache = window._frBrandCache || {};
 
-  try {
-    const clauses = batch.map(s => `nwr["amenity"="fuel"](around:160,${s.lat.toFixed(5)},${s.lon.toFixed(5)});`).join('');
-    const q = `[out:json][timeout:5];(${clauses});out center tags;`;
-    const res = await fetch('https://overpass-api.de/api/interpreter', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'data=' + encodeURIComponent(q)
-    });
-    if (!res.ok) return;
-    const json = await res.json();
-    const els = Array.isArray(json.elements) ? json.elements : [];
-    if (els.length === 0) return;
+  let updatedAny = false;
+  await Promise.all(batch.map(async (st) => {
+    const rawId = String(st.id || '').replace(/^fr_/, '');
+    if (!/^\d{6,10}$/.test(rawId)) return;
 
-    let updatedAny = false;
-    batch.forEach(st => {
-      let bestBrand = '';
-      let bestDist = 0.2; // 200 m max
-      els.forEach(el => {
-        const elLat = el.lat || (el.center && el.center.lat);
-        const elLon = el.lon || (el.center && el.center.lon);
-        if (!elLat || !elLon || !el.tags) return;
-        const d = getDistanceKm(st.lat, st.lon, elLat, elLon);
-        if (d < bestDist) {
-          const b = (el.tags.brand || el.tags.operator || el.tags.name || '').trim();
-          if (b && b.toLowerCase() !== 'station' && b.toLowerCase() !== 'fuel') {
-            bestDist = d;
-            bestBrand = b;
-          }
-        }
-      });
-      if (bestBrand) {
-        const low = bestBrand.toLowerCase();
-        let norm = bestBrand;
-        if (low.includes('total')) norm = 'TotalEnergies';
-        else if (low.includes('leclerc')) norm = 'E.Leclerc';
-        else if (low.includes('carrefour')) norm = 'Carrefour';
-        else if (low.includes('intermarch')) norm = 'Intermarché';
-        else if (low.includes('super u') || low.includes('hyper u') || low.includes('système u')) norm = 'Système U';
-        else if (low.includes('esso')) norm = 'Esso';
-        else if (low.includes('shell')) norm = 'Shell';
-        else if (low.includes('avia')) norm = 'Avia';
-        else if (low.includes('bp')) norm = 'BP';
-        else if (low.includes('auchan')) norm = 'Auchan';
-        else if (low.includes('eni') || low.includes('agip')) norm = 'Eni';
-        else if (low.includes('dyneff')) norm = 'Dyneff';
-        else if (low.includes('elan') || low.includes('élan')) norm = 'Élan';
-
-        st.enseigne = norm;
-        st._needsOsmBrand = false;
-        if (st.nom && st.nom.toLowerCase().startsWith('station ')) {
-          st.nom = `${norm === 'TotalEnergies' ? 'Total' : norm} — ${formatProperName(st.ville || '')}`.replace(/\s+—\s*$/, '');
-        }
-        updatedAny = true;
+    let cached = window._frBrandCache[rawId];
+    if (!cached) {
+      try {
+        const res = await fetch(`https://api.prix-carburants.2aaz.fr/station/${rawId}`, {
+          headers: { 'Accept': 'application/json' }
+        });
+        if (!res.ok) return;
+        const d = await res.json();
+        const brandName = (d && d.Brand && d.Brand.name) ? d.Brand.name.trim() : '';
+        const stationName = (d && d.name) ? d.name.trim() : '';
+        cached = { brandName, stationName };
+        window._frBrandCache[rawId] = cached;
+      } catch (e) {
+        return;
       }
-    });
-
-    if (updatedAny && activeRouteData === route) {
-      populateBrandFilter();
-      renderCurrentRouteStations();
     }
-  } catch (e) {
-    console.warn('[OSM Brand Enrich]', e);
+
+    if (cached && cached.brandName) {
+      const low = cached.brandName.toLowerCase();
+      let norm = cached.brandName;
+      if (low.includes('total')) norm = 'TotalEnergies';
+      else if (low.includes('leclerc')) norm = 'E.Leclerc';
+      else if (low.includes('carrefour')) norm = 'Carrefour';
+      else if (low.includes('intermarch')) norm = 'Intermarché';
+      else if (low.includes('super u') || low.includes('hyper u') || low.includes('système u') || low.includes('systeme u')) norm = 'Système U';
+      else if (low.includes('esso')) norm = 'Esso';
+      else if (low.includes('shell')) norm = 'Shell';
+      else if (low.includes('avia')) norm = 'Avia';
+      else if (low.includes('bp')) norm = 'BP';
+      else if (low.includes('auchan')) norm = 'Auchan';
+      else if (low.includes('eni') || low.includes('agip')) norm = 'Eni';
+      else if (low.includes('dyneff')) norm = 'Dyneff';
+      else if (low.includes('elan') || low.includes('élan')) norm = 'Élan';
+
+      st.enseigne = norm;
+      st._needsOsmBrand = false;
+      if (cached.stationName) {
+        st.nom = formatProperName(cached.stationName);
+      } else if (st.nom && st.nom.toLowerCase().startsWith('station ')) {
+        st.nom = `${norm === 'TotalEnergies' ? 'Total' : norm} — ${formatProperName(st.ville || '')}`.replace(/\s+—\s*$/, '');
+      }
+      updatedAny = true;
+    }
+  }));
+
+  if (updatedAny && activeRouteData === route) {
+    populateBrandFilter();
+    renderCurrentRouteStations();
   }
 }
 
