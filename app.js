@@ -1276,7 +1276,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.29';
+const APP_VERSION = '9.9.30';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -5952,6 +5952,9 @@ function processStationsOnRoute(route) {
   fitMapToRouteAndStations();
   maybeLoadGermanLivePrices(route, coords, cumDist);
   maybeLoadFrenchCorridorStations(route, coords, cumDist);
+  maybeLoadSpainCorridorStations(route, coords);
+  maybeLoadAustriaCorridorStations(route, coords, cumDist);
+  maybeLoadEuropeanOsmCorridorStations(route, coords, cumDist);
 }
 
 // Charge à la demande les stations allemandes et leurs prix réels le long du trajet
@@ -6204,6 +6207,296 @@ async function enrichFrenchBrandsFromOsm(route) {
   if (updatedAny && activeRouteData === route) {
     populateBrandFilter();
     renderCurrentRouteStations();
+  }
+}
+
+// ============================================================================
+// ÉTAPE 3 — COUVERTURE EUROPÉENNE UNIVERSELLE (SOLUTION B TOUS PAYS)
+// ============================================================================
+
+/**
+ * 1. ESPAGNE (4 740 stations officielles MITECO — chargement paresseux à la demande)
+ * Couvre 100 % des autovías, autopistas et routes nationales (ex: Limoges -> Sigüenza)
+ */
+let _spainFullDbLoaded = false;
+let _spainFullDbLoading = null;
+
+async function maybeLoadSpainCorridorStations(route, coords) {
+  if (!route || route._esCorridorRequested || !coords || coords.length < 2) return;
+  const inSpain = (lat, lon) => lat >= 35.8 && lat <= 43.9 && lon >= -9.5 && lon <= 3.5;
+  const step = Math.max(1, Math.floor(coords.length / 40));
+  let touchesSpain = false;
+  for (let i = 0; i < coords.length; i += step) {
+    if (inSpain(coords[i][1], coords[i][0])) { touchesSpain = true; break; }
+  }
+  if (!touchesSpain) return;
+  route._esCorridorRequested = true;
+
+  if (_spainFullDbLoaded) return;
+  try {
+    if (!_spainFullDbLoading) {
+      const todayStr = new Date().toISOString().slice(0, 10);
+      _spainFullDbLoading = fetch(`stations_spain.json?v=${APP_VERSION}&d=${todayStr}`).then(r => r.ok ? r.json() : []);
+    }
+    const esStations = await _spainFullDbLoading;
+    if (!Array.isArray(esStations) || esStations.length === 0) return;
+
+    const existingIds = new Set(allStations.map(s => String(s.id)));
+    const existingEs = allStations.filter(s => s.pays === 'ES');
+    let added = 0;
+
+    esStations.forEach(s => {
+      if (!s || !s.id || typeof s.lat !== 'number' || typeof s.lon !== 'number') return;
+      if (existingIds.has(String(s.id))) return;
+      // Ne jamais écraser ni dupliquer une aire d'autoroute déjà répertoriée (< 300 m)
+      const nearExisting = existingEs.some(e => Math.abs(e.lat - s.lat) < 0.0028 && Math.abs(e.lon - s.lon) < 0.0035);
+      if (nearExisting) return;
+      existingIds.add(String(s.id));
+      s.enseigne = s.enseigne || s.marque || 'Station';
+      allStations.push(s);
+      added++;
+    });
+
+    _spainFullDbLoaded = true;
+    if (added > 0 && activeRouteData === route) {
+      populateBrandFilter();
+      processStationsOnRoute(route);
+    }
+  } catch (e) {
+    console.warn('[ES Corridor Loader]', e);
+  }
+}
+
+/**
+ * 2. AUTRICHE (API officielle E-Control Spritpreisrechner — prix en direct temps réel)
+ */
+async function maybeLoadAustriaCorridorStations(route, coords, cumDist) {
+  if (!route || route._atCorridorRequested || !coords || coords.length < 2) return;
+  route._atCorridorRequested = true;
+
+  const inAustria = (lat, lon) => lat >= 46.35 && lat <= 49.05 && lon >= 9.5 && lon <= 17.2;
+  const samples = [];
+  let nextKm = 0;
+  for (let i = 0; i < coords.length; i++) {
+    const lon = coords[i][0], lat = coords[i][1];
+    if (!inAustria(lat, lon)) continue;
+    const km = cumDist[i] || 0;
+    if (km >= nextKm) {
+      samples.push({ lat, lon });
+      nextKm = km + 45;
+      if (samples.length >= 6) break;
+    }
+  }
+  if (samples.length === 0) return;
+
+  const knownIds = new Set(allStations.map(s => String(s.id)));
+  const byStationId = new Map();
+
+  await Promise.allSettled(samples.flatMap(pt => ['DIE', 'SUP'].map(async (fType) => {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 4000);
+    try {
+      const url = `https://api.e-control.at/sprit/1.0/search/gas-stations/by-address?latitude=${pt.lat.toFixed(4)}&longitude=${pt.lon.toFixed(4)}&fuelType=${fType}&includeClosed=false`;
+      const res = await fetch(url, { headers: { 'Accept': 'application/json' }, signal: ctrl.signal });
+      if (!res.ok) return;
+      const list = await res.json();
+      if (!Array.isArray(list)) return;
+      list.forEach(item => {
+        if (!item || !item.id || !item.location) return;
+        const sid = `AT-EC-${item.id}`;
+        if (!byStationId.has(sid)) {
+          byStationId.set(sid, { item, prix: {} });
+        }
+        const entry = byStationId.get(sid);
+        if (Array.isArray(item.prices)) {
+          item.prices.forEach(p => {
+            if (typeof p.amount === 'number' && p.amount > 0) {
+              if (p.fuelType === 'DIE') entry.prix.gazole = p.amount;
+              if (p.fuelType === 'SUP') { entry.prix.e10 = p.amount; entry.prix.sp95 = p.amount; }
+            }
+          });
+        }
+      });
+    } catch (e) {}
+    finally { clearTimeout(timer); }
+  })));
+
+  let added = 0;
+  const existingAt = allStations.filter(s => s.pays === 'AT');
+  byStationId.forEach(({ item, prix }, sid) => {
+    if (knownIds.has(sid) || Object.keys(prix).length === 0) return;
+    const lat = item.location.latitude;
+    const lon = item.location.longitude;
+    if (typeof lat !== 'number' || typeof lon !== 'number') return;
+    const nearExisting = existingAt.some(e => Math.abs(e.lat - lat) < 0.0028 && Math.abs(e.lon - lon) < 0.0035);
+    if (nearExisting) return;
+
+    const rawName = (item.name || 'Tankstelle').trim();
+    const low = rawName.toLowerCase();
+    let enseigne = formatProperName(rawName);
+    if (low.includes('omv')) enseigne = 'OMV';
+    else if (low.includes('bp')) enseigne = 'BP';
+    else if (low.includes('shell')) enseigne = 'Shell';
+    else if (low.includes('eni') || low.includes('agip')) enseigne = 'Eni';
+    else if (low.includes('jet')) enseigne = 'Jet';
+    else if (low.includes('avia')) enseigne = 'Avia';
+    else if (low.includes('turmöl') || low.includes('turmol')) enseigne = 'Turmöl';
+    else if (low.includes('aral')) enseigne = 'Aral';
+    else if (low.includes('esso')) enseigne = 'Esso';
+
+    knownIds.add(sid);
+    allStations.push({
+      id: sid,
+      pays: 'AT',
+      live: true,
+      enseigne,
+      nom: `${enseigne} ${formatProperName(item.location.city || '')}`.trim(),
+      autoroute: 'Route',
+      sens: 'Double sens',
+      adresse: item.location.address || '',
+      cp: item.location.postalCode || '',
+      ville: formatProperName(item.location.city || ''),
+      lat,
+      lon,
+      pk_text: null,
+      prix,
+      ruptures: [],
+      services: []
+    });
+    added++;
+  });
+
+  if (added > 0 && activeRouteData === route) {
+    populateBrandFilter();
+    processStationsOnRoute(route);
+  }
+}
+
+/**
+ * 3. COUVERTURE EUROPÉENNE UNIVERSELLE (IT, PT, GB, BE, NL, CH, LU, SI, HR)
+ * Comble automatiquement les tronçons secondaires / nationaux (> 35 km sans aire d'autoroute)
+ * via OpenStreetMap Overpass sans jamais altérer les stations autoroutières existantes.
+ */
+const EU_COUNTRY_BBOXES = [
+  { code: 'IT', minLat: 36.6, maxLat: 47.1, minLon: 6.6, maxLon: 18.6, avg: { gazole: 1.72, e10: 1.82, sp95: 1.82, sp98: 1.96, gplc: 0.74 } },
+  { code: 'PT', minLat: 36.9, maxLat: 42.2, minLon: -9.5, maxLon: -6.2, avg: { gazole: 1.62, e10: 1.74, sp95: 1.74, sp98: 1.89, gplc: 0.89 } },
+  { code: 'GB', minLat: 49.9, maxLat: 58.7, minLon: -6.5, maxLon: 1.8, avg: { gazole: 1.48, e10: 1.41, sp95: 1.41, sp98: 1.56 } },
+  { code: 'BE', minLat: 49.5, maxLat: 51.5, minLon: 2.5, maxLon: 6.4, avg: { gazole: 1.74, e10: 1.69, sp95: 1.69, sp98: 1.84, gplc: 0.76 } },
+  { code: 'NL', minLat: 50.75, maxLat: 53.55, minLon: 3.35, maxLon: 7.25, avg: { gazole: 1.82, e10: 2.02, sp95: 2.02, sp98: 2.18, gplc: 0.88 } },
+  { code: 'CH', minLat: 45.8, maxLat: 47.8, minLon: 5.95, maxLon: 10.5, devise: 'CHF', avg: { gazole: 1.89, e10: 1.78, sp95: 1.78, sp98: 1.91 } },
+  { code: 'LU', minLat: 49.44, maxLat: 50.19, minLon: 5.73, maxLon: 6.53, avg: { gazole: 1.52, e10: 1.54, sp95: 1.54, sp98: 1.66, gplc: 0.72 } },
+  { code: 'SI', minLat: 45.4, maxLat: 46.9, minLon: 13.38, maxLon: 16.6, avg: { gazole: 1.54, e10: 1.52, sp95: 1.52, sp98: 1.68, gplc: 0.85 } },
+  { code: 'HR', minLat: 42.4, maxLat: 46.55, minLon: 13.49, maxLon: 19.45, avg: { gazole: 1.48, e10: 1.51, sp95: 1.51, sp98: 1.69, gplc: 0.79 } }
+];
+
+function detectEuCountryForPoint(lat, lon) {
+  // Exclure France, Allemagne, Espagne, Autriche déjà gérées par leurs APIs nationales officielles
+  if (lat >= 42.3 && lat <= 51.1 && lon >= -5.2 && lon <= 8.2 && !(lat >= 49.44 && lat <= 50.19 && lon >= 5.73 && lon <= 6.53) && !(lat >= 45.8 && lat <= 47.8 && lon >= 5.95 && lon <= 10.5)) return null;
+  for (const b of EU_COUNTRY_BBOXES) {
+    if (lat >= b.minLat && lat <= b.maxLat && lon >= b.minLon && lon <= b.maxLon) return b;
+  }
+  return null;
+}
+
+async function maybeLoadEuropeanOsmCorridorStations(route, coords, cumDist) {
+  if (!route || route._euOsmCorridorRequested || !coords || coords.length < 2) return;
+  route._euOsmCorridorRequested = true;
+
+  // Repérer uniquement les zones de trajet hors FR/DE/ES/AT ayant un trou de couverture (> 35 km sans station)
+  const existingKms = (currentRouteStations || []).map(s => s.distOnRoute || 0).sort((a, b) => a - b);
+  const hasStationNearKm = (km) => existingKms.some(ek => Math.abs(ek - km) < 22);
+
+  const gapSamples = [];
+  let nextKm = 15;
+  for (let i = 0; i < coords.length; i++) {
+    const km = cumDist[i] || 0;
+    if (km < nextKm) continue;
+    const lon = coords[i][0], lat = coords[i][1];
+    const countryDef = detectEuCountryForPoint(lat, lon);
+    if (countryDef && !hasStationNearKm(km)) {
+      gapSamples.push({ lat, lon, countryDef });
+      nextKm = km + 45;
+      if (gapSamples.length >= 5) break;
+    } else {
+      nextKm = km + 25;
+    }
+  }
+  if (gapSamples.length === 0) return;
+
+  const clauses = gapSamples.map(s => `nwr["amenity"="fuel"](around:3000,${s.lat.toFixed(4)},${s.lon.toFixed(4)});`).join('');
+  const q = `[out:json][timeout:5];(${clauses});out center tags;`;
+
+  let elements = [];
+  for (const endpoint of ['https://overpass.kumi.systems/api/interpreter', 'https://overpass-api.de/api/interpreter']) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 5000);
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'data=' + encodeURIComponent(q),
+        signal: ctrl.signal
+      });
+      if (res.ok) {
+        const json = await res.json();
+        if (json && Array.isArray(json.elements) && json.elements.length > 0) {
+          elements = json.elements;
+          break;
+        }
+      }
+    } catch (e) {}
+    finally { clearTimeout(timer); }
+  }
+  if (elements.length === 0) return;
+
+  const knownIds = new Set(allStations.map(s => String(s.id)));
+  let added = 0;
+
+  elements.forEach(el => {
+    const lat = el.lat || (el.center && el.center.lat);
+    const lon = el.lon || (el.center && el.center.lon);
+    if (!lat || !lon || !el.tags) return;
+    const sid = `EU-OSM-${el.id}`;
+    if (knownIds.has(sid)) return;
+    // Déduplication stricte avec l'existant (< 350 m)
+    const nearAny = allStations.some(e => Math.abs(e.lat - lat) < 0.0032 && Math.abs(e.lon - lon) < 0.004);
+    if (nearAny) return;
+
+    const countryDef = detectEuCountryForPoint(lat, lon);
+    if (!countryDef) return;
+
+    const rawBrand = (el.tags.brand || el.tags.operator || el.tags.name || '').trim();
+    const city = (el.tags['addr:city'] || '').trim();
+    const enseigne = rawBrand ? formatProperName(rawBrand) : (city ? formatProperName(city) : 'Station');
+    const nom = (el.tags.name && el.tags.name.trim()) ? formatProperName(el.tags.name.trim()) : `${enseigne}${city ? ' ' + formatProperName(city) : ''}`;
+
+    knownIds.add(sid);
+    allStations.push({
+      id: sid,
+      pays: countryDef.code,
+      devise: countryDef.devise || 'EUR',
+      live: false,
+      estimated: true,
+      enseigne,
+      nom,
+      autoroute: 'Route',
+      sens: 'Double sens',
+      adresse: (el.tags['addr:street'] || '').trim(),
+      cp: (el.tags['addr:postcode'] || '').trim(),
+      ville: formatProperName(city),
+      lat,
+      lon,
+      pk_text: null,
+      prix: { ...countryDef.avg },
+      ruptures: [],
+      services: []
+    });
+    added++;
+  });
+
+  if (added > 0 && activeRouteData === route) {
+    populateBrandFilter();
+    processStationsOnRoute(route);
   }
 }
 
