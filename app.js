@@ -1276,7 +1276,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.26';
+const APP_VERSION = '9.9.27';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -6759,9 +6759,9 @@ function triggerStationVoiceAlert(st) {
 function formatFuelForSpeech(fuelKey, rawLabel) {
   if (currentLang === 'fr') {
     const frMap = {
-      e10: 'SP quatre-vingt-quinze E dix',
-      sp95: 'SP quatre-vingt-quinze',
-      sp98: 'SP quatre-vingt-dix-huit',
+      e10: 'sans plomb quatre-vingt-quinze E dix',
+      sp95: 'sans plomb quatre-vingt-quinze',
+      sp98: 'sans plomb quatre-vingt-dix-huit',
       e85: 'E quatre-vingt-cinq',
       gazole: 'gazole',
       gplc: 'GPL',
