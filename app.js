@@ -58,7 +58,8 @@ try {
   Object.defineProperty(window, 'updateActiveRoutePolylines', { get: () => updateActiveRoutePolylines, configurable: true });
 } catch(e) {}
 let selectedFuel = 'e10'; // Default to SP95
-let selectedBrand = 'all';
+let selectedBrands = new Set(); // Empty Set = all brands selected
+let lastBrandCounts = {};
 let currentSort = 'route'; // 'route', 'price', 'dist'
 let maxDistanceKm = 0.45; // 450m tolerance for highway service areas
 
@@ -3787,18 +3788,51 @@ function getActiveSearchCountries() {
   return [langCountryMap[currentLang] || 'FR'];
 }
 
-// Populate Brands Filter dropdown
+// Normalize station brand label consistently between dropdown & filtering
+function normalizeStationBrand(st) {
+  let b = (st && st.enseigne) ? st.enseigne : 'Indépendant';
+  if (b.startsWith('DELETE TAG')) b = 'TotalEnergies';
+  return b;
+}
+
+// Update the multi-select brand trigger button label & "All" checkbox state
+function updateBrandMultiSelectUI() {
+  const btn = document.getElementById('select-brand');
+  const labelEl = document.getElementById('brand-multiselect-label');
+  const allChk = document.getElementById('brand-opt-all');
+  const allLabel = document.getElementById('brand-opt-all-label');
+  const totalBrandCount = Object.keys(lastBrandCounts).length;
+  const allText = `${t().allBrands} (${totalBrandCount})`;
+
+  if (allLabel) allLabel.textContent = allText;
+  if (allChk) allChk.checked = (selectedBrands.size === 0);
+
+  if (labelEl) {
+    if (selectedBrands.size === 0) {
+      labelEl.textContent = allText;
+    } else if (selectedBrands.size === 1) {
+      const only = Array.from(selectedBrands)[0];
+      const cnt = lastBrandCounts[only];
+      labelEl.textContent = cnt ? `🏢 ${only} (${cnt})` : `🏢 ${only}`;
+    } else {
+      const list = Array.from(selectedBrands);
+      const preview = list.slice(0, 2).join(', ') + (list.length > 2 ? '…' : '');
+      labelEl.textContent = `🏢 ${list.length} : ${preview}`;
+    }
+  }
+  if (btn) {
+    btn.classList.toggle('has-selection', selectedBrands.size > 0);
+  }
+}
+
+// Populate Brands Multi-Select Filter
 // Dynamically adjusts: for an itinerary or search in a single country, strictly limits to brands available in that country!
 function populateBrandFilter() {
-  const brandSelect = document.getElementById('select-brand');
-  if (!brandSelect) return;
-  const currentVal = selectedBrand;
+  const listEl = document.getElementById('brand-multiselect-list');
+  if (!listEl) return;
 
   const activeCountries = getActiveSearchCountries();
 
-  // Determine station pool:
-  // If route stations exist, use them directly (they already match the route's countries)
-  // Otherwise, strictly filter all network stations by the active country/countries
   let pool = [];
   if (currentRouteStations && currentRouteStations.length > 0) {
     pool = currentRouteStations;
@@ -3809,23 +3843,33 @@ function populateBrandFilter() {
 
   const counts = {};
   pool.forEach(s => {
-    let b = s.enseigne || 'Indépendant';
-    if (b.startsWith('DELETE TAG')) b = 'TotalEnergies';
+    const b = normalizeStationBrand(s);
     counts[b] = (counts[b] || 0) + 1;
   });
+  lastBrandCounts = counts;
+
+  // Prune previously selected brands no longer present in the new route/country pool
+  for (const b of Array.from(selectedBrands)) {
+    if (!counts[b]) selectedBrands.delete(b);
+  }
 
   const sortedBrands = Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
-  let html = `<option value="all">${t().allBrands} (${sortedBrands.length})</option>`;
-  sortedBrands.forEach(b => {
-    const isSel = (b === currentVal) ? ' selected' : '';
-    html += `<option value="${b}"${isSel}>${b} (${counts[b]})</option>`;
-  });
-  brandSelect.innerHTML = html;
+  const esc = (str) => String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-  if (currentVal !== 'all' && !counts[currentVal]) {
-    selectedBrand = 'all';
-    brandSelect.value = 'all';
-  }
+  listEl.innerHTML = sortedBrands.map(b => {
+    const isChecked = selectedBrands.has(b);
+    return `
+      <label class="brand-multiselect-item${isChecked ? ' checked' : ''}">
+        <span class="brand-multiselect-item-left">
+          <input type="checkbox" class="brand-opt-chk" value="${esc(b)}"${isChecked ? ' checked' : ''}>
+          <span class="brand-multiselect-item-name">${esc(b)}</span>
+        </span>
+        <span class="brand-multiselect-item-count">${counts[b]}</span>
+      </label>
+    `;
+  }).join('');
+
+  updateBrandMultiSelectUI();
 }
 
 // Bilingual European Cities Index (instant support for English, French, Spanish & Italian names)
@@ -4878,10 +4922,75 @@ function setupEventListeners() {
     });
   });
 
-  // Brand dropdown
-  document.getElementById('select-brand').addEventListener('change', (e) => {
-    selectedBrand = e.target.value;
-    renderCurrentRouteStations();
+  // Brand multi-select dropdown
+  const brandWrap = document.getElementById('brand-multiselect');
+  const brandBtn = document.getElementById('select-brand');
+  const brandDoneBtn = document.getElementById('brand-multiselect-done');
+  const brandAllChk = document.getElementById('brand-opt-all');
+  const brandListEl = document.getElementById('brand-multiselect-list');
+
+  function closeBrandMultiSelect() {
+    if (!brandWrap) return;
+    brandWrap.classList.remove('open');
+    if (brandBtn) brandBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  if (brandBtn && brandWrap) {
+    brandBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const willOpen = !brandWrap.classList.contains('open');
+      brandWrap.classList.toggle('open', willOpen);
+      brandBtn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    });
+  }
+
+  if (brandDoneBtn) {
+    brandDoneBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeBrandMultiSelect();
+    });
+  }
+
+  if (brandAllChk) {
+    brandAllChk.addEventListener('change', () => {
+      selectedBrands.clear();
+      if (brandListEl) {
+        brandListEl.querySelectorAll('.brand-opt-chk').forEach(chk => {
+          chk.checked = false;
+          const row = chk.closest('.brand-multiselect-item');
+          if (row) row.classList.remove('checked');
+        });
+      }
+      updateBrandMultiSelectUI();
+      renderCurrentRouteStations();
+    });
+  }
+
+  if (brandListEl) {
+    brandListEl.addEventListener('change', (e) => {
+      const chk = e.target;
+      if (!chk || !chk.classList.contains('brand-opt-chk')) return;
+      const val = chk.value;
+      if (chk.checked) {
+        selectedBrands.add(val);
+      } else {
+        selectedBrands.delete(val);
+      }
+      const row = chk.closest('.brand-multiselect-item');
+      if (row) row.classList.toggle('checked', chk.checked);
+      updateBrandMultiSelectUI();
+      renderCurrentRouteStations();
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    if (brandWrap && brandWrap.classList.contains('open') && !brandWrap.contains(e.target)) {
+      closeBrandMultiSelect();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeBrandMultiSelect();
   });
 
   // Exit stations (< 1.5 km) toggle
@@ -6583,8 +6692,8 @@ function renderCurrentRouteStations() {
       return p !== null && p > 0;
     });
   }
-  if (selectedBrand !== 'all') {
-    filtered = filtered.filter(s => s.enseigne === selectedBrand);
+  if (selectedBrands.size > 0) {
+    filtered = filtered.filter(s => selectedBrands.has(normalizeStationBrand(s)));
   }
 
   // Find lowest price for selected fuel among candidate stations

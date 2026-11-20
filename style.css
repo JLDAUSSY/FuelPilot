@@ -6703,3 +6703,174 @@ header {
   font-weight: 700;
   cursor: pointer;
 }
+
+
+/* ==========================================================================
+   Multi-Select Brand Filter Dropdown (v9.9.31)
+   ========================================================================== */
+.brand-multiselect {
+  position: relative;
+  width: 100%;
+}
+
+.brand-multiselect-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: none !important;
+  padding-right: 10px !important;
+}
+
+.brand-multiselect-btn.has-selection {
+  border-color: rgba(56, 189, 248, 0.75) !important;
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.35);
+}
+
+.brand-multiselect-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.brand-multiselect-caret {
+  flex: 0 0 auto;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  transition: transform 0.18s ease;
+}
+
+.brand-multiselect.open .brand-multiselect-caret {
+  transform: rotate(180deg);
+  color: #38bdf8;
+}
+
+.brand-multiselect-panel {
+  display: none;
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  min-width: max(100%, 245px);
+  max-width: min(320px, 88vw);
+  max-height: 295px;
+  background: #0f172a;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  border-radius: 12px;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.72);
+  z-index: 2600;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+.brand-multiselect.open .brand-multiselect-panel {
+  display: flex;
+}
+
+.brand-multiselect-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  background: rgba(14, 165, 233, 0.14);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+  flex-shrink: 0;
+}
+
+.brand-multiselect-all-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  cursor: pointer;
+  flex: 1 1 auto;
+  min-width: 0;
+  user-select: none;
+}
+
+.brand-multiselect-all-row input[type="checkbox"],
+.brand-multiselect-item input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: #38bdf8;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.brand-multiselect-done {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.brand-multiselect-done:hover {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+}
+
+.brand-multiselect-list {
+  overflow-y: auto;
+  max-height: 242px;
+  padding: 4px 0;
+  overscroll-behavior: contain;
+}
+
+.brand-multiselect-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 11px;
+  font-size: 0.84rem;
+  color: #e2e8f0;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.12s ease;
+}
+
+.brand-multiselect-item:hover {
+  background: rgba(56, 189, 248, 0.12);
+}
+
+.brand-multiselect-item.checked {
+  background: rgba(14, 165, 233, 0.18);
+  color: #fff;
+  font-weight: 600;
+}
+
+.brand-multiselect-item-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.brand-multiselect-item-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.brand-multiselect-item-count {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 2px 7px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
