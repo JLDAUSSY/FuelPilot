@@ -1276,7 +1276,7 @@ function getStationOpeningStatus(st) {
 }
 
 // Initialize Application
-const APP_VERSION = '9.9.25';
+const APP_VERSION = '9.9.26';
 window.APP_VERSION = APP_VERSION;
 let userManuallySelectedLang = false;
 
@@ -6752,6 +6752,32 @@ function triggerStationVoiceAlert(st) {
   showToast(`🔔 ${msg}`, { isInfo: true, duration: 5000 });
 }
 
+/**
+ * Formate le nom du carburant pour une prononciation naturelle par la synthèse vocale
+ * (ex: "SP95-E10" -> "SP quatre-vingt-quinze E dix", "SP98" -> "SP quatre-vingt-dix-huit")
+ */
+function formatFuelForSpeech(fuelKey, rawLabel) {
+  if (currentLang === 'fr') {
+    const frMap = {
+      e10: 'SP quatre-vingt-quinze E dix',
+      sp95: 'SP quatre-vingt-quinze',
+      sp98: 'SP quatre-vingt-dix-huit',
+      e85: 'E quatre-vingt-cinq',
+      gazole: 'gazole',
+      gplc: 'GPL',
+      elec: 'point de recharge électrique'
+    };
+    if (frMap[fuelKey]) return frMap[fuelKey];
+  }
+  // Pour les autres langues : séparer lettres et chiffres (ex: "SP95-E10" -> "SP 95 E 10") pour une lecture naturelle des nombres
+  return String(rawLabel || fuelKey || '')
+    .replace(/([A-Za-zÀ-ÿ])(\d)/g, '$1 $2')
+    .replace(/(\d)([A-Za-zÀ-ÿ])/g, '$1 $2')
+    .replace(/[-/]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function toggleStationAlertSelection(stationId, checkboxEl) {
   const sid = String(stationId);
   if (selectedAlertStationIds.has(sid)) {
@@ -6773,14 +6799,16 @@ function toggleStationAlertSelection(stationId, checkboxEl) {
     if (st && selectedFuel && selectedFuel !== 'all' && (!fuelPrice || fuelPrice <= 0)) {
       const cfg = I18N_VOICE_ALERTS[currentLang] || I18N_VOICE_ALERTS.fr;
       const fuelLabel = getFuelLabel(selectedFuel, st.pays).replace(/^[⚡⛽]\s*/, '');
-      const warnMsg = cfg.unavailFuel(fuelLabel);
+      const spokenFuel = formatFuelForSpeech(selectedFuel, fuelLabel);
+      const warnMsgVisual = cfg.unavailFuel(fuelLabel);
+      const warnMsgSpoken = cfg.unavailFuel(spokenFuel);
       window._lastVoiceSpeechTimestamp = Date.now();
       // Si l'utilisateur est déjà à moins de 2,2 km de cette station, ne pas superposer l'annonce "Dans 2 km"
       if (userGpsPosition && getDistanceKm(userGpsPosition.lat, userGpsPosition.lon, st.lat, st.lon) <= 2.2) {
         triggeredAlertStationIds.add(sid);
       }
-      setTimeout(() => speakFuelAlertText(warnMsg), 260);
-      showToast(`⚠️ ${warnMsg}`, { isWarning: true, duration: 5500 });
+      setTimeout(() => speakFuelAlertText(warnMsgSpoken), 260);
+      showToast(`⚠️ ${warnMsgVisual}`, { isWarning: true, duration: 5500 });
     } else {
       showToast(`🔔 Alerte sonore 2 km activée (${selectedAlertStationIds.size}/${MAX_STATION_ALERTS})`, { isSuccess: true, duration: 2500 });
     }
