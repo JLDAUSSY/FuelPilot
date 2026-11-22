@@ -4847,7 +4847,7 @@ function applyGpsAsStartPoint(lat, lon, knownCity) {
   let displayName = knownCity ? `${baseName} (${knownCity})` : baseName;
 
   // 1. Remplir IMMÉDIATEMENT le champ pour réactivité instantanée (0ms)
-  startPoint = { coords: [lon, lat], label: displayName, isIpFallback: false };
+  startPoint = { coords: [lon, lat], label: displayName, isIpFallback: false, isCurrentPosition: true };
   if (startInput) {
     startInput.value = displayName;
     startInput.classList.remove('input-attention-pulse');
@@ -5053,7 +5053,8 @@ function applyPreset(startLabel, startCoords, endLabel, endCoords) {
     inStart.value = formattedStart; if (typeof updateAllClearButtons === 'function') updateAllClearButtons();
     inStart.classList.remove('input-attention-pulse');
   }
-  startPoint = { coords: startCoords, label: formattedStart };
+  isWaitingGpsForStart = false;
+  startPoint = { coords: startCoords, label: formattedStart, isCurrentPosition: false };
 
   const inEnd = document.getElementById('input-arrivee') || document.getElementById('input-end');
   if (inEnd) {
@@ -5260,9 +5261,18 @@ function addWaypointInput() {
 async function calculateItinerary(options = {}) {
   const isAutoRecalc = !!(options && options.isAutoRecalc);
   if (!isAutoRecalc) {
+    isWaitingGpsForStart = false;
     hasSeenListTabAfterRoute = false;
     selectedAlertStationIds.clear();
     triggeredAlertStationIds.clear();
+    offRouteConsecutiveCount = 0;
+    userProgressionKmOnRoute = 0;
+    lastRenderedProgressionKm = -1;
+    if (isGpsNavActive) {
+      isGpsNavActive = false;
+      releaseNavWakeLock();
+      updateNavButtonUI();
+    }
   }
   const startInput = document.getElementById('input-start');
   const endInput = document.getElementById('input-end');
@@ -8281,7 +8291,7 @@ function formatGeolocationErrorMessage(err) {
  * Recalcul automatique de l'itinéraire lorsque le conducteur s'écarte du tracé (> 400 m)
  */
 async function triggerOffRouteRecalculation(latitude, longitude) {
-  if (isAutoRecalculatingRoute || !endPoint || !endPoint.coords) return;
+  if (!isGpsNavActive || isAutoRecalculatingRoute || !endPoint || !endPoint.coords) return;
   isAutoRecalculatingRoute = true;
   lastAutoRecalcTimestamp = Date.now();
   offRouteConsecutiveCount = 0;
@@ -8289,7 +8299,7 @@ async function triggerOffRouteRecalculation(latitude, longitude) {
   showToast('🔄 Écart détecté : recalcul de l\'itinéraire...', { isInfo: true, duration: 3500 });
 
   const cityLabel = (userGpsPosition && userGpsPosition.city) ? `Ma position actuelle (${userGpsPosition.city})` : 'Ma position actuelle';
-  startPoint = { coords: [longitude, latitude], label: cityLabel, isIpFallback: false };
+  startPoint = { coords: [longitude, latitude], label: cityLabel, isIpFallback: false, isCurrentPosition: true };
   const startInp = document.getElementById('input-start');
   if (startInp) startInp.value = cityLabel;
 
@@ -8336,7 +8346,7 @@ function updateUserProgressionOnRoute(latitude, longitude) {
   const offRouteThresholdKm = (speedKmh >= 70 && routeTotalKm >= 30) ? 0.20 : 0.09;
   const distToDestKm = (endPoint && endPoint.coords) ? getDistanceKm(latitude, longitude, endPoint.coords[1], endPoint.coords[0]) : 999;
 
-  if (minDist > offRouteThresholdKm && endPoint && endPoint.coords && distToDestKm > 0.15) {
+  if (isGpsNavActive && minDist > offRouteThresholdKm && endPoint && endPoint.coords && distToDestKm > 0.15) {
     offRouteConsecutiveCount++;
     const isLargeDeviation = minDist > 0.25;
     if ((offRouteConsecutiveCount >= 2 || isLargeDeviation) && (Date.now() - lastAutoRecalcTimestamp > 7000) && !isAutoRecalculatingRoute) {
@@ -8845,9 +8855,53 @@ function getCachedUserPosition() { return null; }
 function saveCachedUserPosition() {}
 function initPermanentGpsTracking() { startGpsWatch(true); }
 
+function isRouteFromCurrentPosition() {
+  if (!startPoint || !startPoint.coords) return false;
+  if (startPoint.isCurrentPosition === true) return true;
+  const lbl = (startPoint.label || '').toLowerCase();
+  const curLbl = (t().currentPos || 'Ma position actuelle').replace(/^📍\s*/, '').toLowerCase();
+  if (lbl.includes('ma position actuelle') || (curLbl && lbl.includes(curLbl))) return true;
+  let refLat = userGpsPosition ? userGpsPosition.lat : null;
+  let refLon = userGpsPosition ? userGpsPosition.lon : null;
+  if (refLat === null || refLon === null) {
+    try {
+      const sl = parseFloat(localStorage.getItem('fuelpilot_last_lat'));
+      const so = parseFloat(localStorage.getItem('fuelpilot_last_lon'));
+      if (!isNaN(sl) && !isNaN(so)) { refLat = sl; refLon = so; }
+    } catch (e) {}
+  }
+  if (refLat !== null && refLon !== null) {
+    const distStartToUserKm = getDistanceKm(refLat, refLon, startPoint.coords[1], startPoint.coords[0]);
+    return distStartToUserKm <= 3.0;
+  }
+  return false;
+}
+
+function getNavRequiresCurrentPosVoiceMsg() {
+  const mapMsg = {
+    fr: "Cette fonction n'est activable que pour un itinéraire au départ de votre position.",
+    en: "This feature can only be activated for a route starting from your current location.",
+    de: "Diese Funktion kann nur für eine Route ab Ihrem aktuellen Standort aktiviert werden.",
+    it: "Questa funzione è attivabile solo per un percorso in partenza dalla tua posizione.",
+    es: "Esta función solo se puede activar para una ruta que parta desde tu ubicación actual.",
+    nl: "Deze functie kan alleen worden geactiveerd voor een route vanaf uw huidige locatie.",
+    pt: "Esta função só pode ser ativada para um percurso a partir da sua localização atual.",
+    sl: "To funkcijo je mogoče aktivirati samo za pot z izhodiščem na vaši trenutni lokaciji.",
+    hr: "Ovu funkciju moguće je aktivirati samo za rutu koja kreće s vaše trenutne lokacije."
+  };
+  return mapMsg[currentLang] || mapMsg.fr;
+}
+
 function startGpsNavigation() {
   if (!activeRouteData) {
     alert(t().alertMissingPoints || "Veuillez d'abord calculer un itinéraire.");
+    return;
+  }
+
+  if (!isRouteFromCurrentPosition()) {
+    const msg = getNavRequiresCurrentPosVoiceMsg();
+    speakFuelAlertText(msg);
+    showToast(`⚠️ ${msg}`, { isWarning: true, duration: 5500 });
     return;
   }
 
