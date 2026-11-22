@@ -6101,6 +6101,7 @@ function processStationsOnRoute(route) {
   maybeLoadFrenchCorridorStations(route, coords, cumDist);
   maybeLoadSpainCorridorStations(route, coords);
   maybeLoadAustriaCorridorStations(route, coords, cumDist);
+  maybeLoadUkCorridorStations(route, coords);
   maybeLoadEuropeanOsmCorridorStations(route, coords, cumDist);
 }
 
@@ -6545,16 +6546,72 @@ function detectEuCountryForPoint(lat, lon) {
   return null;
 }
 
+let ukCorridorLoaded = false;
+let ukCorridorLoadingPromise = null;
+
+async function maybeLoadUkCorridorStations(route, coords) {
+  if (!route || route._ukCorridorRequested || !coords || coords.length < 2) return;
+  const inUk = (lat, lon) => lat >= 49.8 && lat <= 60.9 && lon >= -8.3 && lon <= 1.85;
+  let crossesUk = false;
+  const step = Math.max(1, Math.floor(coords.length / 80));
+  for (let i = 0; i < coords.length; i += step) {
+    if (inUk(coords[i][1], coords[i][0])) { crossesUk = true; break; }
+  }
+  if (!crossesUk) return;
+  route._ukCorridorRequested = true;
+
+  if (ukCorridorLoaded) return;
+  if (!ukCorridorLoadingPromise) {
+    ukCorridorLoadingPromise = fetch('stations_uk.json?v=9.9.34')
+      .then(r => r.ok ? r.json() : [])
+      .catch(() => []);
+  }
+  const ukStations = await ukCorridorLoadingPromise;
+  if (!Array.isArray(ukStations) || ukStations.length === 0) return;
+
+  ukCorridorLoaded = true;
+  const existingIds = new Set(allStations.map(s => String(s.id)));
+  const existingGb = allStations.filter(s => s.pays === 'GB');
+  let added = 0;
+  let enriched = 0;
+
+  ukStations.forEach(st => {
+    if (!st || !st.id || typeof st.lat !== 'number' || typeof st.lon !== 'number') return;
+    if (existingIds.has(String(st.id))) return;
+
+    // Si une aire autoroutière UK existante est à < 350 m, enrichir ses prix live en £
+    const nearMsa = existingGb.find(e => Math.abs(e.lat - st.lat) < 0.0032 && Math.abs(e.lon - st.lon) < 0.0045);
+    if (nearMsa) {
+      if (st.prix && Object.keys(st.prix).length > 0) {
+        nearMsa.prix = Object.assign({}, nearMsa.prix || {}, st.prix);
+        nearMsa.live = true;
+        if (st.maj) nearMsa.maj = st.maj;
+        enriched++;
+      }
+      return;
+    }
+
+    existingIds.add(String(st.id));
+    allStations.push(st);
+    added++;
+  });
+
+  if ((added > 0 || enriched > 0) && activeRouteData === route) {
+    populateBrandFilter();
+    processStationsOnRoute(route);
+  }
+}
+
 async function maybeLoadEuropeanOsmCorridorStations(route, coords, cumDist) {
   if (!route || route._euOsmCorridorRequested || !coords || coords.length < 2) return;
   route._euOsmCorridorRequested = true;
 
-  // Repérer uniquement les zones de trajet hors FR/DE/ES/AT ayant un trou de couverture (> 35 km sans station)
+  // Repérer les zones de trajet hors FR/DE/ES/AT ayant un trou de couverture (> 18 km sans station)
   const existingKms = (currentRouteStations || []).map(s => s.distOnRoute || 0).sort((a, b) => a - b);
-  const hasStationNearKm = (km) => existingKms.some(ek => Math.abs(ek - km) < 22);
+  const hasStationNearKm = (km) => existingKms.some(ek => Math.abs(ek - km) < 18);
 
   const gapSamples = [];
-  let nextKm = 15;
+  let nextKm = 12;
   for (let i = 0; i < coords.length; i++) {
     const km = cumDist[i] || 0;
     if (km < nextKm) continue;
@@ -6562,21 +6619,21 @@ async function maybeLoadEuropeanOsmCorridorStations(route, coords, cumDist) {
     const countryDef = detectEuCountryForPoint(lat, lon);
     if (countryDef && !hasStationNearKm(km)) {
       gapSamples.push({ lat, lon, countryDef });
-      nextKm = km + 45;
-      if (gapSamples.length >= 5) break;
+      nextKm = km + 28;
+      if (gapSamples.length >= 10) break;
     } else {
-      nextKm = km + 25;
+      nextKm = km + 20;
     }
   }
   if (gapSamples.length === 0) return;
 
-  const clauses = gapSamples.map(s => `nwr["amenity"="fuel"](around:3000,${s.lat.toFixed(4)},${s.lon.toFixed(4)});`).join('');
-  const q = `[out:json][timeout:5];(${clauses});out center tags;`;
+  const clauses = gapSamples.map(s => `nwr["amenity"="fuel"](around:2500,${s.lat.toFixed(4)},${s.lon.toFixed(4)});`).join('');
+  const q = `[out:json][timeout:8];(${clauses});out center tags;`;
 
   let elements = [];
   for (const endpoint of ['https://overpass.kumi.systems/api/interpreter', 'https://overpass-api.de/api/interpreter']) {
     const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), 5000);
+    const timer = setTimeout(() => ctrl.abort(), 8000);
     try {
       const res = await fetch(endpoint, {
         method: 'POST',
