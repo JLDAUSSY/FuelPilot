@@ -183,17 +183,20 @@ function setMobileView(view) {
       mapBar.style.zIndex = '1950';
       ensureMobileNavBarVisible();
     }
-    setTimeout(() => {
-      if (map) {
-        map.invalidateSize();
-        // If navigation is active, preserve follow zoom on car
-        if (isGpsNavActive && userGpsPosition) {
-          safeMapPanTo(userGpsPosition.lat, userGpsPosition.lon, Math.max(map.getZoom(), 15));
-        } else if (!map._popup || !map._popup.isOpen()) {
-          fitMapToRouteAndStations();
-        }
+    const refitAfterMapVisible = () => {
+      if (!map) return;
+      map.invalidateSize(true);
+      // If navigation is active, preserve follow zoom on car
+      if (isGpsNavActive && userGpsPosition) {
+        safeMapPanTo(userGpsPosition.lat, userGpsPosition.lon, Math.max(map.getZoom(), 15));
+      } else if (activeRouteData && (!map._popup || !map._popup.isOpen())) {
+        isGpsAutoFollow = false;
+        updateLocateButtonNavState();
+        fitMapToRouteAndStations();
       }
-    }, 150);
+    };
+    requestAnimationFrame(refitAfterMapVisible);
+    setTimeout(refitAfterMapVisible, 160);
   } else {
     document.body.classList.remove('mobile-view-map');
     document.body.classList.add('mobile-view-list');
@@ -5607,7 +5610,12 @@ function selectRoute(routeIndex, options = {}) {
   activeRouteData = alternativeRoutes[routeIndex];
   userProgressionKmOnRoute = 0;
   lastRenderedProgressionKm = -1;
-  window._skipNextRouteFitBounds = !!(options && options.skipFitBounds);
+  const skipFit = !!(options && options.skipFitBounds);
+  window._skipNextRouteFitBounds = skipFit;
+  if (!skipFit && !isGpsNavActive) {
+    isGpsAutoFollow = false;
+    updateLocateButtonNavState();
+  }
 
   // Update active state in sidebar cards and map floating pills
   document.querySelectorAll('.route-card').forEach((c, idx) => {
@@ -5728,7 +5736,7 @@ function drawRoutesOnMap(activeIdx) {
   }
 }
 
-// Fit map to show the entire route, alternative routes, departure, arrival, and all stations along it
+// Fit map to maximize the selected route on screen (phone & desktop)
 function fitMapToRouteAndStations() {
   if (!map) return;
   if (window._skipNextRouteFitBounds) {
@@ -5738,24 +5746,15 @@ function fitMapToRouteAndStations() {
 
   const bounds = L.latLngBounds();
 
-  // Include user's current GPS position if available
-  if (userGpsPosition && userGpsPosition.lat && userGpsPosition.lon) {
-    bounds.extend([userGpsPosition.lat, userGpsPosition.lon]);
-  }
-
-  // Include all routes (active + alternatives) so the whole comparison is visible on screen
-  if (alternativeRoutes && alternativeRoutes.length > 0) {
-    alternativeRoutes.forEach(r => {
-      (r.geometry?.coordinates || []).forEach(c => bounds.extend([c[1], c[0]]));
-    });
-  } else if (activeRouteData && activeRouteData.geometry && activeRouteData.geometry.coordinates) {
+  // Fit strictly to the ACTIVE selected route (do NOT include distant user GPS or non-selected alternatives)
+  if (activeRouteData && activeRouteData.geometry && activeRouteData.geometry.coordinates && activeRouteData.geometry.coordinates.length > 0) {
     activeRouteData.geometry.coordinates.forEach(c => bounds.extend([c[1], c[0]]));
   } else if (startPoint && startPoint.coords && endPoint && endPoint.coords) {
     bounds.extend([startPoint.coords[1], startPoint.coords[0]]);
     bounds.extend([endPoint.coords[1], endPoint.coords[0]]);
   }
 
-  // Also include all station coordinates
+  // Also include stations matched along the active route
   if (currentRouteStations && currentRouteStations.length > 0) {
     currentRouteStations.forEach(st => {
       if (st.lat && st.lon) bounds.extend([st.lat, st.lon]);
@@ -5763,10 +5762,16 @@ function fitMapToRouteAndStations() {
   }
 
   if (bounds.isValid()) {
+    const sz = map.getSize();
+    if (sz && sz.x > 0 && sz.y > 0) {
+      map.invalidateSize(false);
+    }
     const isMobile = window.innerWidth <= 1080;
+    const mapBar = document.getElementById('map-routes-bar');
+    const hasRoutesBar = !!(mapBar && mapBar.style.display !== 'none' && alternativeRoutes && alternativeRoutes.length > 1);
     const paddingOptions = isMobile
-      ? { paddingTopLeft: [45, 25], paddingBottomRight: [25, 135], maxZoom: 15, animate: false }
-      : { padding: [50, 50], maxZoom: 15, animate: false };
+      ? { paddingTopLeft: [16, 20], paddingBottomRight: [16, hasRoutesBar ? 112 : 82], maxZoom: 15, animate: false }
+      : { padding: [36, 36], maxZoom: 15, animate: false };
 
     map.fitBounds(bounds, paddingOptions);
     if (coveredCountriesLayer) coveredCountriesLayer.bringToBack();
