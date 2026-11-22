@@ -4004,7 +4004,26 @@ const BILINGUAL_CITIES_INDEX = [
   { names: ['Aachen', 'Aix-la-Chapelle', 'Aquisgrana'], display: 'Aachen (Aix-la-Chapelle)', country: 'Allemagne', flag: '🇩🇪', coords: [6.0839, 50.7753] },
   { names: ['Saarbrücken', 'Saarbrucken', 'Sarrebruck'], display: 'Saarbrücken (Sarrebruck)', country: 'Allemagne', flag: '🇩🇪', coords: [6.9969, 49.2402] },
   { names: ['Ulm'], display: 'Ulm', country: 'Allemagne', flag: '🇩🇪', coords: [9.9876, 48.4011] },
-  { names: ['Augsburg', 'Augsbourg', 'Augusta'], display: 'Augsburg (Augsbourg)', country: 'Allemagne', flag: '🇩🇪', coords: [10.8978, 48.3705] }
+  { names: ['Augsburg', 'Augsbourg', 'Augusta'], display: 'Augsburg (Augsbourg)', country: 'Allemagne', flag: '🇩🇪', coords: [10.8978, 48.3705] },
+
+  // Major UK Regional Cities
+  { names: ['Derby'], display: 'Derby', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.4746, 52.9225] },
+  { names: ['Nottingham'], display: 'Nottingham', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.1581, 52.9548] },
+  { names: ['Leicester'], display: 'Leicester', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.1398, 52.6369] },
+  { names: ['Sheffield'], display: 'Sheffield', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.4701, 53.3811] },
+  { names: ['York'], display: 'York', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.0803, 53.9591] },
+  { names: ['Oxford'], display: 'Oxford', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.2577, 51.7520] },
+  { names: ['Cambridge'], display: 'Cambridge', country: 'Royaume-Uni', flag: '🇬🇧', coords: [0.1218, 52.2053] },
+  { names: ['Coventry'], display: 'Coventry', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.5197, 52.4068] },
+  { names: ['Southampton'], display: 'Southampton', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.4044, 50.9097] },
+  { names: ['Portsmouth'], display: 'Portsmouth', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-1.0880, 50.8198] },
+  { names: ['Plymouth'], display: 'Plymouth', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-4.1427, 50.3755] },
+  { names: ['Exeter'], display: 'Exeter', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-3.5339, 50.7184] },
+  { names: ['Reading'], display: 'Reading', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-0.9781, 51.4543] },
+  { names: ['Norwich'], display: 'Norwich', country: 'Royaume-Uni', flag: '🇬🇧', coords: [1.2974, 52.6309] },
+  { names: ['Swansea'], display: 'Swansea', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-3.9436, 51.6214] },
+  { names: ['Aberdeen'], display: 'Aberdeen', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-2.0943, 57.1497] },
+  { names: ['Belfast'], display: 'Belfast', country: 'Royaume-Uni', flag: '🇬🇧', coords: [-5.9301, 54.5973] }
 ];
 
 async function searchLocationsBilingual(q) {
@@ -4059,8 +4078,9 @@ async function searchLocationsBilingual(q) {
 
   const euroBbox = '-11.0,35.0,19.5,61.0';
   const banBias = hasRefPos ? `&lat=${refLat.toFixed(4)}&lon=${refLon.toFixed(4)}` : '';
-  const photonBias = hasRefPos ? `&lat=${refLat.toFixed(4)}&lon=${refLon.toFixed(4)}&location_bias_scale=0.15` : '';
-  const nomViewbox = hasRefPos ? `&viewbox=${(refLon - 0.5).toFixed(3)},${(refLat + 0.5).toFixed(3)},${(refLon + 0.5).toFixed(3)},${(refLat - 0.5).toFixed(3)}` : '';
+  // Pour une recherche précise (rue/POI), biaiser vers le GPS; pour une recherche de ville seule, ne pas masquer les villes européennes éloignées
+  const photonBias = (hasRefPos && isSpecificSearch) ? `&lat=${refLat.toFixed(4)}&lon=${refLon.toFixed(4)}&location_bias_scale=0.15` : '';
+  const nomViewbox = (hasRefPos && isSpecificSearch) ? `&viewbox=${(refLon - 0.5).toFixed(3)},${(refLat + 0.5).toFixed(3)},${(refLon + 0.5).toFixed(3)},${(refLat - 0.5).toFixed(3)}` : '';
 
   const queriesToRun = [
     fetchWithTimeout(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(q)}&limit=6${banBias}`, {}, 2200),
@@ -4095,15 +4115,18 @@ async function searchLocationsBilingual(q) {
 
   const addResultIfUnique = (item) => {
     const itemNameNorm = (item.cleanName || '').toLowerCase().trim();
-    const isDup = results.some(r => {
+    const existingIdx = results.findIndex(r => {
       const rNameNorm = (r.cleanName || '').toLowerCase().trim();
       const sameName = rNameNorm === itemNameNorm;
+      const sameArea = Math.abs(r.coords[0] - item.coords[0]) < 0.12 && Math.abs(r.coords[1] - item.coords[1]) < 0.12;
       const veryClose = Math.abs(r.coords[0] - item.coords[0]) < 0.00025 && Math.abs(r.coords[1] - item.coords[1]) < 0.00025;
       const sharesWord = rNameNorm.split(/\W+/).some(w => w.length >= 4 && itemNameNorm.includes(w));
-      return sameName || (veryClose && sharesWord);
+      return (sameName && sameArea) || (veryClose && sharesWord);
     });
-    if (!isDup) {
+    if (existingIdx === -1) {
       results.push(item);
+    } else if ((item.priority || 0) > (results[existingIdx].priority || 0)) {
+      results[existingIdx] = item;
     }
   };
 
@@ -4292,7 +4315,9 @@ async function searchLocationsBilingual(q) {
         priority = (isSpecificSearch ? 105 : 55) + (allTokensMatched ? 20 : 0);
       } else if (isCity) {
         const isExactCity = mainName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '') === qNorm;
-        priority = (isSpecificSearch ? 45 : (isExactCity ? 135 : 80)) + (allTokensMatched ? 15 : -10);
+        const osmVal = (p.osm_value || p.type || '').toLowerCase();
+        const sizeBoost = osmVal === 'city' ? 25 : (osmVal === 'town' ? 10 : (osmVal === 'village' || osmVal === 'hamlet' ? -18 : 0));
+        priority = (isSpecificSearch ? 45 : (isExactCity ? 135 : 80)) + sizeBoost + (allTokensMatched ? 15 : -10);
       }
       if (isCoveredCountry) priority += 15;
 
@@ -4365,7 +4390,10 @@ async function searchLocationsBilingual(q) {
         priority = (isSpecificSearch ? 102 : 55) + (allTokensMatched ? 20 : 0);
       } else if (isCity) {
         const isExactCity = (it.name || cleanName).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '') === qNorm;
-        priority = (isSpecificSearch ? 45 : (isExactCity ? 135 : 75)) + (allTokensMatched ? 15 : -10);
+        const impBoost = Math.min(55, Math.round((parseFloat(it.importance) || 0) * 65));
+        const addrType = (it.addresstype || it.type || '').toLowerCase();
+        const citySizeBoost = addrType === 'city' ? 25 : (addrType === 'town' ? 10 : (addrType === 'village' || addrType === 'hamlet' ? -15 : 0));
+        priority = (isSpecificSearch ? 45 : (isExactCity ? 135 : 75)) + impBoost + citySizeBoost + (allTokensMatched ? 15 : -10);
       }
       if (isCoveredCountry) priority += 15;
 
