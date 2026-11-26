@@ -212,6 +212,9 @@ function setMobileView(view) {
       mapBar.style.display = 'none';
     }
   }
+  if (typeof updateNextAlertCountdownHud === 'function') {
+    updateNextAlertCountdownHud();
+  }
 }
 
 // Official fuel denominations per country (Government open-data registries: FR, DE, ES, IT, GB)
@@ -5296,6 +5299,8 @@ async function calculateItinerary(options = {}) {
     hasSeenListTabAfterRoute = false;
     selectedAlertStationIds.clear();
     triggeredAlertStationIds.clear();
+    if (typeof triggeredAlert400mStationIds !== 'undefined') triggeredAlert400mStationIds.clear();
+    if (typeof updateNextAlertCountdownHud === 'function') updateNextAlertCountdownHud();
     offRouteConsecutiveCount = 0;
     userProgressionKmOnRoute = 0;
     lastRenderedProgressionKm = -1;
@@ -5954,6 +5959,23 @@ function processStationsOnRoute(route) {
   });
   const bboxPad = 0.03; // ~3 km margin
 
+  // Détecter si le trajet est un itinéraire autoroutier (A1..A999, AP-, M1..M99, E19..E411, Autobahn/Autoroute...)
+  let motorwayDistM = 0;
+  const routeTotalM = route.distance || (totalKm * 1000) || 0;
+  if (Array.isArray(route.legs)) {
+    route.legs.forEach(leg => {
+      (leg.steps || []).forEach(step => {
+        const ref = String(step.ref || '');
+        const name = String(step.name || '');
+        if (/\b(A\s?\d{1,3}|AP-?\d{1,2}|M\s?\d{1,2}|E\s?\d{2,3})\b/i.test(ref) ||
+            /autoroute|autobahn|autostrad|autopista|autoestrada|motorway|snelweg/i.test(name)) {
+          motorwayDistM += (step.distance || 0);
+        }
+      });
+    });
+  }
+  const isMotorwayRoute = (motorwayDistM >= 15000) || (routeTotalM > 0 && (motorwayDistM / routeTotalM) >= 0.20);
+
   const matched = [];
 
   allStations.forEach(s => {
@@ -5990,8 +6012,16 @@ function processStationsOnRoute(route) {
     const includeExit = Boolean(exitStationsChk && exitStationsChk.checked);
     const isServiceArea = Boolean(
       s.pk || s.pk_text ||
-      /aire|área|area|vzp|verzorgingsplaats|snelweg|rastst|autobahn|autostrad|autoestrad|services|msa/i.test(s.nom || '') ||
-      /aire|área|area|vzp|verzorgingsplaats|snelweg|rastst|autobahn|autostrad|autoestrad|services|msa/i.test(s.adresse || '')
+      (s.autoroute && s.autoroute !== 'Route' && /\b(A\d+|AP-?\d+|M\d+|E\d+|M\/A)\b/i.test(s.autoroute)) ||
+      (s.autoroute !== 'Route' && (
+        /aire|área|area|vzp|verzorgingsplaats|snelweg|rastst|autobahn|autostrad|autoestrad|services|msa/i.test(s.nom || '') ||
+        /aire|área|area|vzp|verzorgingsplaats|snelweg|rastst|autobahn|autostrad|autoestrad|services|msa/i.test(s.adresse || '')
+      ))
+    );
+    const isRoadsideNonHighway = Boolean(
+      s.is_exit_station ||
+      s.autoroute === 'Route' ||
+      (!isServiceArea && (!s.autoroute || /^(FR-|FR-CORR-|ES-CORR-|AT-LIVE-|EU-OSM-|UK-CMA-)/.test(String(s.id || ''))))
     );
     const isExitCandidate = Boolean(s.is_exit_station || !isServiceArea);
     
@@ -5999,7 +6029,11 @@ function processStationsOnRoute(route) {
     const stationToleranceKm = includeExit ? 1.80 : (s.pays === 'GB' ? 0.95 : maxDistanceKm);
 
     if (minDist <= stationToleranceKm) {
-      const isExit = Boolean(isExitCandidate && (minDist > 0.35 || s.is_exit_station));
+      // Sur un trajet autoroutier, exclure strictement les stations hors autoroute si "Stations à la sortie" n'est pas coché
+      if (!includeExit && isMotorwayRoute && isRoadsideNonHighway) {
+        return;
+      }
+      const isExit = Boolean(isExitCandidate && (minDist > 0.35 || s.is_exit_station || (isMotorwayRoute && isRoadsideNonHighway)));
       if (!includeExit && isExit) {
         return; // Exclude exit stations when user has not checked the toggle
       }
@@ -6101,6 +6135,7 @@ function processStationsOnRoute(route) {
   window.currentRouteStations = currentRouteStations;
   populateBrandFilter();
   renderCurrentRouteStations();
+  if (typeof updateNextAlertCountdownHud === 'function') updateNextAlertCountdownHud();
   fitMapToRouteAndStations();
   maybeLoadGermanLivePrices(route, coords, cumDist);
   maybeLoadFrenchCorridorStations(route, coords, cumDist);
@@ -7244,60 +7279,70 @@ function formatPinBrandLabel(st) {
 const MAX_STATION_ALERTS = 3;
 let selectedAlertStationIds = new Set();
 let triggeredAlertStationIds = new Set();
+let triggeredAlert400mStationIds = new Set();
 
 const I18N_VOICE_ALERTS = {
   fr: {
     lang: 'fr-FR',
     kicker: 'Alerte carburant imminente (2 km)',
     alert: (name) => `Dans 2 kilomètres, vous arriverez à la station ${name}.`,
+    alert400m: (name) => `Dans 400 mètres, vous arriverez à la station ${name}.`,
     unavailFuel: (fuel) => `Attention, le ${fuel} pourrait ne pas être disponible aujourd'hui dans cette station.`
   },
   en: {
     lang: 'en-GB',
     kicker: 'Upcoming fuel alert (2 km)',
     alert: (name) => `In 2 kilometers, you will arrive at ${name} station.`,
+    alert400m: (name) => `In 400 meters, you will arrive at ${name} station.`,
     unavailFuel: (fuel) => `Warning, ${fuel} may not be available today at this station.`
   },
   de: {
     lang: 'de-DE',
     kicker: 'Tankstellen-Warnung (2 km)',
     alert: (name) => `In 2 Kilometern erreichen Sie die Tankstelle ${name}.`,
+    alert400m: (name) => `In 400 Metern erreichen Sie die Tankstelle ${name}.`,
     unavailFuel: (fuel) => `Achtung, ${fuel} ist heute an dieser Tankstelle möglicherweise nicht verfügbar.`
   },
   it: {
     lang: 'it-IT',
     kicker: 'Avviso carburante imminente (2 km)',
     alert: (name) => `Tra 2 chilometri arriverai alla stazione ${name}.`,
+    alert400m: (name) => `Tra 400 metri arriverai alla stazione ${name}.`,
     unavailFuel: (fuel) => `Attenzione, ${fuel} potrebbe non essere disponibile oggi in questa stazione.`
   },
   es: {
     lang: 'es-ES',
     kicker: 'Alerta de gasolinera inminente (2 km)',
     alert: (name) => `En 2 kilómetros, llegará a la estación ${name}.`,
+    alert400m: (name) => `En 400 metros, llegará a la estación ${name}.`,
     unavailFuel: (fuel) => `Atención, ${fuel} podría no estar disponible hoy en esta estación.`
   },
   nl: {
     lang: 'nl-NL',
     kicker: 'Tankstation melding (2 km)',
     alert: (name) => `Over 2 kilometer komt u aan bij het tankstation ${name}.`,
+    alert400m: (name) => `Over 400 meter komt u aan bij het tankstation ${name}.`,
     unavailFuel: (fuel) => `Let op, ${fuel} is vandaag mogelijk niet beschikbaar bij dit tankstation.`
   },
   pt: {
     lang: 'pt-PT',
     kicker: 'Alerta de posto iminente (2 km)',
     alert: (name) => `Em 2 quilómetros chegará à estação ${name}.`,
+    alert400m: (name) => `Em 400 metros chegará à estação ${name}.`,
     unavailFuel: (fuel) => `Atenção, ${fuel} pode não estar disponível hoje nesta estação.`
   },
   sl: {
     lang: 'sl-SI',
     kicker: 'Opozorilo za črpalko (2 km)',
     alert: (name) => `Čez 2 kilometra boste prispeli do črpalke ${name}.`,
+    alert400m: (name) => `Čez 400 metrov boste prispeli do črpalke ${name}.`,
     unavailFuel: (fuel) => `Pozor, ${fuel} danes morda ni na voljo na tej črpalki.`
   },
   hr: {
     lang: 'hr-HR',
     kicker: 'Upozorenje za postaju (2 km)',
     alert: (name) => `Za 2 kilometra stižete na postaju ${name}.`,
+    alert400m: (name) => `Za 400 metara stižete na postaju ${name}.`,
     unavailFuel: (fuel) => `Pažnja, ${fuel} danas možda nije dostupan na ovoj postaji.`
   }
 };
@@ -7350,7 +7395,7 @@ function speakFuelAlertText(text) {
   } catch (e) {}
 }
 
-function triggerStationVoiceAlert(st) {
+function triggerStationVoiceAlert(st, stage = '2km') {
   if (!st) return;
   const cfg = I18N_VOICE_ALERTS[currentLang] || I18N_VOICE_ALERTS.fr;
   const brand = formatPinBrandLabel(st);
@@ -7358,7 +7403,10 @@ function triggerStationVoiceAlert(st) {
   const spokenName = (!cleanName || cleanName.toLowerCase().includes(brand.toLowerCase()))
     ? (cleanName || brand)
     : `${brand} ${cleanName}`;
-  const msg = cfg.alert(spokenName);
+  const msg = (stage === '400m' && typeof cfg.alert400m === 'function')
+    ? cfg.alert400m(spokenName)
+    : cfg.alert(spokenName);
+  window._lastVoiceSpeechTimestamp = Date.now();
   playAlertChime();
   setTimeout(() => speakFuelAlertText(msg), 260);
   showToast(`🔔 ${msg}`, { isInfo: true, duration: 5000 });
@@ -7395,6 +7443,7 @@ function toggleStationAlertSelection(stationId, checkboxEl) {
   if (selectedAlertStationIds.has(sid)) {
     selectedAlertStationIds.delete(sid);
     triggeredAlertStationIds.delete(sid);
+    triggeredAlert400mStationIds.delete(sid);
   } else {
     if (selectedAlertStationIds.size >= MAX_STATION_ALERTS) {
       if (checkboxEl) checkboxEl.checked = false;
@@ -7403,6 +7452,7 @@ function toggleStationAlertSelection(stationId, checkboxEl) {
     }
     selectedAlertStationIds.add(sid);
     triggeredAlertStationIds.delete(sid);
+    triggeredAlert400mStationIds.delete(sid);
     playAlertChime();
 
     // Vérifier si le carburant choisi est disponible dans cette station
@@ -7415,14 +7465,16 @@ function toggleStationAlertSelection(stationId, checkboxEl) {
       const warnMsgVisual = cfg.unavailFuel(fuelLabel);
       const warnMsgSpoken = cfg.unavailFuel(spokenFuel);
       window._lastVoiceSpeechTimestamp = Date.now();
-      // Si l'utilisateur est déjà à moins de 2,2 km de cette station, ne pas superposer l'annonce "Dans 2 km"
-      if (userGpsPosition && getDistanceKm(userGpsPosition.lat, userGpsPosition.lon, st.lat, st.lon) <= 2.2) {
-        triggeredAlertStationIds.add(sid);
+      // Si l'utilisateur est déjà à moins de 2,2 km de cette station, ne pas superposer l'annonce "Dans 2 km" / "400 m"
+      if (userGpsPosition) {
+        const dUserKm = getDistanceKm(userGpsPosition.lat, userGpsPosition.lon, st.lat, st.lon);
+        if (dUserKm <= 2.2) triggeredAlertStationIds.add(sid);
+        if (dUserKm <= 0.45) triggeredAlert400mStationIds.add(sid);
       }
       setTimeout(() => speakFuelAlertText(warnMsgSpoken), 260);
       showToast(`⚠️ ${warnMsgVisual}`, { isWarning: true, duration: 5500 });
     } else {
-      showToast(`🔔 Alerte sonore 2 km activée (${selectedAlertStationIds.size}/${MAX_STATION_ALERTS})`, { isSuccess: true, duration: 2500 });
+      showToast(`🔔 Alerte sonore 2 km & 400 m activée (${selectedAlertStationIds.size}/${MAX_STATION_ALERTS})`, { isSuccess: true, duration: 2500 });
     }
   }
 
@@ -7440,15 +7492,85 @@ function toggleStationAlertSelection(stationId, checkboxEl) {
     const cardEl = document.getElementById(`card-${id}`);
     if (cardEl) cardEl.classList.toggle('alert-armed', armed);
   });
+
+  updateNextAlertCountdownHud();
 }
 
 function testStationVoiceAlert(stationId) {
   const sid = String(stationId);
   const st = (currentRouteStations || []).find(s => String(s.id) === sid) || (allStations || []).find(s => String(s.id) === sid);
-  if (st) triggerStationVoiceAlert(st);
+  if (st) triggerStationVoiceAlert(st, '2km');
+}
+
+function updateNextAlertCountdownHud() {
+  const hud = document.getElementById('next-alert-hud');
+  const distEl = document.getElementById('next-alert-hud-dist');
+  const nameEl = document.getElementById('next-alert-hud-name');
+  if (!hud || !distEl || !nameEl) return;
+
+  if (!selectedAlertStationIds || selectedAlertStationIds.size === 0 || !currentRouteStations || currentRouteStations.length === 0) {
+    hud.style.display = 'none';
+    return;
+  }
+
+  let bestSt = null;
+  let bestRemKm = Infinity;
+
+  currentRouteStations.forEach(st => {
+    const sid = String(st.id);
+    if (!selectedAlertStationIds.has(sid)) return;
+    let remKm = null;
+    if (typeof st.distOnRoute === 'number') {
+      remKm = st.distOnRoute - (userProgressionKmOnRoute || 0);
+    } else if (userGpsPosition) {
+      remKm = getDistanceKm(userGpsPosition.lat, userGpsPosition.lon, st.lat, st.lon);
+    }
+    if (remKm !== null && remKm >= -0.05 && remKm < bestRemKm) {
+      bestRemKm = remKm;
+      bestSt = st;
+    }
+  });
+
+  if (!bestSt) {
+    hud.style.display = 'none';
+    return;
+  }
+
+  const clampedKm = Math.max(0, bestRemKm);
+  let distStr = '';
+  if (clampedKm < 1.0) {
+    const meters = Math.max(0, Math.round((clampedKm * 1000) / 10) * 10);
+    distStr = `${meters} m`;
+  } else if (clampedKm < 100) {
+    distStr = `${clampedKm.toFixed(1).replace('.', ',')} km`;
+  } else {
+    distStr = `${Math.round(clampedKm)} km`;
+  }
+
+  const brand = formatPinBrandLabel(bestSt);
+  const cleanName = formatProperName(bestSt.nom || bestSt.ville || '').replace(/^Station\s+/i, '').trim();
+  const displayName = (!cleanName || cleanName.toLowerCase().includes(brand.toLowerCase()))
+    ? (cleanName || brand)
+    : `${brand} • ${cleanName}`;
+
+  distEl.textContent = distStr;
+  nameEl.textContent = `🔔 ${displayName}`;
+
+  const mapBar = document.getElementById('map-routes-bar');
+  const isMapBarVisible = Boolean(
+    mapBar &&
+    mapBar.style.display !== 'none' &&
+    !document.body.classList.contains('mobile-view-list') &&
+    alternativeRoutes && alternativeRoutes.length > 1
+  );
+  hud.classList.toggle('above-routes-bar', isMapBarVisible);
+  hud.classList.toggle('near-400m', clampedKm <= 0.45);
+  hud.classList.toggle('near-2km', clampedKm > 0.45 && clampedKm <= 2.2);
+  hud.style.display = 'flex';
 }
 
 function checkStationProximityAlerts(latitude, longitude) {
+  updateNextAlertCountdownHud();
   if (!selectedAlertStationIds || selectedAlertStationIds.size === 0) return;
   if (!currentRouteStations || currentRouteStations.length === 0) return;
   // Empêcher toute superposition avec une annonce vocale en cours (délai minimum 6,5 s)
@@ -7456,7 +7578,7 @@ function checkStationProximityAlerts(latitude, longitude) {
 
   currentRouteStations.forEach(st => {
     const sid = String(st.id);
-    if (!selectedAlertStationIds.has(sid) || triggeredAlertStationIds.has(sid)) return;
+    if (!selectedAlertStationIds.has(sid)) return;
 
     let remKm = null;
     if (typeof st.distOnRoute === 'number' && userProgressionKmOnRoute > 0) {
@@ -7465,9 +7587,17 @@ function checkStationProximityAlerts(latitude, longitude) {
       remKm = getDistanceKm(latitude, longitude, st.lat, st.lon);
     }
 
-    if (remKm !== null && remKm <= 2.2 && remKm >= 0.05) {
+    if (remKm === null) return;
+
+    // 2ème alerte à 400 m
+    if (!triggeredAlert400mStationIds.has(sid) && remKm <= 0.45 && remKm >= 0.03) {
+      triggeredAlert400mStationIds.add(sid);
       triggeredAlertStationIds.add(sid);
-      triggerStationVoiceAlert(st);
+      triggerStationVoiceAlert(st, '400m');
+    } else if (!triggeredAlertStationIds.has(sid) && remKm <= 2.2 && remKm > 0.45) {
+      // 1ère alerte à 2 km
+      triggeredAlertStationIds.add(sid);
+      triggerStationVoiceAlert(st, '2km');
     }
   });
 }
@@ -7476,6 +7606,7 @@ window.toggleStationAlertSelection = toggleStationAlertSelection;
 window.testStationVoiceAlert = testStationVoiceAlert;
 window.formatPinBrandLabel = formatPinBrandLabel;
 window.checkStationProximityAlerts = checkStationProximityAlerts;
+window.updateNextAlertCountdownHud = updateNextAlertCountdownHud;
 
 // Helper : affiche le nom du carburant barré d'une croix rouge en travers lorsqu'il est indisponible
 function renderCrossedFuelHtml(fuelName, compact = false) {
