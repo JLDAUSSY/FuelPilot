@@ -7537,14 +7537,18 @@ function updateNextAlertCountdownHud() {
   }
 
   const clampedKm = Math.max(0, bestRemKm);
-  let distStr = '';
+  let numStr = '';
+  let unitStr = 'km';
   if (clampedKm < 1.0) {
     const meters = Math.max(0, Math.round((clampedKm * 1000) / 10) * 10);
-    distStr = `${meters} m`;
+    numStr = `${meters}`;
+    unitStr = 'm';
   } else if (clampedKm < 100) {
-    distStr = `${clampedKm.toFixed(1).replace('.', ',')} km`;
+    numStr = clampedKm.toFixed(1).replace('.', ',');
+    unitStr = 'km';
   } else {
-    distStr = `${Math.round(clampedKm)} km`;
+    numStr = `${Math.round(clampedKm)}`;
+    unitStr = 'km';
   }
 
   const brand = formatPinBrandLabel(bestSt);
@@ -7553,7 +7557,7 @@ function updateNextAlertCountdownHud() {
     ? (cleanName || brand)
     : `${brand} • ${cleanName}`;
 
-  distEl.textContent = distStr;
+  distEl.innerHTML = `<span class="hud-num">${numStr}</span><span class="hud-unit">${unitStr}</span>`;
   nameEl.textContent = `🔔 ${displayName}`;
 
   const mapBar = document.getElementById('map-routes-bar');

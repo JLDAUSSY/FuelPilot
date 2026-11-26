@@ -6908,45 +6908,73 @@ header {
 }
 
 .next-alert-hud-dist {
-  font-size: 2.15rem;
-  font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: 0.01em;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.88);
-  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.75));
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 5px;
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+  line-height: 1.04;
   font-variant-numeric: tabular-nums;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+}
+
+.next-alert-hud-dist .hud-num {
+  font-size: 2.3rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.08);
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.08);
+  -webkit-text-stroke: 1.45px rgba(255, 255, 255, 0.94);
+  paint-order: stroke fill;
+}
+
+.next-alert-hud-dist .hud-unit {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  color: rgba(255, 255, 255, 0.08);
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.08);
+  -webkit-text-stroke: 1.05px rgba(255, 255, 255, 0.92);
+  paint-order: stroke fill;
 }
 
 .next-alert-hud-name {
   margin-top: 2px;
   font-size: 0.8rem;
   font-weight: 700;
-  color: rgba(241, 245, 249, 0.88);
+  color: rgba(241, 245, 249, 0.92);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.92), 0 0 8px rgba(0, 0, 0, 0.72);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95), 0 0 8px rgba(0, 0, 0, 0.78);
 }
 
 .next-alert-hud.near-2km {
-  border-color: rgba(251, 191, 36, 0.45);
+  border-color: rgba(251, 191, 36, 0.5);
   background: rgba(15, 23, 42, 0.16);
 }
 
-.next-alert-hud.near-2km .next-alert-hud-dist {
-  -webkit-text-stroke: 2.2px rgba(253, 224, 71, 0.94);
+.next-alert-hud.near-2km .hud-num {
+  -webkit-text-stroke: 1.5px rgba(253, 224, 71, 0.96);
+}
+
+.next-alert-hud.near-2km .hud-unit {
+  -webkit-text-stroke: 1.1px rgba(253, 224, 71, 0.94);
 }
 
 .next-alert-hud.near-400m {
-  border-color: rgba(52, 211, 153, 0.55);
+  border-color: rgba(52, 211, 153, 0.6);
   background: rgba(6, 78, 59, 0.16);
 }
 
-.next-alert-hud.near-400m .next-alert-hud-dist {
-  -webkit-text-stroke: 2.2px rgba(52, 211, 153, 0.96);
+.next-alert-hud.near-400m .hud-num {
+  -webkit-text-stroke: 1.55px rgba(52, 211, 153, 0.98);
+}
+
+.next-alert-hud.near-400m .hud-unit {
+  -webkit-text-stroke: 1.1px rgba(52, 211, 153, 0.96);
 }
 
 @media (min-width: 1081px) {
