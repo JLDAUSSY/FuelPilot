@@ -5301,6 +5301,7 @@ async function calculateItinerary(options = {}) {
     triggeredAlertStationIds.clear();
     if (typeof triggeredAlert400mStationIds !== 'undefined') triggeredAlert400mStationIds.clear();
     if (typeof updateNextAlertCountdownHud === 'function') updateNextAlertCountdownHud();
+    if (typeof syncNativeBackgroundAlerts === 'function') syncNativeBackgroundAlerts();
     offRouteConsecutiveCount = 0;
     userProgressionKmOnRoute = 0;
     lastRenderedProgressionKm = -1;
@@ -7494,6 +7495,39 @@ function toggleStationAlertSelection(stationId, checkboxEl) {
   });
 
   updateNextAlertCountdownHud();
+  syncNativeBackgroundAlerts();
+}
+
+function syncNativeBackgroundAlerts() {
+  if (!window.AndroidBridge || typeof window.AndroidBridge.syncBackgroundAlerts !== 'function') return;
+  try {
+    const cfg = I18N_VOICE_ALERTS[currentLang] || I18N_VOICE_ALERTS.fr;
+    const payload = [];
+    if (selectedAlertStationIds && selectedAlertStationIds.size > 0 && Array.isArray(currentRouteStations)) {
+      currentRouteStations.forEach(st => {
+        const sid = String(st.id);
+        if (!selectedAlertStationIds.has(sid)) return;
+        const brand = formatPinBrandLabel(st);
+        const cleanName = formatProperName(st.nom || st.ville || '').replace(/^Station\s+/i, '').trim();
+        const spokenName = (!cleanName || cleanName.toLowerCase().includes(brand.toLowerCase()))
+          ? (cleanName || brand)
+          : `${brand} ${cleanName}`;
+        payload.push({
+          id: sid,
+          name: spokenName,
+          lat: st.lat,
+          lon: st.lon,
+          msg2km: cfg.alert(spokenName),
+          msg400m: (typeof cfg.alert400m === 'function') ? cfg.alert400m(spokenName) : cfg.alert(spokenName),
+          langTag: cfg.lang || 'fr-FR',
+          triggered2km: triggeredAlertStationIds.has(sid),
+          triggered400m: triggeredAlert400mStationIds.has(sid)
+        });
+      });
+    }
+    const keepAlive = Boolean(isGpsNavActive || payload.length > 0);
+    window.AndroidBridge.syncBackgroundAlerts(JSON.stringify(payload), keepAlive);
+  } catch (e) {}
 }
 
 function testStationVoiceAlert(stationId) {
@@ -7598,10 +7632,12 @@ function checkStationProximityAlerts(latitude, longitude) {
       triggeredAlert400mStationIds.add(sid);
       triggeredAlertStationIds.add(sid);
       triggerStationVoiceAlert(st, '400m');
+      syncNativeBackgroundAlerts();
     } else if (!triggeredAlertStationIds.has(sid) && remKm <= 2.2 && remKm > 0.45) {
       // 1ère alerte à 2 km
       triggeredAlertStationIds.add(sid);
       triggerStationVoiceAlert(st, '2km');
+      syncNativeBackgroundAlerts();
     }
   });
 }
@@ -9170,6 +9206,7 @@ function startGpsNavigation() {
 
   // Rafraîchir immédiatement la liste des stations avec les décomptes kilométriques
   renderCurrentRouteStations();
+  if (typeof syncNativeBackgroundAlerts === 'function') syncNativeBackgroundAlerts();
 }
 
 function stopGpsNavigation() {
@@ -9181,6 +9218,7 @@ function stopGpsNavigation() {
   updateLocateButtonNavState();
   updateActiveRoutePolylines();
   renderCurrentRouteStations();
+  if (typeof syncNativeBackgroundAlerts === 'function') syncNativeBackgroundAlerts();
 }
 
 function onGpsLocationUpdate(coords) {
