@@ -7525,7 +7525,7 @@ function syncNativeBackgroundAlerts() {
         });
       });
     }
-    const keepAlive = Boolean(isGpsNavActive || payload.length > 0);
+    const keepAlive = Boolean(isGpsNavActive);
     window.AndroidBridge.syncBackgroundAlerts(JSON.stringify(payload), keepAlive);
   } catch (e) {}
 }
@@ -9153,6 +9153,39 @@ function getNavRequiresCurrentPosVoiceMsg() {
   return mapMsg[currentLang] || mapMsg.fr;
 }
 
+let webBatteryChargingState = null;
+try {
+  if (navigator && typeof navigator.getBattery === 'function') {
+    navigator.getBattery().then(bat => {
+      if (!bat) return;
+      webBatteryChargingState = Boolean(bat.charging);
+      bat.addEventListener('chargingchange', () => { webBatteryChargingState = Boolean(bat.charging); });
+    }).catch(() => {});
+  }
+} catch (e) {}
+
+function isDeviceCurrentlyCharging() {
+  if (window.AndroidBridge && typeof window.AndroidBridge.isCharging === 'function') {
+    try { return Boolean(window.AndroidBridge.isCharging()); } catch (e) {}
+  }
+  return webBatteryChargingState; // true, false, or null if unsupported
+}
+
+function getChargeAdviceVoiceMsg() {
+  const mapMsg = {
+    fr: "Pendant votre trajet, pour de meilleures performances, il est conseillé de mettre votre téléphone en charge.",
+    en: "During your trip, for best performance, it is recommended to keep your phone charging.",
+    de: "Für optimale Leistung während Ihrer Fahrt wird empfohlen, Ihr Telefon aufzuladen.",
+    it: "Durante il viaggio, per prestazioni ottimali, si consiglia di tenere il telefono in carica.",
+    es: "Durante su viaje, para un mejor rendimiento, se recomienda mantener el teléfono cargando.",
+    nl: "Voor de beste prestaties tijdens uw rit wordt aangeraden uw telefoon op te laden.",
+    pt: "Durante a sua viagem, para melhor desempenho, recomenda-se manter o telemóvel a carregar.",
+    sl: "Za najboljše delovanje med vožnjo priporočamo, da imate telefon priključen na polnilnik.",
+    hr: "Za najbolje performanse tijekom putovanja preporučuje se držati telefon na punjaču."
+  };
+  return mapMsg[currentLang] || mapMsg.fr;
+}
+
 function startGpsNavigation() {
   if (!activeRouteData) {
     alert(t().alertMissingPoints || "Veuillez d'abord calculer un itinéraire.");
@@ -9207,6 +9240,15 @@ function startGpsNavigation() {
   // Rafraîchir immédiatement la liste des stations avec les décomptes kilométriques
   renderCurrentRouteStations();
   if (typeof syncNativeBackgroundAlerts === 'function') syncNativeBackgroundAlerts();
+
+  // Si le téléphone n'est pas en charge au lancement de "Démarrer", conseil vocal discret
+  const chargingState = isDeviceCurrentlyCharging();
+  if (chargingState === false) {
+    const advice = getChargeAdviceVoiceMsg();
+    window._lastVoiceSpeechTimestamp = Date.now();
+    setTimeout(() => speakFuelAlertText(advice), 350);
+    showToast(`🔌 ${advice}`, { isInfo: true, duration: 6000 });
+  }
 }
 
 function stopGpsNavigation() {
