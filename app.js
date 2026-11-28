@@ -4564,6 +4564,28 @@ async function searchLocationsBilingual(q) {
 // Memory of the 10 most recent departure / arrival localities (localStorage)
 // ============================================================================
 const RECENT_LOCATIONS_KEY = 'fuelpilot_recent_locations_v1';
+const MAX_RECENT_LOCATIONS = 20;
+
+function readRecentCookieFallback() {
+  try {
+    const m = document.cookie.match(/(?:^|;\s*)fuelpilot_recent_bk=([^;]+)/);
+    if (m && m[1]) return decodeURIComponent(m[1]);
+  } catch (e) {}
+  return null;
+}
+
+function writeRecentBackup(jsonStr) {
+  try {
+    if (jsonStr && jsonStr.length < 3600) {
+      document.cookie = `fuelpilot_recent_bk=${encodeURIComponent(jsonStr)}; max-age=31536000; path=/; SameSite=Lax`;
+    }
+  } catch (e) {}
+  try {
+    if (window.AndroidBridge && typeof window.AndroidBridge.saveRecentLocations === 'function') {
+      window.AndroidBridge.saveRecentLocations(jsonStr);
+    }
+  } catch (e) {}
+}
 
 // Nettoie un libellé pour ne conserver que le nom réel de la commune
 // Empêche la multiplication de "Ma position actuelle (Ville)" dans l'historique
@@ -4583,7 +4605,11 @@ function sanitizeLocationName(rawName) {
 
 function getRecentLocations() {
   try {
-    const raw = localStorage.getItem(RECENT_LOCATIONS_KEY);
+    let raw = localStorage.getItem(RECENT_LOCATIONS_KEY);
+    if (!raw && window.AndroidBridge && typeof window.AndroidBridge.getRecentLocations === 'function') {
+      try { raw = window.AndroidBridge.getRecentLocations(); } catch (e) {}
+    }
+    if (!raw) raw = readRecentCookieFallback();
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
@@ -4606,12 +4632,12 @@ function getRecentLocations() {
         label: sLabel,
         coords: Array.isArray(item.coords) ? [Number(item.coords[0]), Number(item.coords[1])] : [0, 0]
       });
-      if (cleaned.length >= 10) break;
+      if (cleaned.length >= MAX_RECENT_LOCATIONS) break;
     }
 
-    // Assainir le stockage local si des entrées ont été nettoyées ou dédoublonnées
+    // Assainir et synchroniser le stockage local + sauvegarde
     const cleanedJson = JSON.stringify(cleaned);
-    if (cleanedJson !== raw) {
+    if (cleanedJson !== localStorage.getItem(RECENT_LOCATIONS_KEY)) {
       localStorage.setItem(RECENT_LOCATIONS_KEY, cleanedJson);
     }
     return cleaned;
@@ -4643,7 +4669,9 @@ function saveRecentLocation(cleanName, coords, fullLabel) {
       label: sLabel,
       coords: [Number(coords[0]), Number(coords[1])]
     });
-    localStorage.setItem(RECENT_LOCATIONS_KEY, JSON.stringify(filtered.slice(0, 10)));
+    const outJson = JSON.stringify(filtered.slice(0, MAX_RECENT_LOCATIONS));
+    localStorage.setItem(RECENT_LOCATIONS_KEY, outJson);
+    writeRecentBackup(outJson);
   } catch (e) {}
 }
 
